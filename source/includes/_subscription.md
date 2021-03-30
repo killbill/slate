@@ -452,7 +452,7 @@ Bundles bundles = subscriptionApi.createSubscriptionsWithAddOns(bulkSubscription
 ```
 
 ```ruby
-entitlement = [
+entitlements = [
                  {
                     "baseEntitlementAndAddOns":[
                        {
@@ -464,18 +464,18 @@ entitlement = [
                     ]
                  }
               ]
-requested_date = nil
 entitlement_date = nil
 billing_date = nil
 migrated = false
+rename_key_if_exists_and_unused = true
 call_completion_sec = 3
 
 subscription = KillBillClient::Model::Subscription.new
-subscription.create_entitlement_with_add_on(entitlement,
-                                            requested_date,
+subscription.create_entitlement_with_add_on(entitlements,
                                             entitlement_date, 
                                             billing_date,
                                             migrated, 
+                                            rename_key_if_exists_and_unused,
                                             call_completion_sec,                                            
                                             user, 
                                             reason, 
