@@ -11943,7 +11943,9 @@ all the child <code>Accounts</code> for a given parent <code>Account</code>.</p>
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A JSON string representing the custom field object to be added.</p>
+<p>A list of objects giving the name and value of the custom field, or fields, to be added. For example:</p>
+
+<p>[ { &quot;name&quot;: &quot;CF1&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -12184,7 +12186,7 @@ This endpoint allows you to retrieve all custom fields, or to filter them by typ
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of custom field objects</p>
+<p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects</p>
 <h3 id='account-modify-custom-fields-for-an-account'>Modify custom fields for an account</h3>
 <p>Modify the custom fields associated with an account. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.</p>
 
@@ -12254,7 +12256,11 @@ This endpoint allows you to retrieve all custom fields, or to filter them by typ
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A JSON string representing a list of custom fields to substitute for the existing ones. Although the <code>field name</code> and <code>object type</code> can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
+<p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
+
+<p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
+
+<p>Although the <code>fieldName</code> and <code>objectType</code> can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -15584,7 +15590,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -15666,11 +15672,11 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A list of objects giving the id and the new value for the custom field, or fields, to be modified. For example:</p>
+<p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
 
-<p>[  {  &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;,  &quot;value&quot;: &quot;123&quot; }  ]</p>
+<p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
-<p>Although the field name and object type can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
+<p>Although the <code>fieldName</code> and <code>objectType</code> can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -16100,13 +16106,34 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
             "planName": "super-monthly"
         }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span> 
+
+    OR
+
+    curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'{ 
+          "accountId": "59afd9fe-e98d-4fb3-b5bf-21d4a2b036cd",
+            "externalKey": "somethingSpecial", 
+            "productName": "Test", 
+            "productCategory": "BASE",  
+            "billingPeriod": "MONTHLY",
+            "priceList": "DEFAULT"
+        }'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span>    
+
+
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"905a0636-ab63-40c0-acd4-b461b6808b5d"</span><span class="o">);</span>
 
 <span class="n">Subscription</span> <span class="n">input</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
-<span class="n">input</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountJson</span><span class="o">.</span><span class="na">getAccountId</span><span class="o">());</span>
+<span class="n">input</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
 <span class="n">input</span><span class="o">.</span><span class="na">setExternalKey</span><span class="o">(</span><span class="s">"somethingSpecial"</span><span class="o">);</span>
 <span class="n">input</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"shotgun-monthly"</span><span class="o">);</span>
 
@@ -16316,9 +16343,13 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A subscription resource object specifying <code>accountId</code>, optional <code>externalKey</code>, and <code>planName</code>.</p>
+<p>A subscription resource object specifying <code>accountId</code> and either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code>,<code>billingPeriod</code> and <code>priceList</code>. </p>
 
-<p>Also, note that one can atomically change the per-subscription BCD while making this call by specifying a new date in the field body <code>billCycleDayLocal</code>. This allows changes to be made to realign the billing with the date of the change.</p>
+<p>It can also include the following optional fields:
+* <code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.
+* <code>externalKey</code> - External key corresponding to the subscription.
+* <code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. 
+* <code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only while invoking this method for an addon subscription.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -16336,14 +16367,14 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <td>string</td>
 <td>no</td>
 <td>immediately</td>
-<td>Date at which the entitlement (sevice) starts.</td>
+<td>Date at which the entitlement (service) starts in <code>yyyy-mm-dd</code> format.</td>
 </tr>
 <tr>
 <td><strong>billingDate</strong></td>
 <td>string</td>
 <td>no</td>
 <td>immediately</td>
-<td>Date at which the billing starts.</td>
+<td>Date at which the billing starts in <code>yyyy-mm-dd</code> format.</td>
 </tr>
 <tr>
 <td><strong>renameKeyIfExistsAndUnused</strong></td>
@@ -16376,6 +16407,9 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 </tbody></table>
 
 <p>Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If <strong>callCompletion</strong> is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by <strong>callTimeoutSec</strong>.</p>
+
+<p><strong>Other Notes</strong> 
+The <code>entitlementDate</code> drives the subscription state. So, if a subscription is created with a future <code>entitlementDate</code>, its state remains <code>PENDING</code> until the date is reached after which it becomes <code>ACTIVE</code>.</p>
 
 <p><strong>Response</strong></p>
 
@@ -16416,244 +16450,10 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
         }
         ]'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionWithAddOns'</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
-<span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
 
-<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"a3087bfb-eb81-466d-afeb-6501c30f8f85"</span><span class="o">);</span>
+OR
 
-<span class="n">Subscription</span> <span class="n">base</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
-<span class="n">base</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
-<span class="n">base</span><span class="o">.</span><span class="na">setExternalKey</span><span class="o">(</span><span class="s">"base"</span><span class="o">);</span>
-<span class="n">base</span><span class="o">.</span><span class="na">setProductName</span><span class="o">(</span><span class="s">"Shotgun"</span><span class="o">);</span>
-<span class="n">base</span><span class="o">.</span><span class="na">setProductCategory</span><span class="o">(</span><span class="n">ProductCategory</span><span class="o">.</span><span class="na">BASE</span><span class="o">);</span>
-<span class="n">base</span><span class="o">.</span><span class="na">setBillingPeriod</span><span class="o">(</span><span class="n">BillingPeriod</span><span class="o">.</span><span class="na">MONTHLY</span><span class="o">);</span>
-<span class="n">base</span><span class="o">.</span><span class="na">setPriceList</span><span class="o">(</span><span class="s">"DEFAULT"</span><span class="o">);</span>
-
-<span class="kd">final</span> <span class="n">Subscription</span> <span class="n">addOn1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
-<span class="n">addOn1</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
-<span class="n">addOn1</span><span class="o">.</span><span class="na">setProductName</span><span class="o">(</span><span class="s">"Telescopic-Scope"</span><span class="o">);</span>
-<span class="n">addOn1</span><span class="o">.</span><span class="na">setProductCategory</span><span class="o">(</span><span class="n">ProductCategory</span><span class="o">.</span><span class="na">ADD_ON</span><span class="o">);</span>
-<span class="n">addOn1</span><span class="o">.</span><span class="na">setBillingPeriod</span><span class="o">(</span><span class="n">BillingPeriod</span><span class="o">.</span><span class="na">MONTHLY</span><span class="o">);</span>
-<span class="n">addOn1</span><span class="o">.</span><span class="na">setPriceList</span><span class="o">(</span><span class="s">"DEFAULT"</span><span class="o">);</span>
-
-<span class="kd">final</span> <span class="n">Subscription</span> <span class="n">addOn2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
-<span class="n">addOn2</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
-<span class="n">addOn2</span><span class="o">.</span><span class="na">setProductName</span><span class="o">(</span><span class="s">"Laser-Scope"</span><span class="o">);</span>
-<span class="n">addOn2</span><span class="o">.</span><span class="na">setProductCategory</span><span class="o">(</span><span class="n">ProductCategory</span><span class="o">.</span><span class="na">ADD_ON</span><span class="o">);</span>
-<span class="n">addOn2</span><span class="o">.</span><span class="na">setBillingPeriod</span><span class="o">(</span><span class="n">BillingPeriod</span><span class="o">.</span><span class="na">MONTHLY</span><span class="o">);</span>
-<span class="n">addOn2</span><span class="o">.</span><span class="na">setPriceList</span><span class="o">(</span><span class="s">"DEFAULT"</span><span class="o">);</span>
-
-<span class="kd">final</span> <span class="n">Subscriptions</span> <span class="n">subscriptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscriptions</span><span class="o">();</span>
-<span class="n">subscriptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">base</span><span class="o">);</span>
-<span class="n">subscriptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">addOn1</span><span class="o">);</span>
-<span class="n">subscriptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">addOn2</span><span class="o">);</span>
-
-<span class="n">BulkSubscriptionsBundles</span> <span class="n">bulkSubscriptionsBundles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BulkSubscriptionsBundles</span><span class="o">();</span>
-
-<span class="n">BulkSubscriptionsBundle</span> <span class="n">bulkSubscriptionsBundle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BulkSubscriptionsBundle</span><span class="o">();</span>
-<span class="n">bulkSubscriptionsBundle</span><span class="o">.</span><span class="na">setBaseEntitlementAndAddOns</span><span class="o">(</span><span class="n">subscriptions</span><span class="o">);</span>
-<span class="n">bulkSubscriptionsBundles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bulkSubscriptionsBundle</span><span class="o">);</span>
-
-<span class="n">LocalDate</span> <span class="n">entitlementDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">LocalDate</span> <span class="n">billingDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">Boolean</span> <span class="n">renameKeyIfExistsAndUnused</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-<span class="n">Boolean</span> <span class="n">migrated</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-<span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-<span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-
-<span class="n">Bundles</span> <span class="n">bundles</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionsWithAddOns</span><span class="o">(</span><span class="n">bulkSubscriptionsBundles</span><span class="o">,</span> 
-                                                                <span class="n">entitlementDate</span><span class="o">,</span> 
-                                                                <span class="n">billingDate</span><span class="o">,</span> 
-                                                                <span class="n">renameKeyIfExistsAndUnused</span><span class="o">,</span> 
-                                                                <span class="n">migrated</span><span class="o">,</span> 
-                                                                <span class="n">callCompletion</span><span class="o">,</span> 
-                                                                <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span><span class="o">,</span>
-                                                                <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
-                                                                <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">entitlement</span> <span class="o">=</span> <span class="p">[</span>
-                 <span class="p">{</span>
-                    <span class="s2">"baseEntitlementAndAddOns"</span><span class="p">:[</span>
-                       <span class="p">{</span>
-                          <span class="s2">"accountId"</span><span class="ss">:"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836"</span><span class="p">,</span>
-                          <span class="s2">"externalKey"</span><span class="ss">:"1-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-827963"</span><span class="p">,</span>
-                          <span class="s2">"productCategory"</span><span class="ss">:"BASE"</span><span class="p">,</span>
-                          <span class="s2">"planName"</span><span class="ss">:"sports-monthly"</span>
-                       <span class="p">}</span>
-                    <span class="p">]</span>
-                 <span class="p">}</span>
-              <span class="p">]</span>
-<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="n">entitlement_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="n">billing_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="n">migrated</span> <span class="o">=</span> <span class="kp">false</span>
-<span class="n">call_completion_sec</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="n">subscription</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">subscription</span><span class="p">.</span><span class="nf">create_entitlement_with_add_on</span><span class="p">(</span><span class="n">entitlement</span><span class="p">,</span>
-                                            <span class="n">requested_date</span><span class="p">,</span>
-                                            <span class="n">entitlement_date</span><span class="p">,</span> 
-                                            <span class="n">billing_date</span><span class="p">,</span>
-                                            <span class="n">migrated</span><span class="p">,</span> 
-                                            <span class="n">call_completion_sec</span><span class="p">,</span>                                            
-                                            <span class="n">user</span><span class="p">,</span> 
-                                            <span class="n">reason</span><span class="p">,</span> 
-                                            <span class="n">comment</span><span class="p">,</span> 
-                                            <span class="n">options</span><span class="p">)</span>                                         
-</code></pre><pre class="highlight python tab-python"><code><span class="n">subscriptionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">SubscriptionApi</span><span class="p">()</span>
-<span class="n">account_id</span> <span class="o">=</span> <span class="s">'16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836'</span>
-<span class="n">subscription_a</span> <span class="o">=</span> <span class="n">Subscription</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account_id</span><span class="p">,</span>
-                              <span class="n">product_category</span><span class="o">=</span><span class="s">'BASE'</span><span class="p">,</span>
-                              <span class="n">plan_name</span><span class="o">=</span><span class="s">'sports-monthly'</span><span class="p">)</span>
-
-<span class="n">subscription_b</span> <span class="o">=</span> <span class="n">Subscription</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account_id</span><span class="p">,</span>
-                              <span class="n">product_category</span><span class="o">=</span><span class="s">'ADD_ON'</span><span class="p">,</span>
-                              <span class="n">plan_name</span><span class="o">=</span><span class="s">'super-monthly'</span><span class="p">)</span>
-
-<span class="n">body</span> <span class="o">=</span> <span class="p">[</span><span class="n">subscription_a</span><span class="p">,</span> <span class="n">subscription_b</span><span class="p">]</span>
-
-<span class="n">subscriptionApi</span><span class="o">.</span><span class="n">create_subscription_with_add_ons</span><span class="p">(</span><span class="n">body</span><span class="p">,</span>
-                                                 <span class="n">created_by</span><span class="p">,</span>
-                                                 <span class="n">api_key</span><span class="p">,</span>
-                                                 <span class="n">api_secret</span><span class="p">)</span>
-</code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 201 Created
-&lt; Location: http://127.0.0.1:8080/1.0/kb/accounts/886adb60-be70-40c8-b97d-1f8ecbc30a64/bundles?bundlesFilter<span class="o">=</span>cbcc7642-1aa5-4609-b89d-5356d05819be
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">BulkSubscriptionsBundle</span> <span class="o">{</span>
-    <span class="nl">baseEntitlementAndAddOns:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">Subscription</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Subscription</span><span class="err">@</span><span class="mi">23</span><span class="n">b30120</span>
-        <span class="nl">accountId:</span> <span class="n">a3087bfb</span><span class="o">-</span><span class="n">eb81</span><span class="o">-</span><span class="mi">466</span><span class="n">d</span><span class="o">-</span><span class="n">afeb</span><span class="o">-</span><span class="mi">6501</span><span class="n">c30f8f85</span>
-        <span class="nl">bundleId:</span> <span class="mi">2</span><span class="n">df85b05</span><span class="o">-</span><span class="mi">4</span><span class="n">a69</span><span class="o">-</span><span class="mi">474</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">e10</span><span class="o">-</span><span class="mo">02</span><span class="n">a836674cc8</span>
-        <span class="nl">subscriptionId:</span> <span class="kc">null</span>
-        <span class="nl">externalKey:</span> <span class="kc">null</span>
-        <span class="nl">startDate:</span> <span class="kc">null</span>
-        <span class="nl">productName:</span> <span class="n">Telescopic</span><span class="o">-</span><span class="n">Scope</span>
-        <span class="nl">productCategory:</span> <span class="n">ADD_ON</span>
-        <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
-        <span class="nl">phaseType:</span> <span class="kc">null</span>
-        <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
-        <span class="nl">planName:</span> <span class="kc">null</span>
-        <span class="nl">state:</span> <span class="kc">null</span>
-        <span class="nl">sourceType:</span> <span class="kc">null</span>
-        <span class="nl">cancelledDate:</span> <span class="kc">null</span>
-        <span class="nl">chargedThroughDate:</span> <span class="kc">null</span>
-        <span class="nl">billingStartDate:</span> <span class="kc">null</span>
-        <span class="nl">billingEndDate:</span> <span class="kc">null</span>
-        <span class="nl">billCycleDayLocal:</span> <span class="kc">null</span>
-        <span class="nl">events:</span> <span class="kc">null</span>
-        <span class="nl">priceOverrides:</span> <span class="kc">null</span>
-        <span class="nl">prices:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="kc">null</span>
-    <span class="o">},</span> <span class="kd">class</span> <span class="nc">Subscription</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Subscription</span><span class="err">@</span><span class="mi">1</span><span class="n">b88c7d0</span>
-        <span class="nl">accountId:</span> <span class="n">a3087bfb</span><span class="o">-</span><span class="n">eb81</span><span class="o">-</span><span class="mi">466</span><span class="n">d</span><span class="o">-</span><span class="n">afeb</span><span class="o">-</span><span class="mi">6501</span><span class="n">c30f8f85</span>
-        <span class="nl">bundleId:</span> <span class="mi">2</span><span class="n">df85b05</span><span class="o">-</span><span class="mi">4</span><span class="n">a69</span><span class="o">-</span><span class="mi">474</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">e10</span><span class="o">-</span><span class="mo">02</span><span class="n">a836674cc8</span>
-        <span class="nl">subscriptionId:</span> <span class="kc">null</span>
-        <span class="nl">externalKey:</span> <span class="kc">null</span>
-        <span class="nl">startDate:</span> <span class="kc">null</span>
-        <span class="nl">productName:</span> <span class="n">Laser</span><span class="o">-</span><span class="n">Scope</span>
-        <span class="nl">productCategory:</span> <span class="n">ADD_ON</span>
-        <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
-        <span class="nl">phaseType:</span> <span class="kc">null</span>
-        <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
-        <span class="nl">planName:</span> <span class="kc">null</span>
-        <span class="nl">state:</span> <span class="kc">null</span>
-        <span class="nl">sourceType:</span> <span class="kc">null</span>
-        <span class="nl">cancelledDate:</span> <span class="kc">null</span>
-        <span class="nl">chargedThroughDate:</span> <span class="kc">null</span>
-        <span class="nl">billingStartDate:</span> <span class="kc">null</span>
-        <span class="nl">billingEndDate:</span> <span class="kc">null</span>
-        <span class="nl">billCycleDayLocal:</span> <span class="kc">null</span>
-        <span class="nl">events:</span> <span class="kc">null</span>
-        <span class="nl">priceOverrides:</span> <span class="kc">null</span>
-        <span class="nl">prices:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="kc">null</span>
-    <span class="o">}]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
-<p><strong>Request Body</strong></p>
-
-<p>A subscription resource object specifying <code>accountId</code>, optional <code>externalKey</code>, and <code>planName</code>. </p>
-
-<p><strong>Query Parameters</strong></p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>entitlementDate</strong></td>
-<td>string</td>
-<td>no</td>
-<td>immediately</td>
-<td>Date at which the entitlement (sevice) starts.</td>
-</tr>
-<tr>
-<td><strong>billingDate</strong></td>
-<td>string</td>
-<td>no</td>
-<td>immediately</td>
-<td>Date at which the billing starts.</td>
-</tr>
-<tr>
-<td><strong>renameKeyIfExistsAndUnused</strong></td>
-<td>boolean</td>
-<td>no</td>
-<td>true</td>
-<td>If true, rename external key if it exists and is unused</td>
-</tr>
-<tr>
-<td><strong>migrated</strong></td>
-<td>boolean</td>
-<td>no</td>
-<td>false</td>
-<td>If true, subscription is migrated</td>
-</tr>
-<tr>
-<td><strong>callCompletion</strong></td>
-<td>boolean</td>
-<td>no</td>
-<td>false</td>
-<td>see below</td>
-</tr>
-<tr>
-<td><strong>callTimeoutSec</strong></td>
-<td>long</td>
-<td>no</td>
-<td>unlimited?</td>
-<td>Timeout in seconds (see below)</td>
-</tr>
-</tbody></table>
-
-<p>Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If <strong>callCompletion</strong> is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by <strong>callTimeoutSec</strong>.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> parameter is returned in the header which contains the new subscription id.</p>
-<h3 id='subscription-create-multiple-subscriptions-with-addon-products'>Create multiple subscriptions with addon products</h3>
-<p>This API creates multiple addon product subscription. The bundle for the base subscription must be specified.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>POST http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionsWithAddOns</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code>curl -v <span class="se">\</span>
+curl -v <span class="se">\</span>
     -X POST <span class="se">\</span>
     -u admin:password <span class="se">\</span>
     -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
@@ -16661,27 +16461,15 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     -d <span class="s1">'[
-          {
-            "baseEntitlementAndAddOns": [
-              {
-                "accountId": "886adb60-be70-40c8-b97d-1f8ecbc30a64",
-                "externalKey": "base",
-                "productName": "Sports",
-                "productCategory": "BASE",
-                "billingPeriod": "MONTHLY",
-                "priceList": "DEFAULT"
-              },
-              {
-                "accountId": "886adb60-be70-40c8-b97d-1f8ecbc30a64",
-                "productName": "OilSlick",
-                "productCategory": "ADD_ON",
-                "billingPeriod": "MONTHLY",
-                "priceList": "DEFAULT"
-              }
-            ]
-          }
+
+        {
+          "accountId": "1f635c3d-fc24-4fa8-81e0-ab646882807a",
+          "planName": "remotecontrol-monthly",
+          "bundleId":"b4709feb-bd14-455a-bbb4-57a758498791"
+        }
         ]'</span> <span class="se">\</span>
-    <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionsWithAddOns'</span> 
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionWithAddOns'</span>   
+
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
 
@@ -16731,40 +16519,35 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                                                                    <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span><span class="o">,</span> 
                                                                    <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
                                                                    <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">bulk_subscription_list</span> <span class="o">=</span> <span class="p">[</span>
-                            <span class="p">{</span>
-                               <span class="s2">"baseEntitlementAndAddOns"</span><span class="p">:[</span>
-                                  <span class="p">{</span>
-                                     <span class="s2">"accountId"</span><span class="ss">:"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836"</span><span class="p">,</span>
-                                     <span class="s2">"externalKey"</span><span class="ss">:"1-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-827963"</span><span class="p">,</span>
-                                     <span class="s2">"productCategory"</span><span class="ss">:"BASE"</span><span class="p">,</span>
-                                     <span class="s2">"planName"</span><span class="ss">:"sports-monthly"</span>
-                                  <span class="p">}</span>
-                               <span class="p">]</span>
-                            <span class="p">},</span>
-                            <span class="p">{</span>
-                               <span class="s2">"baseEntitlementAndAddOns"</span><span class="p">:[</span>
-                                  <span class="p">{</span>
-                                     <span class="s2">"accountId"</span><span class="ss">:"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836"</span><span class="p">,</span>
-                                     <span class="s2">"externalKey"</span><span class="ss">:"2-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-717751"</span><span class="p">,</span>
-                                     <span class="s2">"productCategory"</span><span class="ss">:"ADD_ON"</span><span class="p">,</span>
-                                     <span class="s2">"planName"</span><span class="ss">:"super-monthly"</span>
-                                  <span class="p">}</span>
-                               <span class="p">]</span>
-                            <span class="p">}</span>
-                         <span class="p">]</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">entitlement</span> <span class="o">=</span> <span class="p">[</span>
+                 <span class="p">{</span>
+                    <span class="s2">"baseEntitlementAndAddOns"</span><span class="p">:[</span>
+                       <span class="p">{</span>
+                          <span class="s2">"accountId"</span><span class="ss">:"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836"</span><span class="p">,</span>
+                          <span class="s2">"externalKey"</span><span class="ss">:"1-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-827963"</span><span class="p">,</span>
+                          <span class="s2">"productCategory"</span><span class="ss">:"BASE"</span><span class="p">,</span>
+                          <span class="s2">"planName"</span><span class="ss">:"sports-monthly"</span>
+                       <span class="p">}</span>
+                    <span class="p">]</span>
+                 <span class="p">}</span>
+              <span class="p">]</span>
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">entitlement_date</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">billing_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="n">call_completion_sec</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">migrated</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">call_completion_sec</span> <span class="o">=</span> <span class="mi">3</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">BulkSubscription</span><span class="p">.</span><span class="nf">create_bulk_subscriptions</span><span class="p">(</span><span class="n">bulk_subscription_list</span><span class="p">,</span> 
-                                                                  <span class="n">user</span><span class="p">,</span> 
-                                                                  <span class="n">reason</span><span class="p">,</span> 
-                                                                  <span class="n">comment</span><span class="p">,</span> 
-                                                                  <span class="n">entitlement_date</span><span class="p">,</span> 
-                                                                  <span class="n">billing_date</span><span class="p">,</span> 
-                                                                  <span class="n">call_completion_sec</span><span class="p">,</span> 
-                                                                  <span class="n">options</span><span class="p">)</span>
+<span class="n">subscription</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">create_entitlement_with_add_on</span><span class="p">(</span><span class="n">entitlement</span><span class="p">,</span>
+                                            <span class="n">requested_date</span><span class="p">,</span>
+                                            <span class="n">entitlement_date</span><span class="p">,</span> 
+                                            <span class="n">billing_date</span><span class="p">,</span>
+                                            <span class="n">migrated</span><span class="p">,</span> 
+                                            <span class="n">call_completion_sec</span><span class="p">,</span>                                            
+                                            <span class="n">user</span><span class="p">,</span> 
+                                            <span class="n">reason</span><span class="p">,</span> 
+                                            <span class="n">comment</span><span class="p">,</span> 
+                                            <span class="n">options</span><span class="p">)</span>                                         
 </code></pre><pre class="highlight python tab-python"><code><span class="n">subscriptionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">SubscriptionApi</span><span class="p">()</span>
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836'</span>
 <span class="n">subscription_a</span> <span class="o">=</span> <span class="n">Subscription</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account_id</span><span class="p">,</span>
@@ -16775,12 +16558,12 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                               <span class="n">product_category</span><span class="o">=</span><span class="s">'ADD_ON'</span><span class="p">,</span>
                               <span class="n">plan_name</span><span class="o">=</span><span class="s">'super-monthly'</span><span class="p">)</span>
 
-<span class="n">body</span> <span class="o">=</span> <span class="n">BulkSubscriptionsBundle</span><span class="p">([</span><span class="n">subscription_a</span><span class="p">,</span> <span class="n">subscription_b</span><span class="p">])</span>
+<span class="n">body</span> <span class="o">=</span> <span class="p">[</span><span class="n">subscription_a</span><span class="p">,</span> <span class="n">subscription_b</span><span class="p">]</span>
 
-<span class="n">subscriptionApi</span><span class="o">.</span><span class="n">create_subscriptions_with_add_ons</span><span class="p">([</span><span class="n">body</span><span class="p">],</span>
-                                                  <span class="n">created_by</span><span class="p">,</span>
-                                                  <span class="n">api_key</span><span class="p">,</span>
-                                                  <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">subscriptionApi</span><span class="o">.</span><span class="n">create_subscription_with_add_ons</span><span class="p">(</span><span class="n">body</span><span class="p">,</span>
+                                                 <span class="n">created_by</span><span class="p">,</span>
+                                                 <span class="n">api_key</span><span class="p">,</span>
+                                                 <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -17195,7 +16978,13 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A subscription resource object specifying <code>accountId</code>, optional <code>externalKey</code>, and <code>planName</code>. </p>
+<p>A subscription resource object corresponding to the base subscription and zero or more subscription resource objects corresponding to add-on subscriptions need to be specified. Alternatively, only a list of add-on subscription resource objects may be specified along with the base subscription bundle id. Each subscription resource object needs to include <code>accountId</code> and either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code>,<code>billingPeriod</code> and <code>priceList</code>.</p>
+
+<p>In addition, each subscription resource can also include the following optional fields:
+* <code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.
+* <code>externalKey</code> - External key corresponding to the subscription.
+* <code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. 
+* <code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only with an add-on subscription resource.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -17213,14 +17002,765 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <td>string</td>
 <td>no</td>
 <td>immediately</td>
-<td>Date at which the entitlement (sevice) starts.</td>
+<td>Date at which the entitlement (sevice) starts in <code>yyyy-mm-dd</code> format. If specified, applies both to base and add-on products.</td>
 </tr>
 <tr>
 <td><strong>billingDate</strong></td>
 <td>string</td>
 <td>no</td>
 <td>immediately</td>
-<td>Date at which the billing starts.</td>
+<td>Date at which the billing starts in <code>yyyy-mm-dd</code> format. If specified, applies both to base and add-on products.</td>
+</tr>
+<tr>
+<td><strong>renameKeyIfExistsAndUnused</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>true</td>
+<td>If true, rename external key if it exists and is unused</td>
+</tr>
+<tr>
+<td><strong>migrated</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>If true, subscription is migrated</td>
+</tr>
+<tr>
+<td><strong>callCompletion</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>see below</td>
+</tr>
+<tr>
+<td><strong>callTimeoutSec</strong></td>
+<td>long</td>
+<td>no</td>
+<td>unlimited?</td>
+<td>Timeout in seconds (see below)</td>
+</tr>
+</tbody></table>
+
+<p>Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If <strong>callCompletion</strong> is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by <strong>callTimeoutSec</strong>.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> parameter is returned in the header which contains the new subscription id.</p>
+<h3 id='subscription-create-multiple-subscriptions-with-addon-products'>Create multiple subscriptions with addon products</h3>
+<p>This API creates multiple subscriptions with addon products. The bundle for the base subscription must be specified.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionsWithAddOns</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'[
+          {
+            "baseEntitlementAndAddOns": [
+              {
+                "accountId": "886adb60-be70-40c8-b97d-1f8ecbc30a64",
+                "externalKey": "base",
+                "productName": "Sports",
+                "productCategory": "BASE",
+                "billingPeriod": "MONTHLY",
+                "priceList": "DEFAULT"
+              },
+              {
+                "accountId": "886adb60-be70-40c8-b97d-1f8ecbc30a64",
+                "productName": "OilSlick",
+                "productCategory": "ADD_ON",
+                "billingPeriod": "MONTHLY",
+                "priceList": "DEFAULT"
+              }
+            ]
+          },
+           {
+            "baseEntitlementAndAddOns": [
+              {
+                "accountId": "59afd9fe-e98d-4fb3-b5bf-21d4a2b036cd",
+                "externalKey": "createSubscriptionsWithAddOns3",
+                "productName": "Test",
+                "productCategory": "BASE",
+                "billingPeriod": "MONTHLY",
+                "priceList": "DEFAULT"
+              },
+              {
+                "accountId": "59afd9fe-e98d-4fb3-b5bf-21d4a2b036cd",
+                "productName": "TestAO",
+                "productCategory": "ADD_ON",
+                "billingPeriod": "MONTHLY",
+                "priceList": "DEFAULT"
+              }
+            ]
+          }
+        ]'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionsWithAddOns'</span> 
+
+OR 
+
+curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'[
+          {
+            "baseEntitlementAndAddOns": [
+              {
+                "accountId": "1f635c3d-fc24-4fa8-81e0-ab646882807a",
+                "planName": "remotecontrol-monthly",  
+                "bundleId":"a8b4022c-e38c-4336-ad2f-ee15c5e18d12"
+              }
+            ]
+          },
+          {
+            "baseEntitlementAndAddOns": [
+
+              {
+                "accountId": "1f635c3d-fc24-4fa8-81e0-ab646882807a",
+                "planName": "remotecontrol-monthly",
+                "bundleId":"06892885-c276-4cf9-8311-ef0b8a2e364b"
+              }
+            ]
+          }
+        ]'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/createSubscriptionsWithAddOns'</span> 
+
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"a3087bfb-eb81-466d-afeb-6501c30f8f85"</span><span class="o">);</span>
+
+<span class="n">Subscription</span> <span class="n">base</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
+<span class="n">base</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
+<span class="n">base</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"test-monthly"</span><span class="o">);</span>
+
+<span class="kd">final</span> <span class="n">Subscription</span> <span class="n">addOn1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
+<span class="n">addOn1</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
+<span class="n">addOn1</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"testao-monthly"</span><span class="o">);</span>
+
+<span class="kd">final</span> <span class="n">Subscriptions</span> <span class="n">subscriptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscriptions</span><span class="o">();</span>
+<span class="n">subscriptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">base</span><span class="o">);</span>
+<span class="n">subscriptions</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">addOn1</span><span class="o">);</span>
+
+<span class="n">BulkSubscriptionsBundle</span> <span class="n">bulkSubscriptionsBundle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BulkSubscriptionsBundle</span><span class="o">();</span>
+<span class="n">bulkSubscriptionsBundle</span><span class="o">.</span><span class="na">setBaseEntitlementAndAddOns</span><span class="o">(</span><span class="n">subscriptions</span><span class="o">);</span>
+
+<span class="n">Subscription</span> <span class="n">base2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
+<span class="n">base2</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
+<span class="n">base2</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"product1-monthly"</span><span class="o">);</span>
+
+<span class="n">Subscription</span> <span class="n">base2addOn1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
+<span class="n">base2addOn1</span><span class="o">.</span><span class="na">setAccountId</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
+<span class="n">base2addOn1</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"product1-ao-monthly"</span><span class="o">);</span>
+<span class="n">base2addOn1</span><span class="o">.</span><span class="na">setBillCycleDayLocal</span><span class="o">(</span><span class="mi">18</span><span class="o">);</span>
+
+<span class="n">Subscriptions</span> <span class="n">subscriptions2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscriptions</span><span class="o">();</span>
+<span class="n">subscriptions2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">base2</span><span class="o">);</span>
+<span class="n">subscriptions2</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">base2addOn1</span><span class="o">);</span>
+
+<span class="n">BulkSubscriptionsBundle</span> <span class="n">bulkSubscriptionsBundle2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BulkSubscriptionsBundle</span><span class="o">();</span>
+<span class="n">bulkSubscriptionsBundle2</span><span class="o">.</span><span class="na">setBaseEntitlementAndAddOns</span><span class="o">(</span><span class="n">subscriptions2</span><span class="o">);</span>
+
+<span class="n">BulkSubscriptionsBundles</span> <span class="n">bulkSubscriptionsBundles</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BulkSubscriptionsBundles</span><span class="o">();</span>
+<span class="n">bulkSubscriptionsBundles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bulkSubscriptionsBundle</span><span class="o">);</span>
+<span class="n">bulkSubscriptionsBundles</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">bulkSubscriptionsBundle2</span><span class="o">);</span>
+
+<span class="n">LocalDate</span> <span class="n">entitlementDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">LocalDate</span> <span class="n">billingDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">renameKeyIfExistsAndUnused</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">migrated</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Bundles</span> <span class="n">bundles</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionsWithAddOns</span><span class="o">(</span><span class="n">bulkSubscriptionsBundles</span><span class="o">,</span> 
+                                                                 <span class="n">entitlementDate</span><span class="o">,</span> 
+                                                                 <span class="n">billingDate</span><span class="o">,</span> 
+                                                                 <span class="n">renameKeyIfExistsAndUnused</span><span class="o">,</span> 
+                                                                 <span class="n">migrated</span><span class="o">,</span> 
+                                                                 <span class="n">callCompletion</span><span class="o">,</span> 
+                                                                <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span>                                                               <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">bulk_subscription_list</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="p">{</span>
+                               <span class="s2">"baseEntitlementAndAddOns"</span><span class="p">:[</span>
+                                  <span class="p">{</span>
+                                     <span class="s2">"accountId"</span><span class="ss">:"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836"</span><span class="p">,</span>
+                                     <span class="s2">"externalKey"</span><span class="ss">:"1-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-827963"</span><span class="p">,</span>
+                                     <span class="s2">"productCategory"</span><span class="ss">:"BASE"</span><span class="p">,</span>
+                                     <span class="s2">"planName"</span><span class="ss">:"sports-monthly"</span>
+                                  <span class="p">}</span>
+                               <span class="p">]</span>
+                            <span class="p">},</span>
+                            <span class="p">{</span>
+                               <span class="s2">"baseEntitlementAndAddOns"</span><span class="p">:[</span>
+                                  <span class="p">{</span>
+                                     <span class="s2">"accountId"</span><span class="ss">:"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836"</span><span class="p">,</span>
+                                     <span class="s2">"externalKey"</span><span class="ss">:"2-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-717751"</span><span class="p">,</span>
+                                     <span class="s2">"productCategory"</span><span class="ss">:"ADD_ON"</span><span class="p">,</span>
+                                     <span class="s2">"planName"</span><span class="ss">:"super-monthly"</span>
+                                  <span class="p">}</span>
+                               <span class="p">]</span>
+                            <span class="p">}</span>
+                         <span class="p">]</span>
+<span class="n">entitlement_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">billing_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">call_completion_sec</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">BulkSubscription</span><span class="p">.</span><span class="nf">create_bulk_subscriptions</span><span class="p">(</span><span class="n">bulk_subscription_list</span><span class="p">,</span> 
+                                                                  <span class="n">user</span><span class="p">,</span> 
+                                                                  <span class="n">reason</span><span class="p">,</span> 
+                                                                  <span class="n">comment</span><span class="p">,</span> 
+                                                                  <span class="n">entitlement_date</span><span class="p">,</span> 
+                                                                  <span class="n">billing_date</span><span class="p">,</span> 
+                                                                  <span class="n">call_completion_sec</span><span class="p">,</span> 
+                                                                  <span class="n">options</span><span class="p">)</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">subscriptionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">SubscriptionApi</span><span class="p">()</span>
+<span class="n">account_id</span> <span class="o">=</span> <span class="s">'16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836'</span>
+<span class="n">subscription_a</span> <span class="o">=</span> <span class="n">Subscription</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account_id</span><span class="p">,</span>
+                              <span class="n">product_category</span><span class="o">=</span><span class="s">'BASE'</span><span class="p">,</span>
+                              <span class="n">plan_name</span><span class="o">=</span><span class="s">'sports-monthly'</span><span class="p">)</span>
+
+<span class="n">subscription_b</span> <span class="o">=</span> <span class="n">Subscription</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account_id</span><span class="p">,</span>
+                              <span class="n">product_category</span><span class="o">=</span><span class="s">'ADD_ON'</span><span class="p">,</span>
+                              <span class="n">plan_name</span><span class="o">=</span><span class="s">'super-monthly'</span><span class="p">)</span>
+
+<span class="n">body</span> <span class="o">=</span> <span class="n">BulkSubscriptionsBundle</span><span class="p">([</span><span class="n">subscription_a</span><span class="p">,</span> <span class="n">subscription_b</span><span class="p">])</span>
+
+<span class="n">subscriptionApi</span><span class="o">.</span><span class="n">create_subscriptions_with_add_ons</span><span class="p">([</span><span class="n">body</span><span class="p">],</span>
+                                                  <span class="n">created_by</span><span class="p">,</span>
+                                                  <span class="n">api_key</span><span class="p">,</span>
+                                                  <span class="n">api_secret</span><span class="p">)</span>
+</code></pre>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
+&lt; HTTP/1.1 201 Created
+&lt; Location: http://127.0.0.1:8080/1.0/kb/accounts/886adb60-be70-40c8-b97d-1f8ecbc30a64/bundles?bundlesFilter<span class="o">=</span>cbcc7642-1aa5-4609-b89d-5356d05819be
+&lt; Content-Type: application/json
+&lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Bundle</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Bundle</span><span class="nd">@ccb83609</span>
+    <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+    <span class="nl">bundleId:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+    <span class="nl">externalKey:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+    <span class="nl">subscriptions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">Subscription</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Subscription</span><span class="err">@</span><span class="mi">6</span><span class="n">ab8272b</span>
+        <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+        <span class="nl">bundleId:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+        <span class="nl">bundleExternalKey:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+        <span class="nl">subscriptionId:</span> <span class="mi">266</span><span class="n">ff081</span><span class="o">-</span><span class="n">db2a</span><span class="o">-</span><span class="mi">4</span><span class="n">fd9</span><span class="o">-</span><span class="n">b9b4</span><span class="o">-</span><span class="mi">4</span><span class="n">a4b85c553df</span>
+        <span class="nl">externalKey:</span> <span class="mi">266</span><span class="n">ff081</span><span class="o">-</span><span class="n">db2a</span><span class="o">-</span><span class="mi">4</span><span class="n">fd9</span><span class="o">-</span><span class="n">b9b4</span><span class="o">-</span><span class="mi">4</span><span class="n">a4b85c553df</span>
+        <span class="nl">startDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">productName:</span> <span class="n">Product1</span>
+        <span class="nl">productCategory:</span> <span class="n">BASE</span>
+        <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+        <span class="nl">phaseType:</span> <span class="n">TRIAL</span>
+        <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+        <span class="nl">planName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">state:</span> <span class="n">ACTIVE</span>
+        <span class="nl">sourceType:</span> <span class="n">NATIVE</span>
+        <span class="nl">cancelledDate:</span> <span class="kc">null</span>
+        <span class="nl">chargedThroughDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingStartDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingEndDate:</span> <span class="kc">null</span>
+        <span class="nl">billCycleDayLocal:</span> <span class="mi">29</span>
+        <span class="nl">events:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">9</span><span class="n">ac9be06</span>
+            <span class="nl">eventId:</span> <span class="mi">12</span><span class="n">c85188</span><span class="o">-</span><span class="n">f2a8</span><span class="o">-</span><span class="mi">4590</span><span class="o">-</span><span class="mi">83</span><span class="n">af</span><span class="o">-</span><span class="mi">65</span><span class="n">c75fc9677b</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Product1</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">546</span><span class="n">fe023</span>
+            <span class="nl">eventId:</span> <span class="n">eadcaf35</span><span class="o">-</span><span class="mi">673</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="n">d93</span><span class="o">-</span><span class="mi">8</span><span class="n">adf</span><span class="o">-</span><span class="n">dfe5ad6422cb</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Product1</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">37</span><span class="n">f33629</span>
+            <span class="nl">eventId:</span> <span class="mi">29</span><span class="n">a3ccee</span><span class="o">-</span><span class="n">f331</span><span class="o">-</span><span class="mi">48</span><span class="n">d4</span><span class="o">-</span><span class="n">b1c6</span><span class="o">-</span><span class="n">be7f03d0d8c5</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">09</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Product1</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">PHASE</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">+</span><span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">PHASE</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">priceOverrides:</span> <span class="kc">null</span>
+        <span class="nl">prices:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PhasePrice</span> <span class="o">{</span>
+            <span class="nl">planName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">phaseName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">phaseType:</span> <span class="n">TRIAL</span>
+            <span class="nl">fixedPrice:</span> <span class="mi">0</span>
+            <span class="nl">recurringPrice:</span> <span class="kc">null</span>
+            <span class="nl">usagePrices:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PhasePrice</span> <span class="o">{</span>
+            <span class="nl">planName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">phaseName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">phaseType:</span> <span class="n">EVERGREEN</span>
+            <span class="nl">fixedPrice:</span> <span class="kc">null</span>
+            <span class="nl">recurringPrice:</span> <span class="mi">10</span>
+            <span class="nl">usagePrices:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">Subscription</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Subscription</span><span class="nd">@edd6cbe2</span>
+        <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+        <span class="nl">bundleId:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+        <span class="nl">bundleExternalKey:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+        <span class="nl">subscriptionId:</span> <span class="mi">244</span><span class="n">d5e5a</span><span class="o">-</span><span class="mi">71</span><span class="n">af</span><span class="o">-</span><span class="mi">4</span><span class="n">bfc</span><span class="o">-</span><span class="n">b7ec</span><span class="o">-</span><span class="mi">7651</span><span class="n">f30e7208</span>
+        <span class="nl">externalKey:</span> <span class="mi">244</span><span class="n">d5e5a</span><span class="o">-</span><span class="mi">71</span><span class="n">af</span><span class="o">-</span><span class="mi">4</span><span class="n">bfc</span><span class="o">-</span><span class="n">b7ec</span><span class="o">-</span><span class="mi">7651</span><span class="n">f30e7208</span>
+        <span class="nl">startDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">productName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+        <span class="nl">productCategory:</span> <span class="n">ADD_ON</span>
+        <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+        <span class="nl">phaseType:</span> <span class="n">TRIAL</span>
+        <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+        <span class="nl">planName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">state:</span> <span class="n">ACTIVE</span>
+        <span class="nl">sourceType:</span> <span class="n">NATIVE</span>
+        <span class="nl">cancelledDate:</span> <span class="kc">null</span>
+        <span class="nl">chargedThroughDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingStartDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingEndDate:</span> <span class="kc">null</span>
+        <span class="nl">billCycleDayLocal:</span> <span class="mi">18</span>
+        <span class="nl">events:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">13</span><span class="n">fb439a</span>
+            <span class="nl">eventId:</span> <span class="mi">8</span><span class="n">a9c0292</span><span class="o">-</span><span class="n">a36d</span><span class="o">-</span><span class="mi">4428</span><span class="o">-</span><span class="n">ac47</span><span class="o">-</span><span class="n">c9fe39876d5a</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">8553</span><span class="n">fc75</span>
+            <span class="nl">eventId:</span> <span class="mi">6</span><span class="n">c87c127</span><span class="o">-</span><span class="n">edef</span><span class="o">-</span><span class="mi">4762</span><span class="o">-</span><span class="mi">9804</span><span class="o">-</span><span class="mi">3</span><span class="n">cd8638673be</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">28</span><span class="n">e2d33d</span>
+            <span class="nl">eventId:</span> <span class="mi">13495761</span><span class="o">-</span><span class="mi">2</span><span class="n">cf0</span><span class="o">-</span><span class="mi">46</span><span class="n">aa</span><span class="o">-</span><span class="n">ab80</span><span class="o">-</span><span class="mi">7586</span><span class="n">cdaf8a11</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">09</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">PHASE</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">+</span><span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">PHASE</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">priceOverrides:</span> <span class="kc">null</span>
+        <span class="nl">prices:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PhasePrice</span> <span class="o">{</span>
+            <span class="nl">planName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">phaseName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">phaseType:</span> <span class="n">TRIAL</span>
+            <span class="nl">fixedPrice:</span> <span class="mi">0</span>
+            <span class="nl">recurringPrice:</span> <span class="kc">null</span>
+            <span class="nl">usagePrices:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PhasePrice</span> <span class="o">{</span>
+            <span class="nl">planName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">phaseName:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">phaseType:</span> <span class="n">EVERGREEN</span>
+            <span class="nl">fixedPrice:</span> <span class="kc">null</span>
+            <span class="nl">recurringPrice:</span> <span class="mi">5</span>
+            <span class="nl">usagePrices:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">timeline:</span> <span class="kd">class</span> <span class="nc">BundleTimeline</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">BundleTimeline</span><span class="err">@</span><span class="mi">26</span><span class="n">b7a071</span>
+        <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+        <span class="nl">bundleId:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+        <span class="nl">externalKey:</span> <span class="mi">18</span><span class="n">cae774</span><span class="o">-</span><span class="n">d466</span><span class="o">-</span><span class="mi">4</span><span class="n">a19</span><span class="o">-</span><span class="n">b1d3</span><span class="o">-</span><span class="n">d64fb6c0bd30</span>
+        <span class="nl">events:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@d4de5a4</span>
+            <span class="nl">eventId:</span> <span class="mi">8</span><span class="n">a9c0292</span><span class="o">-</span><span class="n">a36d</span><span class="o">-</span><span class="mi">4428</span><span class="o">-</span><span class="n">ac47</span><span class="o">-</span><span class="n">c9fe39876d5a</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">6312065</span><span class="n">e</span>
+            <span class="nl">eventId:</span> <span class="mi">12</span><span class="n">c85188</span><span class="o">-</span><span class="n">f2a8</span><span class="o">-</span><span class="mi">4590</span><span class="o">-</span><span class="mi">83</span><span class="n">af</span><span class="o">-</span><span class="mi">65</span><span class="n">c75fc9677b</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@a057c269</span>
+            <span class="nl">eventId:</span> <span class="mi">6</span><span class="n">c87c127</span><span class="o">-</span><span class="n">edef</span><span class="o">-</span><span class="mi">4762</span><span class="o">-</span><span class="mi">9804</span><span class="o">-</span><span class="mi">3</span><span class="n">cd8638673be</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">535</span><span class="n">f32e2</span>
+            <span class="nl">eventId:</span> <span class="n">eadcaf35</span><span class="o">-</span><span class="mi">673</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="n">d93</span><span class="o">-</span><span class="mi">8</span><span class="n">adf</span><span class="o">-</span><span class="n">dfe5ad6422cb</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Product1</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">trial</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@d0d4bb9c</span>
+            <span class="nl">eventId:</span> <span class="mi">13495761</span><span class="o">-</span><span class="mi">2</span><span class="n">cf0</span><span class="o">-</span><span class="mi">46</span><span class="n">aa</span><span class="o">-</span><span class="n">ab80</span><span class="o">-</span><span class="mi">7586</span><span class="n">cdaf8a11</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">09</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">PHASE</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">+</span><span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">PHASE</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">ao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">8351</span><span class="n">e73e</span>
+            <span class="nl">eventId:</span> <span class="mi">29</span><span class="n">a3ccee</span><span class="o">-</span><span class="n">f331</span><span class="o">-</span><span class="mi">48</span><span class="n">d4</span><span class="o">-</span><span class="n">b1c6</span><span class="o">-</span><span class="n">be7f03d0d8c5</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">09</span>
+            <span class="nl">plan:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Product1</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">PHASE</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">+</span><span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">PHASE</span>
+            <span class="nl">phase:</span> <span class="n">product1</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">},</span> <span class="kd">class</span> <span class="nc">Bundle</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Bundle</span><span class="err">@</span><span class="mi">2</span><span class="n">fedb607</span>
+    <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+    <span class="nl">bundleId:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+    <span class="nl">externalKey:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+    <span class="nl">subscriptions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">Subscription</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Subscription</span><span class="err">@</span><span class="mi">39</span><span class="n">c20f59</span>
+        <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+        <span class="nl">bundleId:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+        <span class="nl">bundleExternalKey:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+        <span class="nl">subscriptionId:</span> <span class="n">ccbb17ab</span><span class="o">-</span><span class="mo">0734</span><span class="o">-</span><span class="mi">49</span><span class="n">be</span><span class="o">-</span><span class="mi">8</span><span class="n">a2a</span><span class="o">-</span><span class="n">ccc3fbe2ecdf</span>
+        <span class="nl">externalKey:</span> <span class="n">ccbb17ab</span><span class="o">-</span><span class="mo">0734</span><span class="o">-</span><span class="mi">49</span><span class="n">be</span><span class="o">-</span><span class="mi">8</span><span class="n">a2a</span><span class="o">-</span><span class="n">ccc3fbe2ecdf</span>
+        <span class="nl">startDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">productName:</span> <span class="n">Test</span>
+        <span class="nl">productCategory:</span> <span class="n">BASE</span>
+        <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+        <span class="nl">phaseType:</span> <span class="n">EVERGREEN</span>
+        <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+        <span class="nl">planName:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">state:</span> <span class="n">ACTIVE</span>
+        <span class="nl">sourceType:</span> <span class="n">NATIVE</span>
+        <span class="nl">cancelledDate:</span> <span class="kc">null</span>
+        <span class="nl">chargedThroughDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingStartDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingEndDate:</span> <span class="kc">null</span>
+        <span class="nl">billCycleDayLocal:</span> <span class="mi">29</span>
+        <span class="nl">events:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">1</span><span class="n">bb29bcf</span>
+            <span class="nl">eventId:</span> <span class="mi">133</span><span class="n">ae9b4</span><span class="o">-</span><span class="n">a250</span><span class="o">-</span><span class="mi">4</span><span class="n">d93</span><span class="o">-</span><span class="mi">8919</span><span class="o">-</span><span class="mi">534</span><span class="n">a990ed4e4</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Test</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@f46f814d</span>
+            <span class="nl">eventId:</span> <span class="mi">309</span><span class="n">cc4d6</span><span class="o">-</span><span class="n">c21e</span><span class="o">-</span><span class="mi">4</span><span class="n">e01</span><span class="o">-</span><span class="mi">8289</span><span class="o">-</span><span class="n">a5767e8272e8</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Test</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">priceOverrides:</span> <span class="kc">null</span>
+        <span class="nl">prices:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PhasePrice</span> <span class="o">{</span>
+            <span class="nl">planName:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">phaseName:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">phaseType:</span> <span class="n">EVERGREEN</span>
+            <span class="nl">fixedPrice:</span> <span class="kc">null</span>
+            <span class="nl">recurringPrice:</span> <span class="mi">20</span>
+            <span class="nl">usagePrices:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">Subscription</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Subscription</span><span class="nd">@c984106f</span>
+        <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+        <span class="nl">bundleId:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+        <span class="nl">bundleExternalKey:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+        <span class="nl">subscriptionId:</span> <span class="mi">15</span><span class="n">e08a0d</span><span class="o">-</span><span class="mi">9</span><span class="n">cce</span><span class="o">-</span><span class="mi">4</span><span class="n">eb6</span><span class="o">-</span><span class="n">b3ce</span><span class="o">-</span><span class="n">ecd42e82ffa0</span>
+        <span class="nl">externalKey:</span> <span class="mi">15</span><span class="n">e08a0d</span><span class="o">-</span><span class="mi">9</span><span class="n">cce</span><span class="o">-</span><span class="mi">4</span><span class="n">eb6</span><span class="o">-</span><span class="n">b3ce</span><span class="o">-</span><span class="n">ecd42e82ffa0</span>
+        <span class="nl">startDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">productName:</span> <span class="n">TestAO</span>
+        <span class="nl">productCategory:</span> <span class="n">ADD_ON</span>
+        <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+        <span class="nl">phaseType:</span> <span class="n">EVERGREEN</span>
+        <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+        <span class="nl">planName:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">state:</span> <span class="n">ACTIVE</span>
+        <span class="nl">sourceType:</span> <span class="n">NATIVE</span>
+        <span class="nl">cancelledDate:</span> <span class="kc">null</span>
+        <span class="nl">chargedThroughDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingStartDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+        <span class="nl">billingEndDate:</span> <span class="kc">null</span>
+        <span class="nl">billCycleDayLocal:</span> <span class="mi">29</span>
+        <span class="nl">events:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@d1b77a46</span>
+            <span class="nl">eventId:</span> <span class="mo">02</span><span class="n">dcf5bd</span><span class="o">-</span><span class="n">a284</span><span class="o">-</span><span class="mi">47</span><span class="n">ef</span><span class="o">-</span><span class="n">b88a</span><span class="o">-</span><span class="n">a5d8a67ba14c</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">TestAO</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">997747</span><span class="n">ea</span>
+            <span class="nl">eventId:</span> <span class="n">b724dc1a</span><span class="o">-</span><span class="n">e6bc</span><span class="o">-</span><span class="mi">4</span><span class="n">a09</span><span class="o">-</span><span class="mi">8790</span><span class="o">-</span><span class="n">f1d1d81bb8b5</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">TestAO</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">priceOverrides:</span> <span class="kc">null</span>
+        <span class="nl">prices:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PhasePrice</span> <span class="o">{</span>
+            <span class="nl">planName:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">phaseName:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">phaseType:</span> <span class="n">EVERGREEN</span>
+            <span class="nl">fixedPrice:</span> <span class="mi">100</span>
+            <span class="nl">recurringPrice:</span> <span class="mi">10</span>
+            <span class="nl">usagePrices:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">timeline:</span> <span class="kd">class</span> <span class="nc">BundleTimeline</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">BundleTimeline</span><span class="err">@</span><span class="mi">379</span><span class="n">f0209</span>
+        <span class="nl">accountId:</span> <span class="mi">1</span><span class="n">d6ef148</span><span class="o">-</span><span class="mi">3</span><span class="n">e91</span><span class="o">-</span><span class="mi">455</span><span class="n">d</span><span class="o">-</span><span class="mi">937</span><span class="n">a</span><span class="o">-</span><span class="mi">27</span><span class="n">d8b2f6deff</span>
+        <span class="nl">bundleId:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+        <span class="nl">externalKey:</span> <span class="mi">64123897</span><span class="o">-</span><span class="n">ae99</span><span class="o">-</span><span class="mi">452</span><span class="n">b</span><span class="o">-</span><span class="mi">9</span><span class="n">dbd</span><span class="o">-</span><span class="mi">88</span><span class="n">dd9f591bf4</span>
+        <span class="nl">events:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="err">@</span><span class="mi">7</span><span class="n">ebf20b</span>
+            <span class="nl">eventId:</span> <span class="mo">02</span><span class="n">dcf5bd</span><span class="o">-</span><span class="n">a284</span><span class="o">-</span><span class="mi">47</span><span class="n">ef</span><span class="o">-</span><span class="n">b88a</span><span class="o">-</span><span class="n">a5d8a67ba14c</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Test</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@d60a18b</span>
+            <span class="nl">eventId:</span> <span class="mi">133</span><span class="n">ae9b4</span><span class="o">-</span><span class="n">a250</span><span class="o">-</span><span class="mi">4</span><span class="n">d93</span><span class="o">-</span><span class="mi">8919</span><span class="o">-</span><span class="mi">534</span><span class="n">a990ed4e4</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Test</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_ENTITLEMENT</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">entitlement</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">ENT_STARTED</span>
+            <span class="nl">phase:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@c8e43ac8</span>
+            <span class="nl">eventId:</span> <span class="mi">309</span><span class="n">cc4d6</span><span class="o">-</span><span class="n">c21e</span><span class="o">-</span><span class="mi">4</span><span class="n">e01</span><span class="o">-</span><span class="mi">8289</span><span class="o">-</span><span class="n">a5767e8272e8</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">Test</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">test</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">},</span> <span class="kd">class</span> <span class="nc">EventSubscription</span> <span class="o">{</span>
+            <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">EventSubscription</span><span class="nd">@c00d61ad</span>
+            <span class="nl">eventId:</span> <span class="n">b724dc1a</span><span class="o">-</span><span class="n">e6bc</span><span class="o">-</span><span class="mi">4</span><span class="n">a09</span><span class="o">-</span><span class="mi">8790</span><span class="o">-</span><span class="n">f1d1d81bb8b5</span>
+            <span class="nl">billingPeriod:</span> <span class="n">MONTHLY</span>
+            <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">29</span>
+            <span class="nl">plan:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span>
+            <span class="nl">product:</span> <span class="n">TestAO</span>
+            <span class="nl">priceList:</span> <span class="n">DEFAULT</span>
+            <span class="nl">eventType:</span> <span class="n">START_BILLING</span>
+            <span class="nl">isBlockedBilling:</span> <span class="kc">false</span>
+            <span class="nl">isBlockedEntitlement:</span> <span class="kc">false</span>
+            <span class="nl">serviceName:</span> <span class="n">billing</span><span class="o">-</span><span class="n">service</span>
+            <span class="nl">serviceStateName:</span> <span class="n">START_BILLING</span>
+            <span class="nl">phase:</span> <span class="n">testao</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+            <span class="nl">auditLogs:</span> <span class="o">[]</span>
+        <span class="o">}]</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
+</code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>One or more subscription resource object corresponding to the base subscriptions need to be specified. Additional, each base subscription resource object can include zero or more subscription resource objects corresponding to add-on subscriptions. Alternatively, only a list of add-on subscription resource objects may be specified along with the base subscription bundle id. Each subscription resource object needs to include <code>accountId</code> and either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code>,<code>billingPeriod</code> and <code>priceList</code>.</p>
+
+<p>In addition, each subscription resource can also include the following optional fields:
+* <code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.
+* <code>externalKey</code> - External key corresponding to the subscription.
+* <code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. 
+* <code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only with an add-on subscription resource.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>entitlementDate</strong></td>
+<td>string</td>
+<td>no</td>
+<td>immediately</td>
+<td>Date at which the entitlement (sevice) starts in <code>yyyy-mm-dd</code> format. If specified, applies both to base and add-on products.</td>
+</tr>
+<tr>
+<td><strong>billingDate</strong></td>
+<td>string</td>
+<td>no</td>
+<td>immediately</td>
+<td>Date at which the billing starts in <code>yyyy-mm-dd</code> format. If specified, applies both to base and add-on products.</td>
 </tr>
 <tr>
 <td><strong>renameKeyIfExistsAndUnused</strong></td>
@@ -17981,6 +18521,10 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>The new BCD needs to be specified in the request body via the <code>billCycleDayLocal</code> field.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -17997,7 +18541,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>string</td>
 <td>no</td>
 <td>immediate</td>
-<td>Date on which this change becomes effective</td>
+<td>Date on which this change becomes effective in <code>yyyy-mm-dd</code> format.</td>
 </tr>
 <tr>
 <td><strong>forceNewBcdWithPastEffectiveDate</strong></td>
@@ -18009,6 +18553,8 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 </tbody></table>
 
 <p>By default the effective date must be in the future so as to not modify existing invoices. Setting <strong>forceNewBcdWithPastEffectiveDate</strong> to true allows the date to be set in the past. </p>
+
+<p>Secondly, even after this endpoint is executed, the <a href="https://killbill.github.io/slate/?shell#subscription-retrieve-a-subscription-by-id">Retrieve a Subscription</a> endpoint will still return the old BCD until an invoice is generated on the new BCD.</p>
 
 <p><strong>Response</strong></p>
 
@@ -18053,7 +18599,9 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">newInput</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"shotgun-monthly"</span><span class="o">);</span>
 
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
+<span class="c1">//specify either requestedDate or BillingActionPolicy</span>
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">changeSubscriptionPlan</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
                                        <span class="n">newInput</span><span class="o">,</span> 
                                        <span class="n">requestedDate</span><span class="o">,</span> 
@@ -18204,7 +18752,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A subscription resource object specifying a <code>planName</code>`. </p>
+<p>A subscription resource object specifying either the <code>planName</code> or a combination of <code>productName</code>, <code>billingPeriod</code> and <code>priceList</code>. </p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -18229,7 +18777,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>string</td>
 <td>no</td>
 <td>immediate</td>
-<td>Date at which this change should become effective.</td>
+<td>Date at which this change should become effective in <code>yyyy-mm-dd</code> format.</td>
 </tr>
 <tr>
 <td><strong>callCompletion</strong></td>
@@ -18257,7 +18805,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h3 id='subscription-undo-a-pending-change-plan-on-a-subscription'>Undo a pending change plan on a subscription</h3>
-<p>This endpoint allows a pending change of <code>Plan</code> for a given subscription to be canceled.</p>
+<p>This endpoint allows a pending <code>Plan</code> change (plan change request with a future effective date) for a given subscription to be canceled. Note that if the plan change is already effective, then it cannot be undone. </p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -18392,21 +18940,21 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>string</td>
 <td>no</td>
 <td>immediate</td>
-<td>Date at which this change should become effective.</td>
+<td>Date at which this change should become effective in <code>yyyy-mm-dd</code> format.</td>
 </tr>
 <tr>
 <td><strong>entitlementPolicy</strong></td>
 <td>string</td>
 <td>no</td>
-<td>default policy</td>
-<td>entitlement policy</td>
+<td>IMMEDIATE</td>
+<td>entitlement policy (see below)</td>
 </tr>
 <tr>
 <td><strong>billingPolicy</strong></td>
 <td>string</td>
 <td>no</td>
-<td>default policy</td>
-<td>billing policy</td>
+<td>default policy from catalog if present, otherwise <code>END_OF_TERM</code></td>
+<td>billing policy (see below)</td>
 </tr>
 <tr>
 <td><strong>useRequestedDateForBilling</strong></td>
@@ -18458,11 +19006,14 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p>The reason for all this complexity is to allow to control entitlement and billing date separately, and also avoid users to have to compute dates to achieve certain behavior by relying on well defined policies.</p>
 
+<p><strong>Other Notes</strong>
+If a subscription is created with a future date and if the cancel method is invoked for immediate cancellation, the cancellation takes effect only after the subscription creation date is reached. Thus, the subscription remains in <code>PENDING</code> state until the subscription creation date is reached after which it is moved to the <code>CANCELLED</code> state.</p>
+
 <p><strong>Returns</strong></p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h3 id='subscription-un-cancel-a-subscription'>Un-cancel a subscription</h3>
-<p>This endpoint allows you to undo a pending cancelation for a given subscription.</p>
+<p>This endpoint allows you to undo a pending cancellation (cancellation request with a future effective date) for a given subscription.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -18518,7 +19069,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h2 id='subscription-blocking-state'>Blocking State</h2>
-<p>See section <a href="#account-blocking-state">Account Blocing State</a> for an introduction to blocking states.</p>
+<p>See section <a href="#account-blocking-state">Account Blocking State</a> for an introduction to blocking states.</p>
 <h3 id='subscription-block-a-subscription'>Block a subscription</h3>
 <p>Provides a low level interface to add a <code>BlockingState</code> event for this subscription. </p>
 
@@ -18631,21 +19182,20 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
-<p><strong>Response Body</strong></p>
+<p><strong>Request Body</strong></p>
 
 <p>A blocking state resource representing the intended new blocking state. For example,</p>
-
-<p>{
-  &quot;blockedId&quot;: &quot;943c4fd0-9000-4975-a3a8-09712223e1f8&quot;,
-  &quot;stateName&quot;: &quot;STATE1&quot;,
-  &quot;service&quot;: &quot;ServiceStateService&quot;,
-  &quot;isBlockChange&quot;: false,
-  &quot;isBlockEntitlement&quot;: false,
-  &quot;isBlockBilling&quot;: true,
-  &quot;effectiveDate&quot;: &quot;2020-07-18T18:22:30.376Z&quot;,
-  &quot;type&quot;: &quot;SUBSCRIPTION&quot;
-}</p>
-
+<pre class="highlight plaintext"><code>{
+  "blockedId": "943c4fd0-9000-4975-a3a8-09712223e1f8",
+  "stateName": "STATE1",
+  "service": "ServiceStateService",
+  "isBlockChange": false,
+  "isBlockEntitlement": false,
+  "isBlockBilling": true,
+  "effectiveDate": "2020-07-18T18:22:30.376Z",
+  "type": "SUBSCRIPTION"
+}
+</code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -18780,7 +19330,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code.In addition, a Location header is returned giving the URL to retrieve the custom fields associated with the subscription.</p>
 <h3 id='subscription-retrieve-subscription-custom-fields'>Retrieve subscription custom fields</h3>
 <p>Returns any custom field objects associated with the specified subscription</p>
 
@@ -18875,7 +19425,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -18885,7 +19435,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
 <h3 id='subscription-modify-custom-fields-for-a-subscription'>Modify custom fields for a subscription</h3>
-<p>Modifies the value of one or more existing custom fields associated with a subscription</p>
+<p>Modifies the value of one or more existing custom fields associated with a subscription. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -18915,9 +19465,11 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">CustomField</span> <span class="n">customFieldModified</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomField</span><span class="o">();</span>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setCustomFieldId</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setValue</span><span class="o">(</span><span class="s">"NewValue"</span><span class="o">);</span>
+<span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
+<span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">customFieldModified</span><span class="o">);</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">modifySubscriptionCustomFields</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
-                                               <span class="n">customFieldModified</span><span class="o">,</span> 
+                                               <span class="n">customFields</span><span class="o">,</span> 
                                                <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
@@ -18952,6 +19504,14 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
+
+<p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
+
+<p>Although the <code>fieldName</code> and <code>objectType</code> can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -18981,9 +19541,10 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">deleteSubscriptionCustomFields</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
-                                               <span class="n">customFieldsId</span><span class="o">,</span> 
+                                               <span class="n">customFieldsList</span><span class="o">,</span> 
                                                <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field_id</span> <span class="o">=</span> <span class="n">custom_field</span><span class="p">.</span><span class="nf">id</span>
 
@@ -19027,7 +19588,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>string</td>
 <td>yes</td>
 <td>none</td>
-<td>the list of custom field object IDs that should be deleted.</td>
+<td>Custom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate <strong>customField</strong> parameter corresponding to each field</td>
 </tr>
 </tbody></table>
 
@@ -19065,7 +19626,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"1bb4b638-3886-4f73-90a5-89eb6d1bcf7f"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
-<span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionTags</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
+<span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionTags</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
                                                      <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                                      <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
@@ -19125,7 +19686,9 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned giving the URL to retrieve the tags associated with the subscription.</p>
+
+<p>Retrieve all tags</p>
 <h3 id='subscription-retrieve-subscription-tags'>Retrieve subscription tags</h3>
 <p>Retrieve all tags attached to this subscription.</p>
 
@@ -19232,7 +19795,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -19312,7 +19875,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <td>array of strings</td>
 <td>true</td>
 <td>none</td>
-<td>List of tag definition IDs identifying the tags that should be removed.</td>
+<td>A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag.</td>
 </tr>
 </tbody></table>
 
@@ -19337,6 +19900,12 @@ to realign invoicing, let&#39;s say on the 16th. </p>
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/subscriptions/70b6856e-6938-495f-9ae9-0a8ec0571c37/auditLogsWithHistory"</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"bc9b98e8-7497-4330-aa42-1fbc71a3d19c"</span><span class="o">);</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">auditLog</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">getSubscriptionAuditLogsWithHistory</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span>                                                                                                                                                                           <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -19424,6 +19993,12 @@ to realign invoicing, let&#39;s say on the 16th. </p>
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/subscriptions/events/9a1c85d5-beba-40c8-9268-f73e09c24007/auditLogsWithHistory"</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">subscriptionEventId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"b4b6f990-4456-4009-9e6c-9825a99a1f25"</span><span class="o">);</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">eventAuditLog</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">getSubscriptionEventAuditLogsWithHistory</span><span class="o">(</span><span class="n">subscriptionEventId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
