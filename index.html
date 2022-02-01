@@ -3314,7 +3314,7 @@ or well formatted yml or a properties file.</p>
 
 <ol>
 <li>Use the default test catalog that ships with Kill Bill by <a href="https://killbill.github.io/slate/#tenant-create-a-tenant">creating a tenant</a> with <code>useGlobalDefault=true</code></li>
-<li>Use the Simple Plan api from KAUI to get started quickly (no need to create an XML catalog, simply use the UI and add the plans you need).</li>
+<li>Use the Simple Plan API from KAUI to get started quickly (no need to create an XML catalog, simply use the UI and add the plans you need).</li>
 <li>Write your own complete catalog as an XML file and upload it. Some examples of catalog can be found in our <a href="https://github.com/killbill/killbill-docs/tree/v3/catalogs">test repo</a>. For validation, check our <a href="https://docs.killbill.io/latest/userguide_subscription.html#components-catalog-overview">manual</a> or use our <a href="https://cloud.killbill.io/">cloud validation tool</a> after creating an account.</li>
 <li>Write a custom Catalog plugin. This is only for advanced users with special needs.</li>
 </ol>
@@ -6546,7 +6546,7 @@ The functionality is exposed on our admin UI (KAUI) to provide a simple graphica
 existing catalog version for the tenant, the system will create such an initial version when the first plan is added; otherwise, the
 system will use the existing active catalog version to add the new plan (but it will not create a new catalog version).</p>
 
-<p>Note that because the Simple Plan api is just an abstraction on top of the more complex XML based apis, one can start with such Simple Plan api,
+<p>Note that because the Simple Plan API is just an abstraction on top of the more complex XML based APIs, one can start with such Simple Plan API,
 and then download the resulting XML, and edit such catalog by hand (to add entries, modify default rules, ...).</p>
 
 <p>A simple plan has the following limitations:</p>
@@ -6642,7 +6642,7 @@ a new version of this catalog. So, this functionality can also be a stepping sto
 
 <p>Provides the content for the plan in JSON form. This should be very simple. Note that the &quot;planId&quot; becomes the <code>planName</code> attribute. For example:</p>
 
-<p>{
+<p><code>{
   &quot;planId&quot;: &quot;newplan&quot;,
   &quot;productName&quot;: &quot;myitem&quot;,
   &quot;productCategory&quot;: &quot;BASE&quot;,
@@ -6652,7 +6652,7 @@ a new version of this catalog. So, this functionality can also be a stepping sto
   &quot;trialLength&quot;: 0,
   &quot;trialTimeUnit&quot;: &quot;DAYS&quot;,
   &quot;availableBaseProducts&quot;: []
-}</p>
+}</code></p>
 
 <p><strong>Query Parameters</strong></p>
 
