@@ -26946,7 +26946,7 @@ in the system.</p>
 </tr>
 <tr>
 <td>SUBSCRIPTION_ACTION</td>
-<td>START_BILING or CHANGE</td>
+<td>START_BILLING or CHANGE</td>
 <td>effectiveDate, productName, productCategory, priceListName, billingPeriod, billingPolicy</td>
 </tr>
 <tr>
@@ -26983,9 +26983,12 @@ in the system.</p>
 </tr>
 </tbody></table>
 
-<p>Note that for <code>SUBSCRIPTION_ACTION</code>, there are 2 dates to take into account:
-* The <code>effectiveDate</code> in the body specifies when the action (e.g CREATE) takes place
-* The <code>targetDate</code> as a query parameter specifies the date for the billing, i.e how far in the future we want to bill for. A null <code>targetDate</code> default to now.</p>
+<p>Note that for <code>SUBSCRIPTION_ACTION</code>, there are 2 dates to take into account:</p>
+
+<ul>
+<li>The <code>effectiveDate</code> in the body specifies when the action (e.g CREATE) takes place</li>
+<li>The <code>targetDate</code> as a query parameter specifies the date for the billing, i.e how far in the future we want to bill for. A null <code>targetDate</code> default to now.</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
