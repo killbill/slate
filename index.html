@@ -876,7 +876,7 @@
                     <a href="#invoice-invoice-resource" class="toc-h2 toc-link" data-title="Invoice Resource">Invoice Resource</a>
                   </li>
                   <li>
-                    <a href="#invoice-invoiceitem-resouece" class="toc-h2 toc-link" data-title="InvoiceItem Resouece">InvoiceItem Resouece</a>
+                    <a href="#invoice-invoiceitem-resource" class="toc-h2 toc-link" data-title="InvoiceItem Resource">InvoiceItem Resource</a>
                   </li>
                   <li>
                     <a href="#invoice-invoicedryrun-resource" class="toc-h2 toc-link" data-title="InvoiceDryRun Resource">InvoiceDryRun Resource</a>
@@ -24366,13 +24366,13 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td><strong>creditAdj</strong></td>
 <td>number</td>
 <td>system</td>
-<td>Sum of all current credits</td>
+<td>Invoice credit (amount that we owe to the customer). It is calculated as the sum of <code>CBA_ADJ</code> invoice items</td>
 </tr>
 <tr>
 <td><strong>refundAdj</strong></td>
 <td>number</td>
 <td>system</td>
-<td>Sum of all current refunds associated with payments</td>
+<td>Refund amount associated with an invoice. It is calculated as the sum of all invoice payment amounts of type <code>REFUND</code> and <code>CHARGED_BACK</code>.</td>
 </tr>
 <tr>
 <td><strong>invoiceDate</strong></td>
@@ -24396,7 +24396,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td><strong>balance</strong></td>
 <td>number</td>
 <td>system</td>
-<td>Sum of all item amounts minus the payment amount</td>
+<td>Invoice balance (amount that a customer owes as part of an invoice). At a high level, it is calculated as the sum of all item amounts minus the payment amount. See <a href="https://docs.killbill.io/latest/invoice_examples.html#_invoice_balance">Invoice Balance</a> for further details.</td>
 </tr>
 <tr>
 <td><strong>bundleKeys</strong></td>
@@ -24435,7 +24435,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td>In the hierarchical model, UUID of the parent account</td>
 </tr>
 </tbody></table>
-<h2 id='invoice-invoiceitem-resouece'>InvoiceItem Resouece</h2>
+<h2 id='invoice-invoiceitem-resource'>InvoiceItem Resource</h2>
 <p>An <code>InvoiceItem</code> resource represents a single item charged on an invoice. The attributes contained in this resource are the following:</p>
 
 <table><thead>
@@ -24486,43 +24486,43 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td><strong>subscriptionId</strong></td>
 <td>string</td>
 <td>system</td>
-<td>UUID for the subscription</td>
+<td>UUID for the subscription (present only if invoice item corresponds to a subscription)</td>
 </tr>
 <tr>
 <td><strong>planName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Name of the <code>Plan</code> for this subscription</td>
+<td>Name of the <code>Plan</code> for this subscription if any</td>
 </tr>
 <tr>
 <td><strong>phaseName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Name of the <code>PlanPhase</code> for this subscription</td>
+<td>Name of the <code>PlanPhase</code> for this subscription if any</td>
 </tr>
 <tr>
 <td><strong>usageName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Name of the <code>Usage</code> section for this subscription</td>
+<td>Name of the <code>Usage</code> section for this subscription if any</td>
 </tr>
 <tr>
 <td><strong>prettyPlanName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Pretty name of the <code>Plan</code> for this subscription</td>
+<td>Pretty name of the <code>Plan</code> for this subscription if any</td>
 </tr>
 <tr>
 <td><strong>prettyPhaseName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Pretty name of the <code>PlanPhase</code> for this subscription</td>
+<td>Pretty name of the <code>PlanPhase</code> for this subscription if any</td>
 </tr>
 <tr>
 <td><strong>prettyUsageName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Pretty name of the <code>Usage</code> section for this subscription</td>
+<td>Pretty name of the <code>Usage</code> section for this subscription if any</td>
 </tr>
 <tr>
 <td><strong>itemType</strong></td>
@@ -24595,6 +24595,8 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <li><code>TAX</code>: Tax item -- this can only be added through an invoice plugin</li>
 <li><code>PARENT_SUMMARY</code>: In the hierarchical model, represents the summary across all children</li>
 </ul>
+
+<p>Refer to the <a href="https://docs.killbill.io/latest/userguide_subscription.html#components-invoicing">Subscription Billing</a> document for further details.  </p>
 <h2 id='invoice-invoicedryrun-resource'>InvoiceDryRun Resource</h2>
 <p>An <code>InvoiceDryRun</code> object represents an invoice preview generated to determine what would be in the invoice scheduled on a certain date, or if certain changes are made. A dry run has no actual effect on the system. The attributes contained in this resource are the following:</p>
 
@@ -24726,7 +24728,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <span class="kd">protected</span> <span class="n">InvoiceApi</span> <span class="n">invoiceApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"5f1e9142-b4de-4409-9366-9920cc1683e9"</span><span class="o">);</span>
-<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">DAYS</span><span class="o">);</span>
+<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalDate</span><span class="o">(</span><span class="mi">2012</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">29</span><span class="o">);</span>
 
 <span class="n">Invoice</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createFutureInvoice</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                                 <span class="n">targetDate</span><span class="o">,</span> 
@@ -24804,13 +24806,13 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td>string</td>
 <td>no</td>
 <td>current date</td>
-<td>target date</td>
+<td>target date (date up to which the account should be invoiced)</td>
 </tr>
 </tbody></table>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A location item is also returned in the header, giving the UUID of the generated invoice (if any).</p>
+<p>If successful, returns a status code of 201 and an empty body. A location item is also returned in the header, giving the UUID of the generated invoice (if any). If there is nothing to invoice for, returns a 404 status code.</p>
 <h3 id='invoice-create-a-migration-invoice'>Create a migration invoice</h3>
 <p>This endpoint is used to insert existing invoices that are being migrated from either a third party system or an in-house billing system into Kill Bill.</p>
 
@@ -24883,13 +24885,63 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 &lt; Location: http://localhost:8080/1.0/kb/invoices/71742c60-273f-4c91-8b8c-7555a3554b0a/ 
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Invoice</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Invoice</span><span class="err">@</span><span class="mi">7983407</span><span class="n">c</span>
+    <span class="nl">amount:</span> <span class="mf">10.00</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">status:</span> <span class="n">COMMITTED</span>
+    <span class="nl">creditAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">refundAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">invoiceId:</span> <span class="n">fb5dadee</span><span class="o">-</span><span class="n">f820</span><span class="o">-</span><span class="mi">4</span><span class="n">d93</span><span class="o">-</span><span class="mi">84</span><span class="n">b1</span><span class="o">-</span><span class="mi">8</span><span class="n">cb37a0b8eea</span>
+    <span class="nl">invoiceDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span>
+    <span class="nl">targetDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span>
+    <span class="nl">invoiceNumber:</span> <span class="mi">3139</span>
+    <span class="nl">balance:</span> <span class="mi">0</span>
+    <span class="nl">accountId:</span> <span class="mi">85472112</span><span class="o">-</span><span class="mi">4</span><span class="n">dcd</span><span class="o">-</span><span class="mi">4</span><span class="n">d5e</span><span class="o">-</span><span class="n">a345</span><span class="o">-</span><span class="mi">5716635</span><span class="n">d7629</span>
+    <span class="nl">bundleKeys:</span> <span class="kc">null</span>
+    <span class="nl">credits:</span> <span class="kc">null</span>
+    <span class="nl">items:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">InvoiceItem</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">InvoiceItem</span><span class="nd">@f50cb1b2</span>
+        <span class="nl">invoiceItemId:</span> <span class="n">e501ddc2</span><span class="o">-</span><span class="n">cf18</span><span class="o">-</span><span class="mi">4</span><span class="n">dd5</span><span class="o">-</span><span class="mi">840</span><span class="n">e</span><span class="o">-</span><span class="n">dbb0527827c3</span>
+        <span class="nl">invoiceId:</span> <span class="n">fb5dadee</span><span class="o">-</span><span class="n">f820</span><span class="o">-</span><span class="mi">4</span><span class="n">d93</span><span class="o">-</span><span class="mi">84</span><span class="n">b1</span><span class="o">-</span><span class="mi">8</span><span class="n">cb37a0b8eea</span>
+        <span class="nl">linkedInvoiceItemId:</span> <span class="kc">null</span>
+        <span class="nl">accountId:</span> <span class="mi">85472112</span><span class="o">-</span><span class="mi">4</span><span class="n">dcd</span><span class="o">-</span><span class="mi">4</span><span class="n">d5e</span><span class="o">-</span><span class="n">a345</span><span class="o">-</span><span class="mi">5716635</span><span class="n">d7629</span>
+        <span class="nl">childAccountId:</span> <span class="kc">null</span>
+        <span class="nl">bundleId:</span> <span class="kc">null</span>
+        <span class="nl">subscriptionId:</span> <span class="kc">null</span>
+        <span class="nl">productName:</span> <span class="kc">null</span>
+        <span class="nl">planName:</span> <span class="kc">null</span>
+        <span class="nl">phaseName:</span> <span class="kc">null</span>
+        <span class="nl">usageName:</span> <span class="kc">null</span>
+        <span class="nl">prettyProductName:</span> <span class="kc">null</span>
+        <span class="nl">prettyPlanName:</span> <span class="kc">null</span>
+        <span class="nl">prettyPhaseName:</span> <span class="kc">null</span>
+        <span class="nl">prettyUsageName:</span> <span class="kc">null</span>
+        <span class="nl">itemType:</span> <span class="n">FIXED</span>
+        <span class="nl">description:</span> <span class="n">Fixed</span> <span class="n">price</span> <span class="n">charge</span>
+        <span class="nl">startDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span>
+        <span class="nl">endDate:</span> <span class="kc">null</span>
+        <span class="nl">amount:</span> <span class="mf">10.00</span>
+        <span class="nl">rate:</span> <span class="kc">null</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">quantity:</span> <span class="kc">null</span>
+        <span class="nl">itemDetails:</span> <span class="kc">null</span>
+        <span class="nl">catalogEffectiveDate:</span> <span class="kc">null</span>
+        <span class="nl">childItems:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">trackingIds:</span> <span class="o">[]</span>
+    <span class="nl">isParentInvoice:</span> <span class="kc">false</span>
+    <span class="nl">parentInvoiceId:</span> <span class="kc">null</span>
+    <span class="nl">parentAccountId:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>An invoice resource object with all fields filled in representing the invoice to be migrated.</p>
+<p>An invoice resource object with all fields filled in representing the invoice to be migrated. At least the following fields need to be specified: itemType=EXTERNAL_CHARGE, amount.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -24902,13 +24954,6 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><strong>accountId</strong></td>
-<td>string</td>
-<td>yes</td>
-<td>none</td>
-<td>account id</td>
-</tr>
 <tr>
 <td><strong>targetDate</strong></td>
 <td>string</td>
@@ -24956,15 +25001,14 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <span class="n">InvoiceItems</span> <span class="n">externalCharges</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceItems</span><span class="o">();</span>
 <span class="n">externalCharges</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">externalCharge</span><span class="o">);</span>
 
-<span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="n">clock</span><span class="o">.</span><span class="na">getUTCToday</span><span class="o">();</span>
-<span class="n">Boolean</span> <span class="n">payInvoice</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">autoCommit</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 
 <span class="n">List</span><span class="o">&lt;</span><span class="n">InvoiceItem</span><span class="o">&gt;</span> <span class="n">createdExternalCharges</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createExternalCharges</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                                                             <span class="n">externalCharges</span><span class="o">,</span> 
                                                                             <span class="n">requestedDate</span><span class="o">,</span>
-                                                                            <span class="n">autoCommit</span>
+                                                                            <span class="n">autoCommit</span><span class="o">,</span>
                                                                             <span class="n">pluginProperty</span><span class="o">,</span> 
                                                                             <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_item</span>             <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span><span class="p">()</span>
@@ -25073,7 +25117,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>An invoiceItem resource object with at least the following attributes: accountId, itemType=EXTERNAL_CHARGE, description, amount, and currency.</p>
+<p>An invoice item resource object with at least the <code>amount</code> attribute. </p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -25104,7 +25148,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A location item is also returned in the header, giving the UUID of the generated invoice (if any).</p>
+<p>If successful, returns a status code of 201 and an invoice item object.</p>
 <h3 id='invoice-create-tax-items'>Create tax items</h3>
 <p>Normally, tax items are added to an invoice by a plugin, which intercepts the invoice during its creation and adds the required tax items on the fly. However, sometimes you may want to add tax items directly. This API adds a tax item to an account, which will result in the creation of a new invoice.</p>
 
@@ -25145,7 +25189,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="n">clock</span><span class="o">.</span><span class="na">getUTCToday</span><span class="o">();</span>
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-<span class="n">List</span><span class="o">&lt;</span><span class="n">InvoiceItem</span><span class="o">&gt;</span> <span class="n">createdExternalCharges</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createTaxItems</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
+<span class="n">List</span><span class="o">&lt;</span><span class="n">InvoiceItem</span><span class="o">&gt;</span> <span class="n">createdTaxItems</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createTaxItems</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                                                      <span class="n">input</span><span class="o">,</span>
                                                                      <span class="n">autoCommit</span><span class="o">,</span>
                                                                      <span class="n">requestedDate</span><span class="o">,</span>
@@ -25259,7 +25303,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>An invoiceItem resource object with at least the following attributes: accountId, itemType=TAX, amount, and currency.</p>
+<p>An invoice item resource object with at least the <code>amount</code> attribute. </p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -25290,7 +25334,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A location item is also returned in the header, giving the UUID of the generated invoice (if any).</p>
+<p>If successful, returns a status code of 201 and an invoice item object.</p>
 <h3 id='invoice-retrieve-an-invoice-by-id'>Retrieve an invoice by id</h3>
 <p>Retrieves an invoice based on the <code>invoiceId</code>.</p>
 
@@ -26588,6 +26632,10 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <span class="p">}</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>An invoice item resource object with at least <code>invoiceitemId</code>, <code>invoiceId</code>, and <code>amount</code> attribute. </p>
+
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -26610,7 +26658,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> header containing the invoice id is returned.</p>
 <h3 id='invoice-delete-a-cba-item'>Delete a CBA item</h3>
 <p>Delete a Credit Balance Adjust (<code>CBA_ADJ</code>) invoice item. There are some limitations and side effects with this api:</p>
 
@@ -26730,8 +26778,54 @@ in the system.</p>
     -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'{ "dryRunType": "TARGET_DATE"}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/invoices/dryRun?accountId=60a47168-7d36-4380-8ec7-e48cfe4e65d6&amp;&amp;targetDate=2022-02-28"</span>   
+
+OR 
+
+curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     -d <span class="s1">'{ "dryRunType": "UPCOMING_INVOICE"}'</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/dryRun?accountId=2ad52f53-85ae-408a-9879-32a7e59dd03d"</span>   
+
+OR
+
+curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'{ "dryRunType": "SUBSCRIPTION_ACTION","dryRunAction":"CHANGE","productName":"Standard", "productCategory":"BASE","billingPeriod":"MONTHLY","subscriptionId":"0b9efead-d5e4-40a9-8178-2286dee0fe48","bundleId":" 6ebcc573-c2c4-408a-b5c3-d6ae0dbae233"}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/invoices/dryRun?accountId=60a47168-7d36-4380-8ec7-e48cfe4e65d6"</span>  
+
+OR
+
+curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'{ "dryRunType": "SUBSCRIPTION_ACTION","dryRunAction":"STOP_BILLING","subscriptionId":"0b9efead-d5e4-40a9-8178-2286dee0fe48","bundleId":"    6ebcc573-c2c4-408a-b5c3-d6ae0dbae233","effectiveDate":"2022-02-10"}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/invoices/dryRun?accountId=60a47168-7d36-4380-8ec7-e48cfe4e65d6"</span>          
+
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoiceApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">InvoiceApi</span> <span class="n">invoiceApi</span><span class="o">;</span>
 
@@ -26746,7 +26840,7 @@ in the system.</p>
 <span class="n">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">LocalDate</span> <span class="n">effectiveDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">BillingActionPolicy</span> <span class="n">billingPolicy</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">PhasePriceOverride</span><span class="o">&gt;</span> <span class="n">priceOverrides</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">PhasePrice</span><span class="o">&gt;</span> <span class="n">priceOverrides</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">InvoiceDryRun</span> <span class="n">dryRunArg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">InvoiceDryRun</span><span class="o">(</span><span class="n">dryRunType</span><span class="o">,</span> 
                                             <span class="n">dryRunAction</span><span class="o">,</span>
@@ -26763,7 +26857,7 @@ in the system.</p>
 
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"fe1a6f86-9ec5-4ac3-8d39-15f024cc8339"</span><span class="o">);</span>
-<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="n">today</span><span class="o">.</span><span class="na">plus</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">ChronoUnit</span><span class="o">.</span><span class="na">DAYS</span><span class="o">);</span>
+<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalDate</span><span class="o">().</span><span class="na">plusDays</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
 
 <span class="n">Invoice</span> <span class="n">dryRunInvoice</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">generateDryRunInvoice</span><span class="o">(</span><span class="n">dryRunArg</span><span class="o">,</span> 
                                                          <span class="n">accountId</span><span class="o">,</span> 
@@ -26801,7 +26895,86 @@ in the system.</p>
 <pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
 &lt; HTTP/1.1 201 Created
 &lt; Content-Type: application/json
-&lt; Content-Length: 0
+<span class="o">{</span>
+  <span class="s2">"amount"</span>: 60,
+  <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+  <span class="s2">"status"</span>: <span class="s2">"COMMITTED"</span>,
+  <span class="s2">"creditAdj"</span>: 0,
+  <span class="s2">"refundAdj"</span>: 0,
+  <span class="s2">"invoiceId"</span>: <span class="s2">"cf4d1d3b-81cf-4054-96d7-bbdada2b9bc2"</span>,
+  <span class="s2">"invoiceDate"</span>: <span class="s2">"2022-01-31"</span>,
+  <span class="s2">"targetDate"</span>: <span class="s2">"2022-02-28"</span>,
+  <span class="s2">"invoiceNumber"</span>: null,
+  <span class="s2">"balance"</span>: 60,
+  <span class="s2">"accountId"</span>: <span class="s2">"60a47168-7d36-4380-8ec7-e48cfe4e65d6"</span>,
+  <span class="s2">"bundleKeys"</span>: null,
+  <span class="s2">"credits"</span>: null,
+  <span class="s2">"items"</span>: <span class="o">[</span>
+    <span class="o">{</span>
+      <span class="s2">"invoiceItemId"</span>: <span class="s2">"8c453b1b-ba2c-4c05-894f-e02eb2ee834e"</span>,
+      <span class="s2">"invoiceId"</span>: <span class="s2">"cf4d1d3b-81cf-4054-96d7-bbdada2b9bc2"</span>,
+      <span class="s2">"linkedInvoiceItemId"</span>: null,
+      <span class="s2">"accountId"</span>: <span class="s2">"60a47168-7d36-4380-8ec7-e48cfe4e65d6"</span>,
+      <span class="s2">"childAccountId"</span>: null,
+      <span class="s2">"bundleId"</span>: <span class="s2">"6ebcc573-c2c4-408a-b5c3-d6ae0dbae233"</span>,
+      <span class="s2">"subscriptionId"</span>: <span class="s2">"0b9efead-d5e4-40a9-8178-2286dee0fe48"</span>,
+      <span class="s2">"productName"</span>: <span class="s2">"Standard"</span>,
+      <span class="s2">"planName"</span>: <span class="s2">"standard-monthly"</span>,
+      <span class="s2">"phaseName"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+      <span class="s2">"usageName"</span>: null,
+      <span class="s2">"prettyProductName"</span>: null,
+      <span class="s2">"prettyPlanName"</span>: null,
+      <span class="s2">"prettyPhaseName"</span>: null,
+      <span class="s2">"prettyUsageName"</span>: null,
+      <span class="s2">"itemType"</span>: <span class="s2">"RECURRING"</span>,
+      <span class="s2">"description"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+      <span class="s2">"startDate"</span>: <span class="s2">"2022-02-28"</span>,
+      <span class="s2">"endDate"</span>: <span class="s2">"2022-03-31"</span>,
+      <span class="s2">"amount"</span>: 30,
+      <span class="s2">"rate"</span>: 30,
+      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+      <span class="s2">"quantity"</span>: null,
+      <span class="s2">"itemDetails"</span>: null,
+      <span class="s2">"catalogEffectiveDate"</span>: <span class="s2">"2019-01-01T00:00:00.000Z"</span>,
+      <span class="s2">"childItems"</span>: null,
+      <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+    <span class="o">}</span>,
+    <span class="o">{</span>
+      <span class="s2">"invoiceItemId"</span>: <span class="s2">"c1e83a72-ef8e-42d4-93e1-b5f9390294b4"</span>,
+      <span class="s2">"invoiceId"</span>: <span class="s2">"cf4d1d3b-81cf-4054-96d7-bbdada2b9bc2"</span>,
+      <span class="s2">"linkedInvoiceItemId"</span>: null,
+      <span class="s2">"accountId"</span>: <span class="s2">"60a47168-7d36-4380-8ec7-e48cfe4e65d6"</span>,
+      <span class="s2">"childAccountId"</span>: null,
+      <span class="s2">"bundleId"</span>: <span class="s2">"c22936f6-5105-45b6-b418-ebba142a17aa"</span>,
+      <span class="s2">"subscriptionId"</span>: <span class="s2">"9cce25a5-6ef2-40fe-8718-ca22529fe9d8"</span>,
+      <span class="s2">"productName"</span>: <span class="s2">"Standard"</span>,
+      <span class="s2">"planName"</span>: <span class="s2">"standard-monthly"</span>,
+      <span class="s2">"phaseName"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+      <span class="s2">"usageName"</span>: null,
+      <span class="s2">"prettyProductName"</span>: null,
+      <span class="s2">"prettyPlanName"</span>: null,
+      <span class="s2">"prettyPhaseName"</span>: null,
+      <span class="s2">"prettyUsageName"</span>: null,
+      <span class="s2">"itemType"</span>: <span class="s2">"RECURRING"</span>,
+      <span class="s2">"description"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+      <span class="s2">"startDate"</span>: <span class="s2">"2022-02-28"</span>,
+      <span class="s2">"endDate"</span>: <span class="s2">"2022-03-31"</span>,
+      <span class="s2">"amount"</span>: 30,
+      <span class="s2">"rate"</span>: 30,
+      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+      <span class="s2">"quantity"</span>: null,
+      <span class="s2">"itemDetails"</span>: null,
+      <span class="s2">"catalogEffectiveDate"</span>: <span class="s2">"2019-01-01T00:00:00.000Z"</span>,
+      <span class="s2">"childItems"</span>: null,
+      <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+    <span class="o">}</span>
+  <span class="o">]</span>,
+  <span class="s2">"trackingIds"</span>: <span class="o">[]</span>,
+  <span class="s2">"isParentInvoice"</span>: <span class="nb">false</span>,
+  <span class="s2">"parentInvoiceId"</span>: null,
+  <span class="s2">"parentAccountId"</span>: null,
+  <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Invoice</span> <span class="o">{</span>
     <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Invoice</span><span class="err">@</span><span class="mi">2</span><span class="n">e7ac6ec</span>
     <span class="nl">amount:</span> <span class="mf">0.00</span>
@@ -26931,30 +27104,35 @@ in the system.</p>
 <tr>
 <th><strong>dryRunType</strong></th>
 <th><strong>dryRunAction</strong></th>
-<th>Other Required Attributes</th>
+<th><strong>Other Required Attributes</strong></th>
+<th><strong>Description</strong></th>
 </tr>
 </thead><tbody>
 <tr>
 <td>TARGET_DATE</td>
 <td>N/A</td>
 <td>none</td>
+<td>Preview the invoice as of the target date specified as a query parameter</td>
 </tr>
 <tr>
 <td>UPCOMING_INVOICE</td>
 <td>N/A</td>
-<td>optional subscriptionId or bundleId</td>
+<td>Optional subscriptionId or bundleId (When specified, computes the upcoming invoice for the specified subscription/bundle. Note that if there are other subscriptions invoiced on the same day, these will also be included in the upcoming invoice)</td>
+<td>Preview the next scheduled invoice. <code>targetDate</code> query parameter does not need to be specified, it is ignored even if specified</td>
 </tr>
 <tr>
 <td>SUBSCRIPTION_ACTION</td>
 <td>START_BILLING or CHANGE</td>
-<td>effectiveDate, productName, productCategory, priceListName, billingPeriod, billingPolicy</td>
-</tr>
-<tr>
-<td>SUBSCRIPTION_ACTION</td>
-<td>STOP_BILLING</td>
-<td>effectiveDate</td>
+<td>productName, productCategory,billingPeriod,subscriptionId,bundleId</td>
+<td></td>
 </tr>
 </tbody></table>
+
+<p>Other optional attributes - effectiveDate, priceListName, billingPolicy
+ |Preview the invoice that would be generated if the <strong>START_BILING</strong> or <strong>CHANGE</strong> action is taken|
+| SUBSCRIPTION_ACTION | STOP_BILLING | subscriptionId,bundleId
+Other optional attributes - effectiveDate
+ |Preview the invoice that would be generated if the <strong>STOP_BILLING</strong> action is taken|</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -26977,8 +27155,8 @@ in the system.</p>
 <tr>
 <td><strong>targetDate</strong></td>
 <td>string</td>
-<td>*</td>
-<td>none</td>
+<td>No</td>
+<td>current date</td>
 <td>Target date is the invoicing target date</td>
 </tr>
 </tbody></table>
@@ -27062,7 +27240,7 @@ in the system.</p>
 <p>Example Response:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
+&lt; HTTP/1.1 201 No Content
 &lt; Content-Type: application/json
 </code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">InvoicePayment</span> <span class="o">{</span>
     <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">InvoicePayment</span><span class="nd">@abf605f2</span>
@@ -27106,7 +27284,7 @@ in the system.</p>
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>An invoicePayment resource object, with at least the following attributes: targetInvoiceId, accountId, and purchasedAmount.</p>
+<p>An invoicePayment resource object, with at least the following attributes: accountId, and purchasedAmount.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -27355,7 +27533,7 @@ in the system.</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and an invoicePayment resource object.</p>
+<p>If successful, returns a status code of 200 and a List of InvoicePayment resource objects.</p>
 <h2 id='invoice-custom-fields'>Custom Fields</h2>
 <p>Custom fields are <code>{key, value}</code> attributes that can be attached to any customer resource. In particular they can be added to invoices. For details on Custom Fields see <a href="https://killbill.github.io/slate/#custom-field">Custom Field</a>.</p>
 <h3 id='invoice-add-custom-fields-to-an-invoice'>Add custom fields to an invoice</h3>
@@ -27448,7 +27626,9 @@ in the system.</p>
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A JSON string representing the custom field object to be added.</p>
+<p>A list of <a href="https://killbill.github.io/slate/?java#custom-field-custom-field-resource">Custom Field</a> objects. Each object should specify at least the the <code>name</code> and <code>value</code> attribute. For example:</p>
+
+<p>[ { &quot;name&quot;: &quot;CF1&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -27456,7 +27636,7 @@ in the system.</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned with the URL to retrieve the custom fields associated with the invoice.</p>
 <h3 id='invoice-retrieve-invoice-custom-fields'>Retrieve invoice custom fields</h3>
 <p>Retrieve the custom fields associated with an invoice</p>
 
@@ -27557,9 +27737,9 @@ in the system.</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of custom field objects</p>
+<p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
 <h3 id='invoice-modify-custom-fields-for-an-invoice'>Modify custom fields for an invoice</h3>
-<p>Modify the custom fields associated with an account</p>
+<p>Modify the custom fields associated with an invoice. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -27591,8 +27771,11 @@ in the system.</p>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setCustomFieldId</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setValue</span><span class="o">(</span><span class="s">"NewValue"</span><span class="o">);</span>
 
+<span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
+<span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">customFieldModified</span><span class="o">);</span>
+
 <span class="n">invoiceApi</span><span class="o">.</span><span class="na">modifyInvoiceCustomFields</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
-                                     <span class="n">customFieldModified</span><span class="o">,</span> 
+                                     <span class="n">customFields</span><span class="o">,</span> 
                                      <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
@@ -27628,6 +27811,10 @@ in the system.</p>
 </code></pre>
 <p><strong>Requst Body</strong></p>
 
+<p>A list of <a href="https://killbill.github.io/slate/?java#custom-field-custom-field-resource">Custom Field</a> objects. Each object should specify at least the the <code>customFieldId</code> and <code>value</code> attribute. For example:</p>
+
+<p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
+
 <p>A JSON string representing a list of custom fields to substitute for the existing ones.</p>
 
 <p><strong>Query Parameters</strong></p>
@@ -27662,9 +27849,10 @@ in the system.</p>
 <span class="n">UUID</span> <span class="n">invoiceId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
 
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 
 <span class="n">invoiceApi</span><span class="o">.</span><span class="na">deleteInvoiceCustomFields</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
-                                     <span class="n">customFieldsId</span><span class="o">,</span> 
+                                     <span class="n">customFieldsList</span><span class="o">,</span> 
                                      <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field_id</span> <span class="o">=</span> <span class="n">custom_field</span><span class="p">.</span><span class="nf">id</span>
 
@@ -27707,7 +27895,7 @@ in the system.</p>
 <td>string</td>
 <td>yes</td>
 <td>none</td>
-<td>Comma separated list of custom field object IDs that should be deleted.</td>
+<td>Custom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate <strong>customField</strong> parameter corresponding to each field</td>
 </tr>
 </tbody></table>
 
@@ -27799,13 +27987,17 @@ in the system.</p>
 <span class="p">]</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>A JSON array containing one or more tag definition ids to be added as tags.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned giving the URL to retrieve the tags associated with the invoice.</p>
 <h3 id='invoice-retrieve-invoice-tags'>Retrieve invoice tags</h3>
 <p>Retrieve all tags attached to this invoice.</p>
 
@@ -28000,7 +28192,7 @@ in the system.</p>
 <td>array of string</td>
 <td>yes</td>
 <td>none</td>
-<td>List of tag definition IDs identifying the tags that should be removed.</td>
+<td>A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag.</td>
 </tr>
 </tbody></table>
 
@@ -28008,11 +28200,11 @@ in the system.</p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h2 id='invoice-translation'>Translation</h2>
-<p>These endpoints support translation of invoices to a different language when required by the customer. Refer to our <a href="http://docs.killbill.io/latest/internationalization.html#_invoice_templates">Internationalization manual</a> for an introduction.</p>
+<p>These endpoints support translation of invoices to a different language when required by the customer. Refer to our <a href="https://docs.killbill.io/latest/internationalization.html#_language_translations">Internationalization manual</a> for an introduction.</p>
 
 <p>Translation replaces words and phrases in an invoice or catalog with the equivalent words or phrases in a different language. A tenant may upload translation tables for specific locales (e.g., locale <code>fr_FR</code> for French). When a customer accesses an invoice, that invoice will be generated from the system data, formatted using the appropriate template (see below), and translated according to the locale of the customer&#39;s account, if a translation table exists for that locale.</p>
 <h3 id='invoice-upload-the-catalog-translation-for-the-tenant'>Upload the catalog translation for the tenant</h3>
-<p>Uploads a catalog transaltion table that will be saved under a specified locale. The translation table gives a translation for specific names in the current catalog.</p>
+<p>Uploads a catalog translation table that will be saved under a specified locale. The translation table gives a translation for specific names in the current catalog.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -28031,9 +28223,13 @@ in the system.</p>
     -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    -d <span class="s1">'"sports-monthly = Voiture Sport"'</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/invoices/catalogTranslation/fr_FR"</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+    -d <span class="s1">'"sports-monthly = Voiture Sport
+silver-monthly = plan d'</span>argent mensuel<span class="s2">"' </span><span class="se">\</span><span class="s2">
+    "</span>http://localhost:8080/1.0/kb/invoices/catalogTranslation/fr_FR<span class="s2">"
+</span></code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="s">"en_US"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"gold-monthly=plan"</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">deleteIfExists</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="n">invoiceApi</span><span class="o">.</span><span class="na">uploadCatalogTranslation</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">deleteIfExists</span><span class="o">,</span><span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">catalog_translation</span> <span class="o">=</span> <span class="s1">'sports-monthly = Voiture Sport'</span>
 <span class="n">locale</span> <span class="o">=</span> <span class="s2">"fr_FR"</span>
 <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="kp">false</span>
@@ -28067,12 +28263,13 @@ in the system.</p>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="s2">"sports-monthly = Voiture Sport"</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
-<p><strong>Response Body</strong></p>
+<p><strong>Request Body</strong></p>
 
 <p>A table of translation items. For example:</p>
 
-<p>gold-monthly = plan Or mensuel
-silver-monthly = plan d&#39;argent mensuel</p>
+<p>gold-monthly = plan Or mensuel</p>
+
+<p>silver-monthly = plan d&#39;argent mensuel</p>
 
 <p>Note that this table does not use a special syntax such as JSON. The equals sign is the only punctuation. There are no brackets or quotation marks.</p>
 
@@ -28100,7 +28297,7 @@ silver-monthly = plan d&#39;argent mensuel</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a status code of 201 and a Location header which can be used to retrieve the catalog translation.</p>
 <h3 id='invoice-retrieve-the-catalog-translation-for-the-tenant'>Retrieve the catalog translation for the tenant</h3>
 <p>Retrieves the catalog translation table that was previously uploaded for a particular locale, if any.</p>
 
@@ -28117,7 +28314,8 @@ silver-monthly = plan d&#39;argent mensuel</p>
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: text/plain"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/catalogTranslation/fr_FR"</span>    
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="s">"en_US"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">translation</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getCatalogTranslation</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">locale</span> <span class="o">=</span> <span class="s2">"fr_FR"</span>
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">get_catalog_translation</span><span class="p">(</span><span class="n">locale</span><span class="p">,</span> 
                                                        <span class="n">options</span><span class="p">)</span>
@@ -28133,7 +28331,7 @@ silver-monthly = plan d&#39;argent mensuel</p>
 &lt; HTTP/1.1 204 No Content
 &lt; Content-Type: text/plain
 <span class="s2">"sports-monthly = Voiture Sport"</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="s">"sports-monthly = Voiture Sport"</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="s2">"sports-monthly = Voiture Sport"</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">sports</span><span class="o">-</span><span class="n">monthly</span> <span class="o">=</span> <span class="n">Voiture</span> <span class="n">Sport</span>
 </code></pre>
@@ -28164,9 +28362,14 @@ silver-monthly = plan d&#39;argent mensuel</p>
     -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    -d <span class="s2">"sports-monthly = Voiture Sport"</span>
+    -d <span class="s2">"invoiceTitle=FACTURE
+invoiceDate=Date:
+invoiceNumber=Facture #"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/translation/fr_FR"</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="s">"en_US"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"gold-monthly=plan"</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">deleteIfExists</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">translation</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">uploadInvoiceTranslation</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">deleteIfExists</span><span class="o">,</span><span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_translation</span> <span class="o">=</span> <span class="n">get_resource_as_string</span><span class="p">(</span><span class="s2">"InvoiceTranslation_fr_FR.properties"</span><span class="p">)</span>
 <span class="n">locale</span> <span class="o">=</span> <span class="s2">"fr_FR"</span>
 <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="kp">false</span>
@@ -28217,14 +28420,17 @@ silver-monthly = plan d&#39;argent mensuel</p>
 <span class="n">processedPaymentRate</span><span class="o">=</span><span class="no">Le</span> <span class="n">taux</span> <span class="n">de</span> <span class="n">conversion</span> <span class="n">est</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
-<p><strong>Response Body</strong></p>
+<p><strong>Request Body</strong></p>
 
 <p>A table of translation items. For example:</p>
 
-<p>invoiceTitle=FACTURE
-invoiceDate=Date:
-invoiceNumber=Facture #
-invoiceAmount=Montant à payer</p>
+<p>invoiceTitle=FACTURE</p>
+
+<p>invoiceDate=Date:</p>
+
+<p>invoiceNumber=Facture #</p>
+
+<p>invoiceAmount=Montant à payer</p>
 
 <p>Note that this table does not use a special syntax such as JSON. The equals sign is the only punctuation. There are no brackets or quotation marks.</p>
 
@@ -28250,7 +28456,7 @@ invoiceAmount=Montant à payer</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a status code of 201 and a Location header which can be used to retrieve the invoice translation.</p>
 <h3 id='invoice-retrieve-the-invoice-translation-for-the-tenant'>Retrieve the invoice translation for the tenant</h3>
 <p>Retrieves the invoice translation table that was previously uploaded for a particular locale, if any.</p>
 
@@ -28267,7 +28473,9 @@ invoiceAmount=Montant à payer</p>
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: text/plain"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/translation/fr_FR"</span>   
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="s">"en_US"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">translation</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getInvoiceTranslation</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">locale</span> <span class="o">=</span> <span class="s2">"fr_FR"</span>
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">get_invoice_translation</span><span class="p">(</span><span class="n">locale</span><span class="p">,</span>
                                                        <span class="n">options</span><span class="p">)</span>
@@ -28284,7 +28492,7 @@ invoiceAmount=Montant à payer</p>
 &lt; Content-Type: text/plain
 
 sports-monthly <span class="o">=</span> Voiture Sport
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">sports</span><span class="o">-</span><span class="n">monthly</span> <span class="o">=</span> <span class="n">Voiture</span> <span class="n">Sport</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">invoiceTitle</span><span class="o">=</span><span class="no">FACTURE</span>
 <span class="n">invoiceDate</span><span class="o">=</span><span class="no">Date</span><span class="p">:</span>
 <span class="n">invoiceNumber</span><span class="o">=</span><span class="no">Facture</span> <span class="c1">#</span>
@@ -28317,7 +28525,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
 
 <p>If successful, returns a status code of 200 and the translation table. A status code of 404 means no table was found for the specified locale.</p>
 <h2 id='invoice-template'>Template</h2>
-<p>A template is a document based on <a href="https://mustache.github.io/"><strong>mustache</strong></a> that provides the layout information for invoices. The template will be trnslated according to the translation table, if any, and the invoice data will be filled in by the Kill Bill system. Refer to our <a href="http://docs.killbill.io/latest/internationalization.html#_invoice_templates">Internationalization manual</a> for an introduction.</p>
+<p>A template is a document based on <a href="https://mustache.github.io/"><strong>mustache</strong></a> that provides the layout information for invoices. The template will be trnslated according to the translation table, if any, and the invoice data will be filled in by the Kill Bill system. Refer to our <a href="https://docs.killbill.io/latest/internationalization.html#_language_translations">Internationalization manual</a> for an introduction.</p>
 <h3 id='invoice-upload-the-manualpay-invoice-template-for-the-tenant'>Upload the manualPay invoice template for the tenant</h3>
 <p>Uploads an invoice template based on the manual pay option, for accounts that have the MANUAL_PAY tag. These accounts manually pay their invoices (e.g. ACH). Typically, this template will contain extra information like the company bank account details, PO number, etc.</p>
 
@@ -28340,7 +28548,10 @@ sports-monthly <span class="o">=</span> Voiture Sport
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     -d <span class="s1">'"Some_HTML_String"'</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/manualPayTemplate?deleteIfExists=false"</span>  
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"Test HTML String"</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">deleteIfExists</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">template</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">uploadInvoiceMPTemplate</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">deleteIfExists</span><span class="o">,</span><span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_template</span> <span class="o">=</span> <span class="s2">"Some_HTML_String"</span>
 <span class="n">is_manual_pay</span> <span class="o">=</span> <span class="kp">true</span>
 <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="kp">false</span>
@@ -28367,7 +28578,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
 &lt; Location: http://localhost:8080/1.0/kb/invoices/manualPayTemplate/%7Blocale:.<span class="k">*</span>%7D/ 
 &lt; Content-Type: text/html
 &lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Some</span> <span class="n">HTML</span> <span class="n">String</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="s2">"
 &lt;meta charset=</span><span class="se">\"</span><span class="s2">UTF-8</span><span class="se">\"</span><span class="s2">&gt;
 
@@ -28568,8 +28779,9 @@ sports-monthly <span class="o">=</span> Voiture Sport
     -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: text/html"</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/invoices/manualPayTemplate/%257Blocale%3A.*%257D"</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/invoices/manualPayTemplate/"</span>  
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">locale</span> <span class="o">=</span> <span class="s">"fr_FR"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">template</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getInvoiceMPTemplate</span><span class="o">(</span><span class="n">locale</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">is_manual_pay</span> <span class="o">=</span> <span class="kp">true</span>
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">get_invoice_template</span><span class="p">(</span><span class="n">is_manual_pay</span><span class="p">,</span>
@@ -28586,7 +28798,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
 &lt; Content-Type: text/html
 
 <span class="s2">"Some_HTML_String"</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Some_HTML_String</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="s2">"
 &lt;meta charset=</span><span class="se">\"</span><span class="s2">UTF-8</span><span class="se">\"</span><span class="s2">&gt;
 
@@ -28928,7 +29140,9 @@ sports-monthly <span class="o">=</span> Voiture Sport
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     -d <span class="s2">"Some_HTML_String"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/template"</span>    
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"Test HTML String"</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">deleteIfExists</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">template</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">uploadInvoiceTemplate</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">deleteIfExists</span><span class="o">,</span><span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_template</span> <span class="o">=</span> <span class="s2">"Some_HTML_String"</span>
 <span class="n">is_manual_pay</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="kp">false</span>
@@ -28955,7 +29169,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
 &lt; Location: http://localhost:8080/1.0/kb/invoices/template
 &lt; Content-Type: text/html
 &lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Some</span> <span class="n">HTML</span> <span class="n">String</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="s2">"
 &lt;meta charset=</span><span class="se">\"</span><span class="s2">UTF-8</span><span class="se">\"</span><span class="s2">&gt;
 
@@ -29157,7 +29371,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: text/html"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/invoices/template"</span>    
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">template</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getInvoiceTemplate</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">is_manual_pay</span> <span class="o">=</span> <span class="kp">false</span>
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">get_invoice_template</span><span class="p">(</span><span class="n">is_manual_pay</span><span class="p">,</span>
@@ -29174,7 +29388,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
 &lt; Content-Type: text/html
 
 Some_HTML_String
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">Some_HTML_String</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="s2">"
 &lt;meta charset=</span><span class="se">\"</span><span class="s2">UTF-8</span><span class="se">\"</span><span class="s2">&gt;
 
@@ -29534,6 +29748,9 @@ Some_HTML_String
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/d456a9b3-7e48-4f56-b387-1d65a492e75e/auditLogsWithHistory"</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">UUID</span> <span class="n">invoiceId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"8f6f3405-249f-4b66-a0c2-ee84e884e81d"</span><span class="o">);</span>
+<span class="n">AuditLogs</span> <span class="n">logs</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getInvoiceAuditLogsWithHistory</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre>
 <blockquote>
 <p>Example Response:</p>
@@ -29578,6 +29795,17 @@ Some_HTML_String
   <span class="o">}</span>
 <span class="o">]</span>
 
+</code></pre><pre class="highlight java tab-java"><code><span class="o">[</span><span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
+    <span class="nl">changeType:</span> <span class="n">INSERT</span>
+    <span class="nl">changeDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span><span class="nl">T00:</span><span class="mi">10</span><span class="o">:</span><span class="mf">47.000</span><span class="n">Z</span>
+    <span class="nl">objectType:</span> <span class="n">INVOICE</span>
+    <span class="nl">objectId:</span> <span class="mi">8</span><span class="n">f6f3405</span><span class="o">-</span><span class="mi">249</span><span class="n">f</span><span class="o">-</span><span class="mi">4</span><span class="n">b66</span><span class="o">-</span><span class="n">a0c2</span><span class="o">-</span><span class="n">ee84e884e81d</span>
+    <span class="nl">changedBy:</span> <span class="n">SubscriptionBaseTransition</span>
+    <span class="nl">reasonCode:</span> <span class="kc">null</span>
+    <span class="nl">comments:</span> <span class="kc">null</span>
+    <span class="nl">userToken:</span> <span class="n">a6bb5711</span><span class="o">-</span><span class="n">b9b3</span><span class="o">-</span><span class="mi">4161</span><span class="o">-</span><span class="n">a7c1</span><span class="o">-</span><span class="mi">69</span><span class="n">f5c3d574c1</span>
+    <span class="nl">history:</span> <span class="o">{</span><span class="n">id</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">createdDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span><span class="nl">T00:</span><span class="mi">10</span><span class="o">:</span><span class="mf">47.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">updatedDate</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">recordId</span><span class="o">=</span><span class="mi">3149</span><span class="o">,</span> <span class="n">accountRecordId</span><span class="o">=</span><span class="mi">562</span><span class="o">,</span> <span class="n">tenantRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">accountId</span><span class="o">=</span><span class="mi">60</span><span class="n">a47168</span><span class="o">-</span><span class="mi">7</span><span class="n">d36</span><span class="o">-</span><span class="mi">4380</span><span class="o">-</span><span class="mi">8</span><span class="n">ec7</span><span class="o">-</span><span class="n">e48cfe4e65d6</span><span class="o">,</span> <span class="n">invoiceNumber</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">invoiceDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span><span class="o">,</span> <span class="n">targetDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mi">31</span><span class="o">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">migrated</span><span class="o">=</span><span class="kc">false</span><span class="o">,</span> <span class="n">status</span><span class="o">=</span><span class="n">COMMITTED</span><span class="o">,</span> <span class="n">invoiceItems</span><span class="o">=[],</span> <span class="n">invoicePayments</span><span class="o">=[],</span> <span class="n">trackingIds</span><span class="o">=[],</span> <span class="n">processedCurrency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">parentInvoice</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">isWrittenOff</span><span class="o">=</span><span class="kc">false</span><span class="o">,</span> <span class="n">isRepaired</span><span class="o">=</span><span class="kc">false</span><span class="o">,</span> <span class="n">writtenOff</span><span class="o">=</span><span class="kc">false</span><span class="o">,</span> <span class="n">repaired</span><span class="o">=</span><span class="kc">false</span><span class="o">,</span> <span class="n">tableName</span><span class="o">=</span><span class="n">INVOICES</span><span class="o">,</span> <span class="n">historyTableName</span><span class="o">=</span><span class="n">INVOICE_HISTORY</span><span class="o">}</span>
+<span class="o">}]</span>
 </code></pre>
 <p><strong>Query Parameters</strong></p>
 
@@ -30094,6 +30322,7 @@ Some_HTML_String
 <span class="n">invoiceApi</span><span class="o">.</span><span class="na">searchInvoices</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> 
                           <span class="n">offset</span><span class="o">,</span>
                           <span class="n">limit</span><span class="o">,</span> 
+                          <span class="n">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span> 
                           <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">search_key</span> <span class="o">=</span> <span class="s1">'COMMITTED'</span>
 <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
