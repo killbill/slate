@@ -26634,7 +26634,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>An invoice item resource object with at least <code>invoiceitemId</code>, <code>invoiceId</code>, and <code>amount</code> attribute. </p>
+<p>An invoice item resource object with at least <code>invoiceItemId</code>, <code>invoiceId</code>, and <code>amount</code> attributes. </p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -26666,11 +26666,8 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <li>Deleting a positive <code>CBA_ADJ</code> (credit generation), may lead the system to reclaim portion of the used credit, possibly leaving some invoices with a balance. Example:</li>
 </ol>
 
-<p>Given an invoice, I1,  where user added some credit ($12), we would see the following items: {<code>CREDIT_ADJ</code>: -12, <code>CBA_ADJ</code>: +12}. Given another invoice, I2, where the system invoiced for a recurring subscription, and where some of this credit was consumed, we would see the following items: {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: -10}. Deleting the <code>CBA_ADJ</code> from I1, would lead to the following resulting invoices:  I1 {<code>CREDIT_ADJ</code>: 0, <code>CBA_ADJ</code>: 0} and I2 {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: 0}. The system zeroed-out the credit generation and the part that was used, and as a result I2 would be left with a balance of +10.</p>
-
-<ol>
-<li>System generated credit</li>
-</ol>
+<p>Given an invoice, I1,  where user added some credit ($12), we would see the following items: {<code>CREDIT_ADJ</code>: -12, <code>CBA_ADJ</code>: +12}. Given another invoice, I2, where the system invoiced for a recurring subscription, and where some of this credit was consumed, we would see the following items: {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: -10}. Deleting the <code>CBA_ADJ</code> from I1, would lead to the following resulting invoices:  I1 {<code>CREDIT_ADJ</code>: 0, <code>CBA_ADJ</code>: 0} and I2 {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: 0}. The system zeroed-out the credit generation and the part that was used, and as a result I2 would be left with a balance of +10.
+2. System generated credit</p>
 
 <p>In an in-advanced scenario where the system first invoiced for a recurring subscription ($20), and then repaired ($-8) for instance as a result of an early cancelation, we would have the following invoices: I1 {<code>RECURRING</code>: +20} and I2 {<code>REPAIR_ADJ</code>: -8, <code>CBA_ADJ</code>: +8}. Attempting to delete the <code>CBA_ADJ</code> on I2 would fail as the generation of credit was system generated, i.e it happened as a result of a subscription change.</p>
 
@@ -26690,7 +26687,10 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/404a98a8-4dd8-4737-a39f-be871e916a8c/a35fb7b5-aec8-489e-aadf-c86107aa1d92/cba?accountId=8785164f-b5d7-4da1-9495-33f5105e8d80"</span>    
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">UUID</span> <span class="n">invoiceId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"c0c2d79d-8b2e-4830-a05b-b9a43b38482c"</span><span class="o">);</span>
+<span class="n">UUID</span> <span class="n">invoiceItemId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"29a8933a-2e5c-409c-97be-7a5964dbf708"</span><span class="o">);</span>
+<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"41e61312-cfb1-4300-afc7-64bc5cb29e85"</span><span class="o">);</span>
+<span class="n">invoiceApi</span><span class="o">.</span><span class="na">deleteCBA</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> <span class="n">invoiceItemId</span><span class="o">,</span> <span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_item</span>                 <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">account_id</span>      <span class="o">=</span> <span class="s2">"3ee3aa82-1d45-4bbc-b36b-74d628e095d0"</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_id</span>      <span class="o">=</span> <span class="s2">"2c98cfa2-7929-4cc2-9397-1624fb72c6d5"</span>
@@ -26718,7 +26718,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
 &lt; HTTP/1.1 204 No Content
 &lt; Content-Type: application/json
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
@@ -26779,7 +26779,7 @@ in the system.</p>
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     -d <span class="s1">'{ "dryRunType": "TARGET_DATE"}'</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/invoices/dryRun?accountId=60a47168-7d36-4380-8ec7-e48cfe4e65d6&amp;&amp;targetDate=2022-02-28"</span>   
+    <span class="s2">"http://localhost:8080/1.0/kb/invoices/dryRun?accountId=60a47168-7d36-4380-8ec7-e48cfe4e65d6&amp;targetDate=2022-02-28"</span>   
 
 OR 
 
@@ -27105,6 +27105,7 @@ curl -v <span class="se">\</span>
 <th><strong>dryRunType</strong></th>
 <th><strong>dryRunAction</strong></th>
 <th><strong>Other Required Attributes</strong></th>
+<th><strong>Other Optional Attributes</strong></th>
 <th><strong>Description</strong></th>
 </tr>
 </thead><tbody>
@@ -27112,27 +27113,31 @@ curl -v <span class="se">\</span>
 <td>TARGET_DATE</td>
 <td>N/A</td>
 <td>none</td>
+<td>none</td>
 <td>Preview the invoice as of the target date specified as a query parameter</td>
 </tr>
 <tr>
 <td>UPCOMING_INVOICE</td>
 <td>N/A</td>
-<td>Optional subscriptionId or bundleId (When specified, computes the upcoming invoice for the specified subscription/bundle. Note that if there are other subscriptions invoiced on the same day, these will also be included in the upcoming invoice)</td>
+<td>none</td>
+<td>subscriptionId or bundleId (When specified, computes the upcoming invoice for the specified subscription/bundle. Note that if there are other subscriptions invoiced on the same day, these will also be included in the upcoming invoice)</td>
 <td>Preview the next scheduled invoice. <code>targetDate</code> query parameter does not need to be specified, it is ignored even if specified</td>
 </tr>
 <tr>
 <td>SUBSCRIPTION_ACTION</td>
 <td>START_BILLING or CHANGE</td>
-<td>productName, productCategory,billingPeriod,subscriptionId,bundleId</td>
-<td></td>
+<td>productName, productCategory, billingPeriod, subscriptionId, bundleId</td>
+<td>effectiveDate, priceListName, billingPolicy</td>
+<td>Preview the invoice that would be generated if the <strong>START_BILING</strong> or <strong>CHANGE</strong> action is taken</td>
+</tr>
+<tr>
+<td>SUBSCRIPTION_ACTION</td>
+<td>STOP_BILLING</td>
+<td>subscriptionId, bundleId</td>
+<td>effectiveDate</td>
+<td>Preview the invoice that would be generated if the <strong>STOP_BILLING</strong> action is taken</td>
 </tr>
 </tbody></table>
-
-<p>Other optional attributes - effectiveDate, priceListName, billingPolicy
- |Preview the invoice that would be generated if the <strong>START_BILING</strong> or <strong>CHANGE</strong> action is taken|
-| SUBSCRIPTION_ACTION | STOP_BILLING | subscriptionId,bundleId
-Other optional attributes - effectiveDate
- |Preview the invoice that would be generated if the <strong>STOP_BILLING</strong> action is taken|</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -28525,7 +28530,7 @@ sports-monthly <span class="o">=</span> Voiture Sport
 
 <p>If successful, returns a status code of 200 and the translation table. A status code of 404 means no table was found for the specified locale.</p>
 <h2 id='invoice-template'>Template</h2>
-<p>A template is a document based on <a href="https://mustache.github.io/"><strong>mustache</strong></a> that provides the layout information for invoices. The template will be trnslated according to the translation table, if any, and the invoice data will be filled in by the Kill Bill system. Refer to our <a href="https://docs.killbill.io/latest/internationalization.html#_language_translations">Internationalization manual</a> for an introduction.</p>
+<p>A template is a document based on <a href="https://mustache.github.io/"><strong>mustache</strong></a> that provides the layout information for invoices. The template will be translated according to the translation table, if any, and the invoice data will be filled in by the Kill Bill system. Refer to our <a href="https://docs.killbill.io/latest/internationalization.html#_language_translations">Internationalization manual</a> for an introduction.</p>
 <h3 id='invoice-upload-the-manualpay-invoice-template-for-the-tenant'>Upload the manualPay invoice template for the tenant</h3>
 <p>Uploads an invoice template based on the manual pay option, for accounts that have the MANUAL_PAY tag. These accounts manually pay their invoices (e.g. ACH). Typically, this template will contain extra information like the company bank account details, PO number, etc.</p>
 
@@ -29730,6 +29735,8 @@ Some_HTML_String
 <ol>
 <li>Each account has a designated locale. When an invoice is retrieved for an account, the appropriate translation tables, if any, are used to translate the invoice.</li>
 </ol>
+
+<p>You can refer to the (Invoice Templates Tutorial)[https://docs.killbill.io/latest/invoice_templates.html] to know more about the how this works.</p>
 <h2 id='invoice-audit-logs'>Audit Logs</h2>
 <p>Audit logs provide a record of events that occur involving various specific resources. For details on audit logs see <a href="https://killbill.github.io/slate/#using-kill-bill-apis-audit-and-history">Audit and History</a>.</p>
 <h3 id='invoice-retrieve-invoice-audit-logs-with-history-by-invoice-id'>Retrieve invoice audit logs with history by invoice id</h3>
