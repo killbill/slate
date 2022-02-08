@@ -26666,8 +26666,11 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <li>Deleting a positive <code>CBA_ADJ</code> (credit generation), may lead the system to reclaim portion of the used credit, possibly leaving some invoices with a balance. Example:</li>
 </ol>
 
-<p>Given an invoice, I1,  where user added some credit ($12), we would see the following items: {<code>CREDIT_ADJ</code>: -12, <code>CBA_ADJ</code>: +12}. Given another invoice, I2, where the system invoiced for a recurring subscription, and where some of this credit was consumed, we would see the following items: {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: -10}. Deleting the <code>CBA_ADJ</code> from I1, would lead to the following resulting invoices:  I1 {<code>CREDIT_ADJ</code>: 0, <code>CBA_ADJ</code>: 0} and I2 {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: 0}. The system zeroed-out the credit generation and the part that was used, and as a result I2 would be left with a balance of +10.
-2. System generated credit</p>
+<p>Given an invoice, I1,  where user added some credit ($12), we would see the following items: {<code>CREDIT_ADJ</code>: -12, <code>CBA_ADJ</code>: +12}. Given another invoice, I2, where the system invoiced for a recurring subscription, and where some of this credit was consumed, we would see the following items: {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: -10}. Deleting the <code>CBA_ADJ</code> from I1, would lead to the following resulting invoices:  I1 {<code>CREDIT_ADJ</code>: 0, <code>CBA_ADJ</code>: 0} and I2 {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: 0}. The system zeroed-out the credit generation and the part that was used, and as a result I2 would be left with a balance of +10.</p>
+
+<ol>
+<li>System generated credit</li>
+</ol>
 
 <p>In an in-advanced scenario where the system first invoiced for a recurring subscription ($20), and then repaired ($-8) for instance as a result of an early cancelation, we would have the following invoices: I1 {<code>RECURRING</code>: +20} and I2 {<code>REPAIR_ADJ</code>: -8, <code>CBA_ADJ</code>: +8}. Attempting to delete the <code>CBA_ADJ</code> on I2 would fail as the generation of credit was system generated, i.e it happened as a result of a subscription change.</p>
 
@@ -26757,9 +26760,10 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 
 <p>A dry run is based on a <a href="https://killbill.github.io/slate/#invoice-invoicedryrun-resource">dry run resource object</a>.</p>
 <h3 id='invoice-generate-a-dry-run-invoice'>Generate a dry run invoice</h3>
-<p>This endpoint creates a dry-run invoice. Based on its parameters you can obtain answers to the different questions listed above.
-Note: This endpoint is rather expensive, as it creates a full invoice run for the designated account, but no invoice will be created or persisted
-in the system.</p>
+<p>This endpoint creates a dry-run invoice. Based on its parameters you can obtain answers to the different questions listed above.</p>
+
+<p>| <img src="https://github.com/killbill/killbill-docs/raw/v3/userguide/assets/img/note-icon.png" alt="note icon" />%7C <strong>Note:</strong> This endpoint is rather expensive, as it creates a full invoice run for the designated account, but no invoice will be created or persisted
+in the system. |</p>
 
 <p><strong>HTTP Request</strong> </p>
 
