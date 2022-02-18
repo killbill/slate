@@ -218,1242 +218,1252 @@
         <img src="images/navbar.png" alt="Navbar" />
       </span>
     </a>
-    <div class="toc-wrapper">
-      <img src="images/logo.png" class="logo" alt="Logo" />
-        <div class="lang-selector">
-              <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="java">java</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
-        </div>
+    <div class="main-wrapper">
+        <div class="toc-wrapper">
+        <a href="https://killbill.github.io/slate" class="logo"><img src="images/logo.png" alt="Logo" /></a>
+          <div class="lang-selector">
+                <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="java">java</a>
+                <a href="#" data-language-name="ruby">ruby</a>
+                <a href="#" data-language-name="python">python</a>
+          </div>
         <div class="search">
-          <input type="text" class="search" id="input-search" placeholder="Search">
+            <div class="search-form-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path fill="#9CA3AF" fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8ZM2 8a6 6 0 1 1 10.9 3.48l4.8 4.81a1 1 0 0 1-1.4 1.42l-4.82-4.82A6 6 0 0 1 2 8Z" clip-rule="evenodd"></path>
+              </svg>
+            </div>  
+            <input type="text" class="search" id="input-search" placeholder="Search">
+            <div class="remove-sign">
+            <img src="images/close.png" alt="Close" />
+            </div>
+          </div>
+          <ul class="search-results"></ul>
+        <div id="toc" class="toc-list-h1">
+            <li>
+              <a href="#using-kill-bill-apis" class="toc-h1 toc-link" data-title="Using Kill Bill APIs">Using Kill Bill APIs</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#using-kill-bill-apis-introduction" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-authentication-and-rbac" class="toc-h2 toc-link" data-title="Authentication and RBAC">Authentication and RBAC</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-multi-tenancy" class="toc-h2 toc-link" data-title="Multi-Tenancy">Multi-Tenancy</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-resource-ids-and-external-keys" class="toc-h2 toc-link" data-title="Resource IDs and External Keys">Resource IDs and External Keys</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-audit-and-history" class="toc-h2 toc-link" data-title="Audit and History">Audit and History</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-versioning" class="toc-h2 toc-link" data-title="Versioning">Versioning</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#using-kill-bill-apis-kill-bill-server" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">Kill Bill Server</a>
+                                </li>
+                                <li>
+                                  <a href="#using-kill-bill-apis-client-libraries" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">Client Libraries</a>
+                                </li>
+                                <li>
+                                  <a href="#using-kill-bill-apis-plugins" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">Plugins</a>
+                                </li>
+                                <li>
+                                  <a href="#using-kill-bill-apis-kpm" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">KPM</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-errors" class="toc-h2 toc-link" data-title="Errors">Errors</a>
+                    </li>
+                    <li>
+                      <a href="#using-kill-bill-apis-additional-resources" class="toc-h2 toc-link" data-title="Additional Resources">Additional Resources</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#tenant" class="toc-h1 toc-link" data-title="Tenant">Tenant</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#tenant-tenant-resource" class="toc-h2 toc-link" data-title="Tenant Resource">Tenant Resource</a>
+                    </li>
+                    <li>
+                      <a href="#tenant-tenant" class="toc-h2 toc-link" data-title="Tenant">Tenant</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tenant-create-a-tenant" class="toc-h3 toc-link" data-title="Tenant">Create a tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-tenant-by-id" class="toc-h3 toc-link" data-title="Tenant">Retrieve a tenant by id</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-tenant-by-its-api-key" class="toc-h3 toc-link" data-title="Tenant">Retrieve a tenant by its API key</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#tenant-push-notifications" class="toc-h2 toc-link" data-title="Push Notifications">Push Notifications</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tenant-register-a-push-notification" class="toc-h3 toc-link" data-title="Tenant">Register a push notification</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-registered-push-notification" class="toc-h3 toc-link" data-title="Tenant">Retrieve a registered push notification</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-delete-a-registered-push-notification" class="toc-h3 toc-link" data-title="Tenant">Delete a registered push notification</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#tenant-tenant-key-value-pairs" class="toc-h2 toc-link" data-title="Tenant Key-Value Pairs">Tenant Key-Value Pairs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tenant-add-a-per-tenant-user-key-value" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant user key/value</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-per-tenant-user-key-value" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant user key value</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-delete-a-per-tenant-user-key-value" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant user key/value</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-per-tenant-keys-and-values-based-on-a-key-prefix" class="toc-h3 toc-link" data-title="Tenant">Retrieve per tenant keys and values based on a key prefix</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#tenant-system-properties-configuration" class="toc-h2 toc-link" data-title="System Properties Configuration">System Properties Configuration</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tenant-add-a-per-tenant-system-properties-configuration" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant system properties configuration</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-per-tenant-system-properties-configuration" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant system properties configuration</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-delete-a-per-tenant-system-properties-configuration" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant system properties configuration</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#tenant-plugin-configuration" class="toc-h2 toc-link" data-title="Plugin Configuration">Plugin Configuration</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tenant-add-a-per-tenant-configuration-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant configuration for a plugin</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-per-tenant-configuration-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant configuration for a plugin</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-delete-a-per-tenant-configuration-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant configuration for a plugin</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#tenant-payment-state-machines" class="toc-h2 toc-link" data-title="Payment State Machines">Payment State Machines</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tenant-add-a-per-tenant-payment-state-machine-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant payment state machine for a plugin</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-retrieve-a-per-tenant-payment-state-machine-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant payment state machine for a plugin</a>
+                                </li>
+                                <li>
+                                  <a href="#tenant-delete-a-per-tenant-payment-state-machine-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant payment state machine for a plugin</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#catalog" class="toc-h1 toc-link" data-title="Catalog">Catalog</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#catalog-catalog-resource" class="toc-h2 toc-link" data-title="Catalog Resource">Catalog Resource</a>
+                    </li>
+                    <li>
+                      <a href="#catalog-catalog" class="toc-h2 toc-link" data-title="Catalog">Catalog</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#catalog-upload-a-catalog-as-xml" class="toc-h3 toc-link" data-title="Catalog">Upload a catalog as XML</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-the-catalog-as-xml" class="toc-h3 toc-link" data-title="Catalog">Retrieve the catalog as XML</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-the-catalog-as-json" class="toc-h3 toc-link" data-title="Catalog">Retrieve the catalog as JSON</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-a-list-of-catalog-versions" class="toc-h3 toc-link" data-title="Catalog">Retrieve a list of catalog versions</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-available-base-plans" class="toc-h3 toc-link" data-title="Catalog">Retrieve available base plans</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-available-add-ons-for-a-given-product" class="toc-h3 toc-link" data-title="Catalog">Retrieve available add-ons for a given product</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-delete-all-versions-of-a-per-tenant-catalog" class="toc-h3 toc-link" data-title="Catalog">Delete all versions of a per tenant catalog</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#catalog-subscription-info" class="toc-h2 toc-link" data-title="Subscription info">Subscription info</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#catalog-retrieve-the-phase-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve the phase for a given subscription and date</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-the-plan-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve the plan for a given subscription and date</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-the-pricelist-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve the priceList for a given subscription and date</a>
+                                </li>
+                                <li>
+                                  <a href="#catalog-retrieve-product-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve product for a given subscription and date</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#catalog-simple-plan" class="toc-h2 toc-link" data-title="Simple Plan">Simple Plan</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#catalog-add-a-simple-plan" class="toc-h3 toc-link" data-title="Catalog">Add a simple plan</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#account" class="toc-h1 toc-link" data-title="Account">Account</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#account-account-resource" class="toc-h2 toc-link" data-title="Account Resource">Account Resource</a>
+                    </li>
+                    <li>
+                      <a href="#account-accounts" class="toc-h2 toc-link" data-title="Accounts">Accounts</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-create-an-account" class="toc-h3 toc-link" data-title="Account">Create an Account</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-an-account-by-its-id" class="toc-h3 toc-link" data-title="Account">Retrieve an Account by its ID</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-an-account-by-its-external-key" class="toc-h3 toc-link" data-title="Account">Retrieve an Account by its external key</a>
+                                </li>
+                                <li>
+                                  <a href="#account-update-an-account" class="toc-h3 toc-link" data-title="Account">Update an Account</a>
+                                </li>
+                                <li>
+                                  <a href="#account-close-account" class="toc-h3 toc-link" data-title="Account">Close account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-list-accounts" class="toc-h3 toc-link" data-title="Account">List accounts</a>
+                                </li>
+                                <li>
+                                  <a href="#account-search-accounts" class="toc-h3 toc-link" data-title="Account">Search accounts</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-email" class="toc-h2 toc-link" data-title="Email">Email</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-add-account-email" class="toc-h3 toc-link" data-title="Account">Add account email</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-emails" class="toc-h3 toc-link" data-title="Account">Retrieve account emails</a>
+                                </li>
+                                <li>
+                                  <a href="#account-delete-email" class="toc-h3 toc-link" data-title="Account">Delete email</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-bundle" class="toc-h2 toc-link" data-title="Bundle">Bundle</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-retrieve-bundles-for-account" class="toc-h3 toc-link" data-title="Account">Retrieve bundles for account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-invoice" class="toc-h2 toc-link" data-title="Invoice">Invoice</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-retrieve-account-invoices" class="toc-h3 toc-link" data-title="Account">Retrieve account invoices</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-payment" class="toc-h2 toc-link" data-title="Payment">Payment</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-trigger-a-payment-for-all-unpaid-invoices" class="toc-h3 toc-link" data-title="Account">Trigger a payment for all unpaid invoices</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-invoice-payments" class="toc-h3 toc-link" data-title="Account">Retrieve account invoice payments</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-payments" class="toc-h3 toc-link" data-title="Account">Retrieve account payments</a>
+                                </li>
+                                <li>
+                                  <a href="#account-trigger-a-payment-authorization-purchase-or-credit" class="toc-h3 toc-link" data-title="Account">Trigger a payment (authorization, purchase or credit)</a>
+                                </li>
+                                <li>
+                                  <a href="#account-trigger-a-payment-authorization-purchase-or-credit-using-the-account-external-key" class="toc-h3 toc-link" data-title="Account">Trigger a payment (authorization, purchase or credit) using the account external key</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-payment-method" class="toc-h2 toc-link" data-title="Payment Method">Payment Method</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-add-a-payment-method" class="toc-h3 toc-link" data-title="Account">Add a payment method</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-payment-methods" class="toc-h3 toc-link" data-title="Account">Retrieve account payment methods</a>
+                                </li>
+                                <li>
+                                  <a href="#account-set-the-default-payment-method" class="toc-h3 toc-link" data-title="Account">Set the default payment method</a>
+                                </li>
+                                <li>
+                                  <a href="#account-refresh-account-payment-methods" class="toc-h3 toc-link" data-title="Account">Refresh account payment methods</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-overdue" class="toc-h2 toc-link" data-title="Overdue">Overdue</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-retrieve-overdue-state-for-account" class="toc-h3 toc-link" data-title="Account">Retrieve overdue state for account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-block-an-account" class="toc-h3 toc-link" data-title="Account">Block an account</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-blocking-states-for-account" class="toc-h3 toc-link" data-title="Account">Retrieve blocking states for account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-hierarchical-accounts" class="toc-h2 toc-link" data-title="Hierarchical Accounts">Hierarchical Accounts</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-list-child-accounts" class="toc-h3 toc-link" data-title="Account">List child accounts</a>
+                                </li>
+                                <li>
+                                  <a href="#account-transfer-a-given-child-credit-to-the-parent-level" class="toc-h3 toc-link" data-title="Account">Transfer a given child credit to the parent level</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-add-custom-fields-to-account" class="toc-h3 toc-link" data-title="Account">Add custom fields to account</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-all-custom-fields" class="toc-h3 toc-link" data-title="Account">Retrieve all custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-custom-fields" class="toc-h3 toc-link" data-title="Account">Retrieve account custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#account-modify-custom-fields-for-an-account" class="toc-h3 toc-link" data-title="Account">Modify custom fields for an account</a>
+                                </li>
+                                <li>
+                                  <a href="#account-remove-custom-fields-from-account" class="toc-h3 toc-link" data-title="Account">Remove custom fields from account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-add-tags-to-account" class="toc-h3 toc-link" data-title="Account">Add tags to account</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-all-tags" class="toc-h3 toc-link" data-title="Account">Retrieve all tags</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-tags" class="toc-h3 toc-link" data-title="Account">Retrieve account tags</a>
+                                </li>
+                                <li>
+                                  <a href="#account-remove-tags-from-account" class="toc-h3 toc-link" data-title="Account">Remove tags from account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#account-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#account-retrieve-audit-logs" class="toc-h3 toc-link" data-title="Account">Retrieve audit logs</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-audit-logs-with-history" class="toc-h3 toc-link" data-title="Account">Retrieve account audit logs with history</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-email-audit-logs-with-history" class="toc-h3 toc-link" data-title="Account">Retrieve account email audit logs with history</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-blocking-state-audit-logs-with-history" class="toc-h3 toc-link" data-title="Account">Retrieve blocking state audit logs with history</a>
+                                </li>
+                                <li>
+                                  <a href="#account-retrieve-account-timeline" class="toc-h3 toc-link" data-title="Account">Retrieve account timeline</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#payment-method" class="toc-h1 toc-link" data-title="Payment Method">Payment Method</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#payment-method-payment-method-resource" class="toc-h2 toc-link" data-title="Payment Method Resource">Payment Method Resource</a>
+                    </li>
+                    <li>
+                      <a href="#payment-method-payment-methods" class="toc-h2 toc-link" data-title="Payment Methods">Payment Methods</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-method-retrieve-a-payment-method-by-id" class="toc-h3 toc-link" data-title="Payment Method">Retrieve a payment method by id</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-method-retrieve-a-payment-method-by-external-key" class="toc-h3 toc-link" data-title="Payment Method">Retrieve a payment method by external key</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-method-delete-a-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Delete a payment method</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-method-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-method-list-payment-methods" class="toc-h3 toc-link" data-title="Payment Method">List payment methods</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-method-search-payment-methods" class="toc-h3 toc-link" data-title="Payment Method">Search payment methods</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-method-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-method-add-custom-fields-to-a-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Add custom fields to a payment method</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-method-retrieve-payment-method-custom-fields" class="toc-h3 toc-link" data-title="Payment Method">Retrieve payment method custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-method-modify-custom-fields-for-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Modify custom fields for payment method</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-method-remove-custom-fields-from-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Remove custom fields from payment method</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-method-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-method-retrieve-payment-method-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment Method">Retrieve payment method audit logs with history by id</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#subscription" class="toc-h1 toc-link" data-title="Subscription">Subscription</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#subscription-subscription-resource" class="toc-h2 toc-link" data-title="Subscription Resource">Subscription Resource</a>
+                    </li>
+                    <li>
+                      <a href="#subscription-subscriptions" class="toc-h2 toc-link" data-title="Subscriptions">Subscriptions</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#subscription-create-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Create a subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-create-a-subscription-with-addon-products" class="toc-h3 toc-link" data-title="Subscription">Create a subscription with addon products</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-create-multiple-subscriptions-with-addon-products" class="toc-h3 toc-link" data-title="Subscription">Create multiple subscriptions with addon products</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-retrieve-a-subscription-by-id" class="toc-h3 toc-link" data-title="Subscription">Retrieve a subscription by id</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-retrieve-a-subscription-by-key" class="toc-h3 toc-link" data-title="Subscription">Retrieve a subscription by key</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-update-the-bcd-associated-with-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Update the BCD associated with a subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-change-subscription-plan" class="toc-h3 toc-link" data-title="Subscription">Change subscription plan</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-undo-a-pending-change-plan-on-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Undo a pending change plan on a subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-cancel-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Cancel a subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-un-cancel-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Un-cancel a subscription</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#subscription-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#subscription-block-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Block a subscription</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#subscription-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#subscription-add-custom-fields-to-subscription" class="toc-h3 toc-link" data-title="Subscription">Add custom fields to subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-retrieve-subscription-custom-fields" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-modify-custom-fields-for-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Modify custom fields for a subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-remove-custom-fields-from-subscription" class="toc-h3 toc-link" data-title="Subscription">Remove custom fields from subscription</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#subscription-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#subscription-add-tags-to-subscription" class="toc-h3 toc-link" data-title="Subscription">Add tags to subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-retrieve-subscription-tags" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription tags</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-remove-tags-from-subscription" class="toc-h3 toc-link" data-title="Subscription">Remove tags from subscription</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#subscription-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#subscription-retrieve-subscription-audit-logs-with-history-by-subscription-id" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription audit logs with history by subscription id</a>
+                                </li>
+                                <li>
+                                  <a href="#subscription-retrieve-subscription-event-audit-logs-with-history-by-subscription-event-id" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription event audit logs with history by subscription event id</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#bundle" class="toc-h1 toc-link" data-title="Bundle">Bundle</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#bundle-bundle-resource" class="toc-h2 toc-link" data-title="Bundle Resource">Bundle Resource</a>
+                    </li>
+                    <li>
+                      <a href="#bundle-bundle" class="toc-h2 toc-link" data-title="Bundle">Bundle</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-retrieve-a-bundle-by-id" class="toc-h3 toc-link" data-title="Bundle">Retrieve a bundle by id</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-retrieve-a-bundle-by-external-key" class="toc-h3 toc-link" data-title="Bundle">Retrieve a bundle by external key</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-update-a-bundle-externalkey" class="toc-h3 toc-link" data-title="Bundle">Update a bundle externalKey</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#bundle-transfer" class="toc-h2 toc-link" data-title="Transfer">Transfer</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-transfer-a-bundle-to-another-account" class="toc-h3 toc-link" data-title="Bundle">Transfer a bundle to another account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#bundle-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-pause-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Pause a bundle</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-resume-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Resume a bundle</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-block-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Block a bundle</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#bundle-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-add-custom-fields-to-bundle" class="toc-h3 toc-link" data-title="Bundle">Add custom fields to bundle</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-retrieve-bundle-custom-fields" class="toc-h3 toc-link" data-title="Bundle">Retrieve bundle custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-modify-custom-fields-for-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Modify custom fields for a bundle</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-remove-custom-fields-from-bundle" class="toc-h3 toc-link" data-title="Bundle">Remove custom fields from bundle</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#bundle-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-add-tags-to-bundle" class="toc-h3 toc-link" data-title="Bundle">Add tags to bundle</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-retrieve-bundle-tags" class="toc-h3 toc-link" data-title="Bundle">Retrieve bundle tags</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-remove-tags-from-bundle" class="toc-h3 toc-link" data-title="Bundle">Remove tags from bundle</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#bundle-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-retrieve-bundle-audit-logs-with-history-by-bundle-id" class="toc-h3 toc-link" data-title="Bundle">Retrieve bundle audit logs with history by bundle id</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#bundle-list-search" class="toc-h2 toc-link" data-title="List/Search">List/Search</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#bundle-list-bundles" class="toc-h3 toc-link" data-title="Bundle">List bundles</a>
+                                </li>
+                                <li>
+                                  <a href="#bundle-search-bundles" class="toc-h3 toc-link" data-title="Bundle">Search bundles</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#invoice" class="toc-h1 toc-link" data-title="Invoice">Invoice</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#invoice-invoice-resource" class="toc-h2 toc-link" data-title="Invoice Resource">Invoice Resource</a>
+                    </li>
+                    <li>
+                      <a href="#invoice-invoiceitem-resource" class="toc-h2 toc-link" data-title="InvoiceItem Resource">InvoiceItem Resource</a>
+                    </li>
+                    <li>
+                      <a href="#invoice-invoicedryrun-resource" class="toc-h2 toc-link" data-title="InvoiceDryRun Resource">InvoiceDryRun Resource</a>
+                    </li>
+                    <li>
+                      <a href="#invoice-invoice" class="toc-h2 toc-link" data-title="Invoice">Invoice</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-trigger-an-invoice-run" class="toc-h3 toc-link" data-title="Invoice">Trigger an invoice run</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-create-a-migration-invoice" class="toc-h3 toc-link" data-title="Invoice">Create a migration invoice</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-create-external-charge-s" class="toc-h3 toc-link" data-title="Invoice">Create external charge(s)</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-create-tax-items" class="toc-h3 toc-link" data-title="Invoice">Create tax items</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-an-invoice-by-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice by id</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-an-invoice-by-number" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice by number</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-an-invoice-by-invoice-item-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice by invoice item id</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-render-an-invoice-as-html" class="toc-h3 toc-link" data-title="Invoice">Render an invoice as HTML</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-change-invoice-status-from-draft-to-committed" class="toc-h3 toc-link" data-title="Invoice">Change invoice status from DRAFT to COMMITTED</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-void-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Void an invoice</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-adjust-an-invoice-item" class="toc-h3 toc-link" data-title="Invoice">Adjust an invoice item</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-delete-a-cba-item" class="toc-h3 toc-link" data-title="Invoice">Delete a CBA item</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-dry-run" class="toc-h2 toc-link" data-title="Dry-run">Dry-run</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-generate-a-dry-run-invoice" class="toc-h3 toc-link" data-title="Invoice">Generate a dry run invoice</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-payments" class="toc-h2 toc-link" data-title="Payments">Payments</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-trigger-a-payment-for-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Trigger a payment for an invoice</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-payments-associated-with-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Retrieve payments associated with an invoice</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-add-custom-fields-to-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Add custom fields to an invoice</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-invoice-custom-fields" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-modify-custom-fields-for-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Modify custom fields for an invoice</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-remove-custom-fields-from-invoice" class="toc-h3 toc-link" data-title="Invoice">Remove custom fields from invoice</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-add-tags-to-invoice" class="toc-h3 toc-link" data-title="Invoice">Add tags to invoice</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-invoice-tags" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice tags</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-remove-tags-from-invoice" class="toc-h3 toc-link" data-title="Invoice">Remove tags from invoice</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-translation" class="toc-h2 toc-link" data-title="Translation">Translation</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-upload-the-catalog-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the catalog translation for the tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-the-catalog-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the catalog translation for the tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-upload-the-invoice-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the invoice translation for the tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-the-invoice-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the invoice translation for the tenant</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-template" class="toc-h2 toc-link" data-title="Template">Template</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-upload-the-manualpay-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the manualPay invoice template for the tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-the-manualpay-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the manualPay invoice template for the tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-upload-the-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the invoice template for the tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-the-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the invoice template for the tenant</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-example" class="toc-h2 toc-link" data-title="Example">Example</a>
+                    </li>
+                    <li>
+                      <a href="#invoice-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-retrieve-invoice-audit-logs-with-history-by-invoice-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice audit logs with history by invoice id</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-invoice-item-audit-logs-with-history-by-invoice-item-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice item audit logs with history by invoice item id</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-invoice-payment-audit-logs-with-history-by-invoice-payment-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice payment audit logs with history by invoice payment id</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-list-invoices" class="toc-h3 toc-link" data-title="Invoice">List invoices</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-search-invoices" class="toc-h3 toc-link" data-title="Invoice">Search invoices</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#credit" class="toc-h1 toc-link" data-title="Credit">Credit</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#credit-credit-resource" class="toc-h2 toc-link" data-title="Credit Resource">Credit Resource</a>
+                    </li>
+                    <li>
+                      <a href="#credit-credit" class="toc-h2 toc-link" data-title="Credit">Credit</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#credit-create-credits" class="toc-h3 toc-link" data-title="Credit">Create credits</a>
+                                </li>
+                                <li>
+                                  <a href="#credit-retrieve-a-credit-by-id" class="toc-h3 toc-link" data-title="Credit">Retrieve a credit by id</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#payment" class="toc-h1 toc-link" data-title="Payment">Payment</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#payment-payment-resource" class="toc-h2 toc-link" data-title="Payment Resource">Payment Resource</a>
+                    </li>
+                    <li>
+                      <a href="#payment-payments" class="toc-h2 toc-link" data-title="Payments">Payments</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-capture-an-existing-authorization-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Capture an existing authorization [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-capture-an-existing-authorization-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Capture an existing authorization [using paymentExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-retrieve-a-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Retrieve a payment [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-retrieve-a-payment-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Retrieve a payment [using paymentExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-complete-an-existing-transaction-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Complete an existing transaction [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-complete-an-existing-transaction-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Complete an existing transaction [using paymentExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-void-an-existing-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Void an existing payment [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-void-an-existing-payment-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Void an existing payment [using paymentExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-record-a-chargeback-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Record a chargeback [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-record-a-chargeback-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Record a chargeback [using paymentExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-record-a-chargeback-reversal-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-record-a-chargeback-reversal-using-paymnetexternalkey" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymnetExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-refund-an-existing-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Refund an existing payment [using paymentId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-refund-an-existing-payment-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Refund an existing payment [using paymentExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-cancel-a-scheduled-payment-attempt-retry-using-transactionid" class="toc-h3 toc-link" data-title="Payment">Cancel a scheduled payment attempt retry [using transactionId]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-cancel-a-scheduled-payment-attempt-retry-using-transactionexternalkey" class="toc-h3 toc-link" data-title="Payment">Cancel a scheduled payment attempt retry [using transactionExternalKey]</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-combo-api-to-create-a-new-payment-transaction-on-a-existing-or-not-account" class="toc-h3 toc-link" data-title="Payment">Combo api to create a new payment transaction on a existing (or not) account</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-add-custom-fields-to-payment" class="toc-h3 toc-link" data-title="Payment">Add custom fields to payment</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-retrieve-payment-custom-fields" class="toc-h3 toc-link" data-title="Payment">Retrieve payment custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-modify-custom-fields-for-a-payment" class="toc-h3 toc-link" data-title="Payment">Modify custom fields for a payment</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-remove-custom-fields-from-a-payment" class="toc-h3 toc-link" data-title="Payment">Remove custom fields from a payment</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-add-tags-to-a-payment" class="toc-h3 toc-link" data-title="Payment">Add tags to a payment</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-retrieve-payment-tags" class="toc-h3 toc-link" data-title="Payment">Retrieve payment tags</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-remove-tags-from-a-payment" class="toc-h3 toc-link" data-title="Payment">Remove tags from a payment</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-retrieve-payment-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment">Retrieve payment audit logs with history by id</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-retrieve-payment-attempt-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment">Retrieve payment attempt audit logs with history by id</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-get-payments" class="toc-h3 toc-link" data-title="Payment">Get payments</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-search-payments" class="toc-h3 toc-link" data-title="Payment">Search payments</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#payment-transaction" class="toc-h1 toc-link" data-title="Payment Transaction">Payment Transaction</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#payment-transaction-payment-transaction-resource" class="toc-h2 toc-link" data-title="Payment Transaction Resource">Payment Transaction Resource</a>
+                    </li>
+                    <li>
+                      <a href="#payment-transaction-payment-transactions" class="toc-h2 toc-link" data-title="Payment Transactions">Payment Transactions</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-transaction-retrieve-a-payment-by-transaction-id" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve a payment by transaction id</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-retrieve-a-payment-transaction-by-external-key" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve a payment transaction by external key</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-mark-a-pending-payment-transaction-as-succeeded-or-failed" class="toc-h3 toc-link" data-title="Payment Transaction">Mark a pending payment transaction as succeeded or failed</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-transaction-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-transaction-retrieve-payment-transaction-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve payment transaction audit logs with history by id</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-transaction-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-transaction-add-custom-fields-to-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Add custom fields to payment transaction</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-retrieve-payment-transaction-custom-fields" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve payment transaction custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-modify-custom-fields-for-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Modify custom fields for a payment transaction</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-remove-custom-fields-from-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Remove custom fields from a payment transaction</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#payment-transaction-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#payment-transaction-add-tags-to-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Add tags to a payment transaction</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-retrieve-payment-transaction-tags" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve payment transaction tags</a>
+                                </li>
+                                <li>
+                                  <a href="#payment-transaction-remove-tags-from-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Remove tags from a payment transaction</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#invoice-payment" class="toc-h1 toc-link" data-title="Invoice Payment">Invoice Payment</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#invoice-payment-invoice-payment-resource" class="toc-h2 toc-link" data-title="Invoice Payment Resource">Invoice Payment Resource</a>
+                    </li>
+                    <li>
+                      <a href="#invoice-payment-invoice-payment-transaction-resource" class="toc-h2 toc-link" data-title="Invoice Payment Transaction Resource">Invoice Payment Transaction Resource</a>
+                    </li>
+                    <li>
+                      <a href="#invoice-payment-invoice-payment" class="toc-h2 toc-link" data-title="Invoice Payment">Invoice Payment</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-payment-retrieve-a-payment-by-id" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve a payment by id</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-refund-a-payment-and-adjust-the-invoice-if-needed" class="toc-h3 toc-link" data-title="Invoice Payment">Refund a payment, and adjust the invoice if needed</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-record-a-chargeback" class="toc-h3 toc-link" data-title="Invoice Payment">Record a chargeback</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-record-a-chargeback-reversal" class="toc-h3 toc-link" data-title="Invoice Payment">Record a chargeback reversal</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-complete-an-existing-transaction" class="toc-h3 toc-link" data-title="Invoice Payment">Complete an existing transaction</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-payment-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-payment-add-custom-fields-to-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Add custom fields to invoice payment</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-retrieve-invoice-payment-custom-fields" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve invoice payment custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-modify-custom-fields-for-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Modify custom fields for an invoice payment</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-remove-custom-fields-from-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Remove custom fields from an invoice payment</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-payment-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-payment-add-tags-to-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Add tags to an invoice payment</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-retrieve-invoice-payment-tags" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve invoice payment tags</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-payment-remove-tags-from-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Remove tags from an invoice payment</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-payment-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-payment-retrieve-invoice-payment-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve invoice payment audit logs with history by id</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#usage" class="toc-h1 toc-link" data-title="Usage">Usage</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#usage-usage-resource" class="toc-h2 toc-link" data-title="Usage Resource">Usage Resource</a>
+                    </li>
+                    <li>
+                      <a href="#usage-usage" class="toc-h2 toc-link" data-title="Usage">Usage</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#usage-record-usage-for-a-subscription" class="toc-h3 toc-link" data-title="Usage">Record usage for a subscription</a>
+                                </li>
+                                <li>
+                                  <a href="#usage-retrieve-usage-for-a-subscription-and-unit-type" class="toc-h3 toc-link" data-title="Usage">Retrieve usage for a subscription and unit type</a>
+                                </li>
+                                <li>
+                                  <a href="#usage-retrieve-usage-for-a-subscription" class="toc-h3 toc-link" data-title="Usage">Retrieve usage for a subscription</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#custom-field" class="toc-h1 toc-link" data-title="Custom Field">Custom Field</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#custom-field-custom-field-resource" class="toc-h2 toc-link" data-title="Custom Field  Resource">Custom Field  Resource</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#custom-field-list-all-custom-fields" class="toc-h3 toc-link" data-title="Custom Field">List all custom fields</a>
+                                </li>
+                                <li>
+                                  <a href="#custom-field-search-custom-fields-by-id" class="toc-h3 toc-link" data-title="Custom Field">Search custom fields by ID</a>
+                                </li>
+                                <li>
+                                  <a href="#custom-field-search-custom-fields-by-resource-type-name-and-optional-value" class="toc-h3 toc-link" data-title="Custom Field">Search custom fields by resource type, name, and optional value</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#custom-field-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#custom-field-retrieve-custom-field-audit-logs-with-history-by-custom-field-id" class="toc-h3 toc-link" data-title="Custom Field">Retrieve custom field audit logs with history by custom field id</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#tag" class="toc-h1 toc-link" data-title="Tag">Tag</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#tag-tag-resource" class="toc-h2 toc-link" data-title="Tag  Resource">Tag  Resource</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tag-list-all-tags" class="toc-h3 toc-link" data-title="Tag">List all tags</a>
+                                </li>
+                                <li>
+                                  <a href="#tag-search-tags" class="toc-h3 toc-link" data-title="Tag">Search tags</a>
+                                </li>
+                                <li>
+                                  <a href="#tag-retrieve-tag-audit-logs" class="toc-h3 toc-link" data-title="Tag">Retrieve tag audit logs</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#tag-definition" class="toc-h1 toc-link" data-title="Tag Definition">Tag Definition</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#tag-definition-tag-definition-resource" class="toc-h2 toc-link" data-title="Tag Definition Resource">Tag Definition Resource</a>
+                    </li>
+                    <li>
+                      <a href="#tag-definition-tag-definition" class="toc-h2 toc-link" data-title="Tag Definition">Tag Definition</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tag-definition-create-a-tag-definition" class="toc-h3 toc-link" data-title="Tag Definition">Create a tag definition</a>
+                                </li>
+                                <li>
+                                  <a href="#tag-definition-list-tag-definitions" class="toc-h3 toc-link" data-title="Tag Definition">List tag definitions</a>
+                                </li>
+                                <li>
+                                  <a href="#tag-definition-retrieve-a-tag-definition-by-its-id" class="toc-h3 toc-link" data-title="Tag Definition">Retrieve a tag definition by its ID</a>
+                                </li>
+                                <li>
+                                  <a href="#tag-definition-delete-a-tag-definition" class="toc-h3 toc-link" data-title="Tag Definition">Delete a tag definition</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#tag-definition-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#tag-definition-retrieve-tag-definition-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Tag Definition">Retrieve tag definition audit logs with history by id</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+              <a href="#admin" class="toc-h1 toc-link" data-title="Admin">Admin</a>
+                <ul class="toc-list-h2">
+                    <li>
+                      <a href="#admin-administrative-apis" class="toc-h2 toc-link" data-title="Administrative Apis">Administrative Apis</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#admin-trigger-an-invoice-generation-for-all-parked-accounts" class="toc-h3 toc-link" data-title="Admin">Trigger an invoice generation for all parked accounts</a>
+                                </li>
+                                <li>
+                                  <a href="#admin-update-the-state-of-a-paymenttransaction-and-associated-payment" class="toc-h3 toc-link" data-title="Admin">Update the state of a paymentTransaction and associated payment</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#admin-operational-apis" class="toc-h2 toc-link" data-title="Operational Apis">Operational Apis</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#admin-invalidate-a-specific-cache-or-invalidate-all-caches" class="toc-h3 toc-link" data-title="Admin">Invalidate a specific cache, or invalidate all caches</a>
+                                </li>
+                                <li>
+                                  <a href="#admin-invalidate-caches-for-an-account" class="toc-h3 toc-link" data-title="Admin">Invalidate Caches for an Account</a>
+                                </li>
+                                <li>
+                                  <a href="#admin-invalidate-caches-for-a-tenant" class="toc-h3 toc-link" data-title="Admin">Invalidate Caches for a Tenant</a>
+                                </li>
+                                <li>
+                                  <a href="#admin-put-the-host-back-into-rotation" class="toc-h3 toc-link" data-title="Admin">Put the host back into rotation</a>
+                                </li>
+                                <li>
+                                  <a href="#admin-remove-a-server-from-the-rotation" class="toc-h3 toc-link" data-title="Admin">Remove a server from the rotation</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#admin-low-level-view-apis" class="toc-h2 toc-link" data-title="Low Level View Apis">Low Level View Apis</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#admin-get-queue-entries" class="toc-h3 toc-link" data-title="Admin">Get queue entries</a>
+                                </li>
+                          </ul>
+                    </li>
+                </ul>
+            </li>
         </div>
-        <ul class="search-results"></ul>
-      <div id="toc" class="toc-list-h1">
-          <li>
-            <a href="#using-kill-bill-apis" class="toc-h1 toc-link" data-title="Using Kill Bill APIs">Using Kill Bill APIs</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#using-kill-bill-apis-introduction" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-authentication-and-rbac" class="toc-h2 toc-link" data-title="Authentication and RBAC">Authentication and RBAC</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-multi-tenancy" class="toc-h2 toc-link" data-title="Multi-Tenancy">Multi-Tenancy</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-resource-ids-and-external-keys" class="toc-h2 toc-link" data-title="Resource IDs and External Keys">Resource IDs and External Keys</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-audit-and-history" class="toc-h2 toc-link" data-title="Audit and History">Audit and History</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-versioning" class="toc-h2 toc-link" data-title="Versioning">Versioning</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#using-kill-bill-apis-kill-bill-server" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">Kill Bill Server</a>
-                              </li>
-                              <li>
-                                <a href="#using-kill-bill-apis-client-libraries" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">Client Libraries</a>
-                              </li>
-                              <li>
-                                <a href="#using-kill-bill-apis-plugins" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">Plugins</a>
-                              </li>
-                              <li>
-                                <a href="#using-kill-bill-apis-kpm" class="toc-h3 toc-link" data-title="Using Kill Bill APIs">KPM</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-errors" class="toc-h2 toc-link" data-title="Errors">Errors</a>
-                  </li>
-                  <li>
-                    <a href="#using-kill-bill-apis-additional-resources" class="toc-h2 toc-link" data-title="Additional Resources">Additional Resources</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#tenant" class="toc-h1 toc-link" data-title="Tenant">Tenant</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#tenant-tenant-resource" class="toc-h2 toc-link" data-title="Tenant Resource">Tenant Resource</a>
-                  </li>
-                  <li>
-                    <a href="#tenant-tenant" class="toc-h2 toc-link" data-title="Tenant">Tenant</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tenant-create-a-tenant" class="toc-h3 toc-link" data-title="Tenant">Create a tenant</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-tenant-by-id" class="toc-h3 toc-link" data-title="Tenant">Retrieve a tenant by id</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-tenant-by-its-api-key" class="toc-h3 toc-link" data-title="Tenant">Retrieve a tenant by its API key</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#tenant-push-notifications" class="toc-h2 toc-link" data-title="Push Notifications">Push Notifications</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tenant-register-a-push-notification" class="toc-h3 toc-link" data-title="Tenant">Register a push notification</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-registered-push-notification" class="toc-h3 toc-link" data-title="Tenant">Retrieve a registered push notification</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-delete-a-registered-push-notification" class="toc-h3 toc-link" data-title="Tenant">Delete a registered push notification</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#tenant-tenant-key-value-pairs" class="toc-h2 toc-link" data-title="Tenant Key-Value Pairs">Tenant Key-Value Pairs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tenant-add-a-per-tenant-user-key-value" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant user key/value</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-per-tenant-user-key-value" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant user key value</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-delete-a-per-tenant-user-key-value" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant user key/value</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-per-tenant-keys-and-values-based-on-a-key-prefix" class="toc-h3 toc-link" data-title="Tenant">Retrieve per tenant keys and values based on a key prefix</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#tenant-system-properties-configuration" class="toc-h2 toc-link" data-title="System Properties Configuration">System Properties Configuration</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tenant-add-a-per-tenant-system-properties-configuration" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant system properties configuration</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-per-tenant-system-properties-configuration" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant system properties configuration</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-delete-a-per-tenant-system-properties-configuration" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant system properties configuration</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#tenant-plugin-configuration" class="toc-h2 toc-link" data-title="Plugin Configuration">Plugin Configuration</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tenant-add-a-per-tenant-configuration-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant configuration for a plugin</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-per-tenant-configuration-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant configuration for a plugin</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-delete-a-per-tenant-configuration-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant configuration for a plugin</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#tenant-payment-state-machines" class="toc-h2 toc-link" data-title="Payment State Machines">Payment State Machines</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tenant-add-a-per-tenant-payment-state-machine-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Add a per tenant payment state machine for a plugin</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-retrieve-a-per-tenant-payment-state-machine-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Retrieve a per tenant payment state machine for a plugin</a>
-                              </li>
-                              <li>
-                                <a href="#tenant-delete-a-per-tenant-payment-state-machine-for-a-plugin" class="toc-h3 toc-link" data-title="Tenant">Delete a per tenant payment state machine for a plugin</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#catalog" class="toc-h1 toc-link" data-title="Catalog">Catalog</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#catalog-catalog-resource" class="toc-h2 toc-link" data-title="Catalog Resource">Catalog Resource</a>
-                  </li>
-                  <li>
-                    <a href="#catalog-catalog" class="toc-h2 toc-link" data-title="Catalog">Catalog</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#catalog-upload-a-catalog-as-xml" class="toc-h3 toc-link" data-title="Catalog">Upload a catalog as XML</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-the-catalog-as-xml" class="toc-h3 toc-link" data-title="Catalog">Retrieve the catalog as XML</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-the-catalog-as-json" class="toc-h3 toc-link" data-title="Catalog">Retrieve the catalog as JSON</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-a-list-of-catalog-versions" class="toc-h3 toc-link" data-title="Catalog">Retrieve a list of catalog versions</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-available-base-plans" class="toc-h3 toc-link" data-title="Catalog">Retrieve available base plans</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-available-add-ons-for-a-given-product" class="toc-h3 toc-link" data-title="Catalog">Retrieve available add-ons for a given product</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-delete-all-versions-of-a-per-tenant-catalog" class="toc-h3 toc-link" data-title="Catalog">Delete all versions of a per tenant catalog</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#catalog-subscription-info" class="toc-h2 toc-link" data-title="Subscription info">Subscription info</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#catalog-retrieve-the-phase-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve the phase for a given subscription and date</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-the-plan-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve the plan for a given subscription and date</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-the-pricelist-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve the priceList for a given subscription and date</a>
-                              </li>
-                              <li>
-                                <a href="#catalog-retrieve-product-for-a-given-subscription-and-date" class="toc-h3 toc-link" data-title="Catalog">Retrieve product for a given subscription and date</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#catalog-simple-plan" class="toc-h2 toc-link" data-title="Simple Plan">Simple Plan</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#catalog-add-a-simple-plan" class="toc-h3 toc-link" data-title="Catalog">Add a simple plan</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#account" class="toc-h1 toc-link" data-title="Account">Account</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#account-account-resource" class="toc-h2 toc-link" data-title="Account Resource">Account Resource</a>
-                  </li>
-                  <li>
-                    <a href="#account-accounts" class="toc-h2 toc-link" data-title="Accounts">Accounts</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-create-an-account" class="toc-h3 toc-link" data-title="Account">Create an Account</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-an-account-by-its-id" class="toc-h3 toc-link" data-title="Account">Retrieve an Account by its ID</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-an-account-by-its-external-key" class="toc-h3 toc-link" data-title="Account">Retrieve an Account by its external key</a>
-                              </li>
-                              <li>
-                                <a href="#account-update-an-account" class="toc-h3 toc-link" data-title="Account">Update an Account</a>
-                              </li>
-                              <li>
-                                <a href="#account-close-account" class="toc-h3 toc-link" data-title="Account">Close account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-list-accounts" class="toc-h3 toc-link" data-title="Account">List accounts</a>
-                              </li>
-                              <li>
-                                <a href="#account-search-accounts" class="toc-h3 toc-link" data-title="Account">Search accounts</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-email" class="toc-h2 toc-link" data-title="Email">Email</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-add-account-email" class="toc-h3 toc-link" data-title="Account">Add account email</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-emails" class="toc-h3 toc-link" data-title="Account">Retrieve account emails</a>
-                              </li>
-                              <li>
-                                <a href="#account-delete-email" class="toc-h3 toc-link" data-title="Account">Delete email</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-bundle" class="toc-h2 toc-link" data-title="Bundle">Bundle</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-retrieve-bundles-for-account" class="toc-h3 toc-link" data-title="Account">Retrieve bundles for account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-invoice" class="toc-h2 toc-link" data-title="Invoice">Invoice</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-retrieve-account-invoices" class="toc-h3 toc-link" data-title="Account">Retrieve account invoices</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-payment" class="toc-h2 toc-link" data-title="Payment">Payment</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-trigger-a-payment-for-all-unpaid-invoices" class="toc-h3 toc-link" data-title="Account">Trigger a payment for all unpaid invoices</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-invoice-payments" class="toc-h3 toc-link" data-title="Account">Retrieve account invoice payments</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-payments" class="toc-h3 toc-link" data-title="Account">Retrieve account payments</a>
-                              </li>
-                              <li>
-                                <a href="#account-trigger-a-payment-authorization-purchase-or-credit" class="toc-h3 toc-link" data-title="Account">Trigger a payment (authorization, purchase or credit)</a>
-                              </li>
-                              <li>
-                                <a href="#account-trigger-a-payment-authorization-purchase-or-credit-using-the-account-external-key" class="toc-h3 toc-link" data-title="Account">Trigger a payment (authorization, purchase or credit) using the account external key</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-payment-method" class="toc-h2 toc-link" data-title="Payment Method">Payment Method</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-add-a-payment-method" class="toc-h3 toc-link" data-title="Account">Add a payment method</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-payment-methods" class="toc-h3 toc-link" data-title="Account">Retrieve account payment methods</a>
-                              </li>
-                              <li>
-                                <a href="#account-set-the-default-payment-method" class="toc-h3 toc-link" data-title="Account">Set the default payment method</a>
-                              </li>
-                              <li>
-                                <a href="#account-refresh-account-payment-methods" class="toc-h3 toc-link" data-title="Account">Refresh account payment methods</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-overdue" class="toc-h2 toc-link" data-title="Overdue">Overdue</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-retrieve-overdue-state-for-account" class="toc-h3 toc-link" data-title="Account">Retrieve overdue state for account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-block-an-account" class="toc-h3 toc-link" data-title="Account">Block an account</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-blocking-states-for-account" class="toc-h3 toc-link" data-title="Account">Retrieve blocking states for account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-hierarchical-accounts" class="toc-h2 toc-link" data-title="Hierarchical Accounts">Hierarchical Accounts</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-list-child-accounts" class="toc-h3 toc-link" data-title="Account">List child accounts</a>
-                              </li>
-                              <li>
-                                <a href="#account-transfer-a-given-child-credit-to-the-parent-level" class="toc-h3 toc-link" data-title="Account">Transfer a given child credit to the parent level</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-add-custom-fields-to-account" class="toc-h3 toc-link" data-title="Account">Add custom fields to account</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-all-custom-fields" class="toc-h3 toc-link" data-title="Account">Retrieve all custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-custom-fields" class="toc-h3 toc-link" data-title="Account">Retrieve account custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#account-modify-custom-fields-for-an-account" class="toc-h3 toc-link" data-title="Account">Modify custom fields for an account</a>
-                              </li>
-                              <li>
-                                <a href="#account-remove-custom-fields-from-account" class="toc-h3 toc-link" data-title="Account">Remove custom fields from account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-add-tags-to-account" class="toc-h3 toc-link" data-title="Account">Add tags to account</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-all-tags" class="toc-h3 toc-link" data-title="Account">Retrieve all tags</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-tags" class="toc-h3 toc-link" data-title="Account">Retrieve account tags</a>
-                              </li>
-                              <li>
-                                <a href="#account-remove-tags-from-account" class="toc-h3 toc-link" data-title="Account">Remove tags from account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#account-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#account-retrieve-audit-logs" class="toc-h3 toc-link" data-title="Account">Retrieve audit logs</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-audit-logs-with-history" class="toc-h3 toc-link" data-title="Account">Retrieve account audit logs with history</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-email-audit-logs-with-history" class="toc-h3 toc-link" data-title="Account">Retrieve account email audit logs with history</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-blocking-state-audit-logs-with-history" class="toc-h3 toc-link" data-title="Account">Retrieve blocking state audit logs with history</a>
-                              </li>
-                              <li>
-                                <a href="#account-retrieve-account-timeline" class="toc-h3 toc-link" data-title="Account">Retrieve account timeline</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#payment-method" class="toc-h1 toc-link" data-title="Payment Method">Payment Method</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#payment-method-payment-method-resource" class="toc-h2 toc-link" data-title="Payment Method Resource">Payment Method Resource</a>
-                  </li>
-                  <li>
-                    <a href="#payment-method-payment-methods" class="toc-h2 toc-link" data-title="Payment Methods">Payment Methods</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-method-retrieve-a-payment-method-by-id" class="toc-h3 toc-link" data-title="Payment Method">Retrieve a payment method by id</a>
-                              </li>
-                              <li>
-                                <a href="#payment-method-retrieve-a-payment-method-by-external-key" class="toc-h3 toc-link" data-title="Payment Method">Retrieve a payment method by external key</a>
-                              </li>
-                              <li>
-                                <a href="#payment-method-delete-a-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Delete a payment method</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-method-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-method-list-payment-methods" class="toc-h3 toc-link" data-title="Payment Method">List payment methods</a>
-                              </li>
-                              <li>
-                                <a href="#payment-method-search-payment-methods" class="toc-h3 toc-link" data-title="Payment Method">Search payment methods</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-method-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-method-add-custom-fields-to-a-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Add custom fields to a payment method</a>
-                              </li>
-                              <li>
-                                <a href="#payment-method-retrieve-payment-method-custom-fields" class="toc-h3 toc-link" data-title="Payment Method">Retrieve payment method custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#payment-method-modify-custom-fields-for-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Modify custom fields for payment method</a>
-                              </li>
-                              <li>
-                                <a href="#payment-method-remove-custom-fields-from-payment-method" class="toc-h3 toc-link" data-title="Payment Method">Remove custom fields from payment method</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-method-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-method-retrieve-payment-method-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment Method">Retrieve payment method audit logs with history by id</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#subscription" class="toc-h1 toc-link" data-title="Subscription">Subscription</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#subscription-subscription-resource" class="toc-h2 toc-link" data-title="Subscription Resource">Subscription Resource</a>
-                  </li>
-                  <li>
-                    <a href="#subscription-subscriptions" class="toc-h2 toc-link" data-title="Subscriptions">Subscriptions</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#subscription-create-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Create a subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-create-a-subscription-with-addon-products" class="toc-h3 toc-link" data-title="Subscription">Create a subscription with addon products</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-create-multiple-subscriptions-with-addon-products" class="toc-h3 toc-link" data-title="Subscription">Create multiple subscriptions with addon products</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-retrieve-a-subscription-by-id" class="toc-h3 toc-link" data-title="Subscription">Retrieve a subscription by id</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-retrieve-a-subscription-by-key" class="toc-h3 toc-link" data-title="Subscription">Retrieve a subscription by key</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-update-the-bcd-associated-with-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Update the BCD associated with a subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-change-subscription-plan" class="toc-h3 toc-link" data-title="Subscription">Change subscription plan</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-undo-a-pending-change-plan-on-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Undo a pending change plan on a subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-cancel-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Cancel a subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-un-cancel-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Un-cancel a subscription</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#subscription-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#subscription-block-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Block a subscription</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#subscription-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#subscription-add-custom-fields-to-subscription" class="toc-h3 toc-link" data-title="Subscription">Add custom fields to subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-retrieve-subscription-custom-fields" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-modify-custom-fields-for-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Modify custom fields for a subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-remove-custom-fields-from-subscription" class="toc-h3 toc-link" data-title="Subscription">Remove custom fields from subscription</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#subscription-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#subscription-add-tags-to-subscription" class="toc-h3 toc-link" data-title="Subscription">Add tags to subscription</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-retrieve-subscription-tags" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription tags</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-remove-tags-from-subscription" class="toc-h3 toc-link" data-title="Subscription">Remove tags from subscription</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#subscription-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#subscription-retrieve-subscription-audit-logs-with-history-by-subscription-id" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription audit logs with history by subscription id</a>
-                              </li>
-                              <li>
-                                <a href="#subscription-retrieve-subscription-event-audit-logs-with-history-by-subscription-event-id" class="toc-h3 toc-link" data-title="Subscription">Retrieve subscription event audit logs with history by subscription event id</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#bundle" class="toc-h1 toc-link" data-title="Bundle">Bundle</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#bundle-bundle-resource" class="toc-h2 toc-link" data-title="Bundle Resource">Bundle Resource</a>
-                  </li>
-                  <li>
-                    <a href="#bundle-bundle" class="toc-h2 toc-link" data-title="Bundle">Bundle</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-retrieve-a-bundle-by-id" class="toc-h3 toc-link" data-title="Bundle">Retrieve a bundle by id</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-retrieve-a-bundle-by-external-key" class="toc-h3 toc-link" data-title="Bundle">Retrieve a bundle by external key</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-update-a-bundle-externalkey" class="toc-h3 toc-link" data-title="Bundle">Update a bundle externalKey</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#bundle-transfer" class="toc-h2 toc-link" data-title="Transfer">Transfer</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-transfer-a-bundle-to-another-account" class="toc-h3 toc-link" data-title="Bundle">Transfer a bundle to another account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#bundle-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-pause-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Pause a bundle</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-resume-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Resume a bundle</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-block-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Block a bundle</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#bundle-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-add-custom-fields-to-bundle" class="toc-h3 toc-link" data-title="Bundle">Add custom fields to bundle</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-retrieve-bundle-custom-fields" class="toc-h3 toc-link" data-title="Bundle">Retrieve bundle custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-modify-custom-fields-for-a-bundle" class="toc-h3 toc-link" data-title="Bundle">Modify custom fields for a bundle</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-remove-custom-fields-from-bundle" class="toc-h3 toc-link" data-title="Bundle">Remove custom fields from bundle</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#bundle-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-add-tags-to-bundle" class="toc-h3 toc-link" data-title="Bundle">Add tags to bundle</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-retrieve-bundle-tags" class="toc-h3 toc-link" data-title="Bundle">Retrieve bundle tags</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-remove-tags-from-bundle" class="toc-h3 toc-link" data-title="Bundle">Remove tags from bundle</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#bundle-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-retrieve-bundle-audit-logs-with-history-by-bundle-id" class="toc-h3 toc-link" data-title="Bundle">Retrieve bundle audit logs with history by bundle id</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#bundle-list-search" class="toc-h2 toc-link" data-title="List/Search">List/Search</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#bundle-list-bundles" class="toc-h3 toc-link" data-title="Bundle">List bundles</a>
-                              </li>
-                              <li>
-                                <a href="#bundle-search-bundles" class="toc-h3 toc-link" data-title="Bundle">Search bundles</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#invoice" class="toc-h1 toc-link" data-title="Invoice">Invoice</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#invoice-invoice-resource" class="toc-h2 toc-link" data-title="Invoice Resource">Invoice Resource</a>
-                  </li>
-                  <li>
-                    <a href="#invoice-invoiceitem-resource" class="toc-h2 toc-link" data-title="InvoiceItem Resource">InvoiceItem Resource</a>
-                  </li>
-                  <li>
-                    <a href="#invoice-invoicedryrun-resource" class="toc-h2 toc-link" data-title="InvoiceDryRun Resource">InvoiceDryRun Resource</a>
-                  </li>
-                  <li>
-                    <a href="#invoice-invoice" class="toc-h2 toc-link" data-title="Invoice">Invoice</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-trigger-an-invoice-run" class="toc-h3 toc-link" data-title="Invoice">Trigger an invoice run</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-create-a-migration-invoice" class="toc-h3 toc-link" data-title="Invoice">Create a migration invoice</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-create-external-charge-s" class="toc-h3 toc-link" data-title="Invoice">Create external charge(s)</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-create-tax-items" class="toc-h3 toc-link" data-title="Invoice">Create tax items</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-an-invoice-by-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice by id</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-an-invoice-by-number" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice by number</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-an-invoice-by-invoice-item-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice by invoice item id</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-render-an-invoice-as-html" class="toc-h3 toc-link" data-title="Invoice">Render an invoice as HTML</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-change-invoice-status-from-draft-to-committed" class="toc-h3 toc-link" data-title="Invoice">Change invoice status from DRAFT to COMMITTED</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-void-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Void an invoice</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-adjust-an-invoice-item" class="toc-h3 toc-link" data-title="Invoice">Adjust an invoice item</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-delete-a-cba-item" class="toc-h3 toc-link" data-title="Invoice">Delete a CBA item</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-dry-run" class="toc-h2 toc-link" data-title="Dry-run">Dry-run</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-generate-a-dry-run-invoice" class="toc-h3 toc-link" data-title="Invoice">Generate a dry run invoice</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-payments" class="toc-h2 toc-link" data-title="Payments">Payments</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-trigger-a-payment-for-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Trigger a payment for an invoice</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-payments-associated-with-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Retrieve payments associated with an invoice</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-add-custom-fields-to-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Add custom fields to an invoice</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-invoice-custom-fields" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-modify-custom-fields-for-an-invoice" class="toc-h3 toc-link" data-title="Invoice">Modify custom fields for an invoice</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-remove-custom-fields-from-invoice" class="toc-h3 toc-link" data-title="Invoice">Remove custom fields from invoice</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-add-tags-to-invoice" class="toc-h3 toc-link" data-title="Invoice">Add tags to invoice</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-invoice-tags" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice tags</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-remove-tags-from-invoice" class="toc-h3 toc-link" data-title="Invoice">Remove tags from invoice</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-translation" class="toc-h2 toc-link" data-title="Translation">Translation</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-upload-the-catalog-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the catalog translation for the tenant</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-the-catalog-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the catalog translation for the tenant</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-upload-the-invoice-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the invoice translation for the tenant</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-the-invoice-translation-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the invoice translation for the tenant</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-template" class="toc-h2 toc-link" data-title="Template">Template</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-upload-the-manualpay-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the manualPay invoice template for the tenant</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-the-manualpay-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the manualPay invoice template for the tenant</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-upload-the-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Upload the invoice template for the tenant</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-the-invoice-template-for-the-tenant" class="toc-h3 toc-link" data-title="Invoice">Retrieve the invoice template for the tenant</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-example" class="toc-h2 toc-link" data-title="Example">Example</a>
-                  </li>
-                  <li>
-                    <a href="#invoice-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-retrieve-invoice-audit-logs-with-history-by-invoice-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice audit logs with history by invoice id</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-invoice-item-audit-logs-with-history-by-invoice-item-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice item audit logs with history by invoice item id</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-retrieve-invoice-payment-audit-logs-with-history-by-invoice-payment-id" class="toc-h3 toc-link" data-title="Invoice">Retrieve invoice payment audit logs with history by invoice payment id</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-list-invoices" class="toc-h3 toc-link" data-title="Invoice">List invoices</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-search-invoices" class="toc-h3 toc-link" data-title="Invoice">Search invoices</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#credit" class="toc-h1 toc-link" data-title="Credit">Credit</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#credit-credit-resource" class="toc-h2 toc-link" data-title="Credit Resource">Credit Resource</a>
-                  </li>
-                  <li>
-                    <a href="#credit-credit" class="toc-h2 toc-link" data-title="Credit">Credit</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#credit-create-credits" class="toc-h3 toc-link" data-title="Credit">Create credits</a>
-                              </li>
-                              <li>
-                                <a href="#credit-retrieve-a-credit-by-id" class="toc-h3 toc-link" data-title="Credit">Retrieve a credit by id</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#payment" class="toc-h1 toc-link" data-title="Payment">Payment</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#payment-payment-resource" class="toc-h2 toc-link" data-title="Payment Resource">Payment Resource</a>
-                  </li>
-                  <li>
-                    <a href="#payment-payments" class="toc-h2 toc-link" data-title="Payments">Payments</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-capture-an-existing-authorization-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Capture an existing authorization [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-capture-an-existing-authorization-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Capture an existing authorization [using paymentExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-retrieve-a-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Retrieve a payment [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-retrieve-a-payment-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Retrieve a payment [using paymentExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-complete-an-existing-transaction-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Complete an existing transaction [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-complete-an-existing-transaction-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Complete an existing transaction [using paymentExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-void-an-existing-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Void an existing payment [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-void-an-existing-payment-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Void an existing payment [using paymentExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-record-a-chargeback-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Record a chargeback [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-record-a-chargeback-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Record a chargeback [using paymentExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-record-a-chargeback-reversal-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-record-a-chargeback-reversal-using-paymnetexternalkey" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymnetExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-refund-an-existing-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Refund an existing payment [using paymentId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-refund-an-existing-payment-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Refund an existing payment [using paymentExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-cancel-a-scheduled-payment-attempt-retry-using-transactionid" class="toc-h3 toc-link" data-title="Payment">Cancel a scheduled payment attempt retry [using transactionId]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-cancel-a-scheduled-payment-attempt-retry-using-transactionexternalkey" class="toc-h3 toc-link" data-title="Payment">Cancel a scheduled payment attempt retry [using transactionExternalKey]</a>
-                              </li>
-                              <li>
-                                <a href="#payment-combo-api-to-create-a-new-payment-transaction-on-a-existing-or-not-account" class="toc-h3 toc-link" data-title="Payment">Combo api to create a new payment transaction on a existing (or not) account</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-add-custom-fields-to-payment" class="toc-h3 toc-link" data-title="Payment">Add custom fields to payment</a>
-                              </li>
-                              <li>
-                                <a href="#payment-retrieve-payment-custom-fields" class="toc-h3 toc-link" data-title="Payment">Retrieve payment custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#payment-modify-custom-fields-for-a-payment" class="toc-h3 toc-link" data-title="Payment">Modify custom fields for a payment</a>
-                              </li>
-                              <li>
-                                <a href="#payment-remove-custom-fields-from-a-payment" class="toc-h3 toc-link" data-title="Payment">Remove custom fields from a payment</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-add-tags-to-a-payment" class="toc-h3 toc-link" data-title="Payment">Add tags to a payment</a>
-                              </li>
-                              <li>
-                                <a href="#payment-retrieve-payment-tags" class="toc-h3 toc-link" data-title="Payment">Retrieve payment tags</a>
-                              </li>
-                              <li>
-                                <a href="#payment-remove-tags-from-a-payment" class="toc-h3 toc-link" data-title="Payment">Remove tags from a payment</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-retrieve-payment-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment">Retrieve payment audit logs with history by id</a>
-                              </li>
-                              <li>
-                                <a href="#payment-retrieve-payment-attempt-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment">Retrieve payment attempt audit logs with history by id</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-list-and-search" class="toc-h2 toc-link" data-title="List and Search">List and Search</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-get-payments" class="toc-h3 toc-link" data-title="Payment">Get payments</a>
-                              </li>
-                              <li>
-                                <a href="#payment-search-payments" class="toc-h3 toc-link" data-title="Payment">Search payments</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#payment-transaction" class="toc-h1 toc-link" data-title="Payment Transaction">Payment Transaction</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#payment-transaction-payment-transaction-resource" class="toc-h2 toc-link" data-title="Payment Transaction Resource">Payment Transaction Resource</a>
-                  </li>
-                  <li>
-                    <a href="#payment-transaction-payment-transactions" class="toc-h2 toc-link" data-title="Payment Transactions">Payment Transactions</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-transaction-retrieve-a-payment-by-transaction-id" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve a payment by transaction id</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-retrieve-a-payment-transaction-by-external-key" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve a payment transaction by external key</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-mark-a-pending-payment-transaction-as-succeeded-or-failed" class="toc-h3 toc-link" data-title="Payment Transaction">Mark a pending payment transaction as succeeded or failed</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-transaction-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-transaction-retrieve-payment-transaction-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve payment transaction audit logs with history by id</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-transaction-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-transaction-add-custom-fields-to-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Add custom fields to payment transaction</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-retrieve-payment-transaction-custom-fields" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve payment transaction custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-modify-custom-fields-for-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Modify custom fields for a payment transaction</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-remove-custom-fields-from-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Remove custom fields from a payment transaction</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#payment-transaction-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#payment-transaction-add-tags-to-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Add tags to a payment transaction</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-retrieve-payment-transaction-tags" class="toc-h3 toc-link" data-title="Payment Transaction">Retrieve payment transaction tags</a>
-                              </li>
-                              <li>
-                                <a href="#payment-transaction-remove-tags-from-a-payment-transaction" class="toc-h3 toc-link" data-title="Payment Transaction">Remove tags from a payment transaction</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#invoice-payment" class="toc-h1 toc-link" data-title="Invoice Payment">Invoice Payment</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#invoice-payment-invoice-payment-resource" class="toc-h2 toc-link" data-title="Invoice Payment Resource">Invoice Payment Resource</a>
-                  </li>
-                  <li>
-                    <a href="#invoice-payment-invoice-payment-transaction-resource" class="toc-h2 toc-link" data-title="Invoice Payment Transaction Resource">Invoice Payment Transaction Resource</a>
-                  </li>
-                  <li>
-                    <a href="#invoice-payment-invoice-payment" class="toc-h2 toc-link" data-title="Invoice Payment">Invoice Payment</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-payment-retrieve-a-payment-by-id" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve a payment by id</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-refund-a-payment-and-adjust-the-invoice-if-needed" class="toc-h3 toc-link" data-title="Invoice Payment">Refund a payment, and adjust the invoice if needed</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-record-a-chargeback" class="toc-h3 toc-link" data-title="Invoice Payment">Record a chargeback</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-record-a-chargeback-reversal" class="toc-h3 toc-link" data-title="Invoice Payment">Record a chargeback reversal</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-complete-an-existing-transaction" class="toc-h3 toc-link" data-title="Invoice Payment">Complete an existing transaction</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-payment-custom-fields" class="toc-h2 toc-link" data-title="Custom Fields">Custom Fields</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-payment-add-custom-fields-to-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Add custom fields to invoice payment</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-retrieve-invoice-payment-custom-fields" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve invoice payment custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-modify-custom-fields-for-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Modify custom fields for an invoice payment</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-remove-custom-fields-from-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Remove custom fields from an invoice payment</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-payment-tags" class="toc-h2 toc-link" data-title="Tags">Tags</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-payment-add-tags-to-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Add tags to an invoice payment</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-retrieve-invoice-payment-tags" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve invoice payment tags</a>
-                              </li>
-                              <li>
-                                <a href="#invoice-payment-remove-tags-from-an-invoice-payment" class="toc-h3 toc-link" data-title="Invoice Payment">Remove tags from an invoice payment</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#invoice-payment-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#invoice-payment-retrieve-invoice-payment-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Invoice Payment">Retrieve invoice payment audit logs with history by id</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#usage" class="toc-h1 toc-link" data-title="Usage">Usage</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#usage-usage-resource" class="toc-h2 toc-link" data-title="Usage Resource">Usage Resource</a>
-                  </li>
-                  <li>
-                    <a href="#usage-usage" class="toc-h2 toc-link" data-title="Usage">Usage</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#usage-record-usage-for-a-subscription" class="toc-h3 toc-link" data-title="Usage">Record usage for a subscription</a>
-                              </li>
-                              <li>
-                                <a href="#usage-retrieve-usage-for-a-subscription-and-unit-type" class="toc-h3 toc-link" data-title="Usage">Retrieve usage for a subscription and unit type</a>
-                              </li>
-                              <li>
-                                <a href="#usage-retrieve-usage-for-a-subscription" class="toc-h3 toc-link" data-title="Usage">Retrieve usage for a subscription</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#custom-field" class="toc-h1 toc-link" data-title="Custom Field">Custom Field</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#custom-field-custom-field-resource" class="toc-h2 toc-link" data-title="Custom Field  Resource">Custom Field  Resource</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#custom-field-list-all-custom-fields" class="toc-h3 toc-link" data-title="Custom Field">List all custom fields</a>
-                              </li>
-                              <li>
-                                <a href="#custom-field-search-custom-fields-by-id" class="toc-h3 toc-link" data-title="Custom Field">Search custom fields by ID</a>
-                              </li>
-                              <li>
-                                <a href="#custom-field-search-custom-fields-by-resource-type-name-and-optional-value" class="toc-h3 toc-link" data-title="Custom Field">Search custom fields by resource type, name, and optional value</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#custom-field-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#custom-field-retrieve-custom-field-audit-logs-with-history-by-custom-field-id" class="toc-h3 toc-link" data-title="Custom Field">Retrieve custom field audit logs with history by custom field id</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#tag" class="toc-h1 toc-link" data-title="Tag">Tag</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#tag-tag-resource" class="toc-h2 toc-link" data-title="Tag  Resource">Tag  Resource</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tag-list-all-tags" class="toc-h3 toc-link" data-title="Tag">List all tags</a>
-                              </li>
-                              <li>
-                                <a href="#tag-search-tags" class="toc-h3 toc-link" data-title="Tag">Search tags</a>
-                              </li>
-                              <li>
-                                <a href="#tag-retrieve-tag-audit-logs" class="toc-h3 toc-link" data-title="Tag">Retrieve tag audit logs</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#tag-definition" class="toc-h1 toc-link" data-title="Tag Definition">Tag Definition</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#tag-definition-tag-definition-resource" class="toc-h2 toc-link" data-title="Tag Definition Resource">Tag Definition Resource</a>
-                  </li>
-                  <li>
-                    <a href="#tag-definition-tag-definition" class="toc-h2 toc-link" data-title="Tag Definition">Tag Definition</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tag-definition-create-a-tag-definition" class="toc-h3 toc-link" data-title="Tag Definition">Create a tag definition</a>
-                              </li>
-                              <li>
-                                <a href="#tag-definition-list-tag-definitions" class="toc-h3 toc-link" data-title="Tag Definition">List tag definitions</a>
-                              </li>
-                              <li>
-                                <a href="#tag-definition-retrieve-a-tag-definition-by-its-id" class="toc-h3 toc-link" data-title="Tag Definition">Retrieve a tag definition by its ID</a>
-                              </li>
-                              <li>
-                                <a href="#tag-definition-delete-a-tag-definition" class="toc-h3 toc-link" data-title="Tag Definition">Delete a tag definition</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#tag-definition-audit-logs" class="toc-h2 toc-link" data-title="Audit Logs">Audit Logs</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#tag-definition-retrieve-tag-definition-audit-logs-with-history-by-id" class="toc-h3 toc-link" data-title="Tag Definition">Retrieve tag definition audit logs with history by id</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#admin" class="toc-h1 toc-link" data-title="Admin">Admin</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#admin-administrative-apis" class="toc-h2 toc-link" data-title="Administrative Apis">Administrative Apis</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#admin-trigger-an-invoice-generation-for-all-parked-accounts" class="toc-h3 toc-link" data-title="Admin">Trigger an invoice generation for all parked accounts</a>
-                              </li>
-                              <li>
-                                <a href="#admin-update-the-state-of-a-paymenttransaction-and-associated-payment" class="toc-h3 toc-link" data-title="Admin">Update the state of a paymentTransaction and associated payment</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#admin-operational-apis" class="toc-h2 toc-link" data-title="Operational Apis">Operational Apis</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#admin-invalidate-a-specific-cache-or-invalidate-all-caches" class="toc-h3 toc-link" data-title="Admin">Invalidate a specific cache, or invalidate all caches</a>
-                              </li>
-                              <li>
-                                <a href="#admin-invalidate-caches-for-an-account" class="toc-h3 toc-link" data-title="Admin">Invalidate Caches for an Account</a>
-                              </li>
-                              <li>
-                                <a href="#admin-invalidate-caches-for-a-tenant" class="toc-h3 toc-link" data-title="Admin">Invalidate Caches for a Tenant</a>
-                              </li>
-                              <li>
-                                <a href="#admin-put-the-host-back-into-rotation" class="toc-h3 toc-link" data-title="Admin">Put the host back into rotation</a>
-                              </li>
-                              <li>
-                                <a href="#admin-remove-a-server-from-the-rotation" class="toc-h3 toc-link" data-title="Admin">Remove a server from the rotation</a>
-                              </li>
-                        </ul>
-                  </li>
-                  <li>
-                    <a href="#admin-low-level-view-apis" class="toc-h2 toc-link" data-title="Low Level View Apis">Low Level View Apis</a>
-                        <ul class="toc-list-h3">
-                              <li>
-                                <a href="#admin-get-queue-entries" class="toc-h3 toc-link" data-title="Admin">Get queue entries</a>
-                              </li>
-                        </ul>
-                  </li>
-              </ul>
-          </li>
+        <a class="doclink" href="mailto:support@killbill.io">Report a doc problem </a>
       </div>
-    </div>
-    <div class="page-wrapper">
-      <div class="dark-box"></div>
-      <div class="content">
-        <h1 id='using-kill-bill-apis'>Using Kill Bill APIs</h1><h2 id='using-kill-bill-apis-introduction'>Introduction</h2>
+      <div class="page-wrapper">
+        <div class="dark-box"></div>
+        <div class="content">
+          <h1 id='using-kill-bill-apis'>Using Kill Bill APIs</h1><h2 id='using-kill-bill-apis-introduction'>Introduction</h2>
 <p>Kill Bill offers a set of HTTP APIs, commonly called REST APIs, that use the HTTP verbs <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>DELETE</code> to invoke Create, Read, Update and Delete (CRUD) operations, and that use HTTP response codes to indicate errors. These APIs enable the management of Kill Bill resources -- e.g <code>Account</code> -- through the use of JSON input and output.</p>
 
 <p>Kill Bill also offers a set of <a href="https://github.com/killbill/killbill-api/tree/master/src/main/java/org/killbill/billing">java APIs</a> that can be used by plugins to make requests, and a set of <a href="https://github.com/killbill/killbill-plugin-api">java plugin APIs</a> for Kill Bill core to interact with the plugins. These apis are beyond the scope of this documentation.</p>
@@ -39663,15 +39673,18 @@ This could happen, for example, if a call to a third party payment gateway times
 
 <p>If successful, returns a status code of 200 and a list of queue entries of the specified types.</p>
 
-      </div>
-      <div class="dark-box">
-          <div class="lang-selector">
-                <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="java">java</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
-          </div>
+        </div>
+        <div class="dark-box">
+            <div class="lang-selector">
+                  <a href="#" data-language-name="shell">shell</a>
+                  <a href="#" data-language-name="java">java</a>
+                  <a href="#" data-language-name="ruby">ruby</a>
+                  <a href="#" data-language-name="python">python</a>
+            </div>
+        </div>
       </div>
     </div>
   </body>
+  <script src='https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js'></script>	
+  <script>docsearch({apiKey: 'd90e9251686de118832e4e00d6a548d2',indexName: 'killbill',inputSelector: '#input-search', debug: false, algoliaOptions: {hitsPerPage: 10}});</script>
 </html>
