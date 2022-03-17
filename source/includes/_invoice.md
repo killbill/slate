@@ -2270,7 +2270,7 @@ A dry run is based on a [dry run resource object](https://killbill.github.io/sla
 
 This endpoint creates a dry-run invoice. Based on its parameters you can obtain answers to the different questions listed above.
 
-| ![note icon](https://github.com/killbill/killbill-docs/raw/v3/userguide/assets/img/note-icon.png)%7C **Note:** This endpoint is rather expensive, as it creates a full invoice run for the designated account, but no invoice will be created or persisted
+| <img src="https://github.com/killbill/killbill-docs/raw/v3/userguide/assets/img/note-icon.png" width="25" height="25" /> **Note:** This endpoint is rather expensive, as it creates a full invoice run for the designated account, but no invoice will be created or persisted
 in the system. |
 
 
