@@ -12369,72 +12369,6 @@ attached to various objects in the system by using tags. Tags come in 2 differen
 
 <p>The APIs to manage tags rely on having an existing tag definition and supplying the <code>tagDefinitionId</code> in the calls. Therefore, for user tags, one should first create a <code>TagDefinition</code>.</p>
 
-<p>The following <strong>system</strong> tags have been defined:</p>
-
-<table><thead>
-<tr>
-<th>Tag</th>
-<th>tagDefinitionId</th>
-<th>Object type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>AUTO_PAY_OFF</code></td>
-<td><code>00000000-0000-0000-0000-000000000001</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Suspends payments until removed.</td>
-</tr>
-<tr>
-<td><code>AUTO_INVOICING_OFF</code></td>
-<td><code>00000000-0000-0000-0000-000000000002</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Suspends invoicing until removed.</td>
-</tr>
-<tr>
-<td><code>OVERDUE_ENFORCEMENT_OFF</code></td>
-<td><code>00000000-0000-0000-0000-000000000003</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Suspends overdue enforcement behaviour until removed.</td>
-</tr>
-<tr>
-<td><code>WRITTEN_OFF</code></td>
-<td><code>00000000-0000-0000-0000-000000000004</code></td>
-<td><code>INVOICE</code></td>
-<td>Indicates that an invoice is written off. This has no effect on billing or payment.</td>
-</tr>
-<tr>
-<td><code>MANUAL_PAY</code></td>
-<td><code>00000000-0000-0000-0000-000000000005</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Indicates that Killbill doesn&#39;t process payments for this account. That is, the account uses external payments only.</td>
-</tr>
-<tr>
-<td><code>TEST</code></td>
-<td><code>00000000-0000-0000-0000-000000000006</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Indicates that this is a test account.</td>
-</tr>
-<tr>
-<td><code>PARTNER</code></td>
-<td><code>00000000-0000-0000-0000-000000000007</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Indicates that this is a partner account.</td>
-</tr>
-<tr>
-<td><code>AUTO_INVOICING_DRAFT</code></td>
-<td><code>00000000-0000-0000-0000-000000000008</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Generate account invoices in DRAFT mode.</td>
-</tr>
-<tr>
-<td><code>AUTO_INVOICING_REUSE_DRAFT</code></td>
-<td><code>00000000-0000-0000-0000-000000000009</code></td>
-<td><code>ACCOUNT</code></td>
-<td>Use existing draft invoice if exists.</td>
-</tr>
-</tbody></table>
-
 <p>To create user tags, one must first create the tag definitions. For instructions see section <a href="#tag-definition">Tag definition</a>.</p>
 <h3 id='account-add-tags-to-account'>Add tags to account</h3>
 <p>This API adds one or more tags to an account. The tag definitions must already exist.</p>
@@ -16355,11 +16289,14 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 
 <p>A subscription resource object specifying <code>accountId</code> and either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code>,<code>billingPeriod</code> and <code>priceList</code>. </p>
 
-<p>It can also include the following optional fields:
-* <code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.
-* <code>externalKey</code> - External key corresponding to the subscription.
-* <code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. 
-* <code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only while invoking this method for an addon subscription.</p>
+<p>It can also include the following optional fields:</p>
+
+<ul>
+<li><code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.</li>
+<li><code>externalKey</code> - External key corresponding to the subscription.</li>
+<li><code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. </li>
+<li><code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only while invoking this method for an addon subscription.</li>
+</ul>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -16990,11 +16927,14 @@ curl -v <span class="se">\</span>
 
 <p>A subscription resource object corresponding to the base subscription and zero or more subscription resource objects corresponding to add-on subscriptions need to be specified. Alternatively, only a list of add-on subscription resource objects may be specified along with the base subscription bundle id. Each subscription resource object needs to include <code>accountId</code> and either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code>,<code>billingPeriod</code> and <code>priceList</code>.</p>
 
-<p>In addition, each subscription resource can also include the following optional fields:
-* <code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.
-* <code>externalKey</code> - External key corresponding to the subscription.
-* <code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. 
-* <code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only with an add-on subscription resource.</p>
+<p>In addition, each subscription resource can also include the following optional fields:</p>
+
+<ul>
+<li><code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.</li>
+<li><code>externalKey</code> - External key corresponding to the subscription.</li>
+<li><code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. </li>
+<li><code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only with an add-on subscription resource.</li>
+</ul>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -17741,11 +17681,14 @@ curl -v <span class="se">\</span>
 
 <p>One or more subscription resource object corresponding to the base subscriptions need to be specified. Additional, each base subscription resource object can include zero or more subscription resource objects corresponding to add-on subscriptions. Alternatively, only a list of add-on subscription resource objects may be specified along with the base subscription bundle id. Each subscription resource object needs to include <code>accountId</code> and either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code>,<code>billingPeriod</code> and <code>priceList</code>.</p>
 
-<p>In addition, each subscription resource can also include the following optional fields:
-* <code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.
-* <code>externalKey</code> - External key corresponding to the subscription.
-* <code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. 
-* <code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only with an add-on subscription resource.</p>
+<p>In addition, each subscription resource can also include the following optional fields:</p>
+
+<ul>
+<li><code>phaseType</code> - Target phase type. Specifying this field causes the subscription to start with this phase.</li>
+<li><code>externalKey</code> - External key corresponding to the subscription.</li>
+<li><code>billCycleDayLocal</code> - Per-subscription BCD. Specifying this value allows realigning the billing with the specified date. </li>
+<li><code>bundleId</code> - Id of the bundle in which to create this subscription. Can be specified only with an add-on subscription resource.</li>
+</ul>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -26772,8 +26715,8 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <h3 id='invoice-generate-a-dry-run-invoice'>Generate a dry run invoice</h3>
 <p>This endpoint creates a dry-run invoice. Based on its parameters you can obtain answers to the different questions listed above.</p>
 
-<p>| <img src="https://github.com/killbill/killbill-docs/raw/v3/userguide/assets/img/note-icon.png" alt="note icon" />%7C <strong>Note:</strong> This endpoint is rather expensive, as it creates a full invoice run for the designated account, but no invoice will be created or persisted
-in the system. |</p>
+<p>Note: This endpoint is rather expensive, as it creates a full invoice run for the designated account, but no invoice will be created or persisted
+in the system.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -27142,7 +27085,7 @@ curl -v <span class="se">\</span>
 <td>START_BILLING or CHANGE</td>
 <td>productName, productCategory, billingPeriod, subscriptionId, bundleId</td>
 <td>effectiveDate, priceListName, billingPolicy</td>
-<td>Preview the invoice that would be generated if the <strong>START_BILING</strong> or <strong>CHANGE</strong> action is taken</td>
+<td>Preview the invoice that would be generated if the <strong>START_BILLING</strong> or <strong>CHANGE</strong> action is taken</td>
 </tr>
 <tr>
 <td>SUBSCRIPTION_ACTION</td>
@@ -38566,6 +38509,72 @@ For example:</p>
 <p>A tag is a label that may be attached to almost any resource. There are two categories of tags: <code>System Tags</code> and <code>User Tags</code>.</p>
 
 <p>Kill Bill provides a small set of predefined <code>System Tags</code> that affect the behavior of the system. For example, <code>AUTO_PAY_OFF</code> prevents the system from initiating automatic payment of an invoice. <code>System Tags</code> may be attached only to specific resource types, and most (including <code>AUTO_PAY_OFF</code>) apply only to <code>Accounts</code>.</p>
+
+<p>The following <strong>system</strong> tags have been defined:</p>
+
+<table><thead>
+<tr>
+<th>Tag</th>
+<th>tagDefinitionId</th>
+<th>Object type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>AUTO_PAY_OFF</code></td>
+<td><code>00000000-0000-0000-0000-000000000001</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Suspends payments until removed.</td>
+</tr>
+<tr>
+<td><code>AUTO_INVOICING_OFF</code></td>
+<td><code>00000000-0000-0000-0000-000000000002</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Suspends invoicing until removed.</td>
+</tr>
+<tr>
+<td><code>OVERDUE_ENFORCEMENT_OFF</code></td>
+<td><code>00000000-0000-0000-0000-000000000003</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Suspends overdue enforcement behaviour until removed.</td>
+</tr>
+<tr>
+<td><code>WRITTEN_OFF</code></td>
+<td><code>00000000-0000-0000-0000-000000000004</code></td>
+<td><code>INVOICE</code></td>
+<td>Indicates that an invoice is written off. This has no effect on billing or payment.</td>
+</tr>
+<tr>
+<td><code>MANUAL_PAY</code></td>
+<td><code>00000000-0000-0000-0000-000000000005</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Indicates that Killbill doesn&#39;t process payments for this account. That is, the account uses external payments only.</td>
+</tr>
+<tr>
+<td><code>TEST</code></td>
+<td><code>00000000-0000-0000-0000-000000000006</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Indicates that this is a test account.</td>
+</tr>
+<tr>
+<td><code>PARTNER</code></td>
+<td><code>00000000-0000-0000-0000-000000000007</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Indicates that this is a partner account.</td>
+</tr>
+<tr>
+<td><code>AUTO_INVOICING_DRAFT</code></td>
+<td><code>00000000-0000-0000-0000-000000000008</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Generate account invoices in DRAFT mode.</td>
+</tr>
+<tr>
+<td><code>AUTO_INVOICING_REUSE_DRAFT</code></td>
+<td><code>00000000-0000-0000-0000-000000000009</code></td>
+<td><code>ACCOUNT</code></td>
+<td>Use existing draft invoice if exists.</td>
+</tr>
+</tbody></table>
 
 <p><code>User Tags</code> are defined by the user for any desired purpose and are not interpreted by the system. <code>User Tags</code> must be defined using the <code>Tag Definition</code> APIs below. These tags may be attached to almost any resource type.</p>
 
