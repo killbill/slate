@@ -210,8 +210,15 @@
       gtag('config', 'UA-32705710-4');
     </script>
   </head>
-
   <body class="index" data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;]">
+    <div class="loader-wrapper">
+      <div id="loading"></div>           
+    </div>
+    <script>
+      $(window).on('load',function(){
+        $('.loader-wrapper').hide();
+      });
+    </script>
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -39696,6 +39703,33 @@ This could happen, for example, if a call to a third party payment gateway times
       </div>
     </div>
   </body>
+  <script>
+    setTimeout(function(){
+      $('.content h2, .content h3, .content h4').append('<a href=""><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>');
+      $('.content h2, .content h3, .content h4').each(function(){
+        let itemHref = '#' + $(this).attr('id');
+        $(this).find('a').attr("href", itemHref);
+      });
+      function copyToClipboard(text) {
+        let sampleTextarea = document.createElement("textarea");
+        document.body.appendChild(sampleTextarea);
+        sampleTextarea.value = text;
+        sampleTextarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(sampleTextarea);
+      }
+      $('.content h2 a, .content h3 a, .content h4 a').on('click', function(){
+        setTimeout(function(){
+          copyToClipboard($(location).attr("href"));
+        }, 500);  
+      });
+      $('.content pre').prepend('<div class="copy-icon"><svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.847 8.462a2.309 2.309 0 0 0-2.308-2.308h-9.23A2.307 2.307 0 0 0 0 8.462v9.23A2.307 2.307 0 0 0 2.308 20h9.23a2.309 2.309 0 0 0 2.309-2.308v-9.23Zm-1.539 0v9.23a.77.77 0 0 1-.77.77h-9.23a.769.769 0 0 1-.769-.77v-9.23c0-.425.344-.77.769-.77h9.23a.77.77 0 0 1 .77.77Z" fill="#99B7CE"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.924 4.615a.769.769 0 0 1-.77-.769V2.308A2.308 2.308 0 0 1 8.462 0h9.23A2.308 2.308 0 0 1 20 2.308v9.23a2.308 2.308 0 0 1-2.308 2.308h-1.538a.769.769 0 1 1 0-1.539h1.538c.425 0 .77-.344.77-.769v-9.23a.769.769 0 0 0-.77-.77h-9.23a.769.769 0 0 0-.77.77v1.538a.77.77 0 0 1-.768.77Z" fill="#99B7CE"/></svg></div>');
+      $('.content pre svg').on('click', function() {
+          copyToClipboard($(this).parent().parent().find('code').text());
+      });
+    });
+  </script>
   <script src='https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js'></script>	
   <script>docsearch({apiKey: 'd90e9251686de118832e4e00d6a548d2',indexName: 'killbill',inputSelector: '#input-search', debug: false, algoliaOptions: {hitsPerPage: 10}});</script>
 </html>
+
