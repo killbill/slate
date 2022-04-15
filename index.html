@@ -1840,7 +1840,7 @@ Known plugins for KB version 0.22.8
 <h3 id='tenant-create-a-tenant'>Create a tenant</h3>
 <p>This API creates a new tenant.</p>
 
-<p>| <img src="https://github.com/killbill/killbill-docs/raw/v3/userguide/assets/img/note-icon.png" alt="note icon" />|<strong>Note:</strong> If you create a tenant using this API, it will <em>not</em> be recognized immediately by KAUI because KAUI will be unable to retrieve the <code>apiSecret</code>. To fix this, you should &quot;create&quot; the same tenant separately after logging into KAUI. This will <em>not</em> create another tenant, but it will synchronize KAUI with the one already created.|</p>
+<p><strong>Note:</strong> If you create a tenant using this API, it will <em>not</em> be recognized immediately by KAUI because KAUI will be unable to retrieve the <code>apiSecret</code>. To fix this, you should &quot;create&quot; the same tenant separately after logging into KAUI. This will <em>not</em> create another tenant, but it will synchronize KAUI with the one already created.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -39164,16 +39164,16 @@ For example:</p>
 <p>The Admin resource offers a set of endpoints such as the following:</p>
 
 <ul>
-<li>Administrative APIs to fix improper states </li>
+<li>Administrative APIs to fix improper states</li>
 <li>Operational APIs such as adding hosts in and out of rotation, clearing internal caches, etc.</li>
 <li>APIs to retrieve low level information from the system</li>
 </ul>
 <h2 id='admin-administrative-apis'>Administrative Apis</h2>
 <p>Miscellaneous administrative APIs</p>
 <h3 id='admin-trigger-an-invoice-generation-for-all-parked-accounts'>Trigger an invoice generation for all parked accounts</h3>
-<p>When the system detects an issue invoicing a customer <code>Account</code>, it will automatically <code>PARK</code> the <code>Account</code> as explained <a href="http://docs.killbill.io/latest/invoice_subsystem.html#_parked_accounts">here</a>. This API can be used after the issues have been resolved to remove accounts from the parked state and generate any outstanding invoices needed. </p>
+<p>When the system detects an issue invoicing a customer <code>Account</code>, it will automatically <code>PARK</code> the <code>Account</code> as explained <a href="http://docs.killbill.io/latest/invoice_subsystem.html#_parked_accounts">here</a>. This API can be used after the issues have been resolved to remove accounts from the parked state and generate any outstanding invoices needed.</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>POST http://127.0.0.1:8080/1.0/kb/admin/invoices</code></p>
 
@@ -39194,16 +39194,16 @@ For example:</p>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.AdminApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">AdminApi</span> <span class="n">adminApi</span><span class="o">;</span>
 
-<span class="n">adminApi</span><span class="o">.</span><span class="na">triggerInvoiceGenerationForParkedAccounts</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span> 
-                                                   <span class="n">limit</span><span class="o">,</span> 
+<span class="n">adminApi</span><span class="o">.</span><span class="na">triggerInvoiceGenerationForParkedAccounts</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span>
+                                                   <span class="n">limit</span><span class="o">,</span>
                                                    <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">ofset</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">trigger_invoice_generation_for_parked_accounts</span><span class="p">(</span><span class="n">ofset</span><span class="p">,</span> 
-                                                                            <span class="n">limit</span><span class="p">,</span> 
-                                                                            <span class="n">user</span><span class="p">,</span> 
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">trigger_invoice_generation_for_parked_accounts</span><span class="p">(</span><span class="n">ofset</span><span class="p">,</span>
+                                                                            <span class="n">limit</span><span class="p">,</span>
+                                                                            <span class="n">user</span><span class="p">,</span>
                                                                             <span class="n">options</span><span class="p">)</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
@@ -39233,7 +39233,7 @@ For example:</p>
 <p>Provides a way to fix the payment state data for a given <code>Payment</code>, if that data becomes corrupted.
 This could happen, for example, if a call to a third party payment gateway times out, leaving the system in an unknwon state.</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>PUT http://127.0.0.1:8080/1.0/kb/admin/payments/{paymentId}/transactions/{paymentTransactionId}</code></p>
 
@@ -39258,13 +39258,13 @@ This could happen, for example, if a call to a third party payment gateway times
 <span class="n">String</span> <span class="n">currentPaymentStateName</span> <span class="o">=</span> <span class="s">"AUTH_FAILED"</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">transactionStatus</span> <span class="o">=</span> <span class="s">"PAYMENT_FAILURE"</span><span class="o">;</span>
 
-<span class="n">AdminPayment</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AdminPayment</span><span class="o">(</span><span class="n">lastSuccessPaymentState</span><span class="o">,</span> 
-                                     <span class="n">currentPaymentStateName</span><span class="o">,</span> 
+<span class="n">AdminPayment</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AdminPayment</span><span class="o">(</span><span class="n">lastSuccessPaymentState</span><span class="o">,</span>
+                                     <span class="n">currentPaymentStateName</span><span class="o">,</span>
                                      <span class="n">transactionStatus</span><span class="o">);</span>
 
-<span class="n">adminApi</span><span class="o">.</span><span class="na">updatePaymentTransactionState</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
-                                       <span class="n">paymentTransactionId</span><span class="o">,</span> 
-                                       <span class="n">body</span><span class="o">,</span> 
+<span class="n">adminApi</span><span class="o">.</span><span class="na">updatePaymentTransactionState</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span>
+                                       <span class="n">paymentTransactionId</span><span class="o">,</span>
+                                       <span class="n">body</span><span class="o">,</span>
                                        <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s2">"6cb944a-b308-4488-b046-4b4d61d375a6"</span>
 <span class="n">transaction_id</span> <span class="o">=</span> <span class="s2">"8gb944a-b308-4488-b046-4b4d61d375r3"</span>
@@ -39273,12 +39273,12 @@ This could happen, for example, if a call to a third party payment gateway times
 <span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">fix_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
-                                                   <span class="n">transaction_id</span><span class="p">,</span> 
-                                                   <span class="n">transaction_status</span><span class="p">,</span> 
-                                                   <span class="n">user</span><span class="p">,</span> 
-                                                   <span class="n">reason</span><span class="p">,</span> 
-                                                   <span class="n">comment</span><span class="p">,</span> 
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">fix_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                   <span class="n">transaction_id</span><span class="p">,</span>
+                                                   <span class="n">transaction_status</span><span class="p">,</span>
+                                                   <span class="n">user</span><span class="p">,</span>
+                                                   <span class="n">reason</span><span class="p">,</span>
+                                                   <span class="n">comment</span><span class="p">,</span>
                                                    <span class="n">options</span><span class="p">)</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
@@ -39287,11 +39287,11 @@ This could happen, for example, if a call to a third party payment gateway times
 <span class="n">body</span> <span class="o">=</span> <span class="n">AdminPayment</span><span class="p">(</span><span class="n">transaction_status</span><span class="o">=</span><span class="s">'AUTH_FAILED'</span><span class="p">)</span>
 <span class="n">created_by</span> <span class="o">=</span> <span class="s">'demo'</span>
 
-<span class="n">adminApi</span><span class="o">.</span><span class="n">update_payment_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
-                                          <span class="n">payment_transaction_id</span><span class="p">,</span> 
-                                          <span class="n">body</span><span class="p">,</span> 
+<span class="n">adminApi</span><span class="o">.</span><span class="n">update_payment_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                          <span class="n">payment_transaction_id</span><span class="p">,</span>
+                                          <span class="n">body</span><span class="p">,</span>
                                           <span class="n">created_by</span><span class="p">,</span>
-                                          <span class="n">api_key</span><span class="p">,</span> 
+                                          <span class="n">api_key</span><span class="p">,</span>
                                           <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
 <blockquote>
@@ -39320,7 +39320,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h3 id='admin-invalidate-a-specific-cache-or-invalidate-all-caches'>Invalidate a specific cache, or invalidate all caches</h3>
 <p>Invalidates a specified cache. If no cache is specified, it invalidates all Kill Bill caches on the server.</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>DELETE http://127.0.0.1:8080/1.0/kb/admin/cache</code></p>
 
@@ -39381,7 +39381,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h3 id='admin-invalidate-caches-for-an-account'>Invalidate Caches for an Account</h3>
 <p>Invalidates all Kill Bill caches on the server associated with a specific Account</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>DELETE http://127.0.0.1:8080/1.0/kb/admin/cache/accounts/{accountId}</code></p>
 
@@ -39427,7 +39427,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h3 id='admin-invalidate-caches-for-a-tenant'>Invalidate Caches for a Tenant</h3>
 <p>Invalidates all Kill Bill caches on the server associated with this Tenant</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>DELETE http://127.0.0.1:8080/1.0/kb/admin/cache/tenants</code></p>
 
@@ -39469,7 +39469,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h3 id='admin-put-the-host-back-into-rotation'>Put the host back into rotation</h3>
 <p>Adds a server back into the rotation after it has been removed.</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>PUT http://127.0.0.1:8080/1.0/kb/admin/healthcheck</code></p>
 
@@ -39512,7 +39512,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h3 id='admin-remove-a-server-from-the-rotation'>Remove a server from the rotation</h3>
 <p>Removes a server from the rotation during a deployment.</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>DELETE http://127.0.0.1:8080/1.0/kb/admin/healthcheck</code></p>
 
@@ -39556,7 +39556,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h3 id='admin-get-queue-entries'>Get queue entries</h3>
 <p>Returns low level details about queue entries. Results can be requested for a specific account or all accounts; for a specific queue or all queues, and for a specific service or all services. In addition optional types of events may be specified, including history, for a specified date range; in processing; bus events; and notifications.</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
 <p><code>GET http://127.0.0.1:8080/1.0/kb/admin/queues</code></p>
 
@@ -39581,15 +39581,15 @@ This could happen, for example, if a call to a third party payment gateway times
 
 
 <span class="n">adminApi</span><span class="o">.</span><span class="na">getQueueEntries</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
-                         <span class="n">queueName</span><span class="o">,</span> 
-                         <span class="n">serviceName</span><span class="o">,</span> 
-                         <span class="n">withHistory</span><span class="o">,</span> 
-                         <span class="n">minDate</span><span class="o">,</span> 
-                         <span class="n">maxDate</span><span class="o">,</span> 
-                         <span class="n">withInProcessing</span><span class="o">,</span> 
-                         <span class="n">withBusEvents</span><span class="o">,</span> 
-                         <span class="n">withNotifications</span><span class="o">,</span> 
-                         <span class="n">outputStream</span><span class="o">,</span> 
+                         <span class="n">queueName</span><span class="o">,</span>
+                         <span class="n">serviceName</span><span class="o">,</span>
+                         <span class="n">withHistory</span><span class="o">,</span>
+                         <span class="n">minDate</span><span class="o">,</span>
+                         <span class="n">maxDate</span><span class="o">,</span>
+                         <span class="n">withInProcessing</span><span class="o">,</span>
+                         <span class="n">withBusEvents</span><span class="o">,</span>
+                         <span class="n">withNotifications</span><span class="o">,</span>
+                         <span class="n">outputStream</span><span class="o">,</span>
                          <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">account_id</span> <span class="o">=</span> <span class="s2">"864c1418-e768-4cd5-a0db-67537144b685"</span>
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">get_queues_entries</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
