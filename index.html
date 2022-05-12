@@ -563,6 +563,9 @@
                       <a href="#account-blocking-state" class="toc-h2 toc-link" data-title="Blocking State">Blocking State</a>
                           <ul class="toc-list-h3">
                                 <li>
+                                  <a href="#account-blocking-state-resource" class="toc-h3 toc-link" data-title="Account">Blocking State Resource</a>
+                                </li>
+                                <li>
                                   <a href="#account-block-an-account" class="toc-h3 toc-link" data-title="Account">Block an account</a>
                                 </li>
                                 <li>
@@ -807,7 +810,7 @@
                                   <a href="#bundle-retrieve-a-bundle-by-external-key" class="toc-h3 toc-link" data-title="Bundle">Retrieve a bundle by external key</a>
                                 </li>
                                 <li>
-                                  <a href="#bundle-update-a-bundle-externalkey" class="toc-h3 toc-link" data-title="Bundle">Update a bundle externalKey</a>
+                                  <a href="#bundle-update-a-bundle-external-key" class="toc-h3 toc-link" data-title="Bundle">Update a bundle external key</a>
                                 </li>
                           </ul>
                     </li>
@@ -2504,7 +2507,7 @@ is used internally by the system to keep track of all the per-tenant configurati
 
 <span class="n">String</span> <span class="n">keyPrefix</span> <span class="o">=</span> <span class="s">"PER_TENANT"</span><span class="o">;</span>
 
-<span class="n">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getAllPluginConfiguration</span><span class="o">(</span><span class="n">keyPrefix</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+<span class="n">TenantKeyValues</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getAllPluginConfiguration</span><span class="o">(</span><span class="n">keyPrefix</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">key_prefix</span> <span class="o">=</span> <span class="s2">"PER_TENANT"</span>
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">search_tenant_config</span><span class="p">(</span><span class="n">key_prefix</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
@@ -9464,13 +9467,14 @@ several such emails for one customer account.</p>
 <span class="n">Boolean</span> <span class="n">withMigrationInvoices</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not fetch migrated invoice - if any</span>
 <span class="n">Boolean</span> <span class="n">unpaidInvoicesOnly</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not restrict to unpaid invoices</span>
 <span class="n">Boolean</span> <span class="n">includeVoidedInvoices</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not include void invoices</span>
-
+<span class="n">String</span> <span class="n">invoicesFilter</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Invoices</span> <span class="n">invoices</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getInvoicesForAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
                                                      <span class="n">startDate</span><span class="o">,</span> 
                                                      <span class="n">endDate</span><span class="o">,</span>
                                                      <span class="n">withMigrationInvoices</span><span class="o">,</span> 
                                                      <span class="n">unpaidInvoicesOnly</span><span class="o">,</span> 
                                                      <span class="n">includeVoidedInvoices</span><span class="o">,</span> 
+                                                     <span class="n">invoicesFilter</span><span class="o">,</span>
                                                      <span class="n">AuditLevel</span><span class="o">.</span><span class="na">FULL</span><span class="o">,</span> 
                                                      <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">account</span><span class="p">.</span><span class="nf">invoices</span><span class="p">(</span><span class="n">with_items</span><span class="p">,</span>
@@ -11338,6 +11342,66 @@ communicating with the payment gateway. The transaction could be an authorizatio
 </ul>
 
 <p>In Scenario 1, billing is blocked between T1 and T2, while entitlement is blocked between T2 and T3. In Scenario 2 however, billing is blocked between T1 and T3, while entitlement is blocked between T2 and T4.</p>
+<h3 id='account-blocking-state-resource'>Blocking State Resource</h3>
+<p>A Blocking State Resource represents a blocking state. It has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>blockedId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for this blocking state id</td>
+</tr>
+<tr>
+<td><strong>stateName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Name of the blocking state</td>
+</tr>
+<tr>
+<td><strong>service</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Name of the service that inserts the blocking state</td>
+</tr>
+<tr>
+<td><strong>isBlockChange</strong></td>
+<td>boolean</td>
+<td>user</td>
+<td>Boolean flag that indicates whether changes should be blocked</td>
+</tr>
+<tr>
+<td><strong>isBlockEntitlement</strong></td>
+<td>boolean</td>
+<td>user</td>
+<td>Boolean flag that indicates whether the entitlement should be blocked</td>
+</tr>
+<tr>
+<td><strong>isBlockBilling</strong></td>
+<td>boolean</td>
+<td>user</td>
+<td>Boolean flag that indicates whether billing should be blocked</td>
+</tr>
+<tr>
+<td><strong>effectiveDate</strong></td>
+<td>DateTime</td>
+<td>user</td>
+<td>DateTime that the change should be effective</td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Type of blocking state. Possible values are SUBSCRIPTION, SUBSCRIPTION_BUNDLE and ACCOUNT</td>
+</tr>
+</tbody></table>
 <h3 id='account-block-an-account'>Block an account</h3>
 <p>Add a <code>BlockingState</code> event for this account.</p>
 
@@ -11435,7 +11499,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A JSON string representing the blocking state object to be added. For details on this resource see <a href="#blocking-state">blocking state</a>.</p>
+<p>A JSON string representing the blocking state object to be added. For details on this resource see <a href="#account-blocking-state-resource">blocking state</a>.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -15547,8 +15611,6 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 </tr>
 </tbody></table>
 
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
-
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
@@ -15992,7 +16054,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <td>list of subscription events tracking what happened (see notes below)</td>
 </tr>
 <tr>
-<td><strong>price</strong></td>
+<td><strong>prices</strong></td>
 <td>list</td>
 <td>user</td>
 <td>list of prices, one for each phase in the plan</td>
@@ -16001,7 +16063,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <td><strong>priceOverrides</strong></td>
 <td>list</td>
 <td>user</td>
-<td>list of prices if this subscription has price overrides</td>
+<td>list of prices if this subscription has price overrides (see notes below)</td>
 </tr>
 </tbody></table>
 
@@ -16034,7 +16096,17 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <p><strong><code>billCycleDayLocal</code></strong>: this value is either the overridden subscription billCycleDay (in case of BCD change) or the value at the subscription, bundle or account level (depending on the catalog <a href="http://docs.killbill.io/latest/userguide_subscription.html#_billing_alignment_rules">billing alignments</a>). For <code>ACCOUNT</code> billing alignments, if the account level billCycleDay hasn&#39;t been set yet, the value returned would be null.</p>
 
 <p><strong><code>Events</code></strong>: possible event types are START_ENTITLEMENT, START_BILLING, PAUSE_ENTITLEMENT, PAUSE_BILLING, RESUME_ENTITLEMENT, RESUME_BILLING, PHASE, CHANGE, STOP_ENTITLEMENT, STOP_BILLING, SERVICE_STATE_CHANGE</p>
-<h2 id='subscription-subscriptions'>Subscriptions</h2>
+
+<p><strong><code>priceOverrides</code></strong>:  List of overridden prices for specific plan phases. Can be specified to override the fixed/recurring price in the catalog for a particular phase. For example, suppose you are creating a subscription corresponding to a plan that has an <code>EVERGREEN</code> phase with a recurring price of <code>$100</code>. You can specify an overridden price of <code>200</code> while creating the subscription by specifying a <code>priceOverrides</code> object as follows:</p>
+<pre class="highlight shell tab-shell"><code><span class="s2">"priceOverrides"</span>: <span class="o">[</span>
+        <span class="o">{</span>
+            <span class="s2">"planName"</span>: <span class="s2">"shotgun-monthly"</span>,
+            <span class="s2">"phaseType"</span>: <span class="s2">"DISCOUNT"</span>,
+            <span class="s2">"fixedPrice"</span>: null,
+            <span class="s2">"recurringPrice"</span>: 150.00,
+            <span class="s2">"usagePrices"</span>: <span class="o">[]</span>
+        <span class="o">}</span>
+</code></pre><h2 id='subscription-subscriptions'>Subscriptions</h2>
 <p>These endpoints support the basic CRUD operations on Subscriptions.</p>
 <h3 id='subscription-create-a-subscription'>Create a subscription</h3>
 <p>This API creates a base product subscription. It also creates a bundle to contain the subscription. See <a href="https://killbill.github.io/slate/#bundle">Bundle</a> for further information.</p>
@@ -16046,7 +16118,9 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -v <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>
+<span class="c"># With planName</span>
+curl -v <span class="se">\</span>
     -X POST <span class="se">\</span>
     -u admin:password <span class="se">\</span>
     -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
@@ -16060,7 +16134,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
         }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span> 
 
-    OR
+<span class="c"># With productName, productCategory and billingPeriod</span>
 
     curl -v <span class="se">\</span>
     -X POST <span class="se">\</span>
@@ -16079,6 +16153,36 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
         }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span>    
 
+<span class="c"># With priceOverrides</span>
+
+    curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'{ 
+            "accountId": "187f9270-7aa0-4db5-81f7-857e8e59fd9a",
+            "planName": "shotgun-monthly",
+             "prices": [
+        {
+            "planName": "shotgun-monthly",
+            "phaseType": "DISCOUNT",
+            "fixedPrice": 150.00,
+            "recurringPrice": null,
+            "usagePrices": []
+        },
+        {
+            "planName": "shotgun-monthly",
+            "phaseType": "EVERGREEN",
+            "fixedPrice": null,
+            "recurringPrice": 400.00,
+            "usagePrices": []
+        }       
+    ]
+        }'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span> 
 
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
@@ -16094,6 +16198,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <span class="n">LocalDate</span> <span class="n">billingDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">renameKeyIfExistsAndUnused</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> 
 <span class="n">Boolean</span> <span class="n">migrated</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">skipResponse</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 <span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
 <span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -16102,7 +16207,8 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                                                                <span class="n">entitlementDate</span><span class="o">,</span> 
                                                                <span class="n">billingDate</span><span class="o">,</span> 
                                                                <span class="n">renameKeyIfExistsAndUnused</span><span class="o">,</span> 
-                                                               <span class="n">migrated</span><span class="o">,</span> 
+                                                               <span class="n">migrated</span><span class="o">,</span>
+                                                               <span class="n">skipResponse</span><span class="o">,</span>  
                                                                <span class="n">callCompletion</span><span class="o">,</span> 
                                                                <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span><span class="o">,</span> 
                                                                <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
@@ -16461,6 +16567,7 @@ curl -v <span class="se">\</span>
 <span class="n">LocalDate</span> <span class="n">entitlementDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">LocalDate</span> <span class="n">billingDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">migrated</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">skipResponse</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">renameKeyIfExistsAndUnused</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 <span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
@@ -16470,6 +16577,7 @@ curl -v <span class="se">\</span>
                                                                    <span class="n">entitlementDate</span><span class="o">,</span> 
                                                                    <span class="n">billingDate</span><span class="o">,</span> 
                                                                    <span class="n">migrated</span><span class="o">,</span> 
+                                                                   <span class="n">skipResponse</span><span class="o">,</span>
                                                                    <span class="n">renameKeyIfExistsAndUnused</span><span class="o">,</span> 
                                                                    <span class="n">callCompletion</span><span class="o">,</span> 
                                                                    <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span><span class="o">,</span> 
@@ -17140,6 +17248,7 @@ curl -v <span class="se">\</span>
 <span class="n">LocalDate</span> <span class="n">billingDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">renameKeyIfExistsAndUnused</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">migrated</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+<span class="n">Boolean</span> <span class="n">skipResponse</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 <span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
 <span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -17149,6 +17258,7 @@ curl -v <span class="se">\</span>
                                                                  <span class="n">billingDate</span><span class="o">,</span> 
                                                                  <span class="n">renameKeyIfExistsAndUnused</span><span class="o">,</span> 
                                                                  <span class="n">migrated</span><span class="o">,</span> 
+                                                                 <span class="n">skipResponse</span><span class="o">,</span> 
                                                                  <span class="n">callCompletion</span><span class="o">,</span> 
                                                                 <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span>                                                               <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">bulk_subscription_list</span> <span class="o">=</span> <span class="p">[</span>
@@ -19391,8 +19501,6 @@ If a subscription is created with a future date and if the cancel method is invo
 </tr>
 </tbody></table>
 
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
-
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
@@ -19649,8 +19757,6 @@ If a subscription is created with a future date and if the cancel method is invo
 <p><strong>Returns</strong></p>
 
 <p>If successful, returns a 201 status code. In addition, a Location header is returned giving the URL to retrieve the tags associated with the subscription.</p>
-
-<p>Retrieve all tags</p>
 <h3 id='subscription-retrieve-subscription-tags'>Retrieve subscription tags</h3>
 <p>Retrieve all tags attached to this subscription.</p>
 
@@ -19760,8 +19866,6 @@ If a subscription is created with a future date and if the cancel method is invo
 <td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -20011,11 +20115,11 @@ If a subscription is created with a future date and if the cancel method is invo
 
 <p>If successful, returns a status code of 200 and a list of audit logs with history.</p>
 <h1 id='bundle'>Bundle</h1>
-<p>A Bundle is a collection of subscriptions. Grouping certain subscriptions into a bundle is useful to ensure
+<p>A Bundle (also known as Subscription Bundle) is a collection of subscriptions. Grouping certain subscriptions into a bundle is useful to ensure
 that certain operations propagate to the group. A common example is cancellation. When cancelling a <code>BASE</code> subscription, which is part of a bundle,
 any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled automatically.</p>
 
-<p>A Bundle is automatically created by the system when creating the intial (BASE) subscription. To add additional subscriptions in the same bundle, one must specify the <code>bundleId</code> for the bundle previously created.</p>
+<p>A Bundle is automatically created by the system when creating the initial (BASE) subscription. To add additional subscriptions in the same bundle, one must specify the <code>bundleId</code> for the bundle previously created.</p>
 <h2 id='bundle-bundle-resource'>Bundle Resource</h2>
 <p>The <code>Bundle</code> resource represents a bundle. The attributes contained in this resource are the following:</p>
 
@@ -20693,11 +20797,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -20709,7 +20811,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <p>Retrieves the details information for the <code>Bundle</code> using its <code>externalKey</code>.</p>
 
-<p><code>GET http://127.0.0.1:8080/1.0/kb/bundles</code></p>
+<p><code>GET http://127.0.0.1:8080/1.0/kb/bundles?externalKey=&lt;external_key&gt;</code></p>
 
 <blockquote>
 <p>Example Request:</p>
@@ -21324,16 +21426,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
-
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a subscription resource object.</p>
-<h3 id='bundle-update-a-bundle-externalkey'>Update a bundle externalKey</h3>
+<p>If successful, returns a status code of 200 and a bundle resource object.</p>
+<h3 id='bundle-update-a-bundle-external-key'>Update a bundle external key</h3>
 <p>THis API sets a new external key for a bundle</p>
 
 <p><strong>HTTP Request</strong> </p>
@@ -21355,7 +21455,10 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     -d <span class="s1">'{ "bundleId": "2cd2f4b5-a1c0-42a7-924f-64c7b791332d", "externalKey": "another_external_key"}'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/renameKey"</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>    
+</code></pre><pre class="highlight java tab-java"><code><span class="n">String</span> <span class="n">externalKey</span> <span class="o">=</span> <span class="s">"another_external_key"</span><span class="o">;</span>
+<span class="n">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Bundle</span><span class="o">();</span>
+<span class="n">bundle</span><span class="o">.</span><span class="na">setExternalKey</span><span class="o">(</span><span class="n">externalKey</span><span class="o">);</span>
+<span class="n">bundleApi</span><span class="o">.</span><span class="na">renameExternalKey</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> <span class="n">bundle</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
 <span class="n">bundle</span><span class="p">.</span><span class="nf">external_key</span> <span class="o">=</span> <span class="s2">"new_external_key"</span>
@@ -21425,7 +21528,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     -d <span class="s1">'{ "accountId": "8785164f-b5d7-4da1-9495-33f5105e8d80", "bundleId": "2cd2f4b5-a1c0-42a7-924f-64c7b791332d"}'</span> <span class="se">\</span>
-    <span class="s2">"http://127.0.01:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d"</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.BundleApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">BundleApi</span> <span class="n">bundleApi</span><span class="o">;</span>
 
@@ -21729,7 +21832,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A bundle resource containing the new account id</p>
+<p>A bundle resource containing at least the new account id</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -21754,19 +21857,17 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>IMMEDIATE</td>
-<td>When billing should occur (see below)</td>
+<td>When billing should occur. Possible values are START_OF_TERM, END_OF_TERM, or IMMEDIATE</td>
 </tr>
 </tbody></table>
 
-<p><strong>billingPolicy</strong>: options are START_OF_TERM, END_OF_TERM, or IMMEDIATE.</p>
-
 <p><strong>Response</strong></p>
 
-<p>IF successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a status code of 201. In addition, a Location header containing the bundleId in the target account is returned. </p>
 <h2 id='bundle-blocking-state'>Blocking State</h2>
 <p>See section <a href="#account-blocking-state">Account Blocking State</a> for an introduction.</p>
 <h3 id='bundle-pause-a-bundle'>Pause a bundle</h3>
-<p>Provides a simple interface to pause both billing and entitlement for all subscriptions in a bundle. The <strong>state</strong> attribute in the bundle resource is set to BLOCKED.</p>
+<p>Provides a simple interface to pause both billing and entitlement for all subscriptions in a bundle. The <strong>state</strong> attribute in the bundle resource is set to ENT_BLOCKED.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -21775,7 +21876,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>  -X PUT <span class="se">\</span>
+<pre class="highlight shell tab-shell"><code>  curl -X PUT <span class="se">\</span>
     -u admin:password <span class="se">\</span>
     -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
@@ -21785,7 +21886,10 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/pause"</span> <span class="se">\</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>    
+</code></pre><pre class="highlight java tab-java"><code><span class="n">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"96a2ba35-de50-4db9-98bb-938cf1e5f616"</span><span class="o">);</span>
+<span class="n">LoalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">bundleApi</span><span class="o">.</span><span class="na">pauseBundle</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span> <span class="n">pluginProperty</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
 <span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
@@ -21837,7 +21941,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h3 id='bundle-resume-a-bundle'>Resume a bundle</h3>
-<p>Provides a simple interface to resume both billing and entitlement for all subscriptions in the bundle. The state of the bundle resource is set to ACTIVE.</p>
+<p>Provides a simple interface to resume both billing and entitlement for all subscriptions in the bundle. The state of the bundle resource is set to ENT_CLEAR.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -21857,7 +21961,10 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/resume"</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>    
+</code></pre><pre class="highlight java tab-java"><code><span class="n">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"96a2ba35-de50-4db9-98bb-938cf1e5f616"</span><span class="o">);</span>
+<span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">bundleApi</span><span class="o">.</span><span class="na">resumeBundle</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span> <span class="n">pluginProperty</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>    
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
 <span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
@@ -22149,7 +22256,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned giving the URL to retrieve the custom fields associated with the bundle.</p>
 <h3 id='bundle-retrieve-bundle-custom-fields'>Retrieve bundle custom fields</h3>
 <p>Retrieves any custom field objects associated with the specified bundle</p>
 
@@ -22242,11 +22349,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -22282,9 +22387,10 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">CustomField</span> <span class="n">customFieldModified</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomField</span><span class="o">();</span>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setCustomFieldId</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setValue</span><span class="o">(</span><span class="s">"NewValue"</span><span class="o">);</span>
-
+<span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
+<span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">customFieldModified</span><span class="o">);</span>
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">modifyBundleCustomFields</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
-                                   <span class="n">customFieldModified</span><span class="o">,</span> 
+                                   <span class="n">customFields</span><span class="o">,</span> 
                                    <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
@@ -22316,6 +22422,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
+
+<p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
+
+<p>Although the <code>fieldName</code> and <code>objectType</code> can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -22347,9 +22461,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <span class="n">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">deleteBundleCustomFields</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
-                                   <span class="n">customFieldsId</span><span class="o">,</span> 
+                                   <span class="n">customFieldsList</span><span class="o">,</span> 
                                    <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field_id</span> <span class="o">=</span> <span class="n">custom_field</span><span class="p">.</span><span class="nf">id</span>
 
@@ -22392,7 +22506,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>yes</td>
 <td>none</td>
-<td>List of object IDs for the custom fields that should be deleted.</td>
+<td>Custom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate <strong>customField</strong> parameter corresponding to each field</td>
 </tr>
 </tbody></table>
 
@@ -22406,7 +22520,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <p>Let&#39;s assume there is an existing <code>user</code> tagDefintion already created with <code>tagDefinitionId</code>=<code>353752dd-9041-4450-b782-a8bb03a923c8</code>.</p>
 <h3 id='bundle-add-tags-to-bundle'>Add tags to bundle</h3>
-<p>This API adds one or more tags to a subscription. The tag definitions must already exist.</p>
+<p>This API adds one or more tags to a subscription bundle. The tag definitions must already exist.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -22496,7 +22610,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned giving the URL to retrieve the tags associated with the bundle.</p>
 <h3 id='bundle-retrieve-bundle-tags'>Retrieve bundle tags</h3>
 <p>Retrieve all tags attached to this bundle.</p>
 
@@ -22613,11 +22727,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -22680,8 +22792,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 </code></pre>
 <p><strong>Query Parameters</strong></p>
 
-<p><strong>Query Parameters</strong></p>
-
 <table><thead>
 <tr>
 <th>Name</th>
@@ -22696,7 +22806,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>array of strings</td>
 <td>true</td>
 <td>none</td>
-<td>List of tag definition IDs identifying the tags that should be removed.</td>
+<td>A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag.</td>
 </tr>
 </tbody></table>
 
@@ -23592,11 +23702,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -24259,11 +24367,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -26423,7 +26529,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <ul>
 <li>We cannot VOID an invoice that was partially or fully paid</li>
 <li>We cannot VOID an invoice if it contains positive credit items (<code>CBA_ADJ</code> &gt;0), unless such credit was not used, i.e there is enough credit left on the account.</li>
-<li>We cannot VOID an invoice if it was repaired, i.e there exists a <code>REPAIR_ADJ</code> item pointing to an item inside that invoice</li>
+<li>We cannot VOID an invoice if it was repaired, i.e there exists a <code>REPAIR_ADJ</code> item pointing to an item inside that invoice.</li>
 </ul>
 
 <p><strong>HTTP Request</strong> </p>
@@ -26628,7 +26734,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <li>Deleting a positive <code>CBA_ADJ</code> (credit generation), may lead the system to reclaim portion of the used credit, possibly leaving some invoices with a balance. Example:</li>
 </ol>
 
-<p>Given an invoice, I1,  where user added some credit ($12), we would see the following items: {<code>CREDIT_ADJ</code>: -12, <code>CBA_ADJ</code>: +12}. Given another invoice, I2, where the system invoiced for a recurring subscription, and where some of this credit was consumed, we would see the following items: {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: -10}. Deleting the <code>CBA_ADJ</code> from I1, would lead to the following resulting invoices:  I1 {<code>CREDIT_ADJ</code>: 0, <code>CBA_ADJ</code>: 0} and I2 {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: 0}. The system zeroed-out the credit generation and the part that was used, and as a result I2 would be left with a balance of +10.</p>
+<p>Given an invoice, I1,  where user added some credit ($12), we would see the following items: {<code>CREDIT_ADJ</code>: -12, <code>CBA_ADJ</code>: +12}. Given another invoice, I2, where the system invoiced for a recurring subscription, and where some of this credit was consumed, we would see the following items: {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: -10}. Deleting the <code>CBA_ADJ</code> from I1, would lead to the following resulting invoices:  I1 {<code>CREDIT_ADJ</code>: 0, <code>CBA_ADJ</code>: 0} and I2 {<code>RECURRING</code>: +10, <code>CBA_ADJ</code>: 0}. The system zeroed-out the credit generation and the part that was used, and as a result I2 would be left with a balance of +10. Deleting the <code>CBA_ADJ</code> from I2 on the other hand would lead to the following invoice:  I2 {<code>RECURRING</code>: +20, <code>CBA_ADJ</code>: 0} . </p>
 
 <ol>
 <li>System generated credit</li>
@@ -27178,10 +27284,12 @@ curl -v <span class="se">\</span>
 <span class="n">invoicePayment</span><span class="o">.</span><span class="na">setTargetInvoiceId</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">);</span>
 
 <span class="n">Boolean</span> <span class="n">externalPayment</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will use a external payment method</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">controlPluginNames</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">InvoicePayment</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createInstantPayment</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
                                                         <span class="n">invoicePayment</span><span class="o">,</span> 
                                                         <span class="n">externalPayment</span><span class="o">,</span> 
+                                                        <span class="n">controlPluginNames</span><span class="o">,</span> 
                                                         <span class="n">pluginProperty</span><span class="o">,</span> 
                                                         <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">payment</span>                  <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoicePayment</span><span class="p">.</span><span class="nf">new</span>
@@ -27700,11 +27808,9 @@ curl -v <span class="se">\</span>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -28084,11 +28190,9 @@ curl -v <span class="se">\</span>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
@@ -34030,12 +34134,118 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <h3 id='payment-retrieve-payment-attempt-audit-logs-with-history-by-id'>Retrieve payment attempt audit logs with history by id</h3>
 <p>Retrieves a list of audit log records showing events that occurred related to a specified payment attempt. History information is included with each record.</p>
 
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/payments/attempts/{payment_attempt_id}/auditLogsWithHistory</code></p>
+
 <blockquote>
 <p>Example Request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    -H <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    -H <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/attempts/&lt;payment_attempt_id&gt;/auditLogsWithHistory'</span>  
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
 
+<span class="n">UUID</span> <span class="n">paymentAttemptId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"2706b8c6-97f2-41b7-b9c5-de23726bb399"</span><span class="o">);</span>
+<span class="n">AuditLogs</span> <span class="n">logs</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">getPaymentAttemptAuditLogsWithHistory</span><span class="o">(</span><span class="n">paymentAttemptId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight ruby tab-ruby"><code></code></pre>
+<blockquote>
 <p>Example Response:</p>
 </blockquote>
-
+<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json
+<span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">"changeType"</span>: <span class="s2">"INSERT"</span>,
+    <span class="s2">"changeDate"</span>: <span class="s2">"2022-05-02T11:15:52.000Z"</span>,
+    <span class="s2">"objectType"</span>: <span class="s2">"PAYMENT_ATTEMPT"</span>,
+    <span class="s2">"objectId"</span>: <span class="s2">"2706b8c6-97f2-41b7-b9c5-de23726bb399"</span>,
+    <span class="s2">"changedBy"</span>: <span class="s2">"admin"</span>,
+    <span class="s2">"reasonCode"</span>: null,
+    <span class="s2">"comments"</span>: null,
+    <span class="s2">"userToken"</span>: <span class="s2">"b65afb87-9e43-4ffe-a492-84ac5d5f10a9"</span>,
+    <span class="s2">"history"</span>: <span class="o">{</span>
+      <span class="s2">"id"</span>: null,
+      <span class="s2">"createdDate"</span>: <span class="s2">"2022-05-02T11:15:52.000Z"</span>,
+      <span class="s2">"updatedDate"</span>: <span class="s2">"2022-05-02T11:15:52.000Z"</span>,
+      <span class="s2">"recordId"</span>: 11214,
+      <span class="s2">"accountRecordId"</span>: 2306,
+      <span class="s2">"tenantRecordId"</span>: 1,
+      <span class="s2">"accountId"</span>: <span class="s2">"bdcd8ed0-ffc6-42db-88eb-cf1ee504b9a8"</span>,
+      <span class="s2">"paymentMethodId"</span>: <span class="s2">"82e375db-4aff-413e-9b52-f70803ea3bc5"</span>,
+      <span class="s2">"paymentExternalKey"</span>: <span class="s2">"1833cad4-4b10-432e-959b-01dbf3ca0596"</span>,
+      <span class="s2">"transactionId"</span>: null,
+      <span class="s2">"transactionExternalKey"</span>: <span class="s2">"92f17f72-c03f-427b-95eb-a959451c37b8"</span>,
+      <span class="s2">"transactionType"</span>: <span class="s2">"PURCHASE"</span>,
+      <span class="s2">"stateName"</span>: <span class="s2">"INIT"</span>,
+      <span class="s2">"amount"</span>: 10,
+      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+      <span class="s2">"pluginName"</span>: <span class="s2">"__INVOICE_PAYMENT_CONTROL_PLUGIN__"</span>,
+      <span class="s2">"pluginProperties"</span>: <span class="s2">"WlYAAAJbXQ=="</span>,
+      <span class="s2">"historyTableName"</span>: <span class="s2">"PAYMENT_ATTEMPT_HISTORY"</span>,
+      <span class="s2">"tableName"</span>: <span class="s2">"PAYMENT_ATTEMPTS"</span>
+    <span class="o">}</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"changeType"</span>: <span class="s2">"UPDATE"</span>,
+    <span class="s2">"changeDate"</span>: <span class="s2">"2022-05-02T11:15:52.000Z"</span>,
+    <span class="s2">"objectType"</span>: <span class="s2">"PAYMENT_ATTEMPT"</span>,
+    <span class="s2">"objectId"</span>: <span class="s2">"2706b8c6-97f2-41b7-b9c5-de23726bb399"</span>,
+    <span class="s2">"changedBy"</span>: <span class="s2">"admin"</span>,
+    <span class="s2">"reasonCode"</span>: null,
+    <span class="s2">"comments"</span>: null,
+    <span class="s2">"userToken"</span>: <span class="s2">"b65afb87-9e43-4ffe-a492-84ac5d5f10a9"</span>,
+    <span class="s2">"history"</span>: <span class="o">{</span>
+      <span class="s2">"id"</span>: null,
+      <span class="s2">"createdDate"</span>: <span class="s2">"2022-05-02T11:15:52.000Z"</span>,
+      <span class="s2">"updatedDate"</span>: <span class="s2">"2022-05-02T11:15:52.000Z"</span>,
+      <span class="s2">"recordId"</span>: 11214,
+      <span class="s2">"accountRecordId"</span>: 2306,
+      <span class="s2">"tenantRecordId"</span>: 1,
+      <span class="s2">"accountId"</span>: <span class="s2">"bdcd8ed0-ffc6-42db-88eb-cf1ee504b9a8"</span>,
+      <span class="s2">"paymentMethodId"</span>: <span class="s2">"82e375db-4aff-413e-9b52-f70803ea3bc5"</span>,
+      <span class="s2">"paymentExternalKey"</span>: <span class="s2">"1833cad4-4b10-432e-959b-01dbf3ca0596"</span>,
+      <span class="s2">"transactionId"</span>: <span class="s2">"92f17f72-c03f-427b-95eb-a959451c37b8"</span>,
+      <span class="s2">"transactionExternalKey"</span>: <span class="s2">"92f17f72-c03f-427b-95eb-a959451c37b8"</span>,
+      <span class="s2">"transactionType"</span>: <span class="s2">"PURCHASE"</span>,
+      <span class="s2">"stateName"</span>: <span class="s2">"SUCCESS"</span>,
+      <span class="s2">"amount"</span>: 10,
+      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+      <span class="s2">"pluginName"</span>: <span class="s2">"__INVOICE_PAYMENT_CONTROL_PLUGIN__"</span>,
+      <span class="s2">"pluginProperties"</span>: <span class="s2">"WlYAADxbeyJJUENEX0lOVk9JQ0VfSUQiOiI3MzdmNDRhMi1iYTljLTRjNjQtOTQzYi04NWRlMjEyODMxYWMifV0="</span>,
+      <span class="s2">"historyTableName"</span>: <span class="s2">"PAYMENT_ATTEMPT_HISTORY"</span>,
+      <span class="s2">"tableName"</span>: <span class="s2">"PAYMENT_ATTEMPTS"</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">]</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="o">[</span><span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
+    <span class="nl">changeType:</span> <span class="n">INSERT</span>
+    <span class="nl">changeDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">02</span><span class="nl">T11:</span><span class="mi">15</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span>
+    <span class="nl">objectType:</span> <span class="n">PAYMENT_ATTEMPT</span>
+    <span class="nl">objectId:</span> <span class="mi">2706</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">97</span><span class="n">f2</span><span class="o">-</span><span class="mi">41</span><span class="n">b7</span><span class="o">-</span><span class="n">b9c5</span><span class="o">-</span><span class="n">de23726bb399</span>
+    <span class="nl">changedBy:</span> <span class="n">admin</span>
+    <span class="nl">reasonCode:</span> <span class="kc">null</span>
+    <span class="nl">comments:</span> <span class="kc">null</span>
+    <span class="nl">userToken:</span> <span class="n">b65afb87</span><span class="o">-</span><span class="mi">9</span><span class="n">e43</span><span class="o">-</span><span class="mi">4</span><span class="n">ffe</span><span class="o">-</span><span class="n">a492</span><span class="o">-</span><span class="mi">84</span><span class="n">ac5d5f10a9</span>
+    <span class="nl">history:</span> <span class="o">{</span><span class="n">id</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">createdDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">02</span><span class="nl">T11:</span><span class="mi">15</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">updatedDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">02</span><span class="nl">T11:</span><span class="mi">15</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">recordId</span><span class="o">=</span><span class="mi">11214</span><span class="o">,</span> <span class="n">accountRecordId</span><span class="o">=</span><span class="mi">2306</span><span class="o">,</span> <span class="n">tenantRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">accountId</span><span class="o">=</span><span class="n">bdcd8ed0</span><span class="o">-</span><span class="n">ffc6</span><span class="o">-</span><span class="mi">42</span><span class="n">db</span><span class="o">-</span><span class="mi">88</span><span class="n">eb</span><span class="o">-</span><span class="n">cf1ee504b9a8</span><span class="o">,</span> <span class="n">paymentMethodId</span><span class="o">=</span><span class="mi">82</span><span class="n">e375db</span><span class="o">-</span><span class="mi">4</span><span class="n">aff</span><span class="o">-</span><span class="mi">413</span><span class="n">e</span><span class="o">-</span><span class="mi">9</span><span class="n">b52</span><span class="o">-</span><span class="n">f70803ea3bc5</span><span class="o">,</span> <span class="n">paymentExternalKey</span><span class="o">=</span><span class="mi">1833</span><span class="n">cad4</span><span class="o">-</span><span class="mi">4</span><span class="n">b10</span><span class="o">-</span><span class="mi">432</span><span class="n">e</span><span class="o">-</span><span class="mi">959</span><span class="n">b</span><span class="o">-</span><span class="mo">01</span><span class="n">dbf3ca0596</span><span class="o">,</span> <span class="n">transactionId</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">transactionExternalKey</span><span class="o">=</span><span class="mi">92</span><span class="n">f17f72</span><span class="o">-</span><span class="n">c03f</span><span class="o">-</span><span class="mi">427</span><span class="n">b</span><span class="o">-</span><span class="mi">95</span><span class="n">eb</span><span class="o">-</span><span class="n">a959451c37b8</span><span class="o">,</span> <span class="n">transactionType</span><span class="o">=</span><span class="n">PURCHASE</span><span class="o">,</span> <span class="n">stateName</span><span class="o">=</span><span class="n">INIT</span><span class="o">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">10.0</span><span class="o">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">pluginName</span><span class="o">=</span><span class="n">__INVOICE_PAYMENT_CONTROL_PLUGIN__</span><span class="o">,</span> <span class="n">pluginProperties</span><span class="o">=</span><span class="n">WlYAAAJbXQ</span><span class="o">==,</span> <span class="n">historyTableName</span><span class="o">=</span><span class="n">PAYMENT_ATTEMPT_HISTORY</span><span class="o">,</span> <span class="n">tableName</span><span class="o">=</span><span class="n">PAYMENT_ATTEMPTS</span><span class="o">}</span>
+<span class="o">},</span> <span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
+    <span class="nl">changeType:</span> <span class="n">UPDATE</span>
+    <span class="nl">changeDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">02</span><span class="nl">T11:</span><span class="mi">15</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span>
+    <span class="nl">objectType:</span> <span class="n">PAYMENT_ATTEMPT</span>
+    <span class="nl">objectId:</span> <span class="mi">2706</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">97</span><span class="n">f2</span><span class="o">-</span><span class="mi">41</span><span class="n">b7</span><span class="o">-</span><span class="n">b9c5</span><span class="o">-</span><span class="n">de23726bb399</span>
+    <span class="nl">changedBy:</span> <span class="n">admin</span>
+    <span class="nl">reasonCode:</span> <span class="kc">null</span>
+    <span class="nl">comments:</span> <span class="kc">null</span>
+    <span class="nl">userToken:</span> <span class="n">b65afb87</span><span class="o">-</span><span class="mi">9</span><span class="n">e43</span><span class="o">-</span><span class="mi">4</span><span class="n">ffe</span><span class="o">-</span><span class="n">a492</span><span class="o">-</span><span class="mi">84</span><span class="n">ac5d5f10a9</span>
+    <span class="nl">history:</span> <span class="o">{</span><span class="n">id</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">createdDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">02</span><span class="nl">T11:</span><span class="mi">15</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">updatedDate</span><span class="o">=</span><span class="mi">2022</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">02</span><span class="nl">T11:</span><span class="mi">15</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">recordId</span><span class="o">=</span><span class="mi">11214</span><span class="o">,</span> <span class="n">accountRecordId</span><span class="o">=</span><span class="mi">2306</span><span class="o">,</span> <span class="n">tenantRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">accountId</span><span class="o">=</span><span class="n">bdcd8ed0</span><span class="o">-</span><span class="n">ffc6</span><span class="o">-</span><span class="mi">42</span><span class="n">db</span><span class="o">-</span><span class="mi">88</span><span class="n">eb</span><span class="o">-</span><span class="n">cf1ee504b9a8</span><span class="o">,</span> <span class="n">paymentMethodId</span><span class="o">=</span><span class="mi">82</span><span class="n">e375db</span><span class="o">-</span><span class="mi">4</span><span class="n">aff</span><span class="o">-</span><span class="mi">413</span><span class="n">e</span><span class="o">-</span><span class="mi">9</span><span class="n">b52</span><span class="o">-</span><span class="n">f70803ea3bc5</span><span class="o">,</span> <span class="n">paymentExternalKey</span><span class="o">=</span><span class="mi">1833</span><span class="n">cad4</span><span class="o">-</span><span class="mi">4</span><span class="n">b10</span><span class="o">-</span><span class="mi">432</span><span class="n">e</span><span class="o">-</span><span class="mi">959</span><span class="n">b</span><span class="o">-</span><span class="mo">01</span><span class="n">dbf3ca0596</span><span class="o">,</span> <span class="n">transactionId</span><span class="o">=</span><span class="mi">92</span><span class="n">f17f72</span><span class="o">-</span><span class="n">c03f</span><span class="o">-</span><span class="mi">427</span><span class="n">b</span><span class="o">-</span><span class="mi">95</span><span class="n">eb</span><span class="o">-</span><span class="n">a959451c37b8</span><span class="o">,</span> <span class="n">transactionExternalKey</span><span class="o">=</span><span class="mi">92</span><span class="n">f17f72</span><span class="o">-</span><span class="n">c03f</span><span class="o">-</span><span class="mi">427</span><span class="n">b</span><span class="o">-</span><span class="mi">95</span><span class="n">eb</span><span class="o">-</span><span class="n">a959451c37b8</span><span class="o">,</span> <span class="n">transactionType</span><span class="o">=</span><span class="n">PURCHASE</span><span class="o">,</span> <span class="n">stateName</span><span class="o">=</span><span class="n">SUCCESS</span><span class="o">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">10.0</span><span class="o">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">pluginName</span><span class="o">=</span><span class="n">__INVOICE_PAYMENT_CONTROL_PLUGIN__</span><span class="o">,</span> <span class="n">pluginProperties</span><span class="o">=</span><span class="n">WlYAADxbeyJJUENEX0lOVk9JQ0VfSUQiOiI3MzdmNDRhMi1iYTljLTRjNjQtOTQzYi04NWRlMjEyODMxYWMifV0</span><span class="o">=,</span> <span class="n">historyTableName</span><span class="o">=</span><span class="n">PAYMENT_ATTEMPT_HISTORY</span><span class="o">,</span> <span class="n">tableName</span><span class="o">=</span><span class="n">PAYMENT_ATTEMPTS</span><span class="o">}</span>
+<span class="o">}]</span>
+</code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight ruby tab-ruby"><code></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -37608,7 +37818,7 @@ For example:</p>
 
 <p><strong>HTTP Request</strong> </p>
 
-<p><code>GET http://127.0.0.1:8080/1.0/kb/payments/{paymentId}/auditLogsWithHistory</code></p>
+<p><code>GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/auditLogsWithHistory</code></p>
 
 <blockquote>
 <p>Example Request:</p>
