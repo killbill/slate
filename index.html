@@ -25211,7 +25211,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 
 <p>If successful, returns a status code of 201 and an invoice item object.</p>
 <h3 id='invoice-create-tax-items'>Create tax items</h3>
-<p>Normally, tax items are added to an invoice by a plugin, which intercepts the invoice during its creation and adds the required tax items on the fly. However, sometimes you may want to add tax items directly. This API adds a tax item to an account, which will result in the creation of a new invoice.</p>
+<p>Normally, tax items are added to an invoice by a plugin, which intercepts the invoice during its creation and adds the required tax items on the fly. However, sometimes you may want to add tax items directly. This API adds a tax item to an account, which will result in the creation of a new invoice. Also, it is worth noting, that the tax items are not linked to any existing <code>invoiceItem</code>s. Consequently, specifying fields like <code>linkedInvoiceItemId</code>, <code>subscriptionId</code> while creating the tax item has no effect. These fields do not get saved on the database and will not be returned in subsequent <code>GET</code> requests.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -30579,7 +30579,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <h2 id='credit-credit'>Credit</h2>
 <p>Basic endpoints to create and retrieve credit invoice items</p>
 <h3 id='credit-create-credits'>Create credits</h3>
-<p>Create one or more credits for a specified account. These credits will appear as <code>invoiceItem</code>s. They may be added to an existing DRAFT invoice, or they may result in the creation of a new invoice. </p>
+<p>Create one or more credits for a specified account. These credits will appear as <code>invoiceItem</code>s. They may be added to an existing DRAFT invoice, or they may result in the creation of a new invoice. While adding a credit to an existing invoice, specifying fields like <code>linkedInvoiceItemId</code>, <code>subscriptionId</code> has no effect. These fields do not get saved in the database and will not be returned in subsequent <code>GET</code> requests</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -30699,7 +30699,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A list of one or more invoiceItem objects. Each object requires at least the following attributes: accountId and amount. If an invoiceId is given, the item will be added to the specified invoice. This invoice must be in DRAFT status or an error will occur.</p>
+<p>A list of one or more invoiceItem objects. Each object requires at least the following attributes: accountId and amount. If an invoiceId is given, the item will be added to the specified invoice. This invoice must be in DRAFT status or an error will occur. </p>
 
 <p><strong>Query Parameters</strong></p>
 
