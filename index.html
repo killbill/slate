@@ -7638,7 +7638,7 @@ a new version of this catalog. So, this functionality can also be a stepping sto
 
 <p>IF successful, returns a status code of 204 and an empty body.</p>
 <h2 id='account-list-and-search'>List and Search</h2>
-<p>These endpoints allow you to list all accounts or to search for a specific account.</p>
+<p>These endpoints allow you to list all accounts or to search for a specific account. </p>
 <h3 id='account-list-accounts'>List accounts</h3>
 <p>Retrieve a list of all account records.</p>
 
@@ -7871,7 +7871,7 @@ a new version of this catalog. So, this functionality can also be a stepping sto
 
 <p>If successful, returns a status code of 200 and a list of all accounts.</p>
 <h3 id='account-search-accounts'>Search accounts</h3>
-<p>Search for an account by a specified search string. The search string is compared to the following attributes: <code>accountId</code>, <code>name</code>, <code>email</code>, <code>companyName</code>, and <code>externalKey</code>. The operation returns all account records in which the search string matches all or part of any one of these attributes.</p>
+<p>Search for an account by a specified search string. The search string is compared to the following attributes: <code>accountId</code>, <code>name</code>, <code>email</code>, <code>companyName</code>, and <code>externalKey</code>. The operation returns all account records in which the search string matches all or part of any one of these attributes. Note that this endpoint returns a shallow object (and thus the value <code>0</code> is returned for fields like <code>accountBalance</code>). In order to retrieve the actual data for such fields, additional endpoints (like retrieve account by id) would need to be invoked.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -30053,7 +30053,7 @@ Some_HTML_String
 
 <p>If successful, returns a status code of 200 and a list of audit logs with history.</p>
 <h2 id='invoice-list-and-search'>List and Search</h2>
-<p>These endpoints allow you to list all invoices or to search for a specific invoice.</p>
+<p>These endpoints allow you to list all invoices or to search for a specific invoice. Note that these endpoints return shallow objects and thus the value <code>0</code> is returned for the <code>amount</code>, <code>creditAdj</code>, <code>refundAdj</code> and <code>balance</code> fields. In order to retrieve the actual data for these fields, additional endpoints (like retrieve invoice by id) would need to be invoked. </p>
 <h3 id='invoice-list-invoices'>List invoices</h3>
 <p>Retrieve a list of all invoice records for this tenant.</p>
 
@@ -30366,7 +30366,7 @@ Some_HTML_String
 
 <p>If successful, returns a status code of 200 and a list of all accounts.</p>
 <h3 id='invoice-search-invoices'>Search invoices</h3>
-<p>Search for an account by a specified search string. If the search string is a number, it is compared to the <code>invoiceNumber</code> attribute. An exact match is required. Otherwise, it is compared to the following attributes: <code>invoiceId</code>, <code>accountId</code>, or <code>currency</code>. The operation returns all account records in which the search string matches all or part of any one of these attributes.</p>
+<p>Search for an account by a specified search string. If the search string is a number, it is compared to the <code>invoiceNumber</code> attribute. An exact match is required. Otherwise, it is compared to the following attributes: <code>invoiceId</code>, <code>accountId</code>, or <code>currency</code>. The operation returns all account records in which the search string matches all or part of any one of these attributes. </p>
 
 <p><strong>HTTP Request</strong> </p>
 
