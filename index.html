@@ -1110,7 +1110,7 @@
                                   <a href="#payment-record-a-chargeback-reversal-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymentId]</a>
                                 </li>
                                 <li>
-                                  <a href="#payment-record-a-chargeback-reversal-using-paymnetexternalkey" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymnetExternalKey]</a>
+                                  <a href="#payment-record-a-chargeback-reversal-using-paymentexternalkey" class="toc-h3 toc-link" data-title="Payment">Record a chargeback reversal [using paymentExternalKey]</a>
                                 </li>
                                 <li>
                                   <a href="#payment-refund-an-existing-payment-using-paymentid" class="toc-h3 toc-link" data-title="Payment">Refund an existing payment [using paymentId]</a>
@@ -27881,11 +27881,9 @@ curl -v <span class="se">\</span>
 </code></pre>
 <p><strong>Requst Body</strong></p>
 
-<p>A list of <a href="https://killbill.github.io/slate/?java#custom-field-custom-field-resource">Custom Field</a> objects. Each object should specify at least the the <code>customFieldId</code> and <code>value</code> attribute. For example:</p>
+<p>A list of <a href="https://killbill.github.io/slate/?java#custom-field-custom-field-resource">Custom Field</a> objects representing the fields to substitute for existing ones. Each object should specify at least the the <code>customFieldId</code> and <code>value</code> attribute. For example:</p>
 
 <p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
-
-<p>A JSON string representing a list of custom fields to substitute for the existing ones.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -28067,7 +28065,7 @@ curl -v <span class="se">\</span>
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a 201 status code. In addition, a Location header is returned giving the URL to retrieve the tags associated with the invoice.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned containing the URL to retrieve the tags associated with the invoice.</p>
 <h3 id='invoice-retrieve-invoice-tags'>Retrieve invoice tags</h3>
 <p>Retrieve all tags attached to this invoice.</p>
 
@@ -30356,17 +30354,15 @@ Some_HTML_String
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
-
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of all accounts.</p>
+<p>If successful, returns a status code of 200 and a list of all invoices for this tenant.</p>
 <h3 id='invoice-search-invoices'>Search invoices</h3>
-<p>Search for an account by a specified search string. If the search string is a number, it is compared to the <code>invoiceNumber</code> attribute. An exact match is required. Otherwise, it is compared to the following attributes: <code>invoiceId</code>, <code>accountId</code>, or <code>currency</code>. The operation returns all account records in which the search string matches all or part of any one of these attributes. </p>
+<p>Search for an invoice by a specified search string. If the search string is a number, it is compared to the <code>invoiceNumber</code> attribute. An exact match is required. Otherwise, it is compared to the following attributes: <code>invoiceId</code>, <code>accountId</code>, or <code>currency</code>. The operation returns all invoice records in which the search string matches all or part of any one of these attributes.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -30926,7 +30922,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <h2 id='payment-payments'>Payments</h2>
 <p>These endpoints initiate transactions on an existing Payment. To begin a new Payment, see <a href="https://killbill.github.io/slate/?shell#account-trigger-a-payment-authorization-purchase-or-credit">Trigger a Payment</a> in the Account API. </p>
 <h3 id='payment-capture-an-existing-authorization-using-paymentid'>Capture an existing authorization [using paymentId]</h3>
-<p>Attempts to capture a payment amount based on a prior authorization. The Payment is identified by its <code>paymentId</code> provided as a path parameter.</p>
+<p>Attempts to capture a payment amount based on a prior authorization. (A prior authorization may be created via the <a href="https://killbill.github.io/slate/index.html?shell#account-trigger-a-payment-authorization-purchase-or-credit">Trigger a Payment</a> endpoint). The Payment is identified by its <code>paymentId</code> provided as a path parameter.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -30955,8 +30951,6 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setPaymentId</span><span class="o">(</span><span class="n">paymentId</span><span class="o">);</span>
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">ONE</span><span class="o">);</span>
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
-<span class="n">captureTransaction</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"d86ecaaa-10ad-4b00-afa8-e469dd3d4bb3"</span><span class="o">);</span>
-<span class="n">captureTransaction</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"9cc6ebab-9a92-44f1-a0dc-e111aa7c368d"</span><span class="o">);</span>
 
 <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -31106,9 +31100,9 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A PaymentTransaction of type CAPTURE is created.</p>
+<p>If successful, returns a status code of 201 and an empty body. A Location header containing the payment id is also included in the response. A PaymentTransaction of type CAPTURE is created.</p>
 <h3 id='payment-capture-an-existing-authorization-using-paymentexternalkey'>Capture an existing authorization [using paymentExternalKey]</h3>
-<p>Requests a payment amount based on a prior authorization. The payment is identified by its external key given in the request body.</p>
+<p>Requests a payment amount based on a prior authorization.(A prior authorization may be created via the <a href="https://killbill.github.io/slate/index.html?shell#account-trigger-a-payment-authorization-purchase-or-credit">Trigger a Payment</a> endpoint).The payment is identified by its external key given in the request body.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -31135,8 +31129,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">PaymentTransaction</span> <span class="n">captureTransaction</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">ONE</span><span class="o">);</span>
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
-<span class="n">captureTransaction</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"8e0c507a-05f9-4572-a57d-3f742cdc040d"</span><span class="o">);</span>
-<span class="n">captureTransaction</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"9b4dbbe7-749d-4c96-a2e7-57b8bff3bf05"</span><span class="o">);</span>
+<span class="n">captureTransaction</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"8e0c507a-05f9-4572-a57d-3f742cdc040d"</span><span class="o">);</span> <span class="c1">//payment external key</span>
+<span class="n">captureTransaction</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"9b4dbbe7-749d-4c96-a2e7-57b8bff3bf05"</span><span class="o">);</span> <span class="c1">//external key to be set on the newly created CAPTURE transaction</span>
 
 <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -31303,7 +31297,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A paymentTransaction of type CAPTURE is created.</p>
+<p>If successful, returns a status code of 201 and an empty body. A Location header containing the payment id is also included in the response. A PaymentTransaction of type CAPTURE is created.</p>
 <h3 id='payment-retrieve-a-payment-using-paymentid'>Retrieve a payment [using paymentId]</h3>
 <p>Retrieves a <code>Payment</code> object based on its <code>paymentId</code> given as a path parameter.</p>
 
@@ -31606,7 +31600,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
                                                      <span class="n">withAttempts</span><span class="o">,</span> 
                                                      <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
                                                      <span class="n">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span> 
-                                                     <span class="n">requestOptions</span><span class="o">);</span><span class="err">`</span> <span class="err">`</span>
+                                                     <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">external_key</span> <span class="o">=</span> <span class="s2">"example_payment_external_key"</span>
 <span class="n">with_plugin_info</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="n">with_attempts</span> <span class="o">=</span> <span class="kp">false</span>
@@ -31895,6 +31889,9 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
     -H <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
     -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
     -H <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    -d <span class="s1">'{ 
+            "paymentId": "8fe697d4-2c25-482c-aa45-f6cd5a48186d"
+      }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d'</span> 
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
@@ -31970,6 +31967,10 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="p">}</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>A PaymentTransaction object containing, at least, the <code>paymentId</code></p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -32072,7 +32073,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A Payment object containing, at least, the <code>paymentExternalKey</code></p>
+<p>A PaymentTransaction object containing, at least, the <code>paymentExternalKey</code></p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -32098,6 +32099,9 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
     -H <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
     -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
     -H <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    -d <span class="s1">'{ 
+            "paymentId": "8fe697d4-2c25-482c-aa45-f6cd5a48186d"
+      }'</span> <span class="se">\ </span>   
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d'</span>    
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
@@ -32152,6 +32156,10 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="p">}</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>A PaymentTransaction object containing, at least, the <code>paymentId</code></p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -32263,7 +32271,17 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
           "amount": 5
         }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/chargebacks'</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"8a096f10-1591-4546-880d-f6d4f7ea818c"</span><span class="o">);</span>
+<span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">5</span><span class="o">));</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">payment_id</span>     <span class="o">=</span> <span class="s2">"42ab1653-051f-416c-8c70-bf5d4061d4fa"</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">amount</span>         <span class="o">=</span> <span class="s1">'50.0'</span>
@@ -32297,6 +32315,61 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; Location: http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="err">@</span><span class="mi">99051262</span>
+    <span class="nl">accountId:</span> <span class="n">e2b3ca57</span><span class="o">-</span><span class="mi">89</span><span class="n">ee</span><span class="o">-</span><span class="mi">4</span><span class="n">eb9</span><span class="o">-</span><span class="n">aa37</span><span class="o">-</span><span class="n">d807a8623a67</span>
+    <span class="nl">paymentId:</span> <span class="mi">8</span><span class="n">a096f10</span><span class="o">-</span><span class="mi">1591</span><span class="o">-</span><span class="mi">4546</span><span class="o">-</span><span class="mi">880</span><span class="n">d</span><span class="o">-</span><span class="n">f6d4f7ea818c</span>
+    <span class="nl">paymentNumber:</span> <span class="mi">68</span>
+    <span class="nl">paymentExternalKey:</span> <span class="mi">8</span><span class="n">a096f10</span><span class="o">-</span><span class="mi">1591</span><span class="o">-</span><span class="mi">4546</span><span class="o">-</span><span class="mi">880</span><span class="n">d</span><span class="o">-</span><span class="n">f6d4f7ea818c</span>
+    <span class="nl">authAmount:</span> <span class="mi">0</span>
+    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
+    <span class="nl">purchasedAmount:</span> <span class="mf">35.00</span>
+    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
+    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">paymentMethodId:</span> <span class="mi">5</span><span class="n">cb571fd</span><span class="o">-</span><span class="mi">5</span><span class="n">c50</span><span class="o">-</span><span class="mi">4803</span><span class="o">-</span><span class="mi">9</span><span class="n">b99</span><span class="o">-</span><span class="n">d7c39e2a9911</span>
+    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">17</span><span class="n">da847e</span>
+        <span class="nl">transactionId:</span> <span class="mi">669</span><span class="n">b0912</span><span class="o">-</span><span class="n">edb4</span><span class="o">-</span><span class="mi">46</span><span class="n">ed</span><span class="o">-</span><span class="n">afd7</span><span class="o">-</span><span class="mi">3</span><span class="n">f653cf957ab</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">669</span><span class="n">b0912</span><span class="o">-</span><span class="n">edb4</span><span class="o">-</span><span class="mi">46</span><span class="n">ed</span><span class="o">-</span><span class="n">afd7</span><span class="o">-</span><span class="mi">3</span><span class="n">f653cf957ab</span>
+        <span class="nl">paymentId:</span> <span class="mi">8</span><span class="n">a096f10</span><span class="o">-</span><span class="mi">1591</span><span class="o">-</span><span class="mi">4546</span><span class="o">-</span><span class="mi">880</span><span class="n">d</span><span class="o">-</span><span class="n">f6d4f7ea818c</span>
+        <span class="nl">paymentExternalKey:</span> <span class="mi">8</span><span class="n">a096f10</span><span class="o">-</span><span class="mi">1591</span><span class="o">-</span><span class="mi">4546</span><span class="o">-</span><span class="mi">880</span><span class="n">d</span><span class="o">-</span><span class="n">f6d4f7ea818c</span>
+        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
+        <span class="nl">amount:</span> <span class="mf">40.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T07:</span><span class="mi">18</span><span class="o">:</span><span class="mf">09.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">40.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">99588</span><span class="n">f7d</span>
+        <span class="nl">transactionId:</span> <span class="n">ae308e00</span><span class="o">-</span><span class="n">a25f</span><span class="o">-</span><span class="mi">4195</span><span class="o">-</span><span class="mi">9869</span><span class="o">-</span><span class="mi">6</span><span class="n">b35b84929a6</span>
+        <span class="nl">transactionExternalKey:</span> <span class="n">ae308e00</span><span class="o">-</span><span class="n">a25f</span><span class="o">-</span><span class="mi">4195</span><span class="o">-</span><span class="mi">9869</span><span class="o">-</span><span class="mi">6</span><span class="n">b35b84929a6</span>
+        <span class="nl">paymentId:</span> <span class="mi">8</span><span class="n">a096f10</span><span class="o">-</span><span class="mi">1591</span><span class="o">-</span><span class="mi">4546</span><span class="o">-</span><span class="mi">880</span><span class="n">d</span><span class="o">-</span><span class="n">f6d4f7ea818c</span>
+        <span class="nl">paymentExternalKey:</span> <span class="mi">8</span><span class="n">a096f10</span><span class="o">-</span><span class="mi">1591</span><span class="o">-</span><span class="mi">4546</span><span class="o">-</span><span class="mi">880</span><span class="n">d</span><span class="o">-</span><span class="n">f6d4f7ea818c</span>
+        <span class="nl">transactionType:</span> <span class="n">CHARGEBACK</span>
+        <span class="nl">amount:</span> <span class="mf">5.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T07:</span><span class="mi">18</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">5.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"accountId"</span><span class="ss">:"82d3625e-65f0-403e-a3aa-8077accb4295"</span><span class="p">,</span>
    <span class="s2">"paymentId"</span><span class="ss">:"42ab1653-051f-416c-8c70-bf5d4061d4fa"</span><span class="p">,</span>
@@ -32377,7 +32450,18 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
           "currency": "USD"
         }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/chargebacks'</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
+
+<span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"a975f7b8-1e59-4801-91c9-fcce1526b019"</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">5</span><span class="o">));</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                      <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">payment_external_key</span> <span class="o">=</span> <span class="s2">"example_payment_external_key"</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">amount</span>               <span class="o">=</span> <span class="s1">'50.0'</span>
@@ -32410,6 +32494,61 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; Location: http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="err">@</span><span class="mi">81697070</span>
+    <span class="nl">accountId:</span> <span class="n">e2b3ca57</span><span class="o">-</span><span class="mi">89</span><span class="n">ee</span><span class="o">-</span><span class="mi">4</span><span class="n">eb9</span><span class="o">-</span><span class="n">aa37</span><span class="o">-</span><span class="n">d807a8623a67</span>
+    <span class="nl">paymentId:</span> <span class="n">a975f7b8</span><span class="o">-</span><span class="mi">1</span><span class="n">e59</span><span class="o">-</span><span class="mi">4801</span><span class="o">-</span><span class="mi">91</span><span class="n">c9</span><span class="o">-</span><span class="n">fcce1526b019</span>
+    <span class="nl">paymentNumber:</span> <span class="mi">70</span>
+    <span class="nl">paymentExternalKey:</span> <span class="n">a975f7b8</span><span class="o">-</span><span class="mi">1</span><span class="n">e59</span><span class="o">-</span><span class="mi">4801</span><span class="o">-</span><span class="mi">91</span><span class="n">c9</span><span class="o">-</span><span class="n">fcce1526b019</span>
+    <span class="nl">authAmount:</span> <span class="mi">0</span>
+    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
+    <span class="nl">purchasedAmount:</span> <span class="mf">40.00</span>
+    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
+    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">paymentMethodId:</span> <span class="mi">5</span><span class="n">cb571fd</span><span class="o">-</span><span class="mi">5</span><span class="n">c50</span><span class="o">-</span><span class="mi">4803</span><span class="o">-</span><span class="mi">9</span><span class="n">b99</span><span class="o">-</span><span class="n">d7c39e2a9911</span>
+    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@afa9b700</span>
+        <span class="nl">transactionId:</span> <span class="mi">81821062</span><span class="o">-</span><span class="n">fcc0</span><span class="o">-</span><span class="mi">495</span><span class="n">b</span><span class="o">-</span><span class="n">a3e9</span><span class="o">-</span><span class="mo">011</span><span class="n">b72169d0f</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">81821062</span><span class="o">-</span><span class="n">fcc0</span><span class="o">-</span><span class="mi">495</span><span class="n">b</span><span class="o">-</span><span class="n">a3e9</span><span class="o">-</span><span class="mo">011</span><span class="n">b72169d0f</span>
+        <span class="nl">paymentId:</span> <span class="n">a975f7b8</span><span class="o">-</span><span class="mi">1</span><span class="n">e59</span><span class="o">-</span><span class="mi">4801</span><span class="o">-</span><span class="mi">91</span><span class="n">c9</span><span class="o">-</span><span class="n">fcce1526b019</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">a975f7b8</span><span class="o">-</span><span class="mi">1</span><span class="n">e59</span><span class="o">-</span><span class="mi">4801</span><span class="o">-</span><span class="mi">91</span><span class="n">c9</span><span class="o">-</span><span class="n">fcce1526b019</span>
+        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
+        <span class="nl">amount:</span> <span class="mf">45.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">17</span><span class="o">:</span><span class="mf">32.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">45.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@be9a38a8</span>
+        <span class="nl">transactionId:</span> <span class="mi">1</span><span class="n">c6429e6</span><span class="o">-</span><span class="mi">49</span><span class="n">fc</span><span class="o">-</span><span class="mi">472</span><span class="n">c</span><span class="o">-</span><span class="n">a144</span><span class="o">-</span><span class="mi">4893</span><span class="n">b5905c15</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">1</span><span class="n">c6429e6</span><span class="o">-</span><span class="mi">49</span><span class="n">fc</span><span class="o">-</span><span class="mi">472</span><span class="n">c</span><span class="o">-</span><span class="n">a144</span><span class="o">-</span><span class="mi">4893</span><span class="n">b5905c15</span>
+        <span class="nl">paymentId:</span> <span class="n">a975f7b8</span><span class="o">-</span><span class="mi">1</span><span class="n">e59</span><span class="o">-</span><span class="mi">4801</span><span class="o">-</span><span class="mi">91</span><span class="n">c9</span><span class="o">-</span><span class="n">fcce1526b019</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">a975f7b8</span><span class="o">-</span><span class="mi">1</span><span class="n">e59</span><span class="o">-</span><span class="mi">4801</span><span class="o">-</span><span class="mi">91</span><span class="n">c9</span><span class="o">-</span><span class="n">fcce1526b019</span>
+        <span class="nl">transactionType:</span> <span class="n">CHARGEBACK</span>
+        <span class="nl">amount:</span> <span class="mf">5.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">18</span><span class="o">:</span><span class="mf">04.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">5.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"accountId"</span><span class="ss">:"82d3625e-65f0-403e-a3aa-8077accb4295"</span><span class="p">,</span>
    <span class="s2">"paymentId"</span><span class="ss">:"42ab1653-051f-416c-8c70-bf5d4061d4fa"</span><span class="p">,</span>
@@ -32488,7 +32627,17 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
           "transactionExternalKey": "7ff346e8-24cc-4437-acfa-c79d96d54ee2"
         }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/chargebackReversals'</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
+
+<span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"a975f7b8-1e59-4801-91c9-fcce1526b019"</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">5</span><span class="o">));</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                          <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">transaction_external_key</span> <span class="o">=</span> <span class="s2">"9ceb96a2-5407-482b-8847-7b08cc64213f"</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">payment_id</span>               <span class="o">=</span> <span class="s2">"74a82e25-120a-4a39-a7f7-7b5c2b4ac05d"</span>
@@ -32517,6 +32666,80 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; Location: http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="nd">@c78613e0</span>
+    <span class="nl">accountId:</span> <span class="n">d02f6cfa</span><span class="o">-</span><span class="mi">127</span><span class="n">f</span><span class="o">-</span><span class="mi">46</span><span class="n">c6</span><span class="o">-</span><span class="mi">9275</span><span class="o">-</span><span class="mi">88362</span><span class="n">a46b4ff</span>
+    <span class="nl">paymentId:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+    <span class="nl">paymentNumber:</span> <span class="mi">72</span>
+    <span class="nl">paymentExternalKey:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+    <span class="nl">authAmount:</span> <span class="mi">0</span>
+    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
+    <span class="nl">purchasedAmount:</span> <span class="mf">60.00</span>
+    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
+    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">paymentMethodId:</span> <span class="n">d07aa4e5</span><span class="o">-</span><span class="mi">3</span><span class="n">ea7</span><span class="o">-</span><span class="mi">43</span><span class="n">f4</span><span class="o">-</span><span class="mi">9</span><span class="n">ba3</span><span class="o">-</span><span class="mi">3421</span><span class="n">c7c3a981</span>
+    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">3</span><span class="n">f6c1918</span>
+        <span class="nl">transactionId:</span> <span class="mo">05201077</span><span class="o">-</span><span class="n">e36a</span><span class="o">-</span><span class="mi">43</span><span class="n">a9</span><span class="o">-</span><span class="n">b8c7</span><span class="o">-</span><span class="n">cc50413c3e17</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mo">05201077</span><span class="o">-</span><span class="n">e36a</span><span class="o">-</span><span class="mi">43</span><span class="n">a9</span><span class="o">-</span><span class="n">b8c7</span><span class="o">-</span><span class="n">cc50413c3e17</span>
+        <span class="nl">paymentId:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
+        <span class="nl">amount:</span> <span class="mf">60.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">35</span><span class="o">:</span><span class="mf">58.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">60.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@debaf134</span>
+        <span class="nl">transactionId:</span> <span class="mi">34</span><span class="n">fcfe0d</span><span class="o">-</span><span class="n">d281</span><span class="o">-</span><span class="mi">4</span><span class="n">d29</span><span class="o">-</span><span class="n">ab8b</span><span class="o">-</span><span class="n">ae48596a7963</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">34</span><span class="n">fcfe0d</span><span class="o">-</span><span class="n">d281</span><span class="o">-</span><span class="mi">4</span><span class="n">d29</span><span class="o">-</span><span class="n">ab8b</span><span class="o">-</span><span class="n">ae48596a7963</span>
+        <span class="nl">paymentId:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+        <span class="nl">transactionType:</span> <span class="n">CHARGEBACK</span>
+        <span class="nl">amount:</span> <span class="mf">10.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">36</span><span class="o">:</span><span class="mf">43.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">10.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">2</span><span class="n">e763f20</span>
+        <span class="nl">transactionId:</span> <span class="n">b5ec40fc</span><span class="o">-</span><span class="mi">5</span><span class="n">d2c</span><span class="o">-</span><span class="mi">4</span><span class="n">f24</span><span class="o">-</span><span class="mi">84</span><span class="n">b8</span><span class="o">-</span><span class="mi">8</span><span class="n">b06e07308a1</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">34</span><span class="n">fcfe0d</span><span class="o">-</span><span class="n">d281</span><span class="o">-</span><span class="mi">4</span><span class="n">d29</span><span class="o">-</span><span class="n">ab8b</span><span class="o">-</span><span class="n">ae48596a7963</span>
+        <span class="nl">paymentId:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">c999b791</span><span class="o">-</span><span class="mi">588</span><span class="n">b</span><span class="o">-</span><span class="mi">4101</span><span class="o">-</span><span class="n">bc45</span><span class="o">-</span><span class="mi">2</span><span class="n">d39b7b3f4fa</span>
+        <span class="nl">transactionType:</span> <span class="n">CHARGEBACK</span>
+        <span class="nl">amount:</span> <span class="kc">null</span>
+        <span class="nl">currency:</span> <span class="kc">null</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">37</span><span class="o">:</span><span class="mf">32.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mi">0</span><span class="n">E</span><span class="o">-</span><span class="mi">9</span>
+        <span class="nl">processedCurrency:</span> <span class="kc">null</span>
+        <span class="nl">status:</span> <span class="n">PAYMENT_FAILURE</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"accountId"</span><span class="ss">:"d513c084-2ee4-4e65-aea5-b47dde03d2d4"</span><span class="p">,</span>
    <span class="s2">"paymentId"</span><span class="ss">:"74a82e25-120a-4a39-a7f7-7b5c2b4ac05d"</span><span class="p">,</span>
@@ -32585,7 +32808,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 201 and an empty body.</p>
-<h3 id='payment-record-a-chargeback-reversal-using-paymnetexternalkey'>Record a chargeback reversal [using paymnetExternalKey]</h3>
+<h3 id='payment-record-a-chargeback-reversal-using-paymentexternalkey'>Record a chargeback reversal [using paymentExternalKey]</h3>
 <p>Reverses a CHARGEBACK PaymentTransaction, if permitted by the Payment plugin. The chargeback amount is added back to the captured amount. The Payment is identified by its <code>paymentExternalKey</code> which is given in the request body. The CHARGEBACK transaction is identified by its <code>transactionExternalKey</code> which is also given in the request body.</p>
 
 <p><strong>HTTP Request</strong> </p>
@@ -32604,10 +32827,21 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
     -H <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
     -d <span class="s1">'{
           "transactionExternalKey": "7ff346e8-24cc-4437-acfa-c79d96d54ee2",
-          "paymentExternalKey": "paymentExternalKey",
+          "paymentExternalKey": "paymentExternalKey"
         }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/chargebackReversals'</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
+
+<span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"631ec4ac-d745-4457-939d-d761badbf0ad"</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"72789509-2b94-43b6-b889-42c5ec5d27f3"</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">10</span><span class="o">));</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                      <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">payment_external_key</span> <span class="o">=</span> <span class="s2">"example_payment_external_key"</span>
 
@@ -32632,6 +32866,80 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; Location: http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="err">@</span><span class="mi">1</span><span class="n">a4138f0</span>
+    <span class="nl">accountId:</span> <span class="n">e67ad136</span><span class="o">-</span><span class="mi">419</span><span class="n">a</span><span class="o">-</span><span class="mi">4942</span><span class="o">-</span><span class="n">a56b</span><span class="o">-</span><span class="mi">6</span><span class="n">c0446b13994</span>
+    <span class="nl">paymentId:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+    <span class="nl">paymentNumber:</span> <span class="mi">74</span>
+    <span class="nl">paymentExternalKey:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+    <span class="nl">authAmount:</span> <span class="mi">0</span>
+    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
+    <span class="nl">purchasedAmount:</span> <span class="mf">55.00</span>
+    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
+    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">paymentMethodId:</span> <span class="mi">6</span><span class="n">bfaeab1</span><span class="o">-</span><span class="n">acdb</span><span class="o">-</span><span class="mi">4</span><span class="n">cce</span><span class="o">-</span><span class="mi">86</span><span class="n">fd</span><span class="o">-</span><span class="n">e3d330ab13cf</span>
+    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@bce4ad8e</span>
+        <span class="nl">transactionId:</span> <span class="mi">4</span><span class="n">c335d90</span><span class="o">-</span><span class="mi">9</span><span class="n">a25</span><span class="o">-</span><span class="mi">400</span><span class="n">c</span><span class="o">-</span><span class="mi">8811</span><span class="o">-</span><span class="mi">9</span><span class="n">d8a8d8d9b8f</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">4</span><span class="n">c335d90</span><span class="o">-</span><span class="mi">9</span><span class="n">a25</span><span class="o">-</span><span class="mi">400</span><span class="n">c</span><span class="o">-</span><span class="mi">8811</span><span class="o">-</span><span class="mi">9</span><span class="n">d8a8d8d9b8f</span>
+        <span class="nl">paymentId:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+        <span class="nl">paymentExternalKey:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
+        <span class="nl">amount:</span> <span class="mf">75.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">51</span><span class="o">:</span><span class="mf">58.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">75.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">13</span><span class="n">d1034</span>
+        <span class="nl">transactionId:</span> <span class="mi">72789509</span><span class="o">-</span><span class="mi">2</span><span class="n">b94</span><span class="o">-</span><span class="mi">43</span><span class="n">b6</span><span class="o">-</span><span class="n">b889</span><span class="o">-</span><span class="mi">42</span><span class="n">c5ec5d27f3</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">72789509</span><span class="o">-</span><span class="mi">2</span><span class="n">b94</span><span class="o">-</span><span class="mi">43</span><span class="n">b6</span><span class="o">-</span><span class="n">b889</span><span class="o">-</span><span class="mi">42</span><span class="n">c5ec5d27f3</span>
+        <span class="nl">paymentId:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+        <span class="nl">paymentExternalKey:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+        <span class="nl">transactionType:</span> <span class="n">CHARGEBACK</span>
+        <span class="nl">amount:</span> <span class="mf">10.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">53</span><span class="o">:</span><span class="mf">10.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">10.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@e911ae29</span>
+        <span class="nl">transactionId:</span> <span class="n">bf8b42b3</span><span class="o">-</span><span class="mi">89</span><span class="n">b0</span><span class="o">-</span><span class="mi">4655</span><span class="o">-</span><span class="n">bf3e</span><span class="o">-</span><span class="mi">8</span><span class="n">b4fa9557777</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">72789509</span><span class="o">-</span><span class="mi">2</span><span class="n">b94</span><span class="o">-</span><span class="mi">43</span><span class="n">b6</span><span class="o">-</span><span class="n">b889</span><span class="o">-</span><span class="mi">42</span><span class="n">c5ec5d27f3</span>
+        <span class="nl">paymentId:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+        <span class="nl">paymentExternalKey:</span> <span class="mi">631</span><span class="n">ec4ac</span><span class="o">-</span><span class="n">d745</span><span class="o">-</span><span class="mi">4457</span><span class="o">-</span><span class="mi">939</span><span class="n">d</span><span class="o">-</span><span class="n">d761badbf0ad</span>
+        <span class="nl">transactionType:</span> <span class="n">CHARGEBACK</span>
+        <span class="nl">amount:</span> <span class="mf">10.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T08:</span><span class="mi">54</span><span class="o">:</span><span class="mf">10.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">10.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"accountId"</span><span class="ss">:"58f01daa-df0f-424e-b430-ad54c3653d70"</span><span class="p">,</span>
    <span class="s2">"paymentId"</span><span class="ss">:"82a8a5eb-7953-4654-b3ff-f3d935ed0c37"</span><span class="p">,</span>
@@ -32701,7 +33009,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p>If successful, returns a status code of 201 and an empty body.</p>
 <h3 id='payment-refund-an-existing-payment-using-paymentid'>Refund an existing payment [using paymentId]</h3>
-<p>Refunds part or all of the balance of an existing Payment. The Payment is identified by its <code>paymentId</code>, which is given as a path parameter.</p>
+<p>Refunds part or all of the balance of an existing Payment. The Payment is identified by its <code>paymentId</code>, which is given as a path parameter. </p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -32731,12 +33039,14 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">TEN</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"de924e98-2c76-4e90-b9d6-2ced262bc251"</span><span class="o">);</span>
-<span class="n">body</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"c4de33be-1c2b-4cf8-be75-6371f08738de"</span><span class="o">);</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">refundPayment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">refundPayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                                  <span class="n">body</span><span class="o">,</span> 
                                                  <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> 
-                                                 <span class="n">pluginProperties</span><span class="o">,</span> 
+                                                 <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
                                                  <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>            <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">payment_id</span> <span class="o">=</span> <span class="s2">"dce5b2a0-0f0f-430b-9427-545ba4be5c7f"</span>
@@ -32870,7 +33180,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A Payment object including, as a minimum, the <code>amount</code> to be refunded.</p>
+<p>A PaymentTransaction object including, as a minimum, the <code>amount</code> to be refunded.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -32878,7 +33188,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A new paymentTransaction of type REFUND is created.</p>
+<p>If successful, returns a status code of 201 and an empty body. In addition, a Location header containing the payment id is returned. A new PaymentTransaction of type <code>REFUND</code> is created.</p>
 <h3 id='payment-refund-an-existing-payment-using-paymentexternalkey'>Refund an existing payment [using paymentExternalKey]</h3>
 <p>Refunds part or all of the balance of an existing payment. The payment is identified by its <code>paymentExternalKey</code>, which is given in the request body.</p>
 
@@ -32902,7 +33212,19 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
           "currency": "USD"
         }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/refunds'</span> 
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
+
+<span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"da96999c-b1ac-470f-8c48-c4ecf386cd89"</span><span class="o">);</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Payment</span> <span class="n">refundPayment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">refundPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                      <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">payment_external_key</span> <span class="o">=</span> <span class="s2">"example_payment_external_key"</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">amount</span>               <span class="o">=</span> <span class="s1">'50.0'</span>
@@ -32931,6 +33253,118 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; Location: http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="nd">@bf80fd62</span>
+    <span class="nl">accountId:</span> <span class="n">a0b2f8e9</span><span class="o">-</span><span class="n">cf39</span><span class="o">-</span><span class="mi">49</span><span class="n">e3</span><span class="o">-</span><span class="n">a8b6</span><span class="o">-</span><span class="mi">18</span><span class="n">ed96da9fa2</span>
+    <span class="nl">paymentId:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+    <span class="nl">paymentNumber:</span> <span class="mi">75</span>
+    <span class="nl">paymentExternalKey:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+    <span class="nl">authAmount:</span> <span class="mi">0</span>
+    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
+    <span class="nl">purchasedAmount:</span> <span class="mf">25.00</span>
+    <span class="nl">refundedAmount:</span> <span class="mf">20.00</span>
+    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">paymentMethodId:</span> <span class="mi">76</span><span class="n">af5ee6</span><span class="o">-</span><span class="n">f4db</span><span class="o">-</span><span class="mi">4</span><span class="n">bf7</span><span class="o">-</span><span class="mi">8221</span><span class="o">-</span><span class="mi">9</span><span class="n">beb3c358b0b</span>
+    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">8547</span><span class="n">d674</span>
+        <span class="nl">transactionId:</span> <span class="mi">337315</span><span class="n">c5</span><span class="o">-</span><span class="n">eb6c</span><span class="o">-</span><span class="mi">4881</span><span class="o">-</span><span class="mi">9665</span><span class="o">-</span><span class="n">a07fc1c19e69</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">337315</span><span class="n">c5</span><span class="o">-</span><span class="n">eb6c</span><span class="o">-</span><span class="mi">4881</span><span class="o">-</span><span class="mi">9665</span><span class="o">-</span><span class="n">a07fc1c19e69</span>
+        <span class="nl">paymentId:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
+        <span class="nl">amount:</span> <span class="mf">25.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T11:</span><span class="mi">14</span><span class="o">:</span><span class="mf">35.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">25.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">2544</span><span class="n">fe4d</span>
+        <span class="nl">transactionId:</span> <span class="n">a89d8533</span><span class="o">-</span><span class="n">a975</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">857</span><span class="n">f</span><span class="o">-</span><span class="mi">79</span><span class="n">ea8ee02ccb</span>
+        <span class="nl">transactionExternalKey:</span> <span class="n">a89d8533</span><span class="o">-</span><span class="n">a975</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">857</span><span class="n">f</span><span class="o">-</span><span class="mi">79</span><span class="n">ea8ee02ccb</span>
+        <span class="nl">paymentId:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">transactionType:</span> <span class="n">REFUND</span>
+        <span class="nl">amount:</span> <span class="mf">5.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T11:</span><span class="mi">17</span><span class="o">:</span><span class="mf">14.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">5.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">4357</span><span class="n">fe3</span>
+        <span class="nl">transactionId:</span> <span class="mi">9</span><span class="n">d361b25</span><span class="o">-</span><span class="mi">0</span><span class="n">fc7</span><span class="o">-</span><span class="mi">4070</span><span class="o">-</span><span class="mi">87</span><span class="n">c3</span><span class="o">-</span><span class="n">e6a5113161bf</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">9</span><span class="n">d361b25</span><span class="o">-</span><span class="mi">0</span><span class="n">fc7</span><span class="o">-</span><span class="mi">4070</span><span class="o">-</span><span class="mi">87</span><span class="n">c3</span><span class="o">-</span><span class="n">e6a5113161bf</span>
+        <span class="nl">paymentId:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">transactionType:</span> <span class="n">REFUND</span>
+        <span class="nl">amount:</span> <span class="mf">10.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T11:</span><span class="mi">28</span><span class="o">:</span><span class="mf">53.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">10.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@d90b4e50</span>
+        <span class="nl">transactionId:</span> <span class="mi">3</span><span class="n">ace5dc9</span><span class="o">-</span><span class="n">e556</span><span class="o">-</span><span class="mi">4350</span><span class="o">-</span><span class="n">baeb</span><span class="o">-</span><span class="mi">4</span><span class="n">f4723d8bf1f</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">3</span><span class="n">ace5dc9</span><span class="o">-</span><span class="n">e556</span><span class="o">-</span><span class="mi">4350</span><span class="o">-</span><span class="n">baeb</span><span class="o">-</span><span class="mi">4</span><span class="n">f4723d8bf1f</span>
+        <span class="nl">paymentId:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">transactionType:</span> <span class="n">REFUND</span>
+        <span class="nl">amount:</span> <span class="mf">3.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T11:</span><span class="mi">32</span><span class="o">:</span><span class="mf">53.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">3.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">},</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@e989e91a</span>
+        <span class="nl">transactionId:</span> <span class="mi">2846</span><span class="n">d45e</span><span class="o">-</span><span class="mo">01</span><span class="n">e9</span><span class="o">-</span><span class="mi">473</span><span class="n">e</span><span class="o">-</span><span class="n">aed9</span><span class="o">-</span><span class="n">c628fadba970</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">2846</span><span class="n">d45e</span><span class="o">-</span><span class="mo">01</span><span class="n">e9</span><span class="o">-</span><span class="mi">473</span><span class="n">e</span><span class="o">-</span><span class="n">aed9</span><span class="o">-</span><span class="n">c628fadba970</span>
+        <span class="nl">paymentId:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">da96999c</span><span class="o">-</span><span class="n">b1ac</span><span class="o">-</span><span class="mi">470</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">c48</span><span class="o">-</span><span class="n">c4ecf386cd89</span>
+        <span class="nl">transactionType:</span> <span class="n">REFUND</span>
+        <span class="nl">amount:</span> <span class="mf">2.00</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mo">04</span><span class="nl">T11:</span><span class="mi">37</span><span class="o">:</span><span class="mf">45.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">2.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
+        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
+        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
+        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
+        <span class="nl">properties:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"accountId"</span><span class="ss">:"6c297750-3a6d-42a4-9d75-c900fbc75ddf"</span><span class="p">,</span>
    <span class="s2">"paymentId"</span><span class="ss">:"dce5b2a0-0f0f-430b-9427-545ba4be5c7f"</span><span class="p">,</span>
@@ -32979,7 +33413,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A payment object including, as a minimum, the <code>paymentExternalKey</code> and the <code>amount</code> to be refunded.</p>
+<p>A PaymentTransaction object including, as a minimum, the <code>paymentExternalKey</code> and the <code>amount</code> to be refunded.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -32987,7 +33421,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body. A new PaymentTransaction of type REFUND is created.</p>
+<p>If successful, returns a status code of 201 and an empty body. In addition, a Location header containing the payment id is returned. A new PaymentTransaction of type <code>REFUND</code> is created.</p>
 <h3 id='payment-cancel-a-scheduled-payment-attempt-retry-using-transactionid'>Cancel a scheduled payment attempt retry [using transactionId]</h3>
 <p>Cancels a scheduled attempt to retry a PaymentTransaction. The transaction is identified by its <code>transactionId</code>, which is provided as a path parameter.</p>
 
@@ -33005,7 +33439,12 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
     -H <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
     -H <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/208d38df-8d5a-4e20-89df-15db4b3516b4/cancelScheduledPaymentTransaction'</span>  
-</code></pre><pre class="highlight java tab-java"><code><span class="n">TODO</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"54aed1ed-f8dc-4445-a19f-3a2519c1a334"</span><span class="o">);</span>
+<span class="n">paymentApi</span><span class="o">.</span><span class="na">cancelScheduledPaymentTransactionById</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c"</span>
 
@@ -33028,6 +33467,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; HTTP/1.1 204 No Content
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
@@ -33039,7 +33479,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h3 id='payment-cancel-a-scheduled-payment-attempt-retry-using-transactionexternalkey'>Cancel a scheduled payment attempt retry [using transactionExternalKey]</h3>
-<p>Cancels a scheduled attempt to retry a PaymentTransaction. The transaction is identified by its <code>transactionExternalKey</code>, which is provided in the request body.</p>
+<p>Cancels a scheduled attempt to retry a PaymentTransaction. The transaction is identified by its <code>transactionExternalKey</code>, which is provided as a query parameter.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -33058,7 +33498,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
 
-<span class="n">String</span> <span class="n">transactionExternalKey</span> <span class="o">=</span> <span class="s">"example_payment_external_key"</span>
+<span class="n">String</span> <span class="n">transactionExternalKey</span> <span class="o">=</span> <span class="s">"example_payment_external_key"</span><span class="o">;</span>
 
 <span class="n">paymentApi</span><span class="o">.</span><span class="na">cancelScheduledPaymentTransactionByExternalKey</span><span class="o">(</span><span class="n">transactionExternalKey</span><span class="o">,</span> <span class="n">inputOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                          <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
@@ -33087,13 +33527,25 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
-<p><strong>Request Body</strong></p>
-
-<p>A payment transaction object including, as a minimum, the <code>transactionExternalKey</code>.</p>
-
 <p><strong>Query Parameters</strong></p>
 
-<p>None.</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>transactionExternalKey</strong></td>
+<td>string</td>
+<td>yes</td>
+<td>none</td>
+<td>Transaction external key</td>
+</tr>
+</tbody></table>
 
 <p><strong>Response</strong></p>
 
@@ -33126,7 +33578,6 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
             },
             "transaction":
             {
-                "transactionExternalKey": "somedTransactionExternalKey",
                 "transactionType": "AUTHORIZE",
                 "amount": 5,
                 "currency": "USD"
@@ -33135,22 +33586,28 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/payments/combo'</span> 
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.AccountApi</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.PaymentApi</span><span class="o">;</span>
-<span class="kd">protected</span> <span class="n">AccountApi</span> <span class="n">accountApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
 
-<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"864c1418-e768-4cd5-a0db-67537144b685"</span><span class="o">);</span>
-<span class="n">Boolean</span> <span class="n">accountWithBalance</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not include account balance</span>
-<span class="n">Boolean</span> <span class="n">accountWithBalanceAndCBA</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not include account balance and CBA info</span>
+<span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Account</span><span class="o">();</span>
+<span class="n">account</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"Jane Doe"</span><span class="o">);</span>
+<span class="n">account</span><span class="o">.</span><span class="na">setExternalKey</span><span class="o">(</span><span class="s">"JaneDoe"</span><span class="o">);</span>
 
-<span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
-                                        <span class="n">accountWithBalance</span><span class="o">,</span> 
-                                        <span class="n">accountWithBalanceAndCBA</span><span class="o">,</span> 
-                                        <span class="n">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span> 
-                                        <span class="n">requestOptions</span><span class="o">);</span>
+<span class="n">PaymentMethod</span> <span class="n">paymentMethod</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentMethod</span><span class="o">();</span>
+<span class="n">paymentMethod</span><span class="o">.</span><span class="na">setPluginName</span><span class="o">(</span><span class="s">"__EXTERNAL_PAYMENT__"</span><span class="o">);</span>
 
-<span class="n">String</span> <span class="n">paymentExternalKey</span> <span class="o">=</span> <span class="s">"5f216d82-dcc4-4e7b-9110-f3896bf6f49a"</span><span class="o">;</span>
+<span class="n">PaymentTransaction</span> <span class="n">paymentTransaction</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
+<span class="n">paymentTransaction</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">TEN</span><span class="o">);</span>
+<span class="n">paymentTransaction</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
+<span class="n">paymentTransaction</span><span class="o">.</span><span class="na">setTransactionType</span><span class="o">(</span><span class="n">TransactionType</span><span class="o">.</span><span class="na">AUTHORIZE</span><span class="o">);</span>
 
-<span class="n">ComboPaymentTransaction</span> <span class="n">result</span> <span class="o">=</span> <span class="n">createComboPaymentTransaction</span><span class="o">(</span><span class="n">account</span><span class="o">,</span> <span class="n">paymentExternalKey</span><span class="o">);</span>
+<span class="n">ComboPaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ComboPaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAccount</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setPaymentMethod</span><span class="o">(</span><span class="n">paymentMethod</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setTransaction</span><span class="o">(</span><span class="n">paymentTransaction</span><span class="o">);</span>
+
+<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Payment</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">createComboPayment</span><span class="o">(</span><span class="n">body</span><span class="o">,</span>  <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">combo_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">ComboTransaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">combo_transaction</span><span class="p">.</span><span class="nf">account</span> <span class="o">=</span> <span class="n">account_obj</span>
 <span class="n">combo_transaction</span><span class="p">.</span><span class="nf">payment_method</span> <span class="o">=</span> <span class="n">payment_method_obj</span>
@@ -33194,74 +33651,41 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 &lt; Location: http://127.0.0.1:8080/1.0/kb/payments/5bebc4c3-7c64-404b-8cd4-0a2150279db8/
 &lt; Content-Type: application/json
 &lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">ComboPaymentTransaction</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">ComboPaymentTransaction</span><span class="err">@</span><span class="mi">631731</span><span class="n">cc</span>
-    <span class="nl">account:</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Account</span><span class="err">@</span><span class="mi">9507</span><span class="n">aa91</span>
-        <span class="nl">accountId:</span> <span class="mi">864</span><span class="n">c1418</span><span class="o">-</span><span class="n">e768</span><span class="o">-</span><span class="mi">4</span><span class="n">cd5</span><span class="o">-</span><span class="n">a0db</span><span class="o">-</span><span class="mi">67537144</span><span class="n">b685</span>
-        <span class="nl">name:</span> <span class="mi">1</span><span class="n">af27661</span><span class="o">-</span><span class="n">dec0</span><span class="o">-</span><span class="mi">4903</span><span class="o">-</span><span class="n">ae76</span><span class="o">-</span><span class="mi">1783</span><span class="n">ae8f7d11</span>
-        <span class="nl">firstNameLength:</span> <span class="mi">4</span>
-        <span class="nl">externalKey:</span> <span class="mi">7</span><span class="n">cf53480</span><span class="o">-</span><span class="n">de54</span><span class="o">-</span><span class="mi">4428</span><span class="o">-</span><span class="n">b72e</span><span class="o">-</span><span class="mi">789</span><span class="n">b1c91e13a</span>
-        <span class="nl">email:</span> <span class="n">aa2c2</span><span class="nd">@da6c8</span>
-        <span class="nl">billCycleDayLocal:</span> <span class="kc">null</span>
-        <span class="nl">currency:</span> <span class="n">USD</span>
-        <span class="nl">parentAccountId:</span> <span class="kc">null</span>
-        <span class="nl">isPaymentDelegatedToParent:</span> <span class="kc">false</span>
-        <span class="nl">paymentMethodId:</span> <span class="kc">null</span>
-        <span class="nl">referenceTime:</span> <span class="kc">null</span>
-        <span class="nl">timeZone:</span> <span class="n">UTC</span>
-        <span class="nl">address1:</span> <span class="mi">12</span> <span class="n">rue</span> <span class="n">des</span> <span class="n">ecoles</span>
-        <span class="nl">address2:</span> <span class="n">Poitier</span>
-        <span class="nl">postalCode:</span> <span class="mi">44</span> <span class="mi">567</span>
-        <span class="nl">company:</span> <span class="n">Renault</span>
-        <span class="nl">city:</span> <span class="n">Quelque</span> <span class="n">part</span>
-        <span class="nl">state:</span> <span class="n">Poitou</span>
-        <span class="nl">country:</span> <span class="n">France</span>
-        <span class="nl">locale:</span> <span class="n">fr</span>
-        <span class="nl">phone:</span> <span class="mi">81</span> <span class="mi">53</span> <span class="mi">26</span> <span class="mi">56</span>
-        <span class="nl">notes:</span> <span class="n">notes</span>
-        <span class="nl">isMigrated:</span> <span class="kc">false</span>
-        <span class="nl">accountBalance:</span> <span class="kc">null</span>
-        <span class="nl">accountCBA:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="o">[]</span>
-    <span class="o">}</span>
-    <span class="nl">paymentMethod:</span> <span class="kd">class</span> <span class="nc">PaymentMethod</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentMethod</span><span class="err">@</span><span class="mi">1619</span><span class="n">f5f6</span>
-        <span class="nl">paymentMethodId:</span> <span class="kc">null</span>
-        <span class="nl">externalKey:</span> <span class="mi">5</span><span class="n">f216d82</span><span class="o">-</span><span class="n">dcc4</span><span class="o">-</span><span class="mi">4</span><span class="n">e7b</span><span class="o">-</span><span class="mi">9110</span><span class="o">-</span><span class="n">f3896bf6f49a</span>
-        <span class="nl">accountId:</span> <span class="kc">null</span>
-        <span class="nl">isDefault:</span> <span class="kc">false</span>
-        <span class="nl">pluginName:</span> <span class="n">noop</span>
-        <span class="nl">pluginInfo:</span> <span class="kd">class</span> <span class="nc">PaymentMethodPluginDetail</span> <span class="o">{</span>
-            <span class="nl">externalPaymentMethodId:</span> <span class="kc">null</span>
-            <span class="nl">isDefaultPaymentMethod:</span> <span class="kc">false</span>
-            <span class="nl">properties:</span> <span class="kc">null</span>
-        <span class="o">}</span>
-        <span class="nl">auditLogs:</span> <span class="kc">null</span>
-    <span class="o">}</span>
-    <span class="nl">transaction:</span> <span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@c4d46526</span>
-        <span class="nl">transactionId:</span> <span class="kc">null</span>
-        <span class="nl">transactionExternalKey:</span> <span class="mi">2</span><span class="n">eea894a</span><span class="o">-</span><span class="mi">2</span><span class="n">e1e</span><span class="o">-</span><span class="mi">44</span><span class="n">e1</span><span class="o">-</span><span class="mi">942</span><span class="n">a</span><span class="o">-</span><span class="n">eed5a40d3ee0</span>
-        <span class="nl">paymentId:</span> <span class="kc">null</span>
-        <span class="nl">paymentExternalKey:</span> <span class="mi">2</span><span class="n">f5fbec7</span><span class="o">-</span><span class="mi">7</span><span class="n">f32</span><span class="o">-</span><span class="mi">493</span><span class="n">c</span><span class="o">-</span><span class="n">a203</span><span class="o">-</span><span class="n">d9281f422e72</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="nd">@f5175842</span>
+    <span class="nl">accountId:</span> <span class="mi">52</span><span class="n">eb3f1a</span><span class="o">-</span><span class="n">aae4</span><span class="o">-</span><span class="mi">4</span><span class="n">e8a</span><span class="o">-</span><span class="mi">9</span><span class="n">f70</span><span class="o">-</span><span class="mo">013</span><span class="n">d42750cbb</span>
+    <span class="nl">paymentId:</span> <span class="n">fd3de75e</span><span class="o">-</span><span class="mi">298</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="n">acc</span><span class="o">-</span><span class="n">ba25</span><span class="o">-</span><span class="mi">7</span><span class="n">e6ca224e1bc</span>
+    <span class="nl">paymentNumber:</span> <span class="mi">456</span>
+    <span class="nl">paymentExternalKey:</span> <span class="n">fd3de75e</span><span class="o">-</span><span class="mi">298</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="n">acc</span><span class="o">-</span><span class="n">ba25</span><span class="o">-</span><span class="mi">7</span><span class="n">e6ca224e1bc</span>
+    <span class="nl">authAmount:</span> <span class="mf">10.00</span>
+    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
+    <span class="nl">purchasedAmount:</span> <span class="mi">0</span>
+    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
+    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">paymentMethodId:</span> <span class="mi">1244</span><span class="n">ac4f</span><span class="o">-</span><span class="n">f6cd</span><span class="o">-</span><span class="mi">4</span><span class="n">a61</span><span class="o">-</span><span class="n">ace5</span><span class="o">-</span><span class="n">b05f0bf3149b</span>
+    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">7</span><span class="n">e8eeeb0</span>
+        <span class="nl">transactionId:</span> <span class="mi">6837875</span><span class="n">c</span><span class="o">-</span><span class="mi">4891</span><span class="o">-</span><span class="mi">479</span><span class="n">d</span><span class="o">-</span><span class="mi">9</span><span class="n">f84</span><span class="o">-</span><span class="n">a53e8b70ef0b</span>
+        <span class="nl">transactionExternalKey:</span> <span class="mi">6837875</span><span class="n">c</span><span class="o">-</span><span class="mi">4891</span><span class="o">-</span><span class="mi">479</span><span class="n">d</span><span class="o">-</span><span class="mi">9</span><span class="n">f84</span><span class="o">-</span><span class="n">a53e8b70ef0b</span>
+        <span class="nl">paymentId:</span> <span class="n">fd3de75e</span><span class="o">-</span><span class="mi">298</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="n">acc</span><span class="o">-</span><span class="n">ba25</span><span class="o">-</span><span class="mi">7</span><span class="n">e6ca224e1bc</span>
+        <span class="nl">paymentExternalKey:</span> <span class="n">fd3de75e</span><span class="o">-</span><span class="mi">298</span><span class="n">e</span><span class="o">-</span><span class="mi">4</span><span class="n">acc</span><span class="o">-</span><span class="n">ba25</span><span class="o">-</span><span class="mi">7</span><span class="n">e6ca224e1bc</span>
         <span class="nl">transactionType:</span> <span class="n">AUTHORIZE</span>
-        <span class="nl">amount:</span> <span class="mi">10</span>
+        <span class="nl">amount:</span> <span class="mf">10.00</span>
         <span class="nl">currency:</span> <span class="n">USD</span>
-        <span class="nl">effectiveDate:</span> <span class="kc">null</span>
-        <span class="nl">processedAmount:</span> <span class="kc">null</span>
-        <span class="nl">processedCurrency:</span> <span class="kc">null</span>
-        <span class="nl">status:</span> <span class="kc">null</span>
+        <span class="nl">effectiveDate:</span> <span class="mi">2022</span><span class="o">-</span><span class="mo">07</span><span class="o">-</span><span class="mi">15</span><span class="nl">T06:</span><span class="mi">59</span><span class="o">:</span><span class="mf">35.000</span><span class="n">Z</span>
+        <span class="nl">processedAmount:</span> <span class="mf">10.00</span>
+        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
+        <span class="nl">status:</span> <span class="n">SUCCESS</span>
         <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
         <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
         <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
         <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
         <span class="nl">properties:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="kc">null</span>
-    <span class="o">}</span>
-    <span class="nl">paymentMethodPluginProperties:</span> <span class="o">[]</span>
-    <span class="nl">transactionPluginProperties:</span> <span class="o">[]</span>
-    <span class="nl">auditLogs:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"accountId"</span><span class="ss">:"86bb6cbc-1324-47fe-99f6-f0f2bf47f3da"</span><span class="p">,</span>
@@ -33298,19 +33722,18 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <p><strong>Request Body</strong></p>
 
 <p>The request body is a JSON string that represents three distinct objects: account, paymentMethod, and transaction. For example:</p>
-
-<p>{
-  &quot;account&quot;: {
+<pre class="highlight plaintext"><code>{
+  "account": {
   },
-  &quot;paymentMethod&quot;: {
-    &quot;pluginName&quot;: &quot;<strong>EXTERNAL_PAYMENT</strong>&quot;
-  &quot;transaction&quot;: {
-    &quot;transactionType&quot;: &quot;AUTHORIZE&quot;,
-    &quot;amount&quot;: 500,
-    &quot;currency&quot;: &quot;USD&quot;
+  "paymentMethod": {
+    "pluginName": "__EXTERNAL_PAYMENT__"
+  "transaction": {
+    "transactionType": "AUTHORIZE",
+    "amount": 500,
+    "currency": "USD"
   }
-}</p>
-
+}
+</code></pre>
 <p>This example assumes that a new Account is to be created.</p>
 
 <ol>
@@ -33325,7 +33748,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Returns</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> header containing the <code>paymentId</code> is returned.</p>
 <h2 id='payment-custom-fields'>Custom Fields</h2>
 <p>Custom fields are <code>{key, value}</code> attributes that can be attached to any customer resource. In particular they can be added to Payment objects. For details on Custom Fields see <a href="https://killbill.github.io/slate/#custom-field">Custom Field</a>.</p>
 <h3 id='payment-add-custom-fields-to-payment'>Add custom fields to payment</h3>
@@ -33419,7 +33842,9 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>A JSON string representing the custom field object or objects to be added.</p>
+<p>A list of <a href="https://killbill.github.io/slate/?java#custom-field-custom-field-resource">Custom Field</a> objects. Each object should specify at least the the <code>name</code> and <code>value</code> attribute. For example:</p>
+
+<p>[ { &quot;name&quot;: &quot;CF1&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -33427,7 +33852,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned with the URL to retrieve the custom fields associated with the payment.</p>
 <h3 id='payment-retrieve-payment-custom-fields'>Retrieve payment custom fields</h3>
 <p>Retrieves the custom fields associated with a payment</p>
 
@@ -33518,15 +33943,13 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
-
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of custom field objects</p>
+<p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
 <h3 id='payment-modify-custom-fields-for-a-payment'>Modify custom fields for a payment</h3>
 <p>Modifies the custom fields associated with a payment object</p>
 
@@ -33595,7 +34018,9 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Requst Body</strong></p>
 
-<p>A JSON string representing a list of custom fields to substitute for the existing ones.</p>
+<p>A list of <a href="https://killbill.github.io/slate/?java#custom-field-custom-field-resource">Custom Field</a> objects representing the fields to substitute for existing ones. Each object should specify at least the the <code>customFieldId</code> and <code>value</code> attribute. For example:</p>
+
+<p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -33672,7 +34097,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <td>string</td>
 <td>yes</td>
 <td>none</td>
-<td>Comma separated list of custom field object IDs that should be deleted.</td>
+<td>CCustom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate <strong>customField</strong> parameter corresponding to each field</td>
 </tr>
 </tbody></table>
 
@@ -33762,7 +34187,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>Provides a list of tag definition Ids in JSON format</p>
+<p>A JSON array containing one or more tag definition ids to be added as tags.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -33770,7 +34195,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and an empty body.</p>
+<p>If successful, returns a 201 status code. In addition, a Location header is returned containing the URL to retrieve the tags associated with the payment.</p>
 <h3 id='payment-retrieve-payment-tags'>Retrieve payment tags</h3>
 <p>Retrieves all tags attached to this payment.</p>
 
@@ -33885,17 +34310,15 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a list of tag objects.</p>
 <h3 id='payment-remove-tags-from-a-payment'>Remove tags from a payment</h3>
-<p>Removes a list of tags attached to an invoice.</p>
+<p>Removes a list of tags attached to a payment.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -33965,7 +34388,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <td>array of string</td>
 <td>yes</td>
 <td>none</td>
-<td>List of tag definition IDs identifying the tags that should be removed.</td>
+<td>A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag.</td>
 </tr>
 </tbody></table>
 
@@ -34123,7 +34546,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of account audit logs with history.</p>
+<p>If successful, returns a status code of 200 and a list of payment audit logs with history.</p>
 <h3 id='payment-retrieve-payment-attempt-audit-logs-with-history-by-id'>Retrieve payment attempt audit logs with history by id</h3>
 <p>Retrieves a list of audit log records showing events that occurred related to a specified payment attempt. History information is included with each record.</p>
 
@@ -34245,11 +34668,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of account audit logs with history.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>GET http://127.0.0.1:8080/1.0/kb/payments/{paymentId}/auditLogsWithHistory</code></p>
+<p>If successful, returns a status code of 200 and a list of payment attempt audit logs with history.</p>
 <h2 id='payment-list-and-search'>List and Search</h2>
 <p>These endpoints allow you to list all payments or to search for a specific payment.</p>
 <h3 id='payment-get-payments'>Get payments</h3>
@@ -34564,17 +34983,15 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a list of all payments for this tenant.</p>
 <h3 id='payment-search-payments'>Search payments</h3>
-<p>Search for a payment using a specified search string. The operation returns all payment records which are matched by the search string.</p>
+<p>Search for a payment by a specified search string. The search string is compared against the <code>paymentNumber</code>, <code>paymentId</code>, <code>accountId</code>, or <code>transactionType</code> attributes. An exact match is required. </p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -34898,11 +35315,9 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
