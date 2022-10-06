@@ -1420,7 +1420,7 @@
               <a href="#admin" class="toc-h1 toc-link" data-title="Admin">Admin</a>
                 <ul class="toc-list-h2">
                     <li>
-                      <a href="#admin-code-adminpayment-code-object" class="toc-h2 toc-link" data-title="<code>AdminPayment</code> object"><code>AdminPayment</code> object</a>
+                      <a href="#admin-adminpayment-object" class="toc-h2 toc-link" data-title="AdminPayment object">AdminPayment object</a>
                     </li>
                     <li>
                       <a href="#admin-administrative-apis" class="toc-h2 toc-link" data-title="Administrative Apis">Administrative Apis</a>
@@ -21854,8 +21854,8 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td><strong>billingPolicy</strong></td>
 <td>string</td>
 <td>no</td>
-<td>IMMEDIATE</td>
-<td>When billing should occur. Possible values are START_OF_TERM, END_OF_TERM, or IMMEDIATE</td>
+<td>END_OF_TERM</td>
+<td>When billing for target account should occur. Accepted values are END_OF_TERM or IMMEDIATE</td>
 </tr>
 </tbody></table>
 
@@ -39791,7 +39791,7 @@ For example:</p>
 <li>Operational APIs such as adding hosts in and out of rotation, clearing internal caches, etc.</li>
 <li>APIs to retrieve low level information from the system</li>
 </ul>
-<h2 id='admin-code-adminpayment-code-object'><code>AdminPayment</code> object</h2>
+<h2 id='admin-adminpayment-object'>AdminPayment object</h2>
 <table><thead>
 <tr>
 <th>Name</th>
