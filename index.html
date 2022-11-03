@@ -10797,30 +10797,18 @@ communicating with the payment gateway. The transaction could be an authorizatio
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.AccountApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">AccountApi</span> <span class="n">accountApi</span><span class="o">;</span>
 
-<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"d751dd57-7644-469a-9e69-f98d36d86f67"</span><span class="o">);</span>
-
-<span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">String</span> <span class="n">externalKey</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">();</span>
-<span class="n">Boolean</span> <span class="n">isDefault</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will set this new payment method as default</span>
+<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"6e5d0912-2e56-4511-af77-af054b616696"</span><span class="o">);</span>
 <span class="n">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"__EXTERNAL_PAYMENT__"</span><span class="o">;</span> 
-<span class="n">PaymentMethodPluginDetail</span> <span class="n">info</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentMethodPluginDetail</span><span class="o">();</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
 
-<span class="n">PaymentMethod</span> <span class="n">paymentMethod</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentMethod</span><span class="o">(</span><span class="n">paymentMethodId</span><span class="o">,</span> 
-                                                <span class="n">externalKey</span><span class="o">,</span> 
-                                                <span class="n">accountId</span><span class="o">,</span> 
-                                                <span class="n">isDefault</span><span class="o">,</span> 
-                                                <span class="n">pluginName</span><span class="o">,</span> 
-                                                <span class="n">info</span><span class="o">,</span> 
-                                                <span class="n">EMPTY_AUDIT_LOGS</span><span class="o">);</span>
+<span class="n">PaymentMethod</span> <span class="n">paymentMethod</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentMethod</span><span class="o">();</span>
+<span class="n">paymentMethod</span><span class="o">.</span><span class="na">setPluginName</span><span class="o">(</span><span class="n">pluginName</span><span class="o">);</span>
 <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-<span class="n">PaymentMethod</span> <span class="n">paymentMethodPP</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">createPaymentMethod</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
-                                                               <span class="n">paymentMethod</span><span class="o">,</span> 
-                                                               <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> 
-                                                               <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
-                                                               <span class="n">requestOptions</span><span class="o">);</span>
+<span class="c1">//create a payment method</span>
+<span class="n">PaymentMethod</span> <span class="n">paymentMethodPP</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">createPaymentMethod</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">paymentMethod</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
+<span class="c1">//to create a payment method and set it as default use accountApi.createPaymentMethod(accountId, body, isDefault, payAllUnpaidInvoices, controlPluginName, pluginProperty, inputOptions);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">pm</span>             <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">PaymentMethod</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">pm</span><span class="p">.</span><span class="nf">account_id</span>  <span class="o">=</span> <span class="n">account</span><span class="p">.</span><span class="nf">account_id</span>
 <span class="n">pm</span><span class="p">.</span><span class="nf">plugin_name</span> <span class="o">=</span> <span class="s1">'__EXTERNAL_PAYMENT__'</span>
@@ -16468,8 +16456,9 @@ curl -v <span class="se">\</span>
 
 <p>Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If <strong>callCompletion</strong> is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by <strong>callTimeoutSec</strong>.</p>
 
-<p><strong>Other Notes</strong> 
-The <code>entitlementDate</code> drives the subscription state. So, if a subscription is created with a future <code>entitlementDate</code>, its state remains <code>PENDING</code> until the date is reached after which it becomes <code>ACTIVE</code>.</p>
+<p><strong>Other Notes:</strong>
+* Specifying the <code>startDate</code>/<code>billingStartDate</code> as part of the request body has no effect, these dates need to be passed as query parameters (<code>entitlementDate</code>/<code>billingDate</code>). 
+* The <code>entitlementDate</code> drives the subscription state. So, if a subscription is created with a future <code>entitlementDate</code>, its state remains <code>PENDING</code> until the date is reached after which it becomes <code>ACTIVE</code>.</p>
 
 <p><strong>Response</strong></p>
 
@@ -19076,8 +19065,8 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <p>The reason for all this complexity is to allow to control entitlement and billing date separately, and also avoid users to have to compute dates to achieve certain behavior by relying on well defined policies.</p>
 
-<p><strong>Other Notes</strong>
-If a subscription is created with a future date and if the cancel method is invoked for immediate cancellation, the cancellation takes effect only after the subscription creation date is reached. Thus, the subscription remains in <code>PENDING</code> state until the subscription creation date is reached after which it is moved to the <code>CANCELLED</code> state.</p>
+<p><strong>Other Notes:</strong>
+* If a subscription is created with a future date and if the cancel method is invoked for immediate cancellation, the cancellation takes effect only after the subscription creation date is reached. Thus, the subscription remains in <code>PENDING</code> state until the subscription creation date is reached after which it is moved to the <code>CANCELLED</code> state.</p>
 
 <p><strong>Returns</strong></p>
 
@@ -25183,7 +25172,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 </code></pre>
 <p><strong>Request Body</strong></p>
 
-<p>An invoice item resource object with at least the <code>amount</code> attribute. </p>
+<p>An invoice item resource object with at least the <code>amount</code> attribute. If multiple invoice items are specified, a single invoice is created with all the invoice items. </p>
 
 <p><strong>Query Parameters</strong></p>
 
