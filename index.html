@@ -16456,9 +16456,12 @@ curl -v <span class="se">\</span>
 
 <p>Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If <strong>callCompletion</strong> is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by <strong>callTimeoutSec</strong>.</p>
 
-<p><strong>Other Notes:</strong>
-* Specifying the <code>startDate</code>/<code>billingStartDate</code> as part of the request body has no effect, these dates need to be passed as query parameters (<code>entitlementDate</code>/<code>billingDate</code>). 
-* The <code>entitlementDate</code> drives the subscription state. So, if a subscription is created with a future <code>entitlementDate</code>, its state remains <code>PENDING</code> until the date is reached after which it becomes <code>ACTIVE</code>.</p>
+<p><strong>Other Notes:</strong></p>
+
+<ul>
+<li>Specifying the <code>startDate</code>/<code>billingStartDate</code> as part of the request body has no effect, these dates need to be passed as query parameters (<code>entitlementDate</code>/<code>billingDate</code>). </li>
+<li>The <code>entitlementDate</code> drives the subscription state. So, if a subscription is created with a future <code>entitlementDate</code>, its state remains <code>PENDING</code> until the date is reached after which it becomes <code>ACTIVE</code>.</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
