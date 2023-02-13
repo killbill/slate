@@ -11468,7 +11468,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
     -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    -d <span class="s1">'{ "accountId": "2ad52f53-85ae-408a-9879-32a7e59dd03d", "pluginName": "__EXTERNAL_PAYMENT__"}'</span> <span class="se">\</span>
+    -d <span class="s1">'{ "externalKey": "ExternalKey", "accountId": "2ad52f53-85ae-408a-9879-32a7e59dd03d", "pluginName": "__EXTERNAL_PAYMENT__"}'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/accounts/8785164f-b5d7-4da1-9495-33f5105e8d80/paymentMethods"</span> 
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.AccountApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">AccountApi</span> <span class="n">accountApi</span><span class="o">;</span>
@@ -11499,7 +11499,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
           <span class="n">options</span><span class="p">)</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">accountApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">AccountApi</span><span class="p">()</span>
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'059ecfb8-6b4d-4a89-9537-63a687e6cf10'</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentMethod</span><span class="p">(</span><span class="n">plugin_name</span><span class="o">=</span><span class="s">'__EXTERNAL_PAYMENT__'</span><span class="p">,</span> <span class="n">plugin_info</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentMethod</span><span class="p">(</span><span class="n">external_key</span><span class="o">=</span><span class="s">'ExternalKey'</span><span class="p">,</span> <span class="n">plugin_name</span><span class="o">=</span><span class="s">'__EXTERNAL_PAYMENT__'</span><span class="p">,</span> <span class="n">plugin_info</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 
 <span class="n">accountApi</span><span class="o">.</span><span class="n">create_payment_method</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> 
                                  <span class="n">body</span><span class="p">,</span> 
@@ -11527,7 +11527,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
 <span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
    <span class="s2">"paymentMethodId"</span><span class="ss">:"059ecfb8-6b4d-4a89-9537-63a687e6cf10"</span><span class="p">,</span>
-   <span class="s2">"externalKey"</span><span class="ss">:"unknown"</span><span class="p">,</span>
+   <span class="s2">"externalKey"</span><span class="ss">:"ExternalKey"</span><span class="p">,</span>
    <span class="s2">"accountId"</span><span class="ss">:"fa488b6e-c52a-450a-94bf-6607ae8b484f"</span><span class="p">,</span>
    <span class="s2">"isDefault"</span><span class="ss">:true</span><span class="p">,</span>
    <span class="s2">"pluginName"</span><span class="ss">:"__EXTERNAL_PAYMENT__"</span><span class="p">,</span>
@@ -11538,6 +11538,10 @@ communicating with the payment gateway. The transaction could be an authorizatio
 <span class="p">}</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>A payment method object specifying <code>accountId</code> and <code>pluginName</code> at the minimum. Please refer to the <a href="https://killbill.github.io/slate/#payment-method-payment-method-resource">payment method resource</a> section for more details about the fields.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -15344,7 +15348,7 @@ based on custom business rules. Additional information can be found in our <a hr
 <h2 id='payment-method-payment-methods'>Payment Methods</h2>
 <p>Basic operations to retrieve, list, search and delete payment methods.</p>
 
-<p>Note that the creation of a payment method relies on an operation listed under the <a href="https://killbill.github.io/slate/#account-add-a-payment-method">Account resource</a>. The creation of a Kill Bill PaymentMethod is always associated with a given <code>Account</code> and it identifies (through its <code>pluginName</code> attribute) the payment plugin that will be used by the system when a payment is made. </p>
+<p>Note that the creation of a payment method needs to be done at the Account level using the <a href="https://killbill.github.io/slate/#account-add-a-payment-method">Add a payment method</a> endpoint. The <code>pluginName</code> attribute identifies the payment plugin that will be used by the system when this payment method is used for a payment. </p>
 <h3 id='payment-method-retrieve-a-payment-method-by-id'>Retrieve a payment method by id</h3>
 <p>Retrieve information on a payment method, given its payment method ID.</p>
 
