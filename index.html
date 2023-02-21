@@ -734,6 +734,9 @@
                                   <a href="#subscription-update-the-bcd-associated-with-a-subscription" class="toc-h3 toc-link" data-title="Subscription">Update the BCD associated with a subscription</a>
                                 </li>
                                 <li>
+                                  <a href="#subscription-update-the-subscription-quantity" class="toc-h3 toc-link" data-title="Subscription">Update the subscription quantity</a>
+                                </li>
+                                <li>
                                   <a href="#subscription-change-subscription-plan" class="toc-h3 toc-link" data-title="Subscription">Change subscription plan</a>
                                 </li>
                                 <li>
@@ -951,6 +954,17 @@
                           <ul class="toc-list-h3">
                                 <li>
                                   <a href="#invoice-generate-a-dry-run-invoice" class="toc-h3 toc-link" data-title="Invoice">Generate a dry run invoice</a>
+                                </li>
+                          </ul>
+                    </li>
+                    <li>
+                      <a href="#invoice-invoice-groups" class="toc-h2 toc-link" data-title="Invoice Groups">Invoice Groups</a>
+                          <ul class="toc-list-h3">
+                                <li>
+                                  <a href="#invoice-trigger-an-invoice-group-run" class="toc-h3 toc-link" data-title="Invoice">Trigger an invoice group run</a>
+                                </li>
+                                <li>
+                                  <a href="#invoice-retrieve-an-invoice-group" class="toc-h3 toc-link" data-title="Invoice">Retrieve an invoice group</a>
                                 </li>
                           </ul>
                     </li>
@@ -16731,6 +16745,12 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <td>user</td>
 <td>list of prices if this subscription has price overrides (see notes below)</td>
 </tr>
+<tr>
+<td><strong>quantity</strong></td>
+<td>integer</td>
+<td>user</td>
+<td>quantity of subscriptions (see notes below)</td>
+</tr>
 </tbody></table>
 
 <p><strong>productCategory</strong>: possible values are BASE, ADD_ON, or STANDALONE</p>
@@ -16772,7 +16792,9 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
             <span class="s2">"recurringPrice"</span>: 150.00,
             <span class="s2">"usagePrices"</span>: <span class="o">[]</span>
         <span class="o">}</span>
-</code></pre><h2 id='subscription-subscriptions'>Subscriptions</h2>
+</code></pre>
+<p><strong>quantity</strong>: An integer value that specifies the quantity of subscription. The default value is 1. The corresponding invoice is generated as per the quantity. So if <code>price=$20/mo</code>, <code>quantity=$2</code> =&gt; <code>invoiceItem recurring amount=$40</code>.</p>
+<h2 id='subscription-subscriptions'>Subscriptions</h2>
 <p>These endpoints support the basic CRUD operations on Subscriptions.</p>
 <h3 id='subscription-create-a-subscription'>Create a subscription</h3>
 <p>This API creates a base product subscription. It also creates a bundle to contain the subscription. See <a href="https://killbill.github.io/slate/#bundle">Bundle</a> for further information.</p>
@@ -19312,6 +19334,87 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <p>By default the effective date must be in the future so as to not modify existing invoices. Setting <strong>forceNewBcdWithPastEffectiveDate</strong> to true allows the date to be set in the past. </p>
 
 <p>Secondly, even after this endpoint is executed, the <a href="https://killbill.github.io/slate/?shell#subscription-retrieve-a-subscription-by-id">Retrieve a Subscription</a> endpoint will still return the old BCD until an invoice is generated on the new BCD.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h3 id='subscription-update-the-subscription-quantity'>Update the subscription quantity</h3>
+<p>This API allows you to change the subscription quantity.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>PUT http://127.0.0.1:8080/1.0/kb/subscriptions/{subscriptionId}/quantity</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -v <span class="se">\</span>
+    -X PUT <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -d <span class="s1">'{ 
+            "quantity": "2" 
+        }'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/c20715fa-8d69-488d-a094-51da0cdf999b/quantity'</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"f0143401-5b9b-41d1-b9c0-8513f1f0cf0b"</span><span class="o">);</span>
+
+<span class="n">Subscription</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Subscription</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setQuantity</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+<span class="n">LocalDate</span> <span class="n">effectiveFromDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">subscriptionApi</span><span class="o">.</span><span class="na">updateSubscriptionQuantity</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">effectiveFromDate</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
+&lt; HTTP/1.1 204 No Content
+&lt; Content-Type: application/json
+&lt; Content-Length: 0
+</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
+</code></pre>
+<p><strong>Request Body</strong></p>
+
+<p>The quantity needs to be specified in the request body via the <code>quantity</code> field.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>effectiveFromDate</strong></td>
+<td>string</td>
+<td>no</td>
+<td>immediate</td>
+<td>Date on which this change becomes effective in <code>yyyy-mm-dd</code> format.</td>
+</tr>
+<tr>
+<td><strong>forceNewQuantityWithPastEffectiveDate</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>See below</td>
+</tr>
+</tbody></table>
+
+<p>By default the effective date must be in the future so as to not modify existing invoices. Setting <strong>forceNewQuantityWithPastEffectiveDate</strong> to true allows the date to be set in the past. </p>
 
 <p><strong>Response</strong></p>
 
@@ -22544,7 +22647,26 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>END_OF_TERM</td>
 <td>When billing for target account should occur. Accepted values are END_OF_TERM or IMMEDIATE</td>
 </tr>
+<tr>
+<td><strong>bcdTransfer</strong></td>
+<td>string</td>
+<td>no</td>
+<td>USE_EXISTING</td>
+<td>Specifies how the per subscription BCD should be transferred. Accepted values are NONE, USE_EXISTING and ALIGN_WITH_EFF_DT. See notes below</td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>no</td>
+<td>omit</td>
+<td>list of plugin properties, if any</td>
+</tr>
 </tbody></table>
+
+<p>Possible values for the <strong>bcdTransfer</strong> parameter are as explained below:
+* NONE: Does not transfer per-subscription BCD
+* USE_EXISTING: Transfer existing per-subscription BCD if exists
+* ALIGN_WITH_EFF_DT: Set per-subscription BCD to align with the day of the transfer effective date</p>
 
 <p><strong>Response</strong></p>
 
@@ -27933,6 +28055,456 @@ curl -v <span class="se">\</span>
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and an invoice resource object.</p>
+<h2 id='invoice-invoice-groups'>Invoice Groups</h2>
+<p>An invoice group is a group of invoices. An invoice group plugin can be used to split an invoice into multiple invoices. Such split invoices belong to a single invoice group. </p>
+
+<p>Note that Kill Bill does not provide any reference implementation for an invoice group plugin. So anyone wishing to use this feature would need to create an invoice plugin and implement the <a href="https://github.com/killbill/killbill-plugin-api/blob/20e10d463b67b0434e1b9f4dd62ed34ebe84bd9b/invoice/src/main/java/org/killbill/billing/invoice/plugin/api/InvoicePluginApi.java#L41">InvoicePluginApi#getInvoiceGrouping</a> method. We provide a <a href="https://github.com/killbill/killbill-invgrp-demo">demo plugin</a> that demonstrates how an invoice group plugin can be implemented. When such a plugin is configured, an <a href="https://killbill.github.io/slate/#invoice-trigger-an-invoice-group-run">invoice group run</a> would result in the generation of multiple invoices.</p>
+<h3 id='invoice-trigger-an-invoice-group-run'>Trigger an invoice group run</h3>
+<p>Triggers an invoice group run for the associated account. This would result in the creation of split invoices only if an invoice group plugin is configured. Otherwise, this endpoint behaves the same way as the <a href="https://killbill.github.io/slate/#invoice-trigger-an-invoice-run">Trigger an invoice run</a> endpoint.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/invoices/group</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -v <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/group?accountId=46897a8b-4ae8-45e2-b934-c4d00dba40a6"</span> 
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoiceApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">InvoiceApi</span> <span class="n">invoiceApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"34a65013-2dd1-480e-b4b8-7999bb15ebce"</span><span class="o">);</span>
+<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">"2023-06-15"</span><span class="o">);</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">Invoices</span> <span class="n">invoices</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createFutureInvoiceGroup</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">targetDate</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
+&lt; HTTP/1.1 201
+&lt; Content-Type: application/json
+&lt; Content-Length: 0
+&lt; Location: http://127.0.0.1:8080/1.0/kb/invoices/60f5af97-9457-4b53-9eec-aec1de96a66f/group
+</code></pre><pre class="highlight java tab-java"><code><span class="o">[</span><span class="kd">class</span> <span class="nc">Invoice</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Invoice</span><span class="err">@</span><span class="mi">13</span><span class="n">e92424</span>
+    <span class="nl">amount:</span> <span class="mf">30.00</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">status:</span> <span class="n">COMMITTED</span>
+    <span class="nl">creditAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">refundAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">invoiceId:</span> <span class="n">f5ecf703</span><span class="o">-</span><span class="mi">10</span><span class="n">b9</span><span class="o">-</span><span class="mi">4019</span><span class="o">-</span><span class="mi">8044</span><span class="o">-</span><span class="mi">8</span><span class="n">db1163bef56</span>
+    <span class="nl">invoiceDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">targetDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">invoiceNumber:</span> <span class="mi">428</span>
+    <span class="nl">balance:</span> <span class="mf">30.00</span>
+    <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+    <span class="nl">bundleKeys:</span> <span class="kc">null</span>
+    <span class="nl">credits:</span> <span class="kc">null</span>
+    <span class="nl">items:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">InvoiceItem</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">InvoiceItem</span><span class="err">@</span><span class="mi">251</span><span class="n">cd54e</span>
+        <span class="nl">invoiceItemId:</span> <span class="n">faf4f9a3</span><span class="o">-</span><span class="mi">943</span><span class="n">b</span><span class="o">-</span><span class="mi">42</span><span class="n">c4</span><span class="o">-</span><span class="mi">9705</span><span class="o">-</span><span class="mi">1365</span><span class="n">cfd91cc7</span>
+        <span class="nl">invoiceId:</span> <span class="n">f5ecf703</span><span class="o">-</span><span class="mi">10</span><span class="n">b9</span><span class="o">-</span><span class="mi">4019</span><span class="o">-</span><span class="mi">8044</span><span class="o">-</span><span class="mi">8</span><span class="n">db1163bef56</span>
+        <span class="nl">linkedInvoiceItemId:</span> <span class="kc">null</span>
+        <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+        <span class="nl">childAccountId:</span> <span class="kc">null</span>
+        <span class="nl">bundleId:</span> <span class="mi">30</span><span class="n">a3a9bf</span><span class="o">-</span><span class="mi">3</span><span class="n">fc7</span><span class="o">-</span><span class="mi">4334</span><span class="o">-</span><span class="n">ac2e</span><span class="o">-</span><span class="mo">064</span><span class="n">cdd99c9dc</span>
+        <span class="nl">subscriptionId:</span> <span class="mi">5</span><span class="n">c463a1a</span><span class="o">-</span><span class="n">e884</span><span class="o">-</span><span class="mi">4177</span><span class="o">-</span><span class="n">aa2c</span><span class="o">-</span><span class="n">cb09aa45e39b</span>
+        <span class="nl">productName:</span> <span class="n">Standard</span>
+        <span class="nl">planName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">phaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">usageName:</span> <span class="kc">null</span>
+        <span class="nl">prettyProductName:</span> <span class="n">Standard</span>
+        <span class="nl">prettyPlanName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">prettyPhaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">prettyUsageName:</span> <span class="kc">null</span>
+        <span class="nl">itemType:</span> <span class="n">RECURRING</span>
+        <span class="nl">description:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">startDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">endDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">amount:</span> <span class="mf">30.00</span>
+        <span class="nl">rate:</span> <span class="mf">30.000000000</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">quantity:</span> <span class="kc">null</span>
+        <span class="nl">itemDetails:</span> <span class="kc">null</span>
+        <span class="nl">catalogEffectiveDate:</span> <span class="mi">2020</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mo">01</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">00.000</span><span class="n">Z</span>
+        <span class="nl">childItems:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">trackingIds:</span> <span class="o">[]</span>
+    <span class="nl">isParentInvoice:</span> <span class="kc">false</span>
+    <span class="nl">parentInvoiceId:</span> <span class="kc">null</span>
+    <span class="nl">parentAccountId:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">},</span> <span class="kd">class</span> <span class="nc">Invoice</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Invoice</span><span class="nd">@ebbaa6cb</span>
+    <span class="nl">amount:</span> <span class="mf">30.00</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">status:</span> <span class="n">COMMITTED</span>
+    <span class="nl">creditAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">refundAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">invoiceId:</span> <span class="n">b2f575d9</span><span class="o">-</span><span class="mi">9</span><span class="n">bb8</span><span class="o">-</span><span class="mi">4</span><span class="n">b5a</span><span class="o">-</span><span class="mi">8595</span><span class="o">-</span><span class="n">da001381fd13</span>
+    <span class="nl">invoiceDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">targetDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">invoiceNumber:</span> <span class="mi">429</span>
+    <span class="nl">balance:</span> <span class="mf">30.00</span>
+    <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+    <span class="nl">bundleKeys:</span> <span class="kc">null</span>
+    <span class="nl">credits:</span> <span class="kc">null</span>
+    <span class="nl">items:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">InvoiceItem</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">InvoiceItem</span><span class="err">@</span><span class="mi">16742</span><span class="n">d15</span>
+        <span class="nl">invoiceItemId:</span> <span class="mi">42376</span><span class="n">d22</span><span class="o">-</span><span class="mi">4</span><span class="n">b19</span><span class="o">-</span><span class="mi">4</span><span class="n">a79</span><span class="o">-</span><span class="mi">816</span><span class="n">b</span><span class="o">-</span><span class="n">b4896f9e8f48</span>
+        <span class="nl">invoiceId:</span> <span class="n">b2f575d9</span><span class="o">-</span><span class="mi">9</span><span class="n">bb8</span><span class="o">-</span><span class="mi">4</span><span class="n">b5a</span><span class="o">-</span><span class="mi">8595</span><span class="o">-</span><span class="n">da001381fd13</span>
+        <span class="nl">linkedInvoiceItemId:</span> <span class="kc">null</span>
+        <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+        <span class="nl">childAccountId:</span> <span class="kc">null</span>
+        <span class="nl">bundleId:</span> <span class="n">c176641f</span><span class="o">-</span><span class="mi">2</span><span class="n">b6e</span><span class="o">-</span><span class="mi">4</span><span class="n">bcf</span><span class="o">-</span><span class="mi">8264</span><span class="o">-</span><span class="n">bfa120bcb337</span>
+        <span class="nl">subscriptionId:</span> <span class="n">d424e7d9</span><span class="o">-</span><span class="n">e81a</span><span class="o">-</span><span class="mi">45</span><span class="n">c7</span><span class="o">-</span><span class="mi">9</span><span class="n">e84</span><span class="o">-</span><span class="mi">77316</span><span class="n">bfe0c80</span>
+        <span class="nl">productName:</span> <span class="n">Standard</span>
+        <span class="nl">planName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">phaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">usageName:</span> <span class="kc">null</span>
+        <span class="nl">prettyProductName:</span> <span class="n">Standard</span>
+        <span class="nl">prettyPlanName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">prettyPhaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">prettyUsageName:</span> <span class="kc">null</span>
+        <span class="nl">itemType:</span> <span class="n">RECURRING</span>
+        <span class="nl">description:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">startDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">endDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">amount:</span> <span class="mf">30.00</span>
+        <span class="nl">rate:</span> <span class="mf">30.000000000</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">quantity:</span> <span class="kc">null</span>
+        <span class="nl">itemDetails:</span> <span class="kc">null</span>
+        <span class="nl">catalogEffectiveDate:</span> <span class="mi">2020</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mo">01</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">00.000</span><span class="n">Z</span>
+        <span class="nl">childItems:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">trackingIds:</span> <span class="o">[]</span>
+    <span class="nl">isParentInvoice:</span> <span class="kc">false</span>
+    <span class="nl">parentInvoiceId:</span> <span class="kc">null</span>
+    <span class="nl">parentAccountId:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}]</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>accountId</strong></td>
+<td>string</td>
+<td>yes</td>
+<td>none</td>
+<td>account id</td>
+</tr>
+<tr>
+<td><strong>targetDate</strong></td>
+<td>string</td>
+<td>no</td>
+<td>current date</td>
+<td>target date (date up to which the account should be invoiced)</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>TODO
+If successful, returns a status code of 201 and an empty body. A location header containing the UUID of the generated group (if any) is also included in the response. If there is nothing to invoice for, returns a 404 status code.</p>
+<h3 id='invoice-retrieve-an-invoice-group'>Retrieve an invoice group</h3>
+<p>Retrieves the invoices associated with the specified <code>groupId</code>.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/invoices/{groupId}/group</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -v <span class="se">\</span>
+    -u admin:password <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    -H <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    -H <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/e7fc3529-92e1-4987-b5f1-08e558a36698/group?accountId=40630170-e390-4cc7-9381-3788a894ba04"</span> 
+</code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoiceApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="n">InvoiceApi</span> <span class="n">invoiceApi</span><span class="o">;</span>
+
+<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"62dfaf14-34c6-4756-8411-89c93b1cfba3"</span><span class="o">);</span>
+<span class="n">UUID</span> <span class="n">groupId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"f5ecf703-10b9-4019-8044-8db1163bef56"</span><span class="o">);</span>
+
+<span class="n">Invoices</span> <span class="n">invoices</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getInvoicesGroup</span><span class="o">(</span><span class="n">groupId</span><span class="o">,</span> <span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json
+<span class="o">[</span>
+  <span class="o">{</span>
+    <span class="s2">"amount"</span>: 30,
+    <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"status"</span>: <span class="s2">"COMMITTED"</span>,
+    <span class="s2">"creditAdj"</span>: 0,
+    <span class="s2">"refundAdj"</span>: 0,
+    <span class="s2">"invoiceId"</span>: <span class="s2">"f5ecf703-10b9-4019-8044-8db1163bef56"</span>,
+    <span class="s2">"invoiceDate"</span>: <span class="s2">"2023-02-16"</span>,
+    <span class="s2">"targetDate"</span>: <span class="s2">"2023-08-16"</span>,
+    <span class="s2">"invoiceNumber"</span>: <span class="s2">"428"</span>,
+    <span class="s2">"balance"</span>: 30,
+    <span class="s2">"accountId"</span>: <span class="s2">"62dfaf14-34c6-4756-8411-89c93b1cfba3"</span>,
+    <span class="s2">"bundleKeys"</span>: null,
+    <span class="s2">"credits"</span>: null,
+    <span class="s2">"items"</span>: <span class="o">[</span>
+      <span class="o">{</span>
+        <span class="s2">"invoiceItemId"</span>: <span class="s2">"faf4f9a3-943b-42c4-9705-1365cfd91cc7"</span>,
+        <span class="s2">"invoiceId"</span>: <span class="s2">"f5ecf703-10b9-4019-8044-8db1163bef56"</span>,
+        <span class="s2">"linkedInvoiceItemId"</span>: null,
+        <span class="s2">"accountId"</span>: <span class="s2">"62dfaf14-34c6-4756-8411-89c93b1cfba3"</span>,
+        <span class="s2">"childAccountId"</span>: null,
+        <span class="s2">"bundleId"</span>: <span class="s2">"30a3a9bf-3fc7-4334-ac2e-064cdd99c9dc"</span>,
+        <span class="s2">"subscriptionId"</span>: <span class="s2">"5c463a1a-e884-4177-aa2c-cb09aa45e39b"</span>,
+        <span class="s2">"productName"</span>: <span class="s2">"Standard"</span>,
+        <span class="s2">"planName"</span>: <span class="s2">"standard-monthly"</span>,
+        <span class="s2">"phaseName"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+        <span class="s2">"usageName"</span>: null,
+        <span class="s2">"prettyProductName"</span>: <span class="s2">"Standard"</span>,
+        <span class="s2">"prettyPlanName"</span>: <span class="s2">"standard-monthly"</span>,
+        <span class="s2">"prettyPhaseName"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+        <span class="s2">"prettyUsageName"</span>: null,
+        <span class="s2">"itemType"</span>: <span class="s2">"RECURRING"</span>,
+        <span class="s2">"description"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+        <span class="s2">"startDate"</span>: <span class="s2">"2023-08-16"</span>,
+        <span class="s2">"endDate"</span>: <span class="s2">"2023-09-16"</span>,
+        <span class="s2">"amount"</span>: 30,
+        <span class="s2">"rate"</span>: 30,
+        <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+        <span class="s2">"quantity"</span>: null,
+        <span class="s2">"itemDetails"</span>: null,
+        <span class="s2">"catalogEffectiveDate"</span>: <span class="s2">"2020-01-01T00:00:00.000Z"</span>,
+        <span class="s2">"childItems"</span>: null,
+        <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+      <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"trackingIds"</span>: <span class="o">[]</span>,
+    <span class="s2">"isParentInvoice"</span>: <span class="nb">false</span>,
+    <span class="s2">"parentInvoiceId"</span>: null,
+    <span class="s2">"parentAccountId"</span>: null,
+    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+  <span class="o">}</span>,
+  <span class="o">{</span>
+    <span class="s2">"amount"</span>: 30,
+    <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+    <span class="s2">"status"</span>: <span class="s2">"COMMITTED"</span>,
+    <span class="s2">"creditAdj"</span>: 0,
+    <span class="s2">"refundAdj"</span>: 0,
+    <span class="s2">"invoiceId"</span>: <span class="s2">"b2f575d9-9bb8-4b5a-8595-da001381fd13"</span>,
+    <span class="s2">"invoiceDate"</span>: <span class="s2">"2023-02-16"</span>,
+    <span class="s2">"targetDate"</span>: <span class="s2">"2023-08-16"</span>,
+    <span class="s2">"invoiceNumber"</span>: <span class="s2">"429"</span>,
+    <span class="s2">"balance"</span>: 30,
+    <span class="s2">"accountId"</span>: <span class="s2">"62dfaf14-34c6-4756-8411-89c93b1cfba3"</span>,
+    <span class="s2">"bundleKeys"</span>: null,
+    <span class="s2">"credits"</span>: null,
+    <span class="s2">"items"</span>: <span class="o">[</span>
+      <span class="o">{</span>
+        <span class="s2">"invoiceItemId"</span>: <span class="s2">"42376d22-4b19-4a79-816b-b4896f9e8f48"</span>,
+        <span class="s2">"invoiceId"</span>: <span class="s2">"b2f575d9-9bb8-4b5a-8595-da001381fd13"</span>,
+        <span class="s2">"linkedInvoiceItemId"</span>: null,
+        <span class="s2">"accountId"</span>: <span class="s2">"62dfaf14-34c6-4756-8411-89c93b1cfba3"</span>,
+        <span class="s2">"childAccountId"</span>: null,
+        <span class="s2">"bundleId"</span>: <span class="s2">"c176641f-2b6e-4bcf-8264-bfa120bcb337"</span>,
+        <span class="s2">"subscriptionId"</span>: <span class="s2">"d424e7d9-e81a-45c7-9e84-77316bfe0c80"</span>,
+        <span class="s2">"productName"</span>: <span class="s2">"Standard"</span>,
+        <span class="s2">"planName"</span>: <span class="s2">"standard-monthly"</span>,
+        <span class="s2">"phaseName"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+        <span class="s2">"usageName"</span>: null,
+        <span class="s2">"prettyProductName"</span>: <span class="s2">"Standard"</span>,
+        <span class="s2">"prettyPlanName"</span>: <span class="s2">"standard-monthly"</span>,
+        <span class="s2">"prettyPhaseName"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+        <span class="s2">"prettyUsageName"</span>: null,
+        <span class="s2">"itemType"</span>: <span class="s2">"RECURRING"</span>,
+        <span class="s2">"description"</span>: <span class="s2">"standard-monthly-evergreen"</span>,
+        <span class="s2">"startDate"</span>: <span class="s2">"2023-08-16"</span>,
+        <span class="s2">"endDate"</span>: <span class="s2">"2023-09-16"</span>,
+        <span class="s2">"amount"</span>: 30,
+        <span class="s2">"rate"</span>: 30,
+        <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
+        <span class="s2">"quantity"</span>: null,
+        <span class="s2">"itemDetails"</span>: null,
+        <span class="s2">"catalogEffectiveDate"</span>: <span class="s2">"2020-01-01T00:00:00.000Z"</span>,
+        <span class="s2">"childItems"</span>: null,
+        <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+      <span class="o">}</span>
+    <span class="o">]</span>,
+    <span class="s2">"trackingIds"</span>: <span class="o">[]</span>,
+    <span class="s2">"isParentInvoice"</span>: <span class="nb">false</span>,
+    <span class="s2">"parentInvoiceId"</span>: null,
+    <span class="s2">"parentAccountId"</span>: null,
+    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
+  <span class="o">}</span>
+<span class="o">]</span>
+</code></pre><pre class="highlight java tab-java"><code><span class="o">[</span><span class="kd">class</span> <span class="nc">Invoice</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Invoice</span><span class="err">@</span><span class="mi">13</span><span class="n">e92424</span>
+    <span class="nl">amount:</span> <span class="mf">30.00</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">status:</span> <span class="n">COMMITTED</span>
+    <span class="nl">creditAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">refundAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">invoiceId:</span> <span class="n">f5ecf703</span><span class="o">-</span><span class="mi">10</span><span class="n">b9</span><span class="o">-</span><span class="mi">4019</span><span class="o">-</span><span class="mi">8044</span><span class="o">-</span><span class="mi">8</span><span class="n">db1163bef56</span>
+    <span class="nl">invoiceDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">targetDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">invoiceNumber:</span> <span class="mi">428</span>
+    <span class="nl">balance:</span> <span class="mf">30.00</span>
+    <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+    <span class="nl">bundleKeys:</span> <span class="kc">null</span>
+    <span class="nl">credits:</span> <span class="kc">null</span>
+    <span class="nl">items:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">InvoiceItem</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">InvoiceItem</span><span class="err">@</span><span class="mi">251</span><span class="n">cd54e</span>
+        <span class="nl">invoiceItemId:</span> <span class="n">faf4f9a3</span><span class="o">-</span><span class="mi">943</span><span class="n">b</span><span class="o">-</span><span class="mi">42</span><span class="n">c4</span><span class="o">-</span><span class="mi">9705</span><span class="o">-</span><span class="mi">1365</span><span class="n">cfd91cc7</span>
+        <span class="nl">invoiceId:</span> <span class="n">f5ecf703</span><span class="o">-</span><span class="mi">10</span><span class="n">b9</span><span class="o">-</span><span class="mi">4019</span><span class="o">-</span><span class="mi">8044</span><span class="o">-</span><span class="mi">8</span><span class="n">db1163bef56</span>
+        <span class="nl">linkedInvoiceItemId:</span> <span class="kc">null</span>
+        <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+        <span class="nl">childAccountId:</span> <span class="kc">null</span>
+        <span class="nl">bundleId:</span> <span class="mi">30</span><span class="n">a3a9bf</span><span class="o">-</span><span class="mi">3</span><span class="n">fc7</span><span class="o">-</span><span class="mi">4334</span><span class="o">-</span><span class="n">ac2e</span><span class="o">-</span><span class="mo">064</span><span class="n">cdd99c9dc</span>
+        <span class="nl">subscriptionId:</span> <span class="mi">5</span><span class="n">c463a1a</span><span class="o">-</span><span class="n">e884</span><span class="o">-</span><span class="mi">4177</span><span class="o">-</span><span class="n">aa2c</span><span class="o">-</span><span class="n">cb09aa45e39b</span>
+        <span class="nl">productName:</span> <span class="n">Standard</span>
+        <span class="nl">planName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">phaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">usageName:</span> <span class="kc">null</span>
+        <span class="nl">prettyProductName:</span> <span class="n">Standard</span>
+        <span class="nl">prettyPlanName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">prettyPhaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">prettyUsageName:</span> <span class="kc">null</span>
+        <span class="nl">itemType:</span> <span class="n">RECURRING</span>
+        <span class="nl">description:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">startDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">endDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">amount:</span> <span class="mf">30.00</span>
+        <span class="nl">rate:</span> <span class="mf">30.000000000</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">quantity:</span> <span class="kc">null</span>
+        <span class="nl">itemDetails:</span> <span class="kc">null</span>
+        <span class="nl">catalogEffectiveDate:</span> <span class="mi">2020</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mo">01</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">00.000</span><span class="n">Z</span>
+        <span class="nl">childItems:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">trackingIds:</span> <span class="o">[]</span>
+    <span class="nl">isParentInvoice:</span> <span class="kc">false</span>
+    <span class="nl">parentInvoiceId:</span> <span class="kc">null</span>
+    <span class="nl">parentAccountId:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">},</span> <span class="kd">class</span> <span class="nc">Invoice</span> <span class="o">{</span>
+    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Invoice</span><span class="nd">@ebbaa6cb</span>
+    <span class="nl">amount:</span> <span class="mf">30.00</span>
+    <span class="nl">currency:</span> <span class="n">USD</span>
+    <span class="nl">status:</span> <span class="n">COMMITTED</span>
+    <span class="nl">creditAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">refundAdj:</span> <span class="mf">0.00</span>
+    <span class="nl">invoiceId:</span> <span class="n">b2f575d9</span><span class="o">-</span><span class="mi">9</span><span class="n">bb8</span><span class="o">-</span><span class="mi">4</span><span class="n">b5a</span><span class="o">-</span><span class="mi">8595</span><span class="o">-</span><span class="n">da001381fd13</span>
+    <span class="nl">invoiceDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">targetDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+    <span class="nl">invoiceNumber:</span> <span class="mi">429</span>
+    <span class="nl">balance:</span> <span class="mf">30.00</span>
+    <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+    <span class="nl">bundleKeys:</span> <span class="kc">null</span>
+    <span class="nl">credits:</span> <span class="kc">null</span>
+    <span class="nl">items:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">InvoiceItem</span> <span class="o">{</span>
+        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">InvoiceItem</span><span class="err">@</span><span class="mi">16742</span><span class="n">d15</span>
+        <span class="nl">invoiceItemId:</span> <span class="mi">42376</span><span class="n">d22</span><span class="o">-</span><span class="mi">4</span><span class="n">b19</span><span class="o">-</span><span class="mi">4</span><span class="n">a79</span><span class="o">-</span><span class="mi">816</span><span class="n">b</span><span class="o">-</span><span class="n">b4896f9e8f48</span>
+        <span class="nl">invoiceId:</span> <span class="n">b2f575d9</span><span class="o">-</span><span class="mi">9</span><span class="n">bb8</span><span class="o">-</span><span class="mi">4</span><span class="n">b5a</span><span class="o">-</span><span class="mi">8595</span><span class="o">-</span><span class="n">da001381fd13</span>
+        <span class="nl">linkedInvoiceItemId:</span> <span class="kc">null</span>
+        <span class="nl">accountId:</span> <span class="mi">62</span><span class="n">dfaf14</span><span class="o">-</span><span class="mi">34</span><span class="n">c6</span><span class="o">-</span><span class="mi">4756</span><span class="o">-</span><span class="mi">8411</span><span class="o">-</span><span class="mi">89</span><span class="n">c93b1cfba3</span>
+        <span class="nl">childAccountId:</span> <span class="kc">null</span>
+        <span class="nl">bundleId:</span> <span class="n">c176641f</span><span class="o">-</span><span class="mi">2</span><span class="n">b6e</span><span class="o">-</span><span class="mi">4</span><span class="n">bcf</span><span class="o">-</span><span class="mi">8264</span><span class="o">-</span><span class="n">bfa120bcb337</span>
+        <span class="nl">subscriptionId:</span> <span class="n">d424e7d9</span><span class="o">-</span><span class="n">e81a</span><span class="o">-</span><span class="mi">45</span><span class="n">c7</span><span class="o">-</span><span class="mi">9</span><span class="n">e84</span><span class="o">-</span><span class="mi">77316</span><span class="n">bfe0c80</span>
+        <span class="nl">productName:</span> <span class="n">Standard</span>
+        <span class="nl">planName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">phaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">usageName:</span> <span class="kc">null</span>
+        <span class="nl">prettyProductName:</span> <span class="n">Standard</span>
+        <span class="nl">prettyPlanName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span>
+        <span class="nl">prettyPhaseName:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">prettyUsageName:</span> <span class="kc">null</span>
+        <span class="nl">itemType:</span> <span class="n">RECURRING</span>
+        <span class="nl">description:</span> <span class="n">standard</span><span class="o">-</span><span class="n">monthly</span><span class="o">-</span><span class="n">evergreen</span>
+        <span class="nl">startDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">endDate:</span> <span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">16</span>
+        <span class="nl">amount:</span> <span class="mf">30.00</span>
+        <span class="nl">rate:</span> <span class="mf">30.000000000</span>
+        <span class="nl">currency:</span> <span class="n">USD</span>
+        <span class="nl">quantity:</span> <span class="kc">null</span>
+        <span class="nl">itemDetails:</span> <span class="kc">null</span>
+        <span class="nl">catalogEffectiveDate:</span> <span class="mi">2020</span><span class="o">-</span><span class="mo">01</span><span class="o">-</span><span class="mo">01</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">00.000</span><span class="n">Z</span>
+        <span class="nl">childItems:</span> <span class="kc">null</span>
+        <span class="nl">auditLogs:</span> <span class="o">[]</span>
+    <span class="o">}]</span>
+    <span class="nl">trackingIds:</span> <span class="o">[]</span>
+    <span class="nl">isParentInvoice:</span> <span class="kc">false</span>
+    <span class="nl">parentInvoiceId:</span> <span class="kc">null</span>
+    <span class="nl">parentAccountId:</span> <span class="kc">null</span>
+    <span class="nl">auditLogs:</span> <span class="o">[]</span>
+<span class="o">}]</span>
+</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>withChildrenItems</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>If true, include children items</td>
+</tr>
+<tr>
+<td><strong>audit</strong></td>
+<td>string</td>
+<td>no</td>
+<td>&quot;NONE&quot;</td>
+<td>Level of audit information to return</td>
+</tr>
+</tbody></table>
+
+<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
+
+<p><strong>Returns</strong>
+If successful, returns a status code of 200 and a list of invoice objects for this group.</p>
 <h2 id='invoice-payments'>Payments</h2>
 <p>These endpoints relate to payments on an invoice. More information can be found at <a href="https://killbill.github.io/slate/#invoice-payment">Invoice Payments</a>.</p>
 <h3 id='invoice-trigger-a-payment-for-an-invoice'>Trigger a payment for an invoice</h3>
