@@ -1742,16 +1742,14 @@ you have a Kill Bill server instance running on <code>127.0.0.1</code> on port <
 
 <p>The version for all these dependencies is managed in the parent <a href="https://github.com/killbill/killbill-oss-parent/blob/master/pom.xml">pom.xml</a>. So in particular, for a given Kill Bill version, you can look up the version of the parent <code>pom.xml</code> and from there access all the dependencies.</p>
 
-<p>The current <strong>stable</strong> and <strong>production</strong> ready version of Kill Bill is <code>0.22.y</code>. You should use the latest relased (<code>y</code>) version as it may contain critical bug fixes.</p>
+<p>The current <strong>stable</strong> and <strong>production</strong> ready version of Kill Bill is <code>0.24.y</code>. You should use the latest released (<code>y</code>) version as it may contain critical bug fixes.</p>
 
 <ul>
 <li>Any bug fixes will result in a new version identified by incrementing the <code>patch</code> number (<code>y</code>). We guarantee compatibility of these versions with those immediately preceding them. Each version will be accompanied by release notes on github - e.g <a href="https://github.com/killbill/killbill/releases/tag/killbill-0.22.8">0.22.8 release notes</a>.</li>
-<li>New development may happen in parallel. This may lead to the release of development versions. Such versions are not yet deemed stable, and will not be supportetd on the public mailing list.</li>
+<li>New development may happen in parallel. This may lead to the release of development versions. Such versions are not yet deemed stable, and will not be supported on the public mailing list.</li>
 </ul>
 
 <p>The choice of releasing <code>0.x.y</code> and not <code>1.x.y</code> is motivated by our desire to add additional features in upcoming releases, and is in no way a statement about code instability.</p>
-
-<p>More information on Kill Bill versions can be found <a href="http://docs.killbill.io/0.22/development.html#_versioning">here</a>.</p>
 <h3 id='using-kill-bill-apis-client-libraries'>Client Libraries</h3>
 <p>Our client libraries contain a <code>README</code> section to describe their compatibility with the Kill Bill server. For instance, such compatibility mapping can be seen in our java client <a href="https://github.com/killbill/killbill-client-java/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
 <h3 id='using-kill-bill-apis-plugins'>Plugins</h3>
@@ -1891,7 +1889,7 @@ Known plugins for KB version 0.22.8
 <span class="n">String</span> <span class="n">externalKey</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"bob"</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"lazar"</span><span class="o">;</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">Tenant</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Tenant</span><span class="o">(</span><span class="n">tenantId</span><span class="o">,</span>
                          <span class="n">externalKey</span><span class="o">,</span>
@@ -6752,7 +6750,7 @@ a new version of this catalog. So, this functionality can also be a stepping sto
                                  <span class="n">BillingPeriod</span><span class="o">.</span><span class="na">MONTHLY</span><span class="o">,</span> 
                                  <span class="n">trialLength</span><span class="o">,</span> 
                                  <span class="n">TimeUnit</span><span class="o">.</span><span class="na">UNLIMITED</span><span class="o">,</span> 
-                                 <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="n">of</span><span class="o">())</span>
+                                 <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">())</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">addSimplePlan</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">simple_plan</span>                  <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">SimplePlanAttributes</span><span class="p">.</span><span class="nf">new</span>
@@ -10462,7 +10460,7 @@ several such emails for one customer account.</p>
 <span class="n">Boolean</span> <span class="n">externalPayment</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will use a external payment method</span>
 <span class="n">BigDecimal</span> <span class="n">paymentAmount</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">accountApi</span><span class="o">.</span><span class="na">payAllInvoices</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                           <span class="n">paymentMethodId</span><span class="o">,</span> 
@@ -10622,7 +10620,7 @@ several such emails for one customer account.</p>
 <span class="kd">protected</span> <span class="n">AccountApi</span> <span class="n">accountApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"e011caa5-ba35-4ac6-81cb-63b4f08122dc"</span><span class="o">);</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">InvoicePayments</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getInvoicePayments</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                                        <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
@@ -10842,7 +10840,7 @@ several such emails for one customer account.</p>
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"e0fe95af-7d59-4b70-8252-165e1840410c"</span><span class="o">);</span>
 <span class="n">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect payment attempts</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect payment attempts</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payments</span> <span class="n">payments</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getPaymentsForAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
                                                      <span class="n">withAttempts</span><span class="o">,</span>
@@ -11075,8 +11073,8 @@ communicating with the payment gateway. The transaction could be an authorizatio
 <span class="n">authTransaction</span><span class="o">.</span><span class="na">setTransactionType</span><span class="o">(</span><span class="n">TransactionType</span><span class="o">.</span><span class="na">AUTHORIZE</span><span class="o">);</span>
 
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"1d55ed5f-deea-4109-98b0-beb13a242f7c"</span><span class="o">);</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">processPayment</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                             <span class="n">authTransaction</span><span class="o">,</span> 
@@ -11281,8 +11279,8 @@ communicating with the payment gateway. The transaction could be an authorizatio
 <span class="n">authTransaction</span><span class="o">.</span><span class="na">setTransactionType</span><span class="o">(</span><span class="n">TransactionType</span><span class="o">.</span><span class="na">AUTHORIZE</span><span class="o">);</span>
 
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"c6bd413e-268e-4cc8-afb0-16b2dec3ffa5"</span><span class="o">);</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">processPaymentByExternalKey</span><span class="o">(</span><span class="n">authTransaction</span><span class="o">,</span> 
                                                                   <span class="n">externalKey</span><span class="o">,</span> 
@@ -11492,8 +11490,8 @@ communicating with the payment gateway. The transaction could be an authorizatio
 
 <span class="n">PaymentMethod</span> <span class="n">paymentMethod</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentMethod</span><span class="o">();</span>
 <span class="n">paymentMethod</span><span class="o">.</span><span class="na">setPluginName</span><span class="o">(</span><span class="n">pluginName</span><span class="o">);</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="c1">//create a payment method</span>
 <span class="n">PaymentMethod</span> <span class="n">paymentMethodPP</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">createPaymentMethod</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">paymentMethod</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
@@ -11620,7 +11618,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
 <span class="kd">protected</span> <span class="n">AccountApi</span> <span class="n">accountApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"faf239a5-456a-4eb9-aef9-8d2254ef57dc"</span><span class="o">);</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">List</span><span class="o">&lt;</span><span class="n">PaymentMethod</span><span class="o">&gt;</span> <span class="n">paymentMethods</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getPaymentMethodsForAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                                                             <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
@@ -11758,7 +11756,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"faf239a5-456a-4eb9-aef9-8d2254ef57dc"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"faf239a5-456a-4eb9-aef9-8d2254ef57dc"</span><span class="o">);</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">accountApi</span><span class="o">.</span><span class="na">setDefaultPaymentMethod</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                    <span class="n">paymentMethodId</span><span class="o">,</span> 
@@ -11847,7 +11845,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"faf239a5-456a-4eb9-aef9-8d2254ef57dc"</span><span class="o">);</span>
 <span class="n">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"__EXTERNAL_PAYMENT__"</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">accountApi</span><span class="o">.</span><span class="na">refreshPaymentMethods</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                  <span class="n">pluginName</span><span class="o">,</span> 
@@ -12117,7 +12115,7 @@ communicating with the payment gateway. The transaction could be an authorizatio
 <span class="n">blockingState</span><span class="o">.</span><span class="na">setIsBlockEntitlement</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
 
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalDate</span><span class="o">(</span><span class="s">"2013-08-01"</span><span class="o">);</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="n">ImmutableMap</span><span class="o">.&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyMap</span><span class="o">();</span>
 
 <span class="n">BlockingStates</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">addAccountBlockingState</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
                                                            <span class="n">blockingState</span><span class="o">,</span>
@@ -12233,8 +12231,8 @@ communicating with the payment gateway. The transaction could be an authorizatio
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"ee6835f0-8347-42d3-958c-9a939383ba28"</span><span class="o">);</span>
 
-<span class="n">List</span><span class="o">&lt;</span><span class="n">BlockingStateType</span><span class="o">&gt;</span> <span class="n">blockingStateTypes</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">BlockingStateType</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">BlockingStateType</span><span class="o">.</span><span class="na">SUBSCRIPTION_BUNDLE</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">blockingStateSvcs</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="s">"service"</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">BlockingStateType</span><span class="o">&gt;</span> <span class="n">blockingStateTypes</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">BlockingStateType</span><span class="o">.</span><span class="na">SUBSCRIPTION_BUNDLE</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">blockingStateSvcs</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"service"</span><span class="o">);</span>
 
 <span class="n">BlockingStates</span> <span class="n">blockingStates</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getBlockingStates</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                                              <span class="n">blockingStateTypes</span><span class="o">,</span> 
@@ -12641,7 +12639,7 @@ all the child <code>Accounts</code> for a given parent <code>Account</code>.</p>
 <span class="kd">protected</span> <span class="n">AccountApi</span> <span class="n">accountApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"15434b45-54c1-4a44-851c-b1f2f7a52f03"</span><span class="o">);</span>
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -13056,7 +13054,7 @@ This endpoint allows you to retrieve all custom fields, or to filter them by typ
 
 <span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">accountApi</span><span class="o">.</span><span class="na">deleteAccountCustomFields</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
                                      <span class="n">customFieldsList</span><span class="o">,</span> 
                                      <span class="n">requestOptions</span><span class="o">);</span>
@@ -13153,7 +13151,7 @@ attached to various objects in the system by using tags. Tags come in 2 differen
 <span class="n">UUID</span> <span class="n">autoPayOffTagId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"00000000-0000-0000-0000-000000000001"</span><span class="o">);</span>
 
 <span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">createAccountTags</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
-                                           <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">autoPayOffTagId</span><span class="o">),</span> 
+                                           <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">autoPayOffTagId</span><span class="o">),</span> 
                                            <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
 
@@ -13492,7 +13490,7 @@ attached to various objects in the system by using tags. Tags come in 2 differen
 <span class="n">UUID</span> <span class="n">autoPayOffId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"00000000-0000-0000-0000-000000000001"</span><span class="o">);</span>
 
 <span class="n">accountApi</span><span class="o">.</span><span class="na">deleteAccountTags</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
-                             <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
+                             <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
                              <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
 
@@ -15385,7 +15383,7 @@ based on custom business rules. Additional information can be found in our <a hr
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"3c449da6-7ec4-4c74-813f-f5055739a0b9"</span><span class="o">);</span>
 <span class="n">Boolean</span> <span class="n">includedDeleted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not include deleted</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will include plugin info</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">PaymentMethod</span> <span class="n">paymentMethodJson</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">getPaymentMethod</span><span class="o">(</span><span class="n">paymentMethodId</span><span class="o">,</span> 
                                                                     <span class="n">includedDeleted</span><span class="o">,</span> 
@@ -15532,7 +15530,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <span class="n">String</span> <span class="n">externalKey</span> <span class="o">=</span> <span class="s">"foo"</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">includedDeleted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not include deleted</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect plugin info</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">PaymentMethod</span> <span class="n">paymentMethod</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">getPaymentMethodByKey</span><span class="o">(</span><span class="n">externalKey</span><span class="o">,</span> 
                                                                      <span class="n">includedDeleted</span><span class="o">,</span>
@@ -15669,7 +15667,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"3c449da6-7ec4-4c74-813f-f5055739a0b9"</span><span class="o">);</span>
 <span class="n">Boolean</span> <span class="n">deleteDefaultPmWithAutoPayOff</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will delete default payment method with auto pay off</span>
 <span class="n">Boolean</span> <span class="n">forceDefaultPmDeletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will force default payment method deletion</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">deletePaymentMethod</span><span class="o">(</span><span class="n">paymentMethodId</span><span class="o">,</span> 
                                      <span class="n">deleteDefaultPmWithAutoPayOff</span><span class="o">,</span> 
@@ -15762,7 +15760,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <span class="n">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">1L</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 
 <span class="n">PaymentMethods</span> <span class="n">allPaymentMethods</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">getPaymentMethods</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span>
@@ -15925,7 +15923,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <span class="n">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">100L</span><span class="o">;</span>
 <span class="n">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">List</span><span class="o">&lt;</span><span class="n">PaymentMethod</span><span class="o">&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">searchPaymentMethods</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> 
                                                                     <span class="n">offset</span><span class="o">,</span> 
@@ -16113,7 +16111,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"3c449da6-7ec4-4c74-813f-f5055739a0b9"</span><span class="o">);</span>
 
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -16402,7 +16400,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"3c449da6-7ec4-4c74-813f-f5055739a0b9"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">deletePaymentMethodCustomFields</span><span class="o">(</span><span class="n">paymentMethodId</span><span class="o">,</span> 
                                                  <span class="n">customFieldsList</span><span class="o">,</span> 
                                                  <span class="n">requestOptions</span><span class="o">);</span>
@@ -16755,7 +16753,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 
 <p><strong>productCategory</strong>: possible values are BASE, ADD_ON, or STANDALONE</p>
 
-<p><strong>billingPeriod</strong>: possible values are DAILY, WEEKLY, BIWEEKLY, THIRTY_DAYS, SIXTY_DAYS, NINETY_DAYS, MONTHLY, BIMESTRIAL (bimonthly), QUARTERLY, TRIANNUAL, BIANNUAL, ANNUAL, BIENNIAL, or NO_BILLING_PERIOD</p>
+<p><strong>billingPeriod</strong>: possible values are DAILY, WEEKLY, BIWEEKLY, THIRTY_DAYS, THIRTY_ONE_DAYS, SIXTY_DAYS, NINETY_DAYS, MONTHLY, BIMESTRIAL (bimonthly), QUARTERLY, TRIANNUAL, BIANNUAL, ANNUAL, SESQUIENNIAL, BIENNIAL, TRIENNIAL, or NO_BILLING_PERIOD</p>
 
 <p><strong>phaseType</strong>: possible values are: TRIAL, DISCOUNT, FIXEDTERM, or EVERGREEN</p>
 
@@ -16766,6 +16764,7 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <li><code>ACTIVE</code>: The subscription is currently active.</li>
 <li><code>BLOCKED</code>: The subscription is currently paused.</li>
 <li><code>CANCELLED</code>: The subscription has been cancelled.</li>
+<li><code>EXPIRED</code>: The subscription has expired. This state is applicable only for subscriptions with a <code>FIXEDTERM</code> phase.</li>
 </ul>
 
 <p><strong>sourceType</strong>: possible values are NATIVE, MIGRATED, or TRANSFERRED </p>
@@ -17278,7 +17277,7 @@ curl -v <span class="se">\</span>
 <span class="n">Boolean</span> <span class="n">renameKeyIfExistsAndUnused</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 <span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="kd">final</span> <span class="n">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionWithAddOns</span><span class="o">(</span><span class="n">subscriptions</span><span class="o">,</span> 
                                                                    <span class="n">entitlementDate</span><span class="o">,</span> 
@@ -17958,7 +17957,7 @@ curl -v <span class="se">\</span>
 <span class="n">Boolean</span> <span class="n">skipResponse</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">callCompletion</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
 <span class="kt">long</span> <span class="n">DEFAULT_WAIT_COMPLETION_TIMEOUT_SEC</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Bundles</span> <span class="n">bundles</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionsWithAddOns</span><span class="o">(</span><span class="n">bulkSubscriptionsBundles</span><span class="o">,</span> 
                                                                  <span class="n">entitlementDate</span><span class="o">,</span> 
@@ -19459,7 +19458,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">newInput</span><span class="o">.</span><span class="na">setPlanName</span><span class="o">(</span><span class="s">"shotgun-monthly"</span><span class="o">);</span>
 
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="c1">//specify either requestedDate or BillingActionPolicy</span>
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">changeSubscriptionPlan</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
@@ -19685,7 +19684,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"1bb4b638-3886-4f73-90a5-89eb6d1bcf7f"</span><span class="o">);</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">undoChangeSubscriptionPlan</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
                                            <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
@@ -19744,7 +19743,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">EntitlementActionPolicy</span> <span class="n">entitlementPolicy</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">BillingActionPolicy</span> <span class="n">billingPolicy</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">cancelSubscriptionPlan</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span>
                                        <span class="n">requestedDate</span><span class="o">,</span> 
@@ -19893,7 +19892,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="kd">protected</span> <span class="n">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"1bb4b638-3886-4f73-90a5-89eb6d1bcf7f"</span><span class="o">);</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">uncancelSubscriptionPlan</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
                                          <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
@@ -19968,7 +19967,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">blockingState</span><span class="o">.</span><span class="na">setIsBlockEntitlement</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
 
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalDate</span><span class="o">(</span><span class="s">"2013-08-01"</span><span class="o">);</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="n">ImmutableMap</span><span class="o">.&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyMap</span><span class="o">();</span>
 
 <span class="n">BlockingStates</span> <span class="n">result</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">addSubscriptionBlockingState</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span>
                                                                      <span class="n">blockingState</span><span class="o">,</span>
@@ -20110,7 +20109,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -20399,7 +20398,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 
 <span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">deleteSubscriptionCustomFields</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
                                                <span class="n">customFieldsList</span><span class="o">,</span> 
@@ -20485,7 +20484,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">createSubscriptionTags</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
-                                                     <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                                     <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                                      <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
 
@@ -20683,7 +20682,7 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">deleteSubscriptionTags</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
-                                       <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                       <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                        <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
 
@@ -22328,7 +22327,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundle</span><span class="o">.</span><span class="na">setBundleId</span><span class="o">(</span><span class="n">bundleId</span><span class="o">);</span>
 
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">BillingActionPolicy</span> <span class="n">billingPolicy</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Bundle</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="o">.</span><span class="na">transferBundle</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
@@ -22868,7 +22867,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                                 <span class="n">auditLogs</span><span class="o">);</span>
 
 <span class="n">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="n">clock</span><span class="o">.</span><span class="na">getToday</span><span class="o">(</span><span class="n">DateTimeZone</span><span class="o">.</span><span class="na">forID</span><span class="o">(</span><span class="n">account</span><span class="o">.</span><span class="na">getTimeZone</span><span class="o">()));</span>
-<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="n">ImmutableMap</span><span class="o">.&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyMap</span><span class="o">();</span>
 
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">addBundleBlockingState</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                                  <span class="n">blockingState</span><span class="o">,</span> 
@@ -22984,7 +22983,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="kd">protected</span> <span class="n">BundleApi</span> <span class="n">bundleApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"b84a8af9-73d4-4749-8d81-38dbcc2d7fb1"</span><span class="o">);</span>
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -23268,7 +23267,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <span class="n">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">deleteBundleCustomFields</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                                    <span class="n">customFieldsList</span><span class="o">,</span> 
                                    <span class="n">requestOptions</span><span class="o">);</span>
@@ -23356,7 +23355,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="o">.</span><span class="na">createBundleTags</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
-                                         <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                         <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                          <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
 
@@ -23568,7 +23567,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">deleteBundleTags</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
-                           <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                           <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                            <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
 
@@ -25555,6 +25554,12 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td>user</td>
 <td>list of prices if this subscription has price overrides</td>
 </tr>
+<tr>
+<td><strong>planName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Name of the plan subscribed</td>
+</tr>
 </tbody></table>
 
 <p><strong>dryRunType</strong>: possible values are:</p>
@@ -25574,6 +25579,8 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <p><strong>billingPeriod</strong>: possible values are DAILY, WEEKLY, BIWEEKLY, THIRTY_DAYS, SIXTY_DAYS, NINETY_DAYS, MONTHLY, BIMESTRIAL (bimonthly), QUARTERLY, TRIANNUAL, BIANNUAL, ANNUAL, BIENNIAL, or NO_BILLING_PERIOD</p>
 
 <p><strong>billingPolicy</strong>: possible values are START_OF_TERM, END_OF_TERM, or IMMEDIATE</p>
+
+<p>Note that either the <code>planName</code> or a combination of <code>productName</code>, <code>productCategory</code> and <code>billingPeriod</code> needs to be specified for the <strong>START_BILLING</strong>, <strong>CHANGE</strong> <code>dryRunAction</code>.</p>
 <h2 id='invoice-invoice'>Invoice</h2>
 <p>These endpoints provide basic operations on invoices.</p>
 <h3 id='invoice-trigger-an-invoice-run'>Trigger an invoice run</h3>
@@ -25602,12 +25609,11 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoiceApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">InvoiceApi</span> <span class="n">invoiceApi</span><span class="o">;</span>
 
-<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"5f1e9142-b4de-4409-9366-9920cc1683e9"</span><span class="o">);</span>
-<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LocalDate</span><span class="o">(</span><span class="mi">2012</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">29</span><span class="o">);</span>
+<span class="n">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"34a65013-2dd1-480e-b4b8-7999bb15ebce"</span><span class="o">);</span>
+<span class="n">LocalDate</span> <span class="n">targetDate</span> <span class="o">=</span> <span class="n">LocalDate</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">"2023-07-15"</span><span class="o">);</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-<span class="n">Invoice</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createFutureInvoice</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> 
-                                                <span class="n">targetDate</span><span class="o">,</span> 
-                                                <span class="n">requestOptions</span><span class="o">);</span>
+<span class="n">Invoice</span> <span class="n">invoice</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createFutureInvoice</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">targetDate</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">account_id</span> <span class="o">=</span> <span class="s2">"3ee3aa82-1d45-4bbc-b36b-74d628e095d0"</span>
 <span class="n">target_date</span> <span class="o">=</span> <span class="kp">nil</span>
 
@@ -25682,6 +25688,13 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td>no</td>
 <td>current date</td>
 <td>target date (date up to which the account should be invoiced)</td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>no</td>
+<td>omit</td>
+<td>list of plugin properties, if any. Should be in the format <code>key%3Dvalue</code></td>
 </tr>
 </tbody></table>
 
@@ -28004,16 +28017,23 @@ curl -v <span class="se">\</span>
 </tr>
 <tr>
 <td>SUBSCRIPTION_ACTION</td>
-<td>START_BILLING or CHANGE</td>
-<td>productName, productCategory, billingPeriod, subscriptionId, bundleId</td>
+<td>START_BILLING</td>
+<td>Either a combination of productName, productCategory, billingPeriod or planName. If the dry run is being generated for an ADDON product, then the bundleId also needs to be specified</td>
 <td>effectiveDate, priceListName, billingPolicy</td>
-<td>Preview the invoice that would be generated if the <strong>START_BILLING</strong> or <strong>CHANGE</strong> action is taken</td>
+<td>Preview the invoice that would be generated if the <strong>START_BILLING</strong> action is taken</td>
+</tr>
+<tr>
+<td>SUBSCRIPTION_ACTION</td>
+<td>CHANGE</td>
+<td>subscriptionId, bundleId and either a combination of productName, productCategory, billingPeriod or planName</td>
+<td>effectiveDate, priceListName, billingPolicy</td>
+<td>Preview the invoice that would be generated if the <strong>CHANGE</strong> action is taken</td>
 </tr>
 <tr>
 <td>SUBSCRIPTION_ACTION</td>
 <td>STOP_BILLING</td>
-<td>subscriptionId, bundleId</td>
-<td>effectiveDate</td>
+<td>subscriptionId, bundleId, effectiveDate</td>
+<td>-</td>
 <td>Preview the invoice that would be generated if the <strong>STOP_BILLING</strong> action is taken</td>
 </tr>
 </tbody></table>
@@ -28228,12 +28248,18 @@ curl -v <span class="se">\</span>
 <td>current date</td>
 <td>target date (date up to which the account should be invoiced)</td>
 </tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>no</td>
+<td>omit</td>
+<td>list of plugin properties, if any. Should be in the format <code>key%3Dvalue</code></td>
+</tr>
 </tbody></table>
 
 <p><strong>Response</strong></p>
 
-<p>TODO
-If successful, returns a status code of 201 and an empty body. A location header containing the UUID of the generated group (if any) is also included in the response. If there is nothing to invoice for, returns a 404 status code.</p>
+<p>If successful, returns a status code of 201 and an empty body. A location header containing the UUID of the generated group (if any) is also included in the response. If there is nothing to invoice for, returns a 404 status code.</p>
 <h3 id='invoice-retrieve-an-invoice-group'>Retrieve an invoice group</h3>
 <p>Retrieves the invoices associated with the specified <code>groupId</code>.</p>
 
@@ -28897,7 +28923,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 
 <span class="n">UUID</span> <span class="n">invoiceId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
 
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -29181,7 +29207,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">UUID</span> <span class="n">invoiceId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
 
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 
 <span class="n">invoiceApi</span><span class="o">.</span><span class="na">deleteInvoiceCustomFields</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
                                      <span class="n">customFieldsList</span><span class="o">,</span> 
@@ -29268,7 +29294,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">UUID</span> <span class="n">writtenOffId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"00000000-0000-0000-0000-000000000004"</span><span class="o">);</span>
 
 <span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createInvoiceTags</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
-                                           <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">writtenOffId</span><span class="o">),</span> 
+                                           <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">writtenOffId</span><span class="o">),</span> 
                                            <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
 
@@ -29478,7 +29504,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">UUID</span> <span class="n">autoPayOffId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"00000000-0000-0000-0000-000000000001"</span><span class="o">);</span>
 
 <span class="n">invoiceApi</span><span class="o">.</span><span class="na">deleteInvoiceTags</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
-                             <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
+                             <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
                              <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
 
@@ -32216,8 +32242,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">ONE</span><span class="o">);</span>
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">capturedPayment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">captureAuthorization</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                                           <span class="n">captureTransaction</span><span class="o">,</span> 
@@ -32396,8 +32422,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"8e0c507a-05f9-4572-a57d-3f742cdc040d"</span><span class="o">);</span> <span class="c1">//payment external key</span>
 <span class="n">captureTransaction</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"9b4dbbe7-749d-4c96-a2e7-57b8bff3bf05"</span><span class="o">);</span> <span class="c1">//external key to be set on the newly created CAPTURE transaction</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">capturedPayment2</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">captureAuthorizationByExternalKey</span><span class="o">(</span><span class="n">captureTransaction</span><span class="o">,</span> 
                                                                         <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> 
@@ -32584,7 +32610,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect plugin info</span>
 <span class="n">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will reflect payment attempts</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">getPayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                         <span class="n">withPluginInfo</span><span class="o">,</span> 
@@ -32835,6 +32861,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a <code>Payment</code> object.</p>
+
+<p><strong>Note:</strong> The <code>effectiveDate</code> of the last payment attempt in <code>SCHEDULED</code> state corresponds to the next scheduled payment retry date and can be used as such.</p>
 <h3 id='payment-retrieve-a-payment-using-paymentexternalkey'>Retrieve a payment [using paymentExternalKey]</h3>
 <p>Retrieves a Payment object based on its external key given as a query parameter.</p>
 
@@ -32857,7 +32885,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">String</span> <span class="n">externalPaymentKey</span> <span class="o">=</span> <span class="s">"11b28b2e-a377-4b95-b712-d71cbcb28f80"</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect plugin info</span>
 <span class="n">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect payment attempts</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">getPaymentByExternalKey</span><span class="o">(</span><span class="n">externalPaymentKey</span><span class="o">,</span>
                                                      <span class="n">withPluginInfo</span><span class="o">,</span> 
@@ -33164,8 +33192,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentId</span><span class="o">(</span><span class="n">paymentId</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">paymentApi</span><span class="o">.</span><span class="na">completeTransaction</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                <span class="n">body</span><span class="o">,</span> 
@@ -33267,8 +33295,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="kd">protected</span> <span class="n">PaymentApi</span> <span class="n">paymentApi</span><span class="o">;</span>
 
 <span class="n">String</span> <span class="n">externalPaymentKey</span> <span class="o">=</span> <span class="s">"11b28b2e-a377-4b95-b712-d71cbcb28f80"</span><span class="o">;</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="n">externalPaymentKey</span><span class="o">);</span>
@@ -33374,8 +33402,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentId</span><span class="o">(</span><span class="n">paymentId</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">paymentApi</span><span class="o">.</span><span class="na">voidPayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                        <span class="n">body</span><span class="o">,</span> 
@@ -33459,8 +33487,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="n">paymentExternalKey</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">paymentApi</span><span class="o">.</span><span class="na">voidPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> 
                                     <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> 
@@ -33542,8 +33570,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">5</span><span class="o">));</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
@@ -33721,8 +33749,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"a975f7b8-1e59-4801-91c9-fcce1526b019"</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">5</span><span class="o">));</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 
@@ -33898,8 +33926,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"a975f7b8-1e59-4801-91c9-fcce1526b019"</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">5</span><span class="o">));</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                          <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
@@ -34102,8 +34130,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setTransactionExternalKey</span><span class="o">(</span><span class="s">"72789509-2b94-43b6-b889-42c5ec5d27f3"</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="mi">10</span><span class="o">));</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">chargebackPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">transaction</span>                      <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
@@ -34304,8 +34332,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"de924e98-2c76-4e90-b9d6-2ced262bc251"</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">refundPayment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">refundPayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                                  <span class="n">body</span><span class="o">,</span> 
@@ -34484,8 +34512,8 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setCurrency</span><span class="o">(</span><span class="n">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentExternalKey</span><span class="o">(</span><span class="s">"da96999c-b1ac-470f-8c48-c4ecf386cd89"</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">refundPayment</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">refundPaymentByExternalKey</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 
@@ -34869,7 +34897,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">body</span><span class="o">.</span><span class="na">setPaymentMethod</span><span class="o">(</span><span class="n">paymentMethod</span><span class="o">);</span>
 <span class="n">body</span><span class="o">.</span><span class="na">setTransaction</span><span class="o">(</span><span class="n">paymentTransaction</span><span class="o">);</span>
 
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payment</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">createComboPayment</span><span class="o">(</span><span class="n">body</span><span class="o">,</span>  <span class="n">NULL_PLUGIN_NAMES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">combo_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">ComboTransaction</span><span class="p">.</span><span class="nf">new</span>
@@ -35042,7 +35070,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 
 <span class="n">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -35401,7 +35429,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">createPaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
-                                           <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                           <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                            <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
 
@@ -35606,7 +35634,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">paymentApi</span><span class="o">.</span><span class="na">deletePaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
-                             <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                             <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                              <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
 
@@ -35959,7 +35987,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not fetch plugin info</span>
 <span class="n">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// Will reflect payment attempts</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payments</span> <span class="n">payments</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">getPayments</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span> 
                                            <span class="n">limit</span><span class="o">,</span> 
@@ -36279,7 +36307,7 @@ subsequent invoices to bring the balance to zero -- or reduce the balance if the
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect plugin info</span>
 <span class="n">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>  <span class="c1">// Will reflect payment attempts</span>
 <span class="n">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">Payments</span> <span class="n">payments</span> <span class="o">=</span> <span class="n">paymentApi</span><span class="o">.</span><span class="na">searchPayments</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> 
                                               <span class="n">offset</span><span class="o">,</span> 
@@ -36730,7 +36758,7 @@ that work directly at the transaction level.</p>
 <span class="kd">protected</span> <span class="n">PaymentTransactionApi</span> <span class="n">paymentTransactionApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"41f4d299-4371-4876-96b4-0b3cc81b246b"</span><span class="o">);</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getPaymentByTransactionId</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
@@ -36867,7 +36895,7 @@ that work directly at the transaction level.</p>
 <span class="kd">protected</span> <span class="n">PaymentTransactionApi</span> <span class="n">paymentTransactionApi</span><span class="o">;</span>
 
 <span class="n">String</span> <span class="n">transactionExternalKey</span> <span class="o">=</span> <span class="s">"41f4d299-4371-4876-96b4-0b3cc81b246b"</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getPaymentByTransactionExternalKey</span><span class="o">(</span><span class="n">transactionExternalKey</span><span class="o">,</span> <span class="n">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
@@ -37249,7 +37277,7 @@ that work directly at the transaction level.</p>
 
 <span class="n">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -37491,7 +37519,7 @@ For example:</p>
 
 <span class="n">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
 <span class="n">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">UUID</span><span class="o">&gt;</span> <span class="n">customFieldsList</span> <span class="o">=</span> <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
 <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">deleteTransactionCustomFields</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                                     <span class="n">customFieldsList</span><span class="o">,</span> 
                                                     <span class="n">requestOptions</span><span class="o">);</span>
@@ -37572,7 +37600,7 @@ For example:</p>
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">createTransactionTags</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
-                                                          <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                                          <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                                           <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
@@ -37752,7 +37780,7 @@ For example:</p>
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">deleteTransactionTags</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
-                                            <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                            <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                             <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
@@ -38062,7 +38090,7 @@ For example:</p>
 <span class="n">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"80f5bfca-e142-4320-b8f2-ae4530ca7172"</span><span class="o">);</span>
 <span class="n">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect plugin info</span>
 <span class="n">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect payment attempts</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">InvoicePayment</span> <span class="n">invoicePayment</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">getInvoicePayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                                                     <span class="n">withPluginInfo</span><span class="o">,</span>
@@ -38308,7 +38336,7 @@ For example:</p>
 
 <span class="n">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"28a3ed1a-7a58-4ac2-b864-2ca723abb864"</span><span class="o">);</span>
 
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">createRefundWithAdjustments</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                               <span class="n">refund</span><span class="o">,</span> 
@@ -38791,8 +38819,8 @@ For example:</p>
 
 <span class="n">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"80f5bfca-e142-4320-b8f2-ae4530ca7172"</span><span class="o">);</span>
 <span class="n">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PaymentTransaction</span><span class="o">();</span>
-<span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-<span class="n">ImmutableMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">completeInvoicePaymentTransaction</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
                                                     <span class="n">body</span><span class="o">,</span> 
@@ -38861,7 +38889,7 @@ For example:</p>
 <span class="kd">protected</span> <span class="n">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
 
 <span class="n">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
-<span class="kd">final</span> <span class="n">ImmutableList</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span><span class="n">of</span><span class="o">();</span>
+<span class="kd">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">AuditLog</span><span class="o">&gt;</span> <span class="n">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
 <span class="n">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="n">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
@@ -39222,7 +39250,7 @@ For example:</p>
 <span class="n">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
 <span class="n">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">createInvoicePaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
-                                                         <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                                         <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                                          <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
 
@@ -39430,7 +39458,7 @@ For example:</p>
 <span class="n">UUID</span> <span class="n">autoPayOffId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"00000000-0000-0000-0000-000000000001"</span><span class="o">);</span>
 
 <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">deleteInvoicePaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
-                                           <span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UUID</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
+                                           <span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
                                            <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
 
@@ -39627,7 +39655,7 @@ For example:</p>
 </tr>
 <tr>
 <td>*<em>amount *</em></td>
-<td>integer</td>
+<td>number</td>
 <td>user</td>
 <td>Amount of usage for this record</td>
 </tr>
@@ -39689,7 +39717,7 @@ For example:</p>
 </tr>
 <tr>
 <td><strong>amount</strong></td>
-<td>integer</td>
+<td>number</td>
 <td>system</td>
 <td>total amount of usage of this unit</td>
 </tr>
@@ -39721,7 +39749,7 @@ curl -v <span class="se">\</span>
      -d <span class="s1">'{"subscriptionId":"365987b2-5443-47e4-a467-c8962fc6995c", "trackingId": "my-unique-tracking-id", "unitUsageRecords":[{"unitType":"chocolate-videos","usageRecords":[{"recordDate":"2013-03-14","amount":1}]}]}'</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/usages"</span>
 
-<span class="c"># With DateTime</span>
+<span class="c"># With DateTime and amount as decimal</span>
 curl -v <span class="se">\</span>
     -X POST <span class="se">\</span>
     -u admin:password <span class="se">\</span>
@@ -39732,27 +39760,27 @@ curl -v <span class="se">\</span>
     -H <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     -H <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-     -d <span class="s1">'{"subscriptionId":"f2d142c3-0157-4f86-a27a-3f0f64d71b2b", "trackingId": "t2", "unitUsageRecords":[{"unitType":"stones","usageRecords":[{"recordDate":"2023-02-07T10:00","amount":20}]}]}'</span> <span class="se">\</span>
+     -d <span class="s1">'{"subscriptionId":"f2d142c3-0157-4f86-a27a-3f0f64d71b2b", "trackingId": "t2", "unitUsageRecords":[{"unitType":"stones","usageRecords":[{"recordDate":"2023-02-07T10:00","amount":20.5}]}]}'</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/usages"</span>
 </code></pre><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.UsageApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="n">UsageApi</span> <span class="n">usageApi</span><span class="o">;</span>
 
-<span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"365987b2-5443-47e4-a467-c8962fc6995c"</span><span class="o">);</span>
+<span class="n">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="n">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"2daf08aa-3a32-45d7-9d75-9c667391f994"</span><span class="o">);</span>
 
 <span class="n">UsageRecord</span> <span class="n">usageRecord1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UsageRecord</span><span class="o">();</span>
-<span class="n">usageRecord1</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="mi">1L</span><span class="o">);</span>
-<span class="n">usageRecord1</span><span class="o">.</span><span class="na">setRecordDate</span><span class="o">(</span><span class="k">new</span> <span class="n">LocalDate</span><span class="o">(</span><span class="s">"2013-03-14"</span><span class="o">));</span>
+<span class="n">usageRecord1</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="n">BigDecimal</span><span class="o">.</span><span class="na">ONE</span><span class="o">);</span>
+<span class="n">usageRecord1</span><span class="o">.</span><span class="na">setRecordDate</span><span class="o">(</span><span class="k">new</span> <span class="n">DateTime</span><span class="o">(</span><span class="s">"2023-02-27"</span><span class="o">));</span>
 
 <span class="n">UnitUsageRecord</span> <span class="n">unitUsageRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UnitUsageRecord</span><span class="o">();</span>
-<span class="n">unitUsageRecord</span><span class="o">.</span><span class="na">setUnitType</span><span class="o">(</span><span class="s">"chocolate-videos"</span><span class="o">);</span>
-<span class="n">unitUsageRecord</span><span class="o">.</span><span class="na">setUsageRecords</span><span class="o">(</span><span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UsageRecord</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">usageRecord1</span><span class="o">));</span>
+<span class="n">unitUsageRecord</span><span class="o">.</span><span class="na">setUnitType</span><span class="o">(</span><span class="s">"bullets"</span><span class="o">);</span>
+<span class="n">unitUsageRecord</span><span class="o">.</span><span class="na">setUsageRecords</span><span class="o">(</span><span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">usageRecord1</span><span class="o">));</span>
 
 <span class="n">SubscriptionUsageRecord</span> <span class="n">usage</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SubscriptionUsageRecord</span><span class="o">();</span>
 <span class="n">usage</span><span class="o">.</span><span class="na">setSubscriptionId</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">);</span>
-<span class="n">usage</span><span class="o">.</span><span class="na">setUnitUsageRecords</span><span class="o">(</span><span class="n">ImmutableList</span><span class="o">.&lt;</span><span class="n">UnitUsageRecord</span><span class="o">&gt;</span><span class="n">of</span><span class="o">(</span><span class="n">unitUsageRecord</span><span class="o">));</span>
+<span class="n">usage</span><span class="o">.</span><span class="na">setUnitUsageRecords</span><span class="o">(</span><span class="n">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">unitUsageRecord</span><span class="o">));</span>
 
-<span class="n">usageApi</span><span class="o">.</span><span class="na">recordUsage</span><span class="o">(</span><span class="n">usage</span><span class="o">,</span>
-                     <span class="n">requestOptions</span><span class="o">);</span>
+<span class="n">usageApi</span><span class="o">.</span><span class="na">recordUsage</span><span class="o">(</span><span class="n">usage</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">usage_record</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UsageRecordAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">usage_record</span><span class="p">.</span><span class="nf">amount</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">usage_record</span><span class="p">.</span><span class="nf">record_date</span> <span class="o">=</span> <span class="s2">"2013-03-14"</span>
@@ -39844,7 +39872,7 @@ curl -v <span class="se">\</span>
   <span class="s2">"rolledUpUnits"</span>: <span class="o">[</span>
     <span class="o">{</span>
       <span class="s2">"unitType"</span>: <span class="s2">"chocolate-videos"</span>,
-      <span class="s2">"amount"</span>: 1
+      <span class="s2">"amount"</span>: 10.5
     <span class="o">}</span>
   <span class="o">]</span>
 <span class="o">}</span>
@@ -39854,7 +39882,7 @@ curl -v <span class="se">\</span>
     <span class="nl">endDate:</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">26</span>
     <span class="nl">rolledUpUnits:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">RolledUpUnit</span> <span class="o">{</span>
         <span class="nl">unitType:</span> <span class="n">chocolate</span><span class="o">-</span><span class="n">videos</span>
-        <span class="nl">amount:</span> <span class="mi">1</span>
+        <span class="nl">amount:</span> <span class="mf">10.5</span>
     <span class="o">}]</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
@@ -39864,7 +39892,7 @@ curl -v <span class="se">\</span>
   <span class="s2">"rolledUpUnits"</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
       <span class="s2">"unitType"</span><span class="p">:</span> <span class="s2">"chocolate-videos"</span><span class="p">,</span>
-      <span class="s2">"amount"</span><span class="p">:</span> <span class="mi">1</span>
+      <span class="s2">"amount"</span><span class="p">:</span> <span class="mi">10</span><span class="o">.</span><span class="mi">5</span>
     <span class="p">}</span>
   <span class="p">]</span>
 <span class="p">}</span>
@@ -39903,9 +39931,9 @@ curl -v <span class="se">\</span>
 
 <p><strong>Response</strong></p>
 
-<p>IF successful, returns a status code of 200 and a RolledUpUsage object.</p>
+<p>If successful, returns a status code of 200 and a RolledUpUsage object.</p>
 <h3 id='usage-retrieve-usage-for-a-subscription'>Retrieve usage for a subscription</h3>
-<p>Retrieves the usage record for a given subscription, for a specified period of time and all unit types</p>
+<p>Retrieves the usage record for a given subscription, for a specified period of time and all unit types.</p>
 
 <p><strong>HTTP Request</strong></p>
 
