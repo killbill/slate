@@ -52,11 +52,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "customFieldId": "13fe6f2c-91af-4635-aa9c-52e04d99b5ec",
@@ -68,7 +64,6 @@ curl  \
   }
 ]
 ```
-
 
 ### Search custom fields by ID
 
@@ -105,11 +100,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "customFieldId": "13fe6f2c-91af-4635-aa9c-52e04d99b5ec",
@@ -161,11 +152,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "customFieldId": "13fe6f2c-91af-4635-aa9c-52e04d99b5ec",
@@ -177,8 +164,6 @@ curl  \
   }
 ]
 ```
-
-
 
 ## Audit Logs
 
@@ -200,11 +185,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
@@ -282,7 +263,6 @@ curl  \
     }
   }
 ]
-
 ```
 
 **Query Parameters**

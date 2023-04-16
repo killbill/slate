@@ -85,11 +85,7 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "accountId": "2ad52f53-85ae-408a-9879-32a7e59dd03d",
   "paymentId": "e8edd4c6-2f85-4375-95f3-e78ca4d85b82",
@@ -126,50 +122,6 @@ TODO
   "paymentAttempts": null,
   "auditLogs": []
 }
-```
-```java
-class Payment {
-    org.killbill.billing.client.model.gen.Payment@dd818d6d
-    accountId: 3093aa3e-63c6-4ffe-92d1-60a0e34f2397
-    paymentId: 59f1e0cb-58ae-481a-afbb-6709e86066de
-    paymentNumber: 42
-    paymentExternalKey: 59f1e0cb-58ae-481a-afbb-6709e86066de
-    authAmount: 0
-    capturedAmount: 0
-    purchasedAmount: 0
-    refundedAmount: 0
-    creditedAmount: 0
-    currency: USD
-    paymentMethodId: aa00971a-6310-43e1-af83-28fca1edadd3
-    transactions: [class PaymentTransaction {
-        org.killbill.billing.client.model.gen.PaymentTransaction@c3eadd4f
-        transactionId: 41f4d299-4371-4876-96b4-0b3cc81b246b
-        transactionExternalKey: 41f4d299-4371-4876-96b4-0b3cc81b246b
-        paymentId: 59f1e0cb-58ae-481a-afbb-6709e86066de
-        paymentExternalKey: 59f1e0cb-58ae-481a-afbb-6709e86066de
-        transactionType: PURCHASE
-        amount: 1.00
-        currency: USD
-        effectiveDate: 2021-05-05T11:54:19.000Z
-        processedAmount: 0.00
-        processedCurrency: USD
-        status: UNKNOWN
-        gatewayErrorCode: null
-        gatewayErrorMsg: null
-        firstPaymentReferenceId: null
-        secondPaymentReferenceId: null
-        properties: null
-        auditLogs: []
-    }]
-    paymentAttempts: null
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
-TODO
 ```
 
 **Query Parameters**
@@ -223,11 +175,7 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "accountId": "2ad52f53-85ae-408a-9879-32a7e59dd03d",
   "paymentId": "e8edd4c6-2f85-4375-95f3-e78ca4d85b82",
@@ -264,50 +212,6 @@ TODO
   "paymentAttempts": null,
   "auditLogs": []
 }
-```
-```java
-class Payment {
-    org.killbill.billing.client.model.gen.Payment@dd818d6d
-    accountId: 3093aa3e-63c6-4ffe-92d1-60a0e34f2397
-    paymentId: 59f1e0cb-58ae-481a-afbb-6709e86066de
-    paymentNumber: 42
-    paymentExternalKey: 59f1e0cb-58ae-481a-afbb-6709e86066de
-    authAmount: 0
-    capturedAmount: 0
-    purchasedAmount: 0
-    refundedAmount: 0
-    creditedAmount: 0
-    currency: USD
-    paymentMethodId: aa00971a-6310-43e1-af83-28fca1edadd3
-    transactions: [class PaymentTransaction {
-        org.killbill.billing.client.model.gen.PaymentTransaction@c3eadd4f
-        transactionId: 41f4d299-4371-4876-96b4-0b3cc81b246b
-        transactionExternalKey: 41f4d299-4371-4876-96b4-0b3cc81b246b
-        paymentId: 59f1e0cb-58ae-481a-afbb-6709e86066de
-        paymentExternalKey: 59f1e0cb-58ae-481a-afbb-6709e86066de
-        transactionType: PURCHASE
-        amount: 1.00
-        currency: USD
-        effectiveDate: 2021-05-05T11:54:19.000Z
-        processedAmount: 0.00
-        processedCurrency: USD
-        status: UNKNOWN
-        gatewayErrorCode: null
-        gatewayErrorMsg: null
-        firstPaymentReferenceId: null
-        secondPaymentReferenceId: null
-        properties: null
-        auditLogs: []
-    }]
-    paymentAttempts: null
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
-TODO
 ```
 
 **Query Parameters**
@@ -372,56 +276,8 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/payments/27d15e39-b25c-4dc1-92cf-5487397a48a6/
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-class Payment {
-    org.killbill.billing.client.model.gen.Payment@b3bf4de6
-    accountId: f7aadaf2-1594-4bd8-b8fd-a09783e04b6d
-    paymentId: 27d15e39-b25c-4dc1-92cf-5487397a48a6
-    paymentNumber: 43
-    paymentExternalKey: 27d15e39-b25c-4dc1-92cf-5487397a48a6
-    authAmount: 0
-    capturedAmount: 0
-    purchasedAmount: 10.00
-    refundedAmount: 0
-    creditedAmount: 0
-    currency: USD
-    paymentMethodId: 47953e4d-2b52-4ac2-a016-340eb0074444
-    transactions: [class PaymentTransaction {
-        org.killbill.billing.client.model.gen.PaymentTransaction@38b46552
-        transactionId: 37d15a2f-55ac-40ab-a873-08faae78f213
-        transactionExternalKey: 37d15a2f-55ac-40ab-a873-08faae78f213
-        paymentId: 27d15e39-b25c-4dc1-92cf-5487397a48a6
-        paymentExternalKey: 27d15e39-b25c-4dc1-92cf-5487397a48a6
-        transactionType: PURCHASE
-        amount: 10.00
-        currency: USD
-        effectiveDate: 2021-05-07T09:16:52.000Z
-        processedAmount: 10.00
-        processedCurrency: USD
-        status: SUCCESS
-        gatewayErrorCode: null
-        gatewayErrorMsg: null
-        firstPaymentReferenceId: null
-        secondPaymentReferenceId: null
-        properties: null
-        auditLogs: []
-    }]
-    paymentAttempts: null
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
-TODO
+```json
+no content
 ```
 
 **Request Body**
@@ -480,11 +336,7 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
@@ -551,35 +403,6 @@ TODO
     }
   }
 ]
-```
-```java
-[class AuditLog {
-    changeType: INSERT
-    changeDate: 2021-05-05T11:54:19.000Z
-    objectType: TRANSACTION
-    objectId: 41f4d299-4371-4876-96b4-0b3cc81b246b
-    changedBy: Kill Bill Client Tutorial
-    reasonCode: Demonstrating Kill Bill Client
-    comments: Demonstrating Kill Bill Client
-    userToken: d05cc121-5a34-4b9e-b876-c48bab354418
-    history: {id=null, createdDate=2021-05-05T11:54:19.000Z, updatedDate=2021-05-05T11:54:19.000Z, recordId=42, accountRecordId=39, tenantRecordId=1, attemptId=null, paymentId=59f1e0cb-58ae-481a-afbb-6709e86066de, transactionExternalKey=41f4d299-4371-4876-96b4-0b3cc81b246b, transactionType=PURCHASE, effectiveDate=2021-05-05T11:54:19.000Z, transactionStatus=UNKNOWN, amount=1.0, currency=USD, processedAmount=null, processedCurrency=null, gatewayErrorCode=null, gatewayErrorMsg=null, tableName=PAYMENT_TRANSACTIONS, historyTableName=PAYMENT_TRANSACTION_HISTORY}
-}, class AuditLog {
-    changeType: UPDATE
-    changeDate: 2021-05-05T11:54:19.000Z
-    objectType: TRANSACTION
-    objectId: 41f4d299-4371-4876-96b4-0b3cc81b246b
-    changedBy: Kill Bill Client Tutorial
-    reasonCode: Demonstrating Kill Bill Client
-    comments: Demonstrating Kill Bill Client
-    userToken: d05cc121-5a34-4b9e-b876-c48bab354418
-    history: {id=null, createdDate=2021-05-05T11:54:19.000Z, updatedDate=2021-05-05T11:54:19.000Z, recordId=42, accountRecordId=39, tenantRecordId=1, attemptId=null, paymentId=59f1e0cb-58ae-481a-afbb-6709e86066de, transactionExternalKey=41f4d299-4371-4876-96b4-0b3cc81b246b, transactionType=PURCHASE, effectiveDate=2021-05-05T11:54:19.000Z, transactionStatus=UNKNOWN, amount=1.0, currency=USD, processedAmount=0.0, processedCurrency=USD, gatewayErrorCode=null, gatewayErrorMsg=null, tableName=PAYMENT_TRANSACTIONS, historyTableName=PAYMENT_TRANSACTION_HISTORY}
-}]
-```
-```ruby
-TODO
-```
-```python
-TODO
 ```
 
 **Query Parameters**
@@ -658,30 +481,7 @@ paymentTransactionApi.create_transaction_custom_fields(payment_transaction_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/paymentTransactions/41f4d299-4371-4876-96b4-0b3cc81b246b/customFields
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-//First element of the list
-class CustomField {
-    org.killbill.billing.client.model.gen.CustomField@c7d0c38a
-    customFieldId: null
-    objectId: cca08349-8b26-41c7-bfcc-2e3cf70a0f28
-    objectType: TRANSACTION
-    name: Test Custom Field
-    value: test_value
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
+```json
 no content
 ```
 
@@ -741,10 +541,7 @@ paymentTransactionApi.get_transaction_custom_fields(payment_transaction_id, api_
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-<
+```json
 [
   {
     "customFieldId": "e4bac228-872d-4966-8072-2c3ac06442ed",
@@ -755,30 +552,6 @@ paymentTransactionApi.get_transaction_custom_fields(payment_transaction_id, api_
     "auditLogs": []
   }
 ]
-```
-
-```java
-//First element of the list
-class CustomField {
-    org.killbill.billing.client.model.gen.CustomField@c7d0c38a
-    customFieldId: null
-    objectId: cca08349-8b26-41c7-bfcc-2e3cf70a0f28
-    objectType: TRANSACTION
-    name: Test Custom Field
-    value: test_value
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
-[{'audit_logs': [],
- 'custom_field_id': '893e0286-2b48-493b-99af-aac9b172dc75',
- 'name': 'Test Custom Field',
- 'object_id': '924bebe7-58e7-40e8-a5ed-192efb59d8ee',
- 'object_type': 'TRANSACTION',
- 'value': 'test_value'}]
 ```
 
 **Query Parameters**
@@ -853,21 +626,7 @@ paymentTransactionApi.modify_transaction_custom_fields(payment_transaction_id,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -939,20 +698,7 @@ paymentTransactionApi.delete_transaction_custom_fields(payment_transaction_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -1029,30 +775,7 @@ paymentTransactionApi.create_transaction_tags(payment_transaction_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/paymentTransactions/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-//First element of the list
-class Tag {
-    org.killbill.billing.client.model.gen.Tag@bd138472
-    tagId: 1bb4b638-3886-4f73-90a5-89eb6d1bcf7f
-    objectType: TRANSACTION
-    objectId: 917992d3-5f1f-4828-9fff-799cc4211aa9
-    tagDefinitionId: 353752dd-9041-4450-b782-a8bb03a923c8
-    tagDefinitionName: AUTO_PAY_OFF
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
+```json
 no content
 ```
 
@@ -1116,10 +839,7 @@ paymentTransactionApi.get_transaction_tags(payment_transaction_id, api_key, api_
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-<
+```json
 [
   {
     "tagId": "890e3b13-3114-478b-9365-50f1a2682143",
@@ -1130,40 +850,6 @@ paymentTransactionApi.get_transaction_tags(payment_transaction_id, api_key, api_
     "auditLogs": []
   }
 ]
-```
-
-```java
-//First element of the list
-class Tag {
-    org.killbill.billing.client.model.gen.Tag@cae768d7
-    tagId: d724f79d-fad1-4758-b35e-d62708450d90
-    objectType: TRANSACTION
-    objectId: e659f0f3-745c-46d5-953c-28fe9282fc7d
-    tagDefinitionId: 353752dd-9041-4450-b782-a8bb03a923c8
-    tagDefinitionName: foo
-    auditLogs: [class AuditLog {
-        changeType: INSERT
-        changeDate: 2012-08-25T00:00:02.000Z
-        objectType: TAG
-        objectId: d724f79d-fad1-4758-b35e-d62708450d90
-        changedBy: Toto
-        reasonCode: i am god
-        comments: no comment
-        userToken: e36f7ba5-fb5b-41c0-b47c-77c48ab37dd9
-        history: null
-    }]
-}
-```
-```ruby
-TODO
-```
-```python
-[{'audit_logs': [],
- 'object_id': '41b6b214-c3f7-40ea-89cd-6a4ecbd9083b',
- 'object_type': 'TRANSACTION',
- 'tag_definition_id': '353752dd-9041-4450-b782-a8bb03a923c8',
- 'tag_definition_name': 'foo',
- 'tag_id': '865e0c77-def7-4880-ac80-11c21a5e571d'}]
 ```
 
 **Query Parameters**
@@ -1231,20 +917,7 @@ paymentTransactionApi.delete_transaction_tags(payment_transaction_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-TODO
-```
-```python
+```json
 no content
 ```
 

@@ -99,7 +99,6 @@ accountApi.create_account(body,
                           created_by, 
                           api_key, 
                           api_secret)
-```
 ```json
 {
 "auditLogs":[],
@@ -963,12 +962,10 @@ accountApi.get_emails(account_id, api_key, api_secret)
 > Example Response:
 
 ```json
-[
-   {
-      "accountId":"e4ca38b3-934d-42e8-a292-ffb0af5549f2",
-      "email":"email@laposte.com"
-   }
-]
+{
+  "accountId":"e4ca38b3-934d-42e8-a292-ffb0af5549f2",
+  "email":"email@laposte.com"
+}
 ```
 **Query Parameters**
 
@@ -2169,7 +2166,7 @@ List<String> NULL_PLUGIN_NAMES = null;
 Map<String, String> NULL_PLUGIN_PROPERTIES = null;
 
 Payment payment = accountApi.processPaymentByExternalKey(authTransaction, 
-													              externalKey, 
+													                            externalKey, 
 		                                                  paymentMethodId, 
 		                                                  NULL_PLUGIN_NAMES,
 		                                                  NULL_PLUGIN_PROPERTIES, 
@@ -2219,7 +2216,7 @@ payment_method_id = '80c7b386-97b2-424c-bb4e-0017f92bc6eb'
 # transaction_type could be 'AUTHORIZE', 'PURCHASE' or 'CREDIT'
 body = PaymentTransaction(amount=50, transaction_type='AUTHORIZE')
 
-accountApi.process_payment_by_external_key(body,
+accountApi.process_payment_by_external_key((body,
                                            external_key,
                                            created_by,
                                            api_key,
@@ -3568,9 +3565,7 @@ accountApi.create_account_tags(account_id,
       "objectId":"28af3cb9-275b-4ac4-a55d-a0536e479069",
       "tagDefinitionId":"00000000-0000-0000-0000-000000000006",
       "tagDefinitionName":"TEST",
-      "auditLogs":[
-
-      ]
+      "auditLogs":[]
    }
 ]
 ```

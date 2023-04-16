@@ -246,102 +246,7 @@ subscriptionApi.create_subscription(body,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/subscriptions/77e23878-8b9d-403b-bf31-93003e125712
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-class Subscription {
-    org.killbill.billing.client.model.gen.Subscription@49563466
-    accountId: e8cd6795-0da1-4848-831f-51977eed42b1
-    bundleId: eac6eecf-2060-434a-b472-170f80a7591c
-    subscriptionId: a74081ee-d7bb-4387-a1df-34e962e37699
-    externalKey: somethingSpecial
-    bundleExternalKey: somethingAlsoSpecial
-    startDate: 2012-04-25
-    productName: Shotgun
-    productCategory: BASE
-    billingPeriod: MONTHLY
-    phaseType: TRIAL
-    priceList: DEFAULT
-    planName: shotgun-monthly
-    state: ACTIVE
-    sourceType: NATIVE
-    cancelledDate: null
-    chargedThroughDate: null
-    billingStartDate: 2012-04-25
-    billingEndDate: null
-    billCycleDayLocal: 25
-    events: [class EventSubscription {
-        org.killbill.billing.client.model.gen.EventSubscription@37b70727
-        eventId: 9ef798a3-95f6-41ac-9b86-00c9385c155f
-        billingPeriod: MONTHLY
-        effectiveDate: 2012-04-25
-        plan: shotgun-monthly
-        product: Shotgun
-        priceList: DEFAULT
-        eventType: START_ENTITLEMENT
-        isBlockedBilling: false
-        isBlockedEntitlement: false
-        serviceName: entitlement-service
-        serviceStateName: ENT_STARTED
-        phase: shotgun-monthly-trial
-        auditLogs: []
-    }, class EventSubscription {
-        org.killbill.billing.client.model.gen.EventSubscription@410923f5
-        eventId: 65ec07fa-61c7-4f05-bd6f-82cea23cf06a
-        billingPeriod: MONTHLY
-        effectiveDate: 2012-04-25
-        plan: shotgun-monthly
-        product: Shotgun
-        priceList: DEFAULT
-        eventType: START_BILLING
-        isBlockedBilling: false
-        isBlockedEntitlement: false
-        serviceName: billing-service
-        serviceStateName: START_BILLING
-        phase: shotgun-monthly-trial
-        auditLogs: []
-    }, class EventSubscription {
-        org.killbill.billing.client.model.gen.EventSubscription@cac84db3
-        eventId: 88f77a50-edca-4cc3-b234-5d70c457128c
-        billingPeriod: MONTHLY
-        effectiveDate: 2012-05-25
-        plan: shotgun-monthly
-        product: Shotgun
-        priceList: DEFAULT
-        eventType: PHASE
-        isBlockedBilling: false
-        isBlockedEntitlement: false
-        serviceName: entitlement+billing-service
-        serviceStateName: PHASE
-        phase: shotgun-monthly-evergreen
-        auditLogs: []
-    }]
-    priceOverrides: null
-    prices: [class PhasePrice {
-        planName: shotgun-monthly
-        phaseName: shotgun-monthly-trial
-        phaseType: TRIAL
-        fixedPrice: 0
-        recurringPrice: null
-        usagePrices: []
-    }, class PhasePrice {
-        planName: shotgun-monthly
-        phaseName: shotgun-monthly-evergreen
-        phaseType: EVERGREEN
-        fixedPrice: null
-        recurringPrice: 249.95
-        usagePrices: []
-    }]
-    auditLogs: []
-}
-```
-```ruby
+```json
 {
    "accountId":"e1826665-4524-4d57-81b5-a5eb11146f3f",
    "bundleId":"f3dea847-1567-467a-8373-838dfdcf6afc",
@@ -412,9 +317,6 @@ class Subscription {
    ],
    "auditLogs":[]
 }
-```
-```python
-no content
 ```
 
 **Request Body**
@@ -619,420 +521,7 @@ subscriptionApi.create_subscription_with_add_ons(body,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/accounts/886adb60-be70-40c8-b97d-1f8ecbc30a64/bundles?bundlesFilter=cbcc7642-1aa5-4609-b89d-5356d05819be
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-class Bundle {
-    org.killbill.billing.client.model.gen.Bundle@ddd846f9
-    accountId: abfba40d-d2dd-47f0-94f2-8ea3e6bc8794
-    bundleId: 83f3a7b5-63c9-4b06-a1f5-7140fec67558
-    externalKey: base
-    subscriptions: [class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@bb1bf160
-        accountId: abfba40d-d2dd-47f0-94f2-8ea3e6bc8794
-        bundleId: 83f3a7b5-63c9-4b06-a1f5-7140fec67558
-        subscriptionId: 6fcf439b-4198-4963-8f0e-7e3054525a24
-        externalKey: base
-        startDate: 2012-04-25
-        productName: Shotgun
-        productCategory: BASE
-        billingPeriod: MONTHLY
-        phaseType: TRIAL
-        priceList: DEFAULT
-        planName: shotgun-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2012-04-25
-        billingStartDate: 2012-04-25
-        billingEndDate: null
-        billCycleDayLocal: 25
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@a6789138
-            eventId: fb7d653a-cadb-46f6-a04f-dbe7043385ed
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: shotgun-monthly
-            product: Shotgun
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: shotgun-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@b4b456ed
-            eventId: b5c00fdf-6ce4-46ad-b996-5513146d8acd
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: shotgun-monthly
-            product: Shotgun
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: shotgun-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@fb1cc392
-            eventId: edd91628-323d-4a3a-b07e-bef09a2623a2
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-05-25
-            plan: shotgun-monthly
-            product: Shotgun
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: shotgun-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: shotgun-monthly
-            phaseName: shotgun-monthly-trial
-            phaseType: TRIAL
-            fixedPrice: 0
-            recurringPrice: null
-            usagePrices: []
-        }, class PhasePrice {
-            planName: shotgun-monthly
-            phaseName: shotgun-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: null
-            recurringPrice: 249.95
-            usagePrices: []
-        }]
-        auditLogs: []
-    }, class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@37a59f88
-        accountId: abfba40d-d2dd-47f0-94f2-8ea3e6bc8794
-        bundleId: 83f3a7b5-63c9-4b06-a1f5-7140fec67558
-        subscriptionId: a490a1c8-ca78-4cbd-bb5a-1ce214cc2f23
-        externalKey: base
-        startDate: 2012-04-25
-        productName: Telescopic-Scope
-        productCategory: ADD_ON
-        billingPeriod: MONTHLY
-        phaseType: DISCOUNT
-        priceList: DEFAULT
-        planName: telescopic-scope-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2012-05-25
-        billingStartDate: 2012-04-25
-        billingEndDate: null
-        billCycleDayLocal: 25
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@9c41861a
-            eventId: 6be47e8c-0ff6-45ee-9b79-7a91c6867e6c
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: telescopic-scope-monthly
-            product: Telescopic-Scope
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: telescopic-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@a386d43d
-            eventId: 0c6b12cb-9390-4d64-b98a-93a8c9a6b67b
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: telescopic-scope-monthly
-            product: Telescopic-Scope
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: telescopic-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@429a9148
-            eventId: 27ce7282-c84c-495a-a7fc-be393cfcf3a7
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-05-25
-            plan: telescopic-scope-monthly
-            product: Telescopic-Scope
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: telescopic-scope-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: telescopic-scope-monthly
-            phaseName: telescopic-scope-monthly-trial
-            phaseType: TRIAL
-            fixedPrice: 0
-            recurringPrice: null
-            usagePrices: []
-        }, class PhasePrice {
-            planName: telescopic-scope-monthly
-            phaseName: telescopic-scope-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: null
-            recurringPrice: 249.95
-            usagePrices: []
-        }]
-        auditLogs: []
-    }, class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@10da5c43
-        accountId: abfba40d-d2dd-47f0-94f2-8ea3e6bc8794
-        bundleId: 83f3a7b5-63c9-4b06-a1f5-7140fec67558
-        subscriptionId: 8f957bfa-61da-45ca-ae4c-ed34b045f18e
-        externalKey: base
-        startDate: 2012-04-25
-        productName: Laser-Scope
-        productCategory: ADD_ON
-        billingPeriod: MONTHLY
-        phaseType: DISCOUNT
-        priceList: DEFAULT
-        planName: laser-scope-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2012-05-25
-        billingStartDate: 2012-04-25
-        billingEndDate: null
-        billCycleDayLocal: 25
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@6615c622
-            eventId: eb05b9d5-a055-426c-8411-7fd9b4728d45
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: laser-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@41ddb948
-            eventId: 6fbe3e71-7e3b-4c3b-8bdd-27c8dc71e044
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: laser-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@182c6fd0
-            eventId: bec40e45-6ffb-49f3-831d-722f19d8ed09
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-05-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: laser-scope-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: laser-scope-monthly
-            phaseName: laser-scope-monthly-trial
-            phaseType: TRIAL
-            fixedPrice: 0
-            recurringPrice: null
-            usagePrices: []
-        }, class PhasePrice {
-            planName: laser-scope-monthly
-            phaseName: laser-scope-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: null
-            recurringPrice: 249.95
-            usagePrices: []
-        }]
-        auditLogs: []
-    }]
-    timeline: class BundleTimeline {
-        org.killbill.billing.client.model.gen.BundleTimeline@8a202296
-        accountId: abfba40d-d2dd-47f0-94f2-8ea3e6bc8794
-        bundleId: 83f3a7b5-63c9-4b06-a1f5-7140fec67558
-        externalKey: base
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@5aa4f7e9
-            eventId: eb05b9d5-a055-426c-8411-7fd9b4728d45
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: laser-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@1df149f3
-            eventId: 6be47e8c-0ff6-45ee-9b79-7a91c6867e6c
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: laser-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@68a2bc3b
-            eventId: fb7d653a-cadb-46f6-a04f-dbe7043385ed
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: laser-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@787b414d
-            eventId: 6fbe3e71-7e3b-4c3b-8bdd-27c8dc71e044
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: laser-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@5ba02249
-            eventId: 0c6b12cb-9390-4d64-b98a-93a8c9a6b67b
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: telescopic-scope-monthly
-            product: Telescopic-Scope
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: telescopic-scope-monthly-discount
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@d45c4b96
-            eventId: b5c00fdf-6ce4-46ad-b996-5513146d8acd
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-04-25
-            plan: shotgun-monthly
-            product: Shotgun
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: shotgun-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@2360e010
-            eventId: bec40e45-6ffb-49f3-831d-722f19d8ed09
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-05-25
-            plan: laser-scope-monthly
-            product: Laser-Scope
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: laser-scope-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@49d428fe
-            eventId: 27ce7282-c84c-495a-a7fc-be393cfcf3a7
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-05-25
-            plan: telescopic-scope-monthly
-            product: Telescopic-Scope
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: telescopic-scope-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@aebff2be
-            eventId: edd91628-323d-4a3a-b07e-bef09a2623a2
-            billingPeriod: MONTHLY
-            effectiveDate: 2012-05-25
-            plan: shotgun-monthly
-            product: Shotgun
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: shotgun-monthly-evergreen
-            auditLogs: []
-        }]
-        auditLogs: []
-    }
-    auditLogs: []
-}
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -1279,493 +768,7 @@ subscriptionApi.create_subscriptions_with_add_ons([body],
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/accounts/886adb60-be70-40c8-b97d-1f8ecbc30a64/bundles?bundlesFilter=cbcc7642-1aa5-4609-b89d-5356d05819be
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-class Bundle {
-    org.killbill.billing.client.model.gen.Bundle@ccb83609
-    accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-    bundleId: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-    externalKey: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-    subscriptions: [class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@6ab8272b
-        accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-        bundleId: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-        bundleExternalKey: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-        subscriptionId: 266ff081-db2a-4fd9-b9b4-4a4b85c553df
-        externalKey: 266ff081-db2a-4fd9-b9b4-4a4b85c553df
-        startDate: 2021-11-29
-        productName: Product1
-        productCategory: BASE
-        billingPeriod: MONTHLY
-        phaseType: TRIAL
-        priceList: DEFAULT
-        planName: product1-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2021-11-29
-        billingStartDate: 2021-11-29
-        billingEndDate: null
-        billCycleDayLocal: 29
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@9ac9be06
-            eventId: 12c85188-f2a8-4590-83af-65c75fc9677b
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-monthly
-            product: Product1
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: product1-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@546fe023
-            eventId: eadcaf35-673e-4d93-8adf-dfe5ad6422cb
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-monthly
-            product: Product1
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: product1-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@37f33629
-            eventId: 29a3ccee-f331-48d4-b1c6-be7f03d0d8c5
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-12-09
-            plan: product1-monthly
-            product: Product1
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: product1-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: product1-monthly
-            phaseName: product1-monthly-trial
-            phaseType: TRIAL
-            fixedPrice: 0
-            recurringPrice: null
-            usagePrices: []
-        }, class PhasePrice {
-            planName: product1-monthly
-            phaseName: product1-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: null
-            recurringPrice: 10
-            usagePrices: []
-        }]
-        auditLogs: []
-    }, class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@edd6cbe2
-        accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-        bundleId: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-        bundleExternalKey: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-        subscriptionId: 244d5e5a-71af-4bfc-b7ec-7651f30e7208
-        externalKey: 244d5e5a-71af-4bfc-b7ec-7651f30e7208
-        startDate: 2021-11-29
-        productName: product1-ao
-        productCategory: ADD_ON
-        billingPeriod: MONTHLY
-        phaseType: TRIAL
-        priceList: DEFAULT
-        planName: product1-ao-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2021-11-29
-        billingStartDate: 2021-11-29
-        billingEndDate: null
-        billCycleDayLocal: 18
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@13fb439a
-            eventId: 8a9c0292-a36d-4428-ac47-c9fe39876d5a
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: product1-ao-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@8553fc75
-            eventId: 6c87c127-edef-4762-9804-3cd8638673be
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: product1-ao-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@28e2d33d
-            eventId: 13495761-2cf0-46aa-ab80-7586cdaf8a11
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-12-09
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: product1-ao-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: product1-ao-monthly
-            phaseName: product1-ao-monthly-trial
-            phaseType: TRIAL
-            fixedPrice: 0
-            recurringPrice: null
-            usagePrices: []
-        }, class PhasePrice {
-            planName: product1-ao-monthly
-            phaseName: product1-ao-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: null
-            recurringPrice: 5
-            usagePrices: []
-        }]
-        auditLogs: []
-    }]
-    timeline: class BundleTimeline {
-        org.killbill.billing.client.model.gen.BundleTimeline@26b7a071
-        accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-        bundleId: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-        externalKey: 18cae774-d466-4a19-b1d3-d64fb6c0bd30
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@d4de5a4
-            eventId: 8a9c0292-a36d-4428-ac47-c9fe39876d5a
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: product1-ao-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@6312065e
-            eventId: 12c85188-f2a8-4590-83af-65c75fc9677b
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: product1-ao-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@a057c269
-            eventId: 6c87c127-edef-4762-9804-3cd8638673be
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: product1-ao-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@535f32e2
-            eventId: eadcaf35-673e-4d93-8adf-dfe5ad6422cb
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: product1-monthly
-            product: Product1
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: product1-monthly-trial
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@d0d4bb9c
-            eventId: 13495761-2cf0-46aa-ab80-7586cdaf8a11
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-12-09
-            plan: product1-ao-monthly
-            product: product1-ao
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: product1-ao-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@8351e73e
-            eventId: 29a3ccee-f331-48d4-b1c6-be7f03d0d8c5
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-12-09
-            plan: product1-monthly
-            product: Product1
-            priceList: DEFAULT
-            eventType: PHASE
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement+billing-service
-            serviceStateName: PHASE
-            phase: product1-monthly-evergreen
-            auditLogs: []
-        }]
-        auditLogs: []
-    }
-    auditLogs: []
-}, class Bundle {
-    org.killbill.billing.client.model.gen.Bundle@2fedb607
-    accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-    bundleId: 64123897-ae99-452b-9dbd-88dd9f591bf4
-    externalKey: 64123897-ae99-452b-9dbd-88dd9f591bf4
-    subscriptions: [class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@39c20f59
-        accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-        bundleId: 64123897-ae99-452b-9dbd-88dd9f591bf4
-        bundleExternalKey: 64123897-ae99-452b-9dbd-88dd9f591bf4
-        subscriptionId: ccbb17ab-0734-49be-8a2a-ccc3fbe2ecdf
-        externalKey: ccbb17ab-0734-49be-8a2a-ccc3fbe2ecdf
-        startDate: 2021-11-29
-        productName: Test
-        productCategory: BASE
-        billingPeriod: MONTHLY
-        phaseType: EVERGREEN
-        priceList: DEFAULT
-        planName: test-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2021-12-29
-        billingStartDate: 2021-11-29
-        billingEndDate: null
-        billCycleDayLocal: 29
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@1bb29bcf
-            eventId: 133ae9b4-a250-4d93-8919-534a990ed4e4
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: test-monthly
-            product: Test
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: test-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@f46f814d
-            eventId: 309cc4d6-c21e-4e01-8289-a5767e8272e8
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: test-monthly
-            product: Test
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: test-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: test-monthly
-            phaseName: test-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: null
-            recurringPrice: 20
-            usagePrices: []
-        }]
-        auditLogs: []
-    }, class Subscription {
-        org.killbill.billing.client.model.gen.Subscription@c984106f
-        accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-        bundleId: 64123897-ae99-452b-9dbd-88dd9f591bf4
-        bundleExternalKey: 64123897-ae99-452b-9dbd-88dd9f591bf4
-        subscriptionId: 15e08a0d-9cce-4eb6-b3ce-ecd42e82ffa0
-        externalKey: 15e08a0d-9cce-4eb6-b3ce-ecd42e82ffa0
-        startDate: 2021-11-29
-        productName: TestAO
-        productCategory: ADD_ON
-        billingPeriod: MONTHLY
-        phaseType: EVERGREEN
-        priceList: DEFAULT
-        planName: testao-monthly
-        state: ACTIVE
-        sourceType: NATIVE
-        cancelledDate: null
-        chargedThroughDate: 2021-12-29
-        billingStartDate: 2021-11-29
-        billingEndDate: null
-        billCycleDayLocal: 29
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@d1b77a46
-            eventId: 02dcf5bd-a284-47ef-b88a-a5d8a67ba14c
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: testao-monthly
-            product: TestAO
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: testao-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@997747ea
-            eventId: b724dc1a-e6bc-4a09-8790-f1d1d81bb8b5
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: testao-monthly
-            product: TestAO
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: testao-monthly-evergreen
-            auditLogs: []
-        }]
-        priceOverrides: null
-        prices: [class PhasePrice {
-            planName: testao-monthly
-            phaseName: testao-monthly-evergreen
-            phaseType: EVERGREEN
-            fixedPrice: 100
-            recurringPrice: 10
-            usagePrices: []
-        }]
-        auditLogs: []
-    }]
-    timeline: class BundleTimeline {
-        org.killbill.billing.client.model.gen.BundleTimeline@379f0209
-        accountId: 1d6ef148-3e91-455d-937a-27d8b2f6deff
-        bundleId: 64123897-ae99-452b-9dbd-88dd9f591bf4
-        externalKey: 64123897-ae99-452b-9dbd-88dd9f591bf4
-        events: [class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@7ebf20b
-            eventId: 02dcf5bd-a284-47ef-b88a-a5d8a67ba14c
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: test-monthly
-            product: Test
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: test-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@d60a18b
-            eventId: 133ae9b4-a250-4d93-8919-534a990ed4e4
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: test-monthly
-            product: Test
-            priceList: DEFAULT
-            eventType: START_ENTITLEMENT
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: entitlement-service
-            serviceStateName: ENT_STARTED
-            phase: test-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@c8e43ac8
-            eventId: 309cc4d6-c21e-4e01-8289-a5767e8272e8
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: test-monthly
-            product: Test
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: test-monthly-evergreen
-            auditLogs: []
-        }, class EventSubscription {
-            org.killbill.billing.client.model.gen.EventSubscription@c00d61ad
-            eventId: b724dc1a-e6bc-4a09-8790-f1d1d81bb8b5
-            billingPeriod: MONTHLY
-            effectiveDate: 2021-11-29
-            plan: testao-monthly
-            product: TestAO
-            priceList: DEFAULT
-            eventType: START_BILLING
-            isBlockedBilling: false
-            isBlockedEntitlement: false
-            serviceName: billing-service
-            serviceStateName: START_BILLING
-            phase: testao-monthly-evergreen
-            auditLogs: []
-        }]
-        auditLogs: []
-    }
-    auditLogs: []
-}
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -1846,11 +849,7 @@ subscriptionApi.get_subscription(subscription_id, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-<
+```json
 {
     "accountId":"581d86fc-7cfc-46f2-b6d4-4dbc1d98beb3",
     "bundleId":"3b7a754c-4fe3-49a4-a56c-c8f56fc4116c",
@@ -1873,8 +872,8 @@ subscriptionApi.get_subscription(subscription_id, api_key, api_secret)
     "billCycleDayLocal":18,
     "events":
     [
-        {"
-            eventId":"d1fc7c9a-bdcd-447c-90f4-72c8de37d457",
+        {
+            "eventId":"d1fc7c9a-bdcd-447c-90f4-72c8de37d457",
             "billingPeriod":"MONTHLY",
             "effectiveDate":"2018-07-19",
             "plan":"super-monthly",
@@ -1941,239 +940,7 @@ subscriptionApi.get_subscription(subscription_id, api_key, api_secret)
     ],
     "auditLogs":[]}
 ```
-            
 
-```java
-class Subscription {
-    org.killbill.billing.client.model.gen.Subscription@c620bf78
-    accountId: e903d1d6-7423-40fe-8ab7-d9d449484cda
-    bundleId: 603db1e6-299e-4b8b-9dfc-beecccca39b2
-    subscriptionId: b0f8f527-78c6-4fef-8fb2-53c9ed60a714
-    externalKey: 99999
-    bundleExternalKey: 88888
-    startDate: 2012-04-25
-    productName: Shotgun
-    productCategory: BASE
-    billingPeriod: ANNUAL
-    phaseType: TRIAL
-    priceList: DEFAULT
-    planName: shotgun-annual
-    state: ACTIVE
-    sourceType: NATIVE
-    cancelledDate: null
-    chargedThroughDate: 2012-04-25
-    billingStartDate: 2012-04-25
-    billingEndDate: null
-    billCycleDayLocal: 25
-    events: [class EventSubscription {
-        org.killbill.billing.client.model.gen.EventSubscription@c8078c46
-        eventId: 7227bab2-b394-42de-b40c-97cecfd1d9ae
-        billingPeriod: ANNUAL
-        effectiveDate: 2012-04-25
-        plan: shotgun-annual
-        product: Shotgun
-        priceList: DEFAULT
-        eventType: START_ENTITLEMENT
-        isBlockedBilling: false
-        isBlockedEntitlement: false
-        serviceName: entitlement-service
-        serviceStateName: ENT_STARTED
-        phase: shotgun-annual-trial
-        auditLogs: []
-    }, class EventSubscription {
-        org.killbill.billing.client.model.gen.EventSubscription@1be0ca21
-        eventId: ce8578e7-553f-45d7-a4d1-2abb7e625f64
-        billingPeriod: ANNUAL
-        effectiveDate: 2012-04-25
-        plan: shotgun-annual
-        product: Shotgun
-        priceList: DEFAULT
-        eventType: START_BILLING
-        isBlockedBilling: false
-        isBlockedEntitlement: false
-        serviceName: billing-service
-        serviceStateName: START_BILLING
-        phase: shotgun-annual-trial
-        auditLogs: []
-    }, class EventSubscription {
-        org.killbill.billing.client.model.gen.EventSubscription@f0472744
-        eventId: 26d5ea05-b91d-43e6-8aa2-ac0ac82f6a95
-        billingPeriod: ANNUAL
-        effectiveDate: 2012-05-25
-        plan: shotgun-annual
-        product: Shotgun
-        priceList: DEFAULT
-        eventType: PHASE
-        isBlockedBilling: false
-        isBlockedEntitlement: false
-        serviceName: entitlement+billing-service
-        serviceStateName: PHASE
-        phase: shotgun-annual-evergreen
-        auditLogs: []
-    }]
-    priceOverrides: null
-    prices: [class PhasePrice {
-        planName: shotgun-annual
-        phaseName: shotgun-annual-trial
-        phaseType: TRIAL
-        fixedPrice: 0
-        recurringPrice: null
-        usagePrices: []
-    }, class PhasePrice {
-        planName: shotgun-annual
-        phaseName: shotgun-annual-evergreen
-        phaseType: EVERGREEN
-        fixedPrice: null
-        recurringPrice: 249.95
-        usagePrices: []
-    }]
-    auditLogs: []
-}
-```
-```ruby
-{
-   "accountId":"0cdaeca7-4984-47dc-b245-7c32627f26cd",
-   "bundleId":"d1f4ca8d-be47-4e64-84ce-f697b42d4182",
-   "subscriptionId":"161692a4-c293-410c-a92f-939c5e3dcba7",
-   "externalKey":"d1f4ca8d-be47-4e64-84ce-f697b42d4182",
-   "bundleExternalKey":"a4f4ca8d-3447-4e64-84ce-6697b42d419c",
-   "startDate":"2013-08-01",
-   "productName":"Basic",
-   "productCategory":"BASE",
-   "billingPeriod":"MONTHLY",
-   "phaseType":"EVERGREEN",
-   "priceList":"DEFAULT",
-   "planName":"basic-monthly-in-advance",
-   "state":"ACTIVE",
-   "sourceType":"NATIVE",
-   "chargedThroughDate":"2013-09-01",
-   "billingStartDate":"2013-08-01",
-   "billCycleDayLocal":1,
-   "events":[
-      {
-         "eventId":"dda11bf3-f74a-4c42-83e1-0f43a41389af",
-         "billingPeriod":"MONTHLY",
-         "effectiveDate":"2013-08-01",
-         "plan":"basic-monthly-in-advance",
-         "product":"Basic",
-         "priceList":"DEFAULT",
-         "eventType":"START_ENTITLEMENT",
-         "isBlockedBilling":false,
-         "isBlockedEntitlement":false,
-         "serviceName":"entitlement-service",
-         "serviceStateName":"ENT_STARTED",
-         "phase":"basic-monthly-in-advance-evergreen",
-         "auditLogs":[]
-      },
-      {
-         "eventId":"6901117c-4ce0-4eb6-8642-380823490fae",
-         "billingPeriod":"MONTHLY",
-         "effectiveDate":"2013-08-01",
-         "plan":"basic-monthly-in-advance",
-         "product":"Basic",
-         "priceList":"DEFAULT",
-         "eventType":"START_BILLING",
-         "isBlockedBilling":false,
-         "isBlockedEntitlement":false,
-         "serviceName":"billing-service",
-         "serviceStateName":"START_BILLING",
-         "phase":"basic-monthly-in-advance-evergreen",
-         "auditLogs":[]
-      }
-   ],
-   "prices":[
-      {
-         "planName":"basic-monthly-in-advance",
-         "phaseName":"asic-monthly-in-advance-trial",
-         "phaseType":"TRIAL",
-         "fixedPrice":0,
-         "recurringPrice":null,
-         "usagePrices":[]
-      },
-      {
-         "planName":"basic-monthly-in-advance",
-         "phaseName":"basic-monthly-in-advance-evergreen",
-         "phaseType":"EVERGREEN",
-         "fixedPrice":null,
-         "recurringPrice":500.0,
-         "usagePrices":[]
-      }
-   ],
-   "auditLogs":[]
-}
-```
-```python
-{'account_id': '3b1a5a67-f0ac-475c-9aad-735d309f0c1f',
- 'audit_logs': [],
- 'bill_cycle_day_local': 13,
- 'billing_end_date': None,
- 'billing_period': 'MONTHLY',
- 'billing_start_date': datetime.date(2018, 5, 14),
- 'bundle_id': 'e5590623-ccd4-4a8a-be26-008ce7c02b3b',
- 'cancelled_date': None,
- 'charged_through_date': None,
- 'events': [{'audit_logs': [],
-             'billing_period': 'MONTHLY',
-             'effective_date': datetime.date(2018, 5, 14),
-             'event_id': '46335d3d-8234-49c3-af1a-dcf8cd354ef3',
-             'event_type': 'START_ENTITLEMENT',
-             'is_blocked_billing': False,
-             'is_blocked_entitlement': False,
-             'phase': 'standard-monthly-trial',
-             'plan': 'standard-monthly',
-             'price_list': 'DEFAULT',
-             'product': 'Standard',
-             'service_name': 'entitlement-service',
-             'service_state_name': 'ENT_STARTED'},
-            {'audit_logs': [],
-             'billing_period': 'MONTHLY',
-             'effective_date': datetime.date(2018, 5, 14),
-             'event_id': 'a14d6512-7479-46e0-b72b-81dff575d1d4',
-             'event_type': 'START_BILLING',
-             'is_blocked_billing': False,
-             'is_blocked_entitlement': False,
-             'phase': 'standard-monthly-trial',
-             'plan': 'standard-monthly',
-             'price_list': 'DEFAULT',
-             'product': 'Standard',
-             'service_name': 'billing-service',
-             'service_state_name': 'START_BILLING'},
-            {'audit_logs': [],
-             'billing_period': 'MONTHLY',
-             'effective_date': datetime.date(2018, 6, 13),
-             'event_id': '27408c65-46b8-4bc9-a7ee-c80d6e5fb9b5',
-             'event_type': 'PHASE',
-             'is_blocked_billing': False,
-             'is_blocked_entitlement': False,
-             'phase': 'standard-monthly-evergreen',
-             'plan': 'standard-monthly',
-             'price_list': 'DEFAULT',
-             'product': 'Standard',
-             'service_name': 'entitlement+billing-service',
-             'service_state_name': 'PHASE'}],
- 'external_key': 'e5590623-ccd4-4a8a-be26-008ce7c02b3b',
- 'phase_type': 'TRIAL',
- 'plan_name': 'standard-monthly',
- 'price_list': 'DEFAULT',
- 'prices': [{'fixed_price': 0.0,
-              'phase_name': 'standard-monthly-trial',
-              'phase_type': 'TRIAL',
-              'plan_name': 'standard-monthly',
-              'recurring_price': None,
-              'usage_prices': []},
-             {'fixed_price': None,
-              'phase_name': 'standard-monthly-evergreen',
-              'phase_type': 'EVERGREEN',
-              'plan_name': 'standard-monthly',
-              'recurring_price': 100.0,
-              'usage_prices': []}],  
- 'product_category': 'BASE',
- 'product_name': 'Standard',
- 'source_type': 'NATIVE',
- 'start_date': datetime.date(2018, 5, 14),
- 'state': 'ACTIVE',
- 'subscription_id': '4aab9b96-c2e7-4641-a6d9-db984969201e'}
-```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -2227,11 +994,7 @@ subscriptionApi.get_subscription_by_key(external_key, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-<
+```json
 {
   "accountId": "1f979085-1765-471b-878a-5f640db4d831",
   "bundleId": "8815e8c0-afab-41b9-b793-cb8fef2382e4",
@@ -2297,150 +1060,6 @@ subscriptionApi.get_subscription_by_key(external_key, api_key, api_secret)
   ],
   "auditLogs": []
 }
-```
-```ruby
-{
-   "accountId":"0cdaeca7-4984-47dc-b245-7c32627f26cd",
-   "bundleId":"d1f4ca8d-be47-4e64-84ce-f697b42d4182",
-   "subscriptionId":"161692a4-c293-410c-a92f-939c5e3dcba7",
-   "externalKey":"somethingSpecial",
-   "bundleExternalKey":"a4f4ca8d-3447-4e64-84ce-6697b42d419c",
-   "startDate":"2013-08-01",
-   "productName":"Basic",
-   "productCategory":"BASE",
-   "billingPeriod":"MONTHLY",
-   "phaseType":"EVERGREEN",
-   "priceList":"DEFAULT",
-   "planName":"basic-monthly-in-advance",
-   "state":"ACTIVE",
-   "sourceType":"NATIVE",
-   "chargedThroughDate":"2013-09-01",
-   "billingStartDate":"2013-08-01",
-   "billCycleDayLocal":1,
-   "events":[
-      {
-         "eventId":"dda11bf3-f74a-4c42-83e1-0f43a41389af",
-         "billingPeriod":"MONTHLY",
-         "effectiveDate":"2013-08-01",
-         "plan":"basic-monthly-in-advance",
-         "product":"Basic",
-         "priceList":"DEFAULT",
-         "eventType":"START_ENTITLEMENT",
-         "isBlockedBilling":false,
-         "isBlockedEntitlement":false,
-         "serviceName":"entitlement-service",
-         "serviceStateName":"ENT_STARTED",
-         "phase":"basic-monthly-in-advance-evergreen",
-         "auditLogs":[]
-      },
-      {
-         "eventId":"6901117c-4ce0-4eb6-8642-380823490fae",
-         "billingPeriod":"MONTHLY",
-         "effectiveDate":"2013-08-01",
-         "plan":"basic-monthly-in-advance",
-         "product":"Basic",
-         "priceList":"DEFAULT",
-         "eventType":"START_BILLING",
-         "isBlockedBilling":false,
-         "isBlockedEntitlement":false,
-         "serviceName":"billing-service",
-         "serviceStateName":"START_BILLING",
-         "phase":"basic-monthly-in-advance-evergreen",
-         "auditLogs":[]
-      }
-   ],
-   "prices":[
-      {
-         "planName":"basic-monthly-in-advance",
-         "phaseName":"asic-monthly-in-advance-trial",
-         "phaseType":"TRIAL",
-         "fixedPrice":0,
-         "recurringPrice":null,
-         "usagePrices":[]
-      },
-      {
-         "planName":"basic-monthly-in-advance",
-         "phaseName":"basic-monthly-in-advance-evergreen",
-         "phaseType":"EVERGREEN",
-         "fixedPrice":null,
-         "recurringPrice":500.0,
-         "usagePrices":[]
-      }
-   ],
-   "auditLogs":[]
-}
-```
-```python
-{'account_id': '3b1a5a67-f0ac-475c-9aad-735d309f0c1f',
- 'audit_logs': [],
- 'bill_cycle_day_local': 13,
- 'billing_end_date': None,
- 'billing_period': 'MONTHLY',
- 'billing_start_date': datetime.date(2018, 5, 14),
- 'bundle_id': 'e5590623-ccd4-4a8a-be26-008ce7c02b3b',
- 'cancelled_date': None,
- 'charged_through_date': None,
- 'events': [{'audit_logs': [],
-             'billing_period': 'MONTHLY',
-             'effective_date': datetime.date(2018, 5, 14),
-             'event_id': '46335d3d-8234-49c3-af1a-dcf8cd354ef3',
-             'event_type': 'START_ENTITLEMENT',
-             'is_blocked_billing': False,
-             'is_blocked_entitlement': False,
-             'phase': 'standard-monthly-trial',
-             'plan': 'standard-monthly',
-             'price_list': 'DEFAULT',
-             'product': 'Standard',
-             'service_name': 'entitlement-service',
-             'service_state_name': 'ENT_STARTED'},
-            {'audit_logs': [],
-             'billing_period': 'MONTHLY',
-             'effective_date': datetime.date(2018, 5, 14),
-             'event_id': 'a14d6512-7479-46e0-b72b-81dff575d1d4',
-             'event_type': 'START_BILLING',
-             'is_blocked_billing': False,
-             'is_blocked_entitlement': False,
-             'phase': 'standard-monthly-trial',
-             'plan': 'standard-monthly',
-             'price_list': 'DEFAULT',
-             'product': 'Standard',
-             'service_name': 'billing-service',
-             'service_state_name': 'START_BILLING'},
-            {'audit_logs': [],
-             'billing_period': 'MONTHLY',
-             'effective_date': datetime.date(2018, 6, 13),
-             'event_id': '27408c65-46b8-4bc9-a7ee-c80d6e5fb9b5',
-             'event_type': 'PHASE',
-             'is_blocked_billing': False,
-             'is_blocked_entitlement': False,
-             'phase': 'standard-monthly-evergreen',
-             'plan': 'standard-monthly',
-             'price_list': 'DEFAULT',
-             'product': 'Standard',
-             'service_name': 'entitlement+billing-service',
-             'service_state_name': 'PHASE'}],
- 'external_key': 'somethingSpecial',
- 'phase_type': 'TRIAL',
- 'plan_name': 'standard-monthly',
- 'price_list': 'DEFAULT',
- 'prices': [{'fixed_price': 0.0,
-              'phase_name': 'standard-monthly-trial',
-              'phase_type': 'TRIAL',
-              'plan_name': 'standard-monthly',
-              'recurring_price': None,
-              'usage_prices': []},
-             {'fixed_price': None,
-              'phase_name': 'standard-monthly-evergreen',
-              'phase_type': 'EVERGREEN',
-              'plan_name': 'standard-monthly',
-              'recurring_price': 100.0,
-              'usage_prices': []}],
- 'product_category': 'BASE',
- 'product_name': 'Standard',
- 'source_type': 'NATIVE',
- 'start_date': datetime.date(2018, 5, 14),
- 'state': 'ACTIVE',
- 'subscription_id': '4aab9b96-c2e7-4641-a6d9-db984969201e'}
 ```
 
 **Query Parameters**
@@ -2532,20 +1151,7 @@ subscriptionApi.update_subscription_bcd(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -2617,20 +1223,7 @@ TODO
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -2748,17 +1341,7 @@ subscriptionApi.change_subscription_plan(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
+```json
 {
    "accountId":"986c5d4e-b322-4d71-ad24-e3bf6e38734a",
    "bundleId":"b0b9da5f-6844-417b-ac97-d7e8df07c26a",
@@ -2860,9 +1443,7 @@ no content
    "auditLogs":[]
 }
 ```
-```python
-no content
-```
+
 **Request Body**
 
 A subscription resource object specifying either the `planName` or a combination of `productName`, `billingPeriod` and `priceList`. 
@@ -2938,20 +1519,7 @@ subscriptionApi.undo_change_subscription_plan(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -3031,20 +1599,7 @@ subscriptionApi.cancel_subscription_plan(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -3143,20 +1698,7 @@ subscriptionApi.uncancel_subscription_plan(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -3264,42 +1806,7 @@ subscriptionApi.add_subscription_blocking_state(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Location: http://127.0.0.1:8080/1.0/kb/accounts/581d86fc-7cfc-46f2-b6d4-4dbc1d98beb3/block?blockingStateTypes=SUBSCRIPTION
-< Content-Length: 0
-```
-```java
-[class BlockingState {
-    org.killbill.billing.client.model.gen.BlockingState@bf898dea
-    blockedId: 161692a4-c293-410c-a92f-939c5e3dcba7
-    stateName: ENT_STARTED
-    service: entitlement-service
-    isBlockChange: false
-    isBlockEntitlement: false
-    isBlockBilling: false
-    effectiveDate: 2012-04-25T00:03:42.000Z
-    type: SUBSCRIPTION
-    auditLogs: []
-}, class BlockingState {
-    org.killbill.billing.client.model.gen.BlockingState@fd3732d8
-    blockedId: 161692a4-c293-410c-a92f-939c5e3dcba7
-    stateName: STATE1
-    service: ServiceStateService
-    isBlockChange: false
-    isBlockEntitlement: false
-    isBlockBilling: false
-    effectiveDate: 2013-08-01T00:03:42.000Z
-    type: SUBSCRIPTION
-    auditLogs: []
-}]
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -3410,27 +1917,7 @@ subscriptionApi.create_subscription_custom_fields(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/subscriptions/77e23878-8b9d-403b-bf31-93003e125712/customFields
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-//First element of the list
-class CustomField {
-    org.killbill.billing.client.model.gen.CustomField@c7d0c38a
-    customFieldId: null
-    objectId: cca08349-8b26-41c7-bfcc-2e3cf70a0f28
-    objectType: SUBSCRIPTION
-    name: Test Custom Field
-    value: test_value
-    auditLogs: []
-}
-```
-```ruby
+```json
 [
    {
       "customFieldId":"7fb3dde7-0911-4477-99e3-69d142509bb9",
@@ -3443,9 +1930,6 @@ class CustomField {
 ]
 ```
 
-```python
-no content
-```
 
 **Request Body**
 
@@ -3514,11 +1998,7 @@ subscriptionApi.get_subscription_custom_fields(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 Ok
-< Content-Type: application/json
-<
+```json
 [
     {
         "customFieldId":"439ed0f8-9b37-4688-bace-e2595b1d3801",
@@ -3531,39 +2011,6 @@ subscriptionApi.get_subscription_custom_fields(subscription_id,
 ]
 ```
 
-```java
-//First element of the list
-class CustomField {
-    org.killbill.billing.client.model.gen.CustomField@c7d0c38a
-    customFieldId: null
-    objectId: cca08349-8b26-41c7-bfcc-2e3cf70a0f28
-    objectType: SUBSCRIPTION
-    name: Test Custom Field
-    value: test_value
-    auditLogs: []
-}
-```
-```ruby
-[
-   {
-      "customFieldId":"7fb3dde7-0911-4477-99e3-69d142509bb9",
-      "objectId":"4927c1a2-3959-4f71-98e7-ce3ba19c92ac",
-      "objectType":"SUBSCRIPTION",
-      "name":"Test Custom Field",
-      "value":"test_value",
-      "auditLogs":[]
-   }
-]
-```
-
-```python
-[{'audit_logs': [],
- 'custom_field_id': '31a21da4-1eae-4f83-b9e4-49c53217d33e',
- 'name': 'Test Custom Field',
- 'object_id': '642ee0ac-972b-4cdf-b9ae-ab8f9bb9bc05',
- 'object_type': 'SUBSCRIPTION',
- 'value': 'test_value'}]
-```
 
 
 **Query Parameters**
@@ -3648,24 +2095,10 @@ subscriptionApi.modify_subscription_custom_fields(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
+```json
 no content
 ```
 
-```ruby
-no content
-```
-
-```python
-no content
-```
 **Request Body**
 
 A list of objects specifying the id and the new value for the custom fields to be modified. For example:
@@ -3738,20 +2171,7 @@ subscriptionApi.delete_subscription_custom_fields(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -3832,27 +2252,7 @@ subscriptionApi.create_subscription_tags(subscription_id,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://127.0.0.1:8080/1.0/kb/subscriptions/77e23878-8b9d-403b-bf31-93003e125712/tags
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-//First element of the list
-class Tag {
-    org.killbill.billing.client.model.gen.Tag@bd138472
-    tagId: 1bb4b638-3886-4f73-90a5-89eb6d1bcf7f
-    objectType: SUBSCRIPTION
-    objectId: 917992d3-5f1f-4828-9fff-799cc4211aa9
-    tagDefinitionId: 353752dd-9041-4450-b782-a8bb03a923c8
-    tagDefinitionName: foo
-    auditLogs: []
-}
-```
-```ruby
+```json
 [
    {
       "tagId":"a46cfeb6-e175-42db-be62-7f117326ab4e",
@@ -3864,9 +2264,7 @@ class Tag {
    }
 ]
 ```
-```python
-no content
-```
+
 
 **Request Body**
 
@@ -3935,10 +2333,7 @@ subscriptionApi.get_subscription_tags(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-<
+```json
 [
     {
         "tagId":"d0513754-56a9-4694-abb1-3ac46c72e861",
@@ -3951,38 +2346,6 @@ subscriptionApi.get_subscription_tags(subscription_id,
 ]
 ```
 
-```java
-//First element of the list
-class Tag {
-    org.killbill.billing.client.model.gen.Tag@bd138472
-    tagId: 1bb4b638-3886-4f73-90a5-89eb6d1bcf7f
-    objectType: SUBSCRIPTION
-    objectId: 917992d3-5f1f-4828-9fff-799cc4211aa9
-    tagDefinitionId: 353752dd-9041-4450-b782-a8bb03a923c8
-    tagDefinitionName: foo
-    auditLogs: []
-}
-```
-```ruby
-[
-   {
-      "tagId":"a46cfeb6-e175-42db-be62-7f117326ab4e",
-      "objectType":"SUBSCRIPTION",
-      "objectId":"28af3cb9-275b-4ac4-a55d-a0536e479069",
-      "tagDefinitionId":"353752dd-9041-4450-b782-a8bb03a923c8",
-      "tagDefinitionName":"foo",
-      "auditLogs":[]
-   }
-]
-```
-```python
-[{'audit_logs': [],
- 'object_id': 'f5bb14ed-c6e8-4895-8d4e-34422e12cdfa',
- 'object_type': 'SUBSCRIPTION',
- 'tag_definition_id': '353752dd-9041-4450-b782-a8bb03a923c8',
- 'tag_definition_name': 'foo',
- 'tag_id': 'a1fd0122-1ec8-4bc3-b71e-ab2a76ae5957'}]
-```
 
 **Query Parameters**
 
@@ -4054,22 +2417,10 @@ subscriptionApi.delete_subscription_tags(subscription_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
+```json
+no content
 ```
 
-```java
-no content
-```
-```ruby
-no content
-```
-```python
-no content
-```
 
 **Query Parameters**
 
@@ -4117,11 +2468,7 @@ List<AuditLog> auditLog = subscriptionApi.getSubscriptionAuditLogsWithHistory(su
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
@@ -4179,6 +2526,7 @@ List<AuditLog> auditLog = subscriptionApi.getSubscriptionAuditLogsWithHistory(su
 
 ```
 
+
 **Query Parameters**
 
 None.
@@ -4221,11 +2569,7 @@ List<AuditLog> eventAuditLog = subscriptionApi.getSubscriptionEventAuditLogsWith
 > Example Response:
 
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",

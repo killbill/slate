@@ -76,18 +76,7 @@ adminApi.trigger_invoice_generation_for_parked_accounts('test', api_key, api_sec
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -186,18 +175,7 @@ adminApi.update_payment_transaction_state(payment_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -259,18 +237,7 @@ adminApi.invalidates_cache(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -326,18 +293,7 @@ adminApi.invalidates_cache_by_account(account_id, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -388,18 +344,7 @@ adminApi.invalidates_cache_by_tenant(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -450,18 +395,7 @@ adminApi.put_in_rotation(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -512,18 +446,7 @@ adminApi.put_out_of_rotation(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -596,21 +519,11 @@ adminApi.get_queue_entries(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/octet-stream
-
-{"busEvents":[],"notifications":[]}
-```
-```java
-{"busEvents":[],"notifications":[]}
-```"
-```ruby
-{"busEvents":[],"notifications":[]}
-```
-```python
-{"busEvents":[],"notifications":[]}
+```json
+{
+  "busEvents":[],
+  "notifications":[]
+}
 ```
 
 **Query Parameters**

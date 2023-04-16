@@ -65,18 +65,7 @@ curl -v \
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 
-< Location: http://127.0.0.1:8080/1.0/kb/tagDefinitions/93f2bc59-e18d-4a5e-a645-9386c76fc03f
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-```
-```ruby
-```
-```python
+```json
 no content
 ```
 
@@ -122,7 +111,7 @@ curl -v \
 
 > Example Response:
 
-```shell
+```json
 {
     "id": "93f2bc59-e18d-4a5e-a645-9386c76fc03f",
     "isControlTag": false,
@@ -142,16 +131,9 @@ curl -v \
       "ACCOUNT"
     ],
     "auditLogs": []
-},
- ...
- 
+} 
 ```
-```java
-```
-```ruby
-```
-```python
-```
+
 
 **Query Parameters**
 
@@ -196,7 +178,7 @@ curl -v \
 
 > Example Response:
 
-```shell
+```json
 {
     "id": "93f2bc59-e18d-4a5e-a645-9386c76fc03f",
     "isControlTag": false,
@@ -208,12 +190,7 @@ curl -v \
     "auditLogs": []
 }
 ```
-```java
-```
-```ruby
-```
-```python
-```
+
 
 **Query Parameters**
 
@@ -262,17 +239,8 @@ curl -v \
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 
-< Content-Type: application/json
-
-```
-```java
-```
-```ruby
-```
-```python
+```json
+no content
 ```
 
 **Query Parameters**
@@ -308,11 +276,7 @@ curl \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",

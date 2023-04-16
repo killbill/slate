@@ -52,9 +52,7 @@ curl -v \
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
+```json
 {
   "role": "ROLE",
   "permissions": [
@@ -62,15 +60,6 @@ curl -v \
     "invoice:trigger"
   ]
 }
-```
-
-```java
-```
-
-```ruby
-```
-
-```python
 ```
 
 **Query Parameters**
@@ -117,21 +106,8 @@ curl -v \
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Content-Type: application/json
-< Location: http://127.0.0.1:8080/1.0/kb/security/roles/ROLE
-< Content-Length: 0
-```
-
-```java
-```
-
-```ruby
-```
-
-```python
+```json
+no content
 ```
 
 **Query Parameters**
@@ -178,20 +154,8 @@ curl -v \
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-< Content-Length: 0
-```
-
-```java
-```
-
-```ruby
-```
-
-```python
+```json
+no content
 ```
 
 **Query Parameters**

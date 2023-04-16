@@ -85,8 +85,7 @@ creditApi.create_credits([body], created_by, api_key, api_secret)
 
 > Example Response:
 
-```shell
-    < HTTP/1.1 200 OK
+```json
 [
   {
     "invoiceItemId": "2a7746a3-abad-42d9-9f54-fe50c0b18802",
@@ -119,36 +118,7 @@ creditApi.create_credits([body], created_by, api_key, api_secret)
   }
 ]
 ```
-```java
-class Credit {
-    org.killbill.billing.client.model.gen.Credit@a32400a5
-    creditId: d2edf4c0-9929-4e2f-b3a9-feb9bd9d60ba
-    creditAmount: 1.00
-    currency: USD
-    invoiceId: 41c87837-ec1d-4095-8d20-a56e6237cb0c
-    invoiceNumber: 3
-    effectiveDate: 2012-09-26
-    accountId: 7cf30d01-84f1-4d9d-94c2-3a3277374960
-    description: description
-    itemDetails: itemDetails
-    auditLogs: []
-}
-```
-```ruby
-{
-   "creditId":"fd5669a8-68c1-8dl0-m4e8-8y535e349324"
-   "amount":50.0,
-   "currency":"USD",
-   "invoiceId":"c57e1a2b-1a6b-4053-be2c-cc5fad2b5cbf",
-   "invoiceNumber":"1285",
-   "effectiveDate":"2013-08-01",
-   "accountId":"da3769a8-58c4-4dc0-b4e8-7b534e349624",
-   "description":"description"
-}
-```
-```python
-no content
-```
+
 
 **Request Body**
 
@@ -205,11 +175,7 @@ creditApi.get_credit(credit_id, api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-
+```json
 {
   "invoiceItemId": "c8bfa9d1-76e5-4a42-92d0-b106c0902c16",
   "amount": 50,
@@ -221,44 +187,6 @@ creditApi.get_credit(credit_id, api_key, api_secret)
   "description": "example",
   "itemDetails": null,
   "auditLogs": []
-}
-```
-```java
-class Credit {
-    org.killbill.billing.client.model.gen.InvoiceItem@a32400a5
-    invoiceItemId: d2edf4c0-9929-4e2f-b3a9-feb9bd9d60ba
-    amount: 1.00
-    currency: USD
-    invoiceId: 41c87837-ec1d-4095-8d20-a56e6237cb0c
-    invoiceNumber: 3
-    effectiveDate: 2012-09-26
-    accountId: 7cf30d01-84f1-4d9d-94c2-3a3277374960
-    description: description
-    itemDetails: itemDetails
-    auditLogs: []
-}
-```
-```ruby
-{
-   "invoiceItemId":"fd5669a8-68c1-8dl0-m4e8-8y535e349324"
-   "amount":50.0,
-   "currency":"USD",
-   "invoiceId":"c57e1a2b-1a6b-4053-be2c-cc5fad2b5cbf",
-   "invoiceNumber":"1285",
-   "effectiveDate":"2013-08-01",
-   "accountId":"da3769a8-58c4-4dc0-b4e8-7b534e349624",
-   "description":"description"
-}
-```
-```python
-{'invoice_item_id' : 'fd5669a8-68c1-8dl0-m4e8-8y535e349328'
- 'account_id': 'da3769a8-58c4-4dc0-b4e8-7b534e349624',
- 'amount': 50.0,
- 'currency': 'USD',
- 'description': 'example',
- 'effective_date': datetime.datetime(2018, 5, 3, 15, 53, 44, tzinfo=tzutc()),,
- 'invoice_id': 'c57e1a2b-1a6b-4053-be2c-cc5fad2b5cbf',
- 'invoice_number': '1285'
 }
 ```
 
