@@ -69,11 +69,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "tagId": "13fe6f2c-91af-4635-aa9c-52e04d99b5ec",
@@ -122,11 +118,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "tagId": "13fe6f2c-91af-4635-aa9c-52e04d99b5ec",
@@ -171,11 +163,7 @@ curl  \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
