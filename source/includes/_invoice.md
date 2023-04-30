@@ -198,40 +198,7 @@ invoiceApi.create_future_invoice(account_id,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/903e55d3-8072-47f1-80fc-32857dbdbcc5
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@8673fcce
-    amount: 249.95
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 139cb81c-6611-4ddf-bb1a-d2c3c47b7a98
-    invoiceDate: 2012-05-27
-    targetDate: 2012-06-25
-    invoiceNumber: 3
-    balance: 249.95
-    accountId: 5f1e9142-b4de-4409-9366-9920cc1683e9
-    bundleKeys: null
-    credits: null
-    items: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -326,70 +293,7 @@ invoiceApi.create_migration_invoice(account_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/71742c60-273f-4c91-8b8c-7555a3554b0a/ 
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@7983407c
-    amount: 10.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: fb5dadee-f820-4d93-84b1-8cb37a0b8eea
-    invoiceDate: 2022-01-31
-    targetDate: 2022-01-31
-    invoiceNumber: 3139
-    balance: 0
-    accountId: 85472112-4dcd-4d5e-a345-5716635d7629
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@f50cb1b2
-        invoiceItemId: e501ddc2-cf18-4dd5-840e-dbb0527827c3
-        invoiceId: fb5dadee-f820-4d93-84b1-8cb37a0b8eea
-        linkedInvoiceItemId: null
-        accountId: 85472112-4dcd-4d5e-a345-5716635d7629
-        childAccountId: null
-        bundleId: null
-        subscriptionId: null
-        productName: null
-        planName: null
-        phaseName: null
-        usageName: null
-        prettyProductName: null
-        prettyPlanName: null
-        prettyPhaseName: null
-        prettyUsageName: null
-        itemType: FIXED
-        description: Fixed price charge
-        startDate: 2022-01-31
-        endDate: null
-        amount: 10.00
-        rate: null
-        currency: USD
-        quantity: null
-        itemDetails: null
-        catalogEffectiveDate: null
-        childItems: null
-        auditLogs: []
-    }]
-    trackingIds: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -492,11 +396,7 @@ invoiceApi.create_external_charges(account_id,
 
 > Example Response:
 
-```shell
-< HTTP/1.1 201 Created
-< Content-Type: application/json
-< Content-Length: 0
-
+```json
 [
   {
     "invoiceItemId": "3aaadeeb-5ffe-4226-a8b6-57723f1f8c12",
@@ -527,52 +427,6 @@ invoiceApi.create_external_charges(account_id,
     "auditLogs": []
   }
 ]
-```
-```java
-class InvoiceItem {
-    org.killbill.billing.client.model.gen.InvoiceItem@a39beab1
-    invoiceItemId: 836d08c4-2bc8-485f-91c1-2dd81b18844e
-    invoiceId: 3006fe16-3641-47b6-804e-2719f8f40c87
-    linkedInvoiceItemId: 2781cefd-fc73-41d2-9823-f8f0d0b60e2b
-    accountId: 616789aa-4004-4681-b38c-b95871d534fc
-    childAccountId: null
-    bundleId: null
-    subscriptionId: null
-    productName: null
-    planName: null
-    phaseName: null
-    usageName: null
-    prettyProductName: null
-    prettyPlanName: null
-    prettyPhaseName: null
-    prettyUsageName: null
-    itemType: EXTERNAL_CHARGE
-    description: b1b7442b-cd1b-4bb7-9d30-6b50ea469202
-    startDate: 2012-09-25
-    endDate: 2012-10-05
-    amount: 10.00
-    rate: null
-    currency: USD
-    quantity: null
-    itemDetails: Item Details
-    childItems: null
-    auditLogs: []
-}
-```
-```ruby
-{
-   "invoiceItemId":"4661b7a9-f19f-431e-80ed-547932527fbe",
-   "invoiceId":"d27bca74-7e08-4eff-9479-51e8009fe3d0",
-   "accountId":"83e5e82d-fe72-4873-9b8b-946f4d250b0d",
-   "itemType":"EXTERNAL_CHARGE",
-   "description":"My charge",
-   "startDate":"2013-08-01",
-   "amount":50.0,
-   "currency":"USD"
-}
-```
-```python
-no content
 ```
 
 **Request Body**
@@ -677,12 +531,7 @@ invoiceApi.create_tax_items(account_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Content-Type: application/json
-< Content-Length: 0
-
+```json
 [
   {
     "invoiceItemId": "e91e8d48-d8de-4931-9758-6cfff86cb2f4",
@@ -713,53 +562,6 @@ invoiceApi.create_tax_items(account_id,
     "auditLogs": []
   }
 ]
-```
-```java
-class InvoiceItem {
-    org.killbill.billing.client.model.gen.InvoiceItem@bedd818e
-    invoiceItemId: 04ebfae8-7898-4c1b-b10e-6fad862e7077
-    invoiceId: 000108b4-d0e3-452f-8537-13f6669f8767
-    linkedInvoiceItemId: null
-    accountId: eb36c64c-b575-4538-b26f-a89c473984da
-    childAccountId: null
-    bundleId: 28723cec-5510-49be-9e87-3a36d246f25e
-    subscriptionId: null
-    productName: null
-    planName: null
-    phaseName: null
-    usageName: null
-    prettyProductName: null
-    prettyPlanName: null
-    prettyPhaseName: null
-    prettyUsageName: null
-    itemType: TAX
-    description: Tax
-    startDate: 2012-09-25
-    endDate: null
-    amount: 10.00
-    rate: null
-    currency: USD
-    quantity: null
-    itemDetails: null
-    childItems: null
-    auditLogs: []
-}
-```
-```ruby
-{
-   "invoiceItemId":"20d3bdc8-48c1-48f5-9d9f-5cf0d273dff6",
-   "invoiceId":"40655121-ac13-4fe4-af49-02ba668ff4bb",
-   "accountId":"29ef0d50-90d1-4163-bb46-ef1b82675ae6",
-   "itemType":"TAX",
-   "description":"My charge",
-   "startDate":"2013-08-01",
-   "amount":50.0,
-   "currency":"USD",
-   "auditLogs":[]
-}
-```
-```python
-no content
 ```
 
 **Request Body**
@@ -829,10 +631,7 @@ invoiceApi.get_invoice(invoice_id, api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "amount": 0,
   "currency": "USD",
@@ -853,107 +652,6 @@ invoiceApi.get_invoice(invoice_id, api_key, api_secret)
   "parentAccountId": null,
   "auditLogs": []
 }
-```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@d6d47bb7
-    amount: 10.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 922a83f4-ae08-4732-9dd9-35e13c332393
-    invoiceDate: 2012-09-25
-    targetDate: 2012-09-25
-    invoiceNumber: 3
-    balance: 10.00
-    accountId: 3db9ebae-3a8e-4cba-ac94-730aeda9a6c3
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@aae429f6
-        invoiceItemId: 6288c2a3-d5c6-4f43-bbf4-7e6bf91369d1
-        invoiceId: 922a83f4-ae08-4732-9dd9-35e13c332393
-        linkedInvoiceItemId: 83716126-1cd4-42bf-907a-22aae31897e7
-        accountId: 3db9ebae-3a8e-4cba-ac94-730aeda9a6c3
-        childAccountId: null
-        bundleId: null
-        subscriptionId: null
-        productName: null
-        planName: null
-        phaseName: null
-        usageName: null
-        prettyProductName: null
-        prettyPlanName: null
-        prettyPhaseName: null
-        prettyUsageName: null
-        itemType: EXTERNAL_CHARGE
-        description: a8fdf3e2-e071-4f09-b4a4-997c02541366
-        startDate: 2012-09-25
-        endDate: 2012-10-05
-        amount: 10.00
-        rate: null
-        currency: USD
-        quantity: null
-        itemDetails: Item Details
-        childItems: null
-        auditLogs: []
-    }]
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-{
-   "amount":7.0,
-   "currency":"USD",
-   "status":"COMMITTED",
-   "creditAdj":0.0,
-   "refundAdj":0.0,
-   "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-   "invoiceDate":"2013-08-01",
-   "targetDate":"2013-08-01",
-   "invoiceNumber":"1913",
-   "balance":0.0,
-   "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-   "items":[
-      {
-         "invoiceItemId":"f641ce8a-a874-4e98-ada5-2bd8fdb74945",
-         "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-         "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-         "itemType":"EXTERNAL_CHARGE",
-         "description":"My first charge",
-         "startDate":"2013-08-01",
-         "amount":7.0,
-         "currency":"USD",
-         "auditLogs":[]
-      }
-   ],
-   "isParentInvoice":false,
-   "auditLogs":[]
-}
-```
-```python
-{'account_id': '78bd2ed3-2dc8-4d7c-92da-2a319fd40881',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': '43da4e9c-03c6-4f15-8943-b9a3af3ecacb',
- 'invoice_number': '972',
- 'is_parent_invoice': False,
- 'items': [],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 5, 10)}
 ```
 
 **Query Parameters**
@@ -1020,11 +718,7 @@ invoiceApi.get_invoice_by_number(invoice_number, api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "amount": 0,
   "currency": "USD",
@@ -1045,127 +739,6 @@ invoiceApi.get_invoice_by_number(invoice_number, api_key, api_secret)
   "parentAccountId": null,
   "auditLogs": []
 }
-```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@fde9afb7
-    amount: 0.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 35285f91-07be-4161-8b80-34c8336020df
-    invoiceDate: 2012-04-25
-    targetDate: 2012-04-25
-    invoiceNumber: 1
-    balance: 0.00
-    accountId: b2fd467c-182e-4ba4-ad93-b12ee43a1dee
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@d77b0a66
-        invoiceItemId: da1d65b0-0b27-45bd-b1c9-ef1caea6c08a
-        invoiceId: 35285f91-07be-4161-8b80-34c8336020df
-        linkedInvoiceItemId: null
-        accountId: b2fd467c-182e-4ba4-ad93-b12ee43a1dee
-        childAccountId: null
-        bundleId: 5f0282c9-28ab-45e1-ba70-53fdf69c2983
-        subscriptionId: 4e05f40f-905f-47db-a470-a3c601053741
-        productName: Shotgun
-        planName: shotgun-monthly
-        phaseName: shotgun-monthly-trial
-        usageName: null
-        prettyProductName: Shotgun
-        prettyPlanName: Shotgun Monthly
-        prettyPhaseName: shotgun-monthly-trial
-        prettyUsageName: null
-        itemType: FIXED
-        description: shotgun-monthly-trial
-        startDate: 2012-04-25
-        endDate: null
-        amount: 0.00
-        rate: null
-        currency: USD
-        quantity: null
-        itemDetails: null
-        childItems: null
-        auditLogs: [class AuditLog {
-            changeType: INSERT
-            changeDate: 2012-04-25T00:03:44.000Z
-            objectType: INVOICE_ITEM
-            objectId: da1d65b0-0b27-45bd-b1c9-ef1caea6c08a
-            changedBy: SubscriptionBaseTransition
-            reasonCode: null
-            comments: null
-            userToken: 6cef0bbb-4378-43f7-9d4f-0c70cba8afb0
-            history: null
-        }]
-    }]
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: [class AuditLog {
-        changeType: INSERT
-        changeDate: 2012-04-25T00:03:44.000Z
-        objectType: INVOICE
-        objectId: 35285f91-07be-4161-8b80-34c8336020df
-        changedBy: SubscriptionBaseTransition
-        reasonCode: null
-        comments: null
-        userToken: 6cef0bbb-4378-43f7-9d4f-0c70cba8afb0
-        history: null
-    }]
-}
-```
-```ruby
-{
-   "amount":7.0,
-   "currency":"USD",
-   "status":"COMMITTED",
-   "creditAdj":0.0,
-   "refundAdj":0.0,
-   "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-   "invoiceDate":"2013-08-01",
-   "targetDate":"2013-08-01",
-   "invoiceNumber":"1913",
-   "balance":0.0,
-   "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-   "items":[
-      {
-         "invoiceItemId":"f641ce8a-a874-4e98-ada5-2bd8fdb74945",
-         "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-         "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-         "itemType":"EXTERNAL_CHARGE",
-         "description":"My first charge",
-         "startDate":"2013-08-01",
-         "amount":7.0,
-         "currency":"USD",
-         "auditLogs":[]
-      }
-   ],
-   "isParentInvoice":false,
-   "auditLogs":[]
-}
-```
-```python
-{'account_id': '78bd2ed3-2dc8-4d7c-92da-2a319fd40881',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': '43da4e9c-03c6-4f15-8943-b9a3af3ecacb',
- 'invoice_number': '972',
- 'is_parent_invoice': False,
- 'items': [],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 5, 10)}
 ```
 
 **Query Parameters**
@@ -1237,11 +810,7 @@ invoiceApi.get_invoice_by_item_id(invoice_item_id,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "amount": 0,
   "currency": "USD",
@@ -1263,132 +832,6 @@ invoiceApi.get_invoice_by_item_id(invoice_item_id,
   "auditLogs": []
 }
 ```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@5c66117a
-    amount: 0.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 3a51917b-c0f9-4d9d-972e-1c5db7906b1b
-    invoiceDate: 2012-04-25
-    targetDate: 2012-04-25
-    invoiceNumber: 1
-    balance: 0.00
-    accountId: 3c186380-b31a-4934-b25b-717056219e73
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@74f2032c
-        invoiceItemId: 111732ad-196d-423f-8ccd-de44109dc944
-        invoiceId: 3a51917b-c0f9-4d9d-972e-1c5db7906b1b
-        linkedInvoiceItemId: null
-        accountId: 3c186380-b31a-4934-b25b-717056219e73
-        childAccountId: null
-        bundleId: 66ebdda5-741a-4284-942a-62b2d576b014
-        subscriptionId: c8c63a23-f7fd-413a-a8be-4a692c4c7e62
-        productName: Shotgun
-        planName: shotgun-monthly
-        phaseName: shotgun-monthly-trial
-        usageName: null
-        prettyProductName: Shotgun
-        prettyPlanName: Shotgun Monthly
-        prettyPhaseName: shotgun-monthly-trial
-        prettyUsageName: null
-        itemType: FIXED
-        description: shotgun-monthly-trial
-        startDate: 2012-04-25
-        endDate: null
-        amount: 0.00
-        rate: null
-        currency: USD
-        quantity: null
-        itemDetails: null
-        childItems: null
-        auditLogs: []
-    }]
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-{
-   "amount":7.0,
-   "currency":"USD",
-   "status":"COMMITTED",
-   "creditAdj":0.0,
-   "refundAdj":0.0,
-   "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-   "invoiceDate":"2013-08-01",
-   "targetDate":"2013-08-01",
-   "invoiceNumber":"1913",
-   "balance":0.0,
-   "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-   "items":[
-      {
-         "invoiceItemId":"f641ce8a-a874-4e98-ada5-2bd8fdb74945",
-         "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-         "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-         "itemType":"EXTERNAL_CHARGE",
-         "description":"My first charge",
-         "startDate":"2013-08-01",
-         "amount":7.0,
-         "currency":"USD",
-         "auditLogs":[]
-      }
-   ],
-   "isParentInvoice":false,
-   "auditLogs":[]
-}
-```
-```python
-{'account_id': '4d5d7a84-e04e-41ea-80be-871c4eda3610',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 7, 13),
- 'invoice_id': 'f14b8e48-aadc-4a68-9d2c-b7e45758e156',
- 'invoice_number': '306',
- 'is_parent_invoice': False,
- 'items': [{'account_id': '4d5d7a84-e04e-41ea-80be-871c4eda3610',
-            'amount': 0.0,
-            'audit_logs': [],
-            'bundle_id': '25b289db-a0e8-4796-a1e3-6c87ee8fef44',
-            'child_account_id': None,
-            'child_items': None,
-            'currency': 'USD',
-            'description': 'standard-monthly-trial',
-            'end_date': None,
-            'invoice_id': 'f14b8e48-aadc-4a68-9d2c-b7e45758e156',
-            'invoice_item_id': '8fae6721-3ebc-4103-85f5-aa13dde0e4f5',
-            'item_details': None,
-            'item_type': 'FIXED',
-            'linked_invoice_item_id': None,
-            'phase_name': 'standard-monthly-trial',
-            'plan_name': 'standard-monthly',
-            'pretty_phase_name': 'standard-monthly-trial',
-            'pretty_plan_name': 'standard-monthly',
-            'pretty_product_name': 'Standard',
-            'pretty_usage_name': None,
-            'product_name': 'Standard',
-            'quantity': None,
-            'rate': None,
-            'start_date': datetime.date(2018, 7, 13),
-            'subscription_id': 'fec6602d-3d11-4039-b09e-86fd488c7082',
-            'usage_name': None}],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 7, 13)}                                                                                                                                                                                                                                                                                                        
-```
 
 **Query Parameters**
 
@@ -1402,10 +845,6 @@ Audit information options are "NONE", "MINIMAL" (only inserts), or "FULL".
 **Response**
 
 If successful, returns a status code of 200 and an invoice resource object.
-
-
-
-
 
 ### Render an invoice as HTML
 
@@ -1449,11 +888,7 @@ invoiceApi.get_invoice_as_html(invoice_id, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: text/html
-
+```
 <html>
     <head>
         <style type="text/css">
@@ -1557,297 +992,6 @@ invoiceApi.get_invoice_as_html(invoice_id, api_key, api_secret)
     </body>
 </html>
 ```
-```java
-<html>
-    <head>
-        <style type="text/css">
-            th {align=left; width=225px; border-bottom: solid 2px black;}
-        </style>
-    </head>
-    <body>
-        <h1>invoiceTitle</h1>
-        <table>
-            <tr>
-                <td rowspan=3 width=350px>Insert image here</td>
-                <td width=100px/>
-                <td width=225px/>
-                <td width=225px/>
-            </tr>
-            <tr>
-                <td />
-                <td align=right>invoiceDate</td>
-                <td>25 avr. 2012</td>
-            </tr>
-            <tr>
-                <td />
-                <td align=right>invoiceNumber</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>companyName</td>
-                <td></td>
-                <td align=right>accountOwnerName</td>
-                <td>74c97b13-f1dc-4307-b324-885795bad326</td>
-            </tr>
-            <tr>
-                <td>companyAddress</td>
-                <td />
-                <td />
-                <td>64549@d1fb9</td>
-            </tr>
-            <tr>
-                <td>companyCityProvincePostalCode</td>
-                <td />
-                <td />
-                <td>81 53 26 56</td>
-            </tr>
-            <tr>
-                <td>companyCountry</td>
-                <td />
-                <td />
-                <td />
-            </tr>
-            <tr>
-                <td><companyUrl</td>
-                <td />
-                <td />
-                <td />
-            </tr>
-        </table>
-        <br />
-        <br />
-        <br />
-        <table>
-            <tr>
-                <th>invoiceItemBundleName</td>
-                <th>invoiceItemDescription</td>
-                <th>invoiceItemServicePeriod</td>
-                <th>invoiceItemAmount</td>
-            </tr>
-            
-            <tr>
-                <td>shotgun-monthly-trial</td>
-                <td>Monthly shotgun plan</td>
-                <td>25 avr. 2012</td>
-                <td>USD 0.00</td>
-            </tr>
-            
-            <tr>
-                <td colspan=4 />
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceAmount</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceAmountPaid</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceBalance</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-        </table>
-    </body>
-</html>
-```
-```ruby
-<html>
-    <head>
-        <style type="text/css">
-            th {align=left; width=225px; border-bottom: solid 2px black;}
-        </style>
-    </head>
-    <body>
-        <h1>invoiceTitle</h1>
-        <table>
-            <tr>
-                <td rowspan=3 width=350px>Insert image here</td>
-                <td width=100px/>
-                <td width=225px/>
-                <td width=225px/>
-            </tr>
-            <tr>
-                <td />
-                <td align=right>invoiceDate</td>
-                <td>1 août 2013</td>
-            </tr>
-            <tr>
-                <td />
-                <td align=right>invoiceNumber</td>
-                <td>2038</td>
-            </tr>
-            <tr>
-                <td>companyName</td>
-                <td></td>
-                <td align=right>accountOwnerName</td>
-                <td>KillBillClient</td>
-            </tr>
-            <tr>
-                <td>companyAddress</td>
-                <td />
-                <td />
-                <td>kill@bill.com</td>
-            </tr>
-            <tr>
-                <td>companyCityProvincePostalCode</td>
-                <td />
-                <td />
-                <td></td>
-            </tr>
-            <tr>
-                <td>companyCountry</td>
-                <td />
-                <td />
-                <td />
-            </tr>
-            <tr>
-                <td><companyUrl</td>
-                <td />
-                <td />
-                <td />
-            </tr>
-        </table>
-        <br />
-        <br />
-        <br />
-        <table>
-            <tr>
-                <th>invoiceItemBundleName</td>
-                <th>invoiceItemDescription</td>
-                <th>invoiceItemServicePeriod</td>
-                <th>invoiceItemAmount</td>
-            </tr>
-            
-            <tr>
-                <td>My charge</td>
-                <td></td>
-                <td>1 août 2013</td>
-                <td>USD 50.00</td>
-            </tr>
-            
-            <tr>
-                <td colspan=4 />
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceAmount</strong></td>
-                <td align=right><strong>50.00</strong></td>
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceAmountPaid</strong></td>
-                <td align=right><strong>50.00</strong></td>
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceBalance</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-        </table>
-    </body>
-</html>
-```
-```python
-<html>
-    <head>
-        <style type="text/css">
-            th {align=left; width=225px; border-bottom: solid 2px black;}
-        </style>
-    </head>
-    <body>
-        <h1>invoiceTitle</h1>
-        <table>
-            <tr>
-                <td rowspan=3 width=350px>Insert image here</td>
-                <td width=100px/>
-                <td width=225px/>
-                <td width=225px/>
-            </tr>
-            <tr>
-                <td />
-                <td align=right>invoiceDate</td>
-                <td>May 10, 2018</td>
-            </tr>
-            <tr>
-                <td />
-                <td align=right>invoiceNumber</td>
-                <td>974</td>
-            </tr>
-            <tr>
-                <td>companyName</td>
-                <td></td>
-                <td align=right>accountOwnerName</td>
-                <td>John</td>
-            </tr>
-            <tr>
-                <td>companyAddress</td>
-                <td />
-                <td />
-                <td></td>
-            </tr>
-            <tr>
-                <td>companyCityProvincePostalCode</td>
-                <td />
-                <td />
-                <td></td>
-            </tr>
-            <tr>
-                <td>companyCountry</td>
-                <td />
-                <td />
-                <td />
-            </tr>
-            <tr>
-                <td><companyUrl</td>
-                <td />
-                <td />
-                <td />
-            </tr>
-        </table>
-        <br />
-        <br />
-        <br />
-        <table>
-            <tr>
-                <th>invoiceItemBundleName</td>
-                <th>invoiceItemDescription</td>
-                <th>invoiceItemServicePeriod</td>
-                <th>invoiceItemAmount</td>
-            </tr>
-            
-            <tr>
-                <td>standard-monthly-trial</td>
-                <td>standard-monthly</td>
-                <td>May 10, 2018</td>
-                <td>USD 0.00</td>
-            </tr>
-            
-            <tr>
-                <td colspan=4 />
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceAmount</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceAmountPaid</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-            <tr>
-                <td colspan=2 />
-                <td align=right><strong>invoiceBalance</strong></td>
-                <td align=right><strong>0.00</strong></td>
-            </tr>
-        </table>
-    </body>
-</html>
-```
 
 **Query Parameters**
 
@@ -1912,18 +1056,7 @@ invoiceApi.commit_invoice(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -1989,18 +1122,7 @@ invoiceApi.void_invoice(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -2096,37 +1218,7 @@ invoiceApi.adjust_invoice_item(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/903e55d3-8072-47f1-80fc-32857dbdbcc5
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@7ae5a94f
-    amount: 224.95
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 4be08988-35a1-4fce-bebc-699af2a95b18
-    invoiceDate: 2012-09-25
-    targetDate: 2012-09-24
-    invoiceNumber: 2
-    balance: 224.95
-    accountId: 53805dbc-720a-4eaf-9072-ade723ee860f
-    bundleKeys: null
-    credits: null
-    items: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
+```json
 {
    "amount":400.0,
    "currency":"USD",
@@ -2143,9 +1235,6 @@ class Invoice {
    "isParentInvoice":false,
    "auditLogs":[]
 }
-```
-```python
-no content
 ```
 
 **Request Body**
@@ -2229,18 +1318,7 @@ invoiceApi.delete_cba(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java 
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -2417,10 +1495,7 @@ invoiceApi.generate_dry_run_invoice(body,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Content-Type: application/json
+```json
 {
   "amount": 60,
   "currency": "USD",
@@ -2501,132 +1576,6 @@ invoiceApi.generate_dry_run_invoice(body,
   "parentAccountId": null,
   "auditLogs": []
 }
-```
-```java
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@2e7ac6ec
-    amount: 0.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: ef25cb16-08ef-4945-a875-c6ffa3c1fd77
-    invoiceDate: 2012-04-25
-    targetDate: 2012-04-25
-    invoiceNumber: null
-    balance: 0.00
-    accountId: fe1a6f86-9ec5-4ac3-8d39-15f024cc8339
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@8be409a8
-        invoiceItemId: 514a2e5c-b3d4-4d67-8825-f56968b84493
-        invoiceId: ef25cb16-08ef-4945-a875-c6ffa3c1fd77
-        linkedInvoiceItemId: null
-        accountId: fe1a6f86-9ec5-4ac3-8d39-15f024cc8339
-        childAccountId: null
-        bundleId: ca41fb1a-e8ff-4adc-a481-96510d9726b0
-        subscriptionId: 3e8f647c-2e8c-4256-9afd-86dd640486d8
-        productName: Assault-Rifle
-        planName: assault-rifle-annual
-        phaseName: assault-rifle-annual-trial
-        usageName: null
-        prettyProductName: null
-        prettyPlanName: null
-        prettyPhaseName: null
-        prettyUsageName: null
-        itemType: FIXED
-        description: assault-rifle-annual-trial
-        startDate: 2012-04-25
-        endDate: null
-        amount: 0.00
-        rate: null
-        currency: USD
-        quantity: null
-        itemDetails: null
-        childItems: null
-        auditLogs: []
-    }]
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-{
-   "amount":500.0,
-   "currency":"USD",
-   "status":"COMMITTED",
-   "creditAdj":0.0,
-   "refundAdj":0.0,
-   "invoiceId":"8c62095e-898d-444e-a05b-a498f8bd9d1b",
-   "invoiceDate":"2013-08-01",
-   "targetDate":"2013-08-31",
-   "balance":500.0,
-   "accountId":"5527abbc-d83d-447f-bf3d-ab9542ea631e",
-   "items":[
-      {
-         "invoiceItemId":"a45f76a2-7775-4053-bd7c-50a7542e52d3",
-         "invoiceId":"8c62095e-898d-444e-a05b-a498f8bd9d1b",
-         "accountId":"5527abbc-d83d-447f-bf3d-ab9542ea631e",
-         "bundleId":"8e26532b-e5c0-4d4a-b2f0-2eeec8668ada",
-         "subscriptionId":"466e26d9-6e44-4afb-9c2f-2b93a4f52329",
-         "planName":"sports-monthly",
-         "phaseName":"sports-monthly-evergreen",
-         "itemType":"RECURRING",
-         "description":"sports-monthly-evergreen",
-         "startDate":"2013-08-31",
-         "endDate":"2013-09-30",
-         "amount":500.0,
-         "currency":"USD"
-      }
-   ],
-   "isParentInvoice":false
-}
-```
-```python
-{'account_id': '00e87495-92dc-4640-8490-e2c794748151',
- 'amount': 100.0,
- 'audit_logs': [],
- 'balance': 100.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': 'a1c2ab02-d5d8-450d-bb7c-e8f169018570',
- 'invoice_number': None,
- 'is_parent_invoice': False,
- 'items': [{'account_id': '00e87495-92dc-4640-8490-e2c794748151',
-            'amount': 100.0,
-            'audit_logs': [],
-            'bundle_id': '3c02be83-3c2d-4f5a-827e-edfe85266d54',
-            'child_account_id': None,
-            'child_items': None,
-            'currency': 'USD',
-            'description': 'standard-monthly-evergreen',
-            'end_date': datetime.date(2018, 8, 9),
-            'invoice_id': 'a1c2ab02-d5d8-450d-bb7c-e8f169018570',
-            'invoice_item_id': 'fe1ec859-dbb9-4851-a030-709a32672bca',
-            'item_details': None,
-            'item_type': 'RECURRING',
-            'linked_invoice_item_id': None,
-            'phase_name': 'standard-monthly-evergreen',
-            'plan_name': 'standard-monthly',
-            'pretty_phase_name': None,
-            'pretty_plan_name': None,
-            'pretty_usage_name': None,
-            'quantity': None,
-            'rate': 100.0,
-            'start_date': datetime.date(2018, 7, 9),
-            'subscription_id': '99e4caa5-d5da-4243-8c91-a38c5cd29632',
-            'usage_name': None}],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 7, 9)}
 ```
 
 **Request Body**
@@ -2711,123 +1660,10 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201
-< Content-Type: application/json
-< Content-Length: 0
-< Location: http://127.0.0.1:8080/1.0/kb/invoices/60f5af97-9457-4b53-9eec-aec1de96a66f/group
+```json
+no content
 ```
 
-```java
-[class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@13e92424
-    amount: 30.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: f5ecf703-10b9-4019-8044-8db1163bef56
-    invoiceDate: 2023-02-16
-    targetDate: 2023-08-16
-    invoiceNumber: 428
-    balance: 30.00
-    accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@251cd54e
-        invoiceItemId: faf4f9a3-943b-42c4-9705-1365cfd91cc7
-        invoiceId: f5ecf703-10b9-4019-8044-8db1163bef56
-        linkedInvoiceItemId: null
-        accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-        childAccountId: null
-        bundleId: 30a3a9bf-3fc7-4334-ac2e-064cdd99c9dc
-        subscriptionId: 5c463a1a-e884-4177-aa2c-cb09aa45e39b
-        productName: Standard
-        planName: standard-monthly
-        phaseName: standard-monthly-evergreen
-        usageName: null
-        prettyProductName: Standard
-        prettyPlanName: standard-monthly
-        prettyPhaseName: standard-monthly-evergreen
-        prettyUsageName: null
-        itemType: RECURRING
-        description: standard-monthly-evergreen
-        startDate: 2023-08-16
-        endDate: 2023-09-16
-        amount: 30.00
-        rate: 30.000000000
-        currency: USD
-        quantity: null
-        itemDetails: null
-        catalogEffectiveDate: 2020-01-01T00:00:00.000Z
-        childItems: null
-        auditLogs: []
-    }]
-    trackingIds: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}, class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@ebbaa6cb
-    amount: 30.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: b2f575d9-9bb8-4b5a-8595-da001381fd13
-    invoiceDate: 2023-02-16
-    targetDate: 2023-08-16
-    invoiceNumber: 429
-    balance: 30.00
-    accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@16742d15
-        invoiceItemId: 42376d22-4b19-4a79-816b-b4896f9e8f48
-        invoiceId: b2f575d9-9bb8-4b5a-8595-da001381fd13
-        linkedInvoiceItemId: null
-        accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-        childAccountId: null
-        bundleId: c176641f-2b6e-4bcf-8264-bfa120bcb337
-        subscriptionId: d424e7d9-e81a-45c7-9e84-77316bfe0c80
-        productName: Standard
-        planName: standard-monthly
-        phaseName: standard-monthly-evergreen
-        usageName: null
-        prettyProductName: Standard
-        prettyPlanName: standard-monthly
-        prettyPhaseName: standard-monthly-evergreen
-        prettyUsageName: null
-        itemType: RECURRING
-        description: standard-monthly-evergreen
-        startDate: 2023-08-16
-        endDate: 2023-09-16
-        amount: 30.00
-        rate: 30.000000000
-        currency: USD
-        quantity: null
-        itemDetails: null
-        catalogEffectiveDate: 2020-01-01T00:00:00.000Z
-        childItems: null
-        auditLogs: []
-    }]
-    trackingIds: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}]
-```
-```ruby
-TODO
-```
-```python
-TODO
-```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -2879,10 +1715,7 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
+```json
 [
   {
     "amount": 30,
@@ -2988,115 +1821,6 @@ TODO
   }
 ]
 ```
-```java
-[class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@13e92424
-    amount: 30.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: f5ecf703-10b9-4019-8044-8db1163bef56
-    invoiceDate: 2023-02-16
-    targetDate: 2023-08-16
-    invoiceNumber: 428
-    balance: 30.00
-    accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@251cd54e
-        invoiceItemId: faf4f9a3-943b-42c4-9705-1365cfd91cc7
-        invoiceId: f5ecf703-10b9-4019-8044-8db1163bef56
-        linkedInvoiceItemId: null
-        accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-        childAccountId: null
-        bundleId: 30a3a9bf-3fc7-4334-ac2e-064cdd99c9dc
-        subscriptionId: 5c463a1a-e884-4177-aa2c-cb09aa45e39b
-        productName: Standard
-        planName: standard-monthly
-        phaseName: standard-monthly-evergreen
-        usageName: null
-        prettyProductName: Standard
-        prettyPlanName: standard-monthly
-        prettyPhaseName: standard-monthly-evergreen
-        prettyUsageName: null
-        itemType: RECURRING
-        description: standard-monthly-evergreen
-        startDate: 2023-08-16
-        endDate: 2023-09-16
-        amount: 30.00
-        rate: 30.000000000
-        currency: USD
-        quantity: null
-        itemDetails: null
-        catalogEffectiveDate: 2020-01-01T00:00:00.000Z
-        childItems: null
-        auditLogs: []
-    }]
-    trackingIds: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}, class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@ebbaa6cb
-    amount: 30.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: b2f575d9-9bb8-4b5a-8595-da001381fd13
-    invoiceDate: 2023-02-16
-    targetDate: 2023-08-16
-    invoiceNumber: 429
-    balance: 30.00
-    accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-    bundleKeys: null
-    credits: null
-    items: [class InvoiceItem {
-        org.killbill.billing.client.model.gen.InvoiceItem@16742d15
-        invoiceItemId: 42376d22-4b19-4a79-816b-b4896f9e8f48
-        invoiceId: b2f575d9-9bb8-4b5a-8595-da001381fd13
-        linkedInvoiceItemId: null
-        accountId: 62dfaf14-34c6-4756-8411-89c93b1cfba3
-        childAccountId: null
-        bundleId: c176641f-2b6e-4bcf-8264-bfa120bcb337
-        subscriptionId: d424e7d9-e81a-45c7-9e84-77316bfe0c80
-        productName: Standard
-        planName: standard-monthly
-        phaseName: standard-monthly-evergreen
-        usageName: null
-        prettyProductName: Standard
-        prettyPlanName: standard-monthly
-        prettyPhaseName: standard-monthly-evergreen
-        prettyUsageName: null
-        itemType: RECURRING
-        description: standard-monthly-evergreen
-        startDate: 2023-08-16
-        endDate: 2023-09-16
-        amount: 30.00
-        rate: 30.000000000
-        currency: USD
-        quantity: null
-        itemDetails: null
-        catalogEffectiveDate: 2020-01-01T00:00:00.000Z
-        childItems: null
-        auditLogs: []
-    }]
-    trackingIds: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}]
-```
-```ruby
-TODO
-```
-```python
-TODO
-```
 
 **Query Parameters**
 
@@ -3194,56 +1918,10 @@ invoiceApi.create_instant_payment(invoice_id,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 No Content
-< Content-Type: application/json
-```
-```java
-class InvoicePayment {
-    org.killbill.billing.client.model.gen.InvoicePayment@abf605f2
-    targetInvoiceId: 4defec0a-3ecb-4d6f-9b97-c3842734d95f
-    accountId: 14eadca7-dc35-4bbf-bb2b-fabad9bfebcf
-    paymentId: 67547a02-2d82-4f39-bff5-ecd1c8a43749
-    paymentNumber: 1
-    paymentExternalKey: 67547a02-2d82-4f39-bff5-ecd1c8a43749
-    authAmount: 0
-    capturedAmount: 0
-    purchasedAmount: 10.00
-    refundedAmount: 0
-    creditedAmount: 0
-    currency: USD
-    paymentMethodId: a6655592-994e-4975-888e-c86bda52f2b4
-    transactions: [class PaymentTransaction {
-        org.killbill.billing.client.model.gen.PaymentTransaction@2452e8fa
-        transactionId: ce51186f-c908-41a3-8ba8-bff57806891f
-        transactionExternalKey: ce51186f-c908-41a3-8ba8-bff57806891f
-        paymentId: 67547a02-2d82-4f39-bff5-ecd1c8a43749
-        paymentExternalKey: 67547a02-2d82-4f39-bff5-ecd1c8a43749
-        transactionType: PURCHASE
-        amount: 10.00
-        currency: USD
-        effectiveDate: 2012-09-25T00:00:08.000Z
-        processedAmount: 10.00
-        processedCurrency: USD
-        status: SUCCESS
-        gatewayErrorCode: null
-        gatewayErrorMsg: null
-        firstPaymentReferenceId: null
-        secondPaymentReferenceId: null
-        properties: null
-        auditLogs: []
-    }]
-    paymentAttempts: null
-    auditLogs: []
-}
-```
-```ruby
+```json
 no content
 ```
-```python
-no content
-```
+
 **Request Body**
 
 An invoicePayment resource object, with at least the following attributes: accountId, and purchasedAmount.
@@ -3305,11 +1983,7 @@ invoiceApi.get_payments_for_invoice(invoice_id, api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "targetInvoiceId": "903e55d3-8072-47f1-80fc-32857dbdbcc5",
   "accountId": "8b66b9f9-bfb4-463a-86c7-e267128a294a",
@@ -3347,119 +2021,6 @@ invoiceApi.get_payments_for_invoice(invoice_id, api_key, api_secret)
   "paymentAttempts": null,
   "auditLogs": []
 }
-```
-```java
-class InvoicePayment {
-    org.killbill.billing.client.model.gen.InvoicePayment@c52fce27
-    targetInvoiceId: ca09d09a-59b2-4ada-8c15-597c9efde46c
-    accountId: e4ba4753-8627-4490-8cda-e225701b8ea9
-    paymentId: c65bf687-6bae-4af3-b356-113594a9d794
-    paymentNumber: 1
-    paymentExternalKey: c65bf687-6bae-4af3-b356-113594a9d794
-    authAmount: 0
-    capturedAmount: 0
-    purchasedAmount: 0
-    refundedAmount: 0
-    creditedAmount: 0
-    currency: USD
-    paymentMethodId: 00e485a5-4ee9-47d2-8108-47697c07b17c
-    transactions: [class PaymentTransaction {
-        org.killbill.billing.client.model.gen.PaymentTransaction@ab8c2dc0
-        transactionId: 92ba850a-615b-4435-bdc1-f1abf507fa26
-        transactionExternalKey: 92ba850a-615b-4435-bdc1-f1abf507fa26
-        paymentId: c65bf687-6bae-4af3-b356-113594a9d794
-        paymentExternalKey: c65bf687-6bae-4af3-b356-113594a9d794
-        transactionType: PURCHASE
-        amount: 249.95
-        currency: USD
-        effectiveDate: 2012-09-26T00:00:06.000Z
-        processedAmount: 0.00
-        processedCurrency: USD
-        status: PAYMENT_FAILURE
-        gatewayErrorCode: gatewayErrorCode
-        gatewayErrorMsg: gatewayError
-        firstPaymentReferenceId: null
-        secondPaymentReferenceId: null
-        properties: null
-        auditLogs: []
-    }]
-    paymentAttempts: [class PaymentAttempt {
-        org.killbill.billing.client.model.gen.PaymentAttempt@811fb24d
-        accountId: e4ba4753-8627-4490-8cda-e225701b8ea9
-        paymentMethodId: 00e485a5-4ee9-47d2-8108-47697c07b17c
-        paymentExternalKey: c65bf687-6bae-4af3-b356-113594a9d794
-        transactionId: 92ba850a-615b-4435-bdc1-f1abf507fa26
-        transactionExternalKey: 92ba850a-615b-4435-bdc1-f1abf507fa26
-        transactionType: PURCHASE
-        effectiveDate: 2012-09-26T00:00:06.000Z
-        stateName: RETRIED
-        amount: null
-        currency: USD
-        pluginName: __INVOICE_PAYMENT_CONTROL_PLUGIN__
-        pluginProperties: [class PluginProperty {
-            key: IPCD_INVOICE_ID
-            value: ca09d09a-59b2-4ada-8c15-597c9efde46c
-            isUpdatable: false
-        }]
-        auditLogs: []
-    }, class PaymentAttempt {
-        org.killbill.billing.client.model.gen.PaymentAttempt@37ee17f0
-        accountId: e4ba4753-8627-4490-8cda-e225701b8ea9
-        paymentMethodId: 00e485a5-4ee9-47d2-8108-47697c07b17c
-        paymentExternalKey: c65bf687-6bae-4af3-b356-113594a9d794
-        transactionId: null
-        transactionExternalKey: 92ba850a-615b-4435-bdc1-f1abf507fa26
-        transactionType: PURCHASE
-        effectiveDate: 2012-10-04T00:00:06.000Z
-        stateName: SCHEDULED
-        amount: null
-        currency: USD
-        pluginName: __INVOICE_PAYMENT_CONTROL_PLUGIN__
-        pluginProperties: [class PluginProperty {
-            key: IPCD_INVOICE_ID
-            value: ca09d09a-59b2-4ada-8c15-597c9efde46c
-            isUpdatable: false
-        }]
-        auditLogs: []
-    }]
-    auditLogs: []
-}
-```
-```ruby
-TODO
-```
-```python
-{'account_id': '8a758318-25fb-46e1-a385-a8f8354ec903',
- 'audit_logs': [],
- 'auth_amount': 0.0,
- 'captured_amount': 0.0,
- 'credited_amount': 0.0,
- 'currency': 'USD',
- 'payment_attempts': None,
- 'payment_external_key': '5e9d8b82-2664-4a36-85a1-37471a0b618a',
- 'payment_id': '5e9d8b82-2664-4a36-85a1-37471a0b618a',
- 'payment_method_id': 'eb737a51-d230-46fe-ad95-8ddf0b8effe3',
- 'payment_number': '337',
- 'purchased_amount': 50.0,
- 'refunded_amount': 0.0,
- 'target_invoice_id': '8291871e-b16e-45e6-a971-577d44727327',
- 'transactions': [{'amount': 50.0,
-                   'audit_logs': [],
-                   'currency': 'USD',
-                   'effective_date': datetime.datetime(2018, 5, 9, 14, 27, 9, tzinfo=tzutc()),
-                   'first_payment_reference_id': None,
-                   'gateway_error_code': None,
-                   'gateway_error_msg': None,
-                   'payment_external_key': '5e9d8b82-2664-4a36-85a1-37471a0b618a',
-                   'payment_id': '5e9d8b82-2664-4a36-85a1-37471a0b618a',
-                   'processed_amount': 50.0,
-                   'processed_currency': 'USD',
-                   'properties': None,
-                   'second_payment_reference_id': None,
-                   'status': 'SUCCESS',
-                   'transaction_external_key': '70a36a47-878e-4fd8-8401-1ab2f4403d41',
-                   'transaction_id': '70a36a47-878e-4fd8-8401-1ab2f4403d41',
-                   'transaction_type': 'PURCHASE'}]}
 ```
 
 **Query Parameters**
@@ -3552,39 +2113,17 @@ invoiceApi.create_invoice_custom_fields(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/customFields
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-//First element of the list
-class CustomField {
-    org.killbill.billing.client.model.gen.CustomField@c7d0c38a
-    customFieldId: null
-    objectId: 59860a0d-c032-456d-a35e-3a48fe8579e5
-    objectType: INVOICE
-    name: Test Custom Field
-    value: test_value
-    auditLogs: []
-}
-```
-```ruby
+```json
 [
-   {
+    {
       "customFieldId":"7fb3dde7-0911-4477-99e3-69d142509bb9",
       "objectId":"4927c1a2-3959-4f71-98e7-ce3ba19c92ac",
       "objectType":"INVOICE",
       "name":"Test Custom Field",
       "value":"test_value",
       "auditLogs":[]
-   }
+    }
 ]
-```
-```python
-no content
 ```
 
 **Request Body**
@@ -3647,11 +2186,7 @@ invoiceApi.get_invoice_custom_fields(invoice_id, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "customFieldId": "349de10f-4bb1-4e1a-93f6-11b745200bf5",
@@ -3663,40 +2198,6 @@ invoiceApi.get_invoice_custom_fields(invoice_id, api_key, api_secret)
   }
 ]
 ```
-```java
-//First element of the list
-class CustomField {
-    org.killbill.billing.client.model.gen.CustomField@c7d0c38a
-    customFieldId: null
-    objectId: 59860a0d-c032-456d-a35e-3a48fe8579e5
-    objectType: INVOICE
-    name: Test Custom Field
-    value: test_value
-    auditLogs: []
-}
-```
-```ruby
-[
-   {
-      "customFieldId":"7fb3dde7-0911-4477-99e3-69d142509bb9",
-      "objectId":"4927c1a2-3959-4f71-98e7-ce3ba19c92ac",
-      "objectType":"INVOICE",
-      "name":"Test Custom Field",
-      "value":"test_value",
-      "auditLogs":[]
-   }
-]
-```
-
-```python
-[{'audit_logs': [],
- 'custom_field_id': '5670b594-9317-4aeb-bfef-2c2342ec172a',
- 'name': 'Test Custom Field',
- 'object_id': '4927c1a2-3959-4f71-98e7-ce3ba19c92ac',
- 'object_type': 'INVOICE',
- 'value': 'test_value'}]
-```
-
 
 **Query Parameters**
 
@@ -3783,18 +2284,7 @@ invoiceApi.modify_invoice_custom_fields(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -3874,21 +2364,7 @@ invoiceApi.delete_invoice_custom_fields(invoice_id,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-
-```java
-no content
-```
-
-```ruby
-no content
-```
-
-```python
+```json
 no content
 ```
 
@@ -3973,26 +2449,7 @@ invoiceApi.create_invoice_tags(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/tags
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-//First element of the list
-class Tag {
-    org.killbill.billing.client.model.gen.Tag@bd138472
-    tagId: 1bb4b638-3886-4f73-90a5-89eb6d1bcf7f
-    objectType: INVOICE
-    objectId: 45d6f4c5-21be-49b1-99c5-7b0c3c985bf0
-    tagDefinitionId: 00000000-0000-0000-0000-000000000004
-    tagDefinitionName: WRITTEN_OFF
-    auditLogs: []
-}
-```
-```ruby
+```json
 [
    {
       "tagId":"a46cfeb6-e175-42db-be62-7f117326ab4e",
@@ -4000,15 +2457,9 @@ class Tag {
       "objectId":"28af3cb9-275b-4ac4-a55d-a0536e479069",
       "tagDefinitionId":"00000000-0000-0000-0000-000000000004",
       "tagDefinitionName":"WRITTEN_OFF",
-      "auditLogs":[
-
-      ]
+      "auditLogs":[]
    }
 ]
-```
-
-```python
-no content
 ```
 
 **Request Body**
@@ -4075,11 +2526,7 @@ invoiceApi.get_invoice_tags(invoice_id, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "tagId": "e054c84a-0518-4611-92a8-53e849f0affd",
@@ -4090,48 +2537,6 @@ invoiceApi.get_invoice_tags(invoice_id, api_key, api_secret)
     "auditLogs": []
   }
 ]
-```
-```java
-//First element of the list
-class Tag {
-    org.killbill.billing.client.model.gen.Tag@cae768d7
-    tagId: d724f79d-fad1-4758-b35e-d62708450d90
-    objectType: INVOICE
-    objectId: e659f0f3-745c-46d5-953c-28fe9282fc7d
-    tagDefinitionId: 00000000-0000-0000-0000-000000000001
-    tagDefinitionName: AUTO_PAY_OFF
-    auditLogs: [class AuditLog {
-        changeType: INSERT
-        changeDate: 2012-08-25T00:00:02.000Z
-        objectType: TAG
-        objectId: d724f79d-fad1-4758-b35e-d62708450d90
-        changedBy: Toto
-        reasonCode: i am god
-        comments: no comment
-        userToken: e36f7ba5-fb5b-41c0-b47c-77c48ab37dd9
-        history: null
-    }]
-}
-```
-```ruby
-[
-   {
-      "tagId":"a46cfeb6-e175-42db-be62-7f117326ab4e",
-      "objectType":"INVOICE",
-      "objectId":"28af3cb9-275b-4ac4-a55d-a0536e479069",
-      "tagDefinitionId":"00000000-0000-0000-0000-000000000006",
-      "tagDefinitionName":"TEST",
-      "auditLogs":[]
-   }
-]
-```
-```python
-[{'audit_logs': [],
- 'object_id': '3e94fccf-0f37-40aa-90a4-122a4f381ebc',
- 'object_type': 'INVOICE',
- 'tag_definition_id': '00000000-0000-0000-0000-000000000002',
- 'tag_definition_name': 'AUTO_INVOICING_OFF',
- 'tag_id': 'fc7fab6e-751c-4dd3-b7fa-e93a66e42822'}]
 ```
 
 **Query Parameters**
@@ -4203,18 +2608,7 @@ invoiceApi.delete_invoice_tags(invoice_id,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: application/json
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -4295,22 +2689,10 @@ invoiceApi.upload_catalog_translation(locale,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/catalogTranslation/fr_FR/ 
-< Content-Type: text/plain
-< Content-Length: 0
-```
-```java 
-TODO
-```
-```ruby
-"sports-monthly = Voiture Sport"
-```
-```python
+```json
 no content
 ```
+
 **Request Body**
 
 A table of translation items. For example:
@@ -4372,22 +2754,11 @@ invoiceApi.get_catalog_translation(locale, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-< Content-Type: text/plain
-"sports-monthly = Voiture Sport"
+```json
+{
+    "sports-monthly = Voiture Sport"
+}
 ```
-```java
-"sports-monthly = Voiture Sport"
-```
-```ruby
-"sports-monthly = Voiture Sport"
-```
-```python
-sports-monthly = Voiture Sport
-```
-
 
 **Query Parameters**
 
@@ -4457,41 +2828,7 @@ invoiceApi.upload_invoice_translation(locale,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/translation/fr_FR/
-< Content-Type: text/plain
-< Content-Length: 0
-```
-```java 
-TODO
-```
-```ruby
-invoiceTitle=FACTURE
-invoiceDate=Date:
-invoiceNumber=Facture #
-invoiceAmount=XXXMontant à payer
-invoiceAmountPaid=XXXMontant payé
-invoiceBalance=Nouveau montant
-
-accountOwnerName=Chauffeur
-
-companyName=Killbill, Inc.
-companyAddress=P.O. Box 1234
-companyCityProvincePostalCode=Springfield
-companyCountry=USA
-companyUrl=http://killbilling.org
-
-invoiceItemBundleName=Armes
-invoiceItemDescription=Description
-invoiceItemServicePeriod=Periode de facturation
-invoiceItemAmount=Montant
-
-processedPaymentCurrency=(*) Le payment à été payé en
-processedPaymentRate=Le taux de conversion est
-```
-```python
+```json
 no content
 ```
 
@@ -4562,43 +2899,10 @@ invoiceApi.get_invoice_translation(locale, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: text/plain
-
-sports-monthly = Voiture Sport
-```
-```java 
-sports-monthly = Voiture Sport
-```
-```ruby
-invoiceTitle=FACTURE
-invoiceDate=Date:
-invoiceNumber=Facture #
-invoiceAmount=XXXMontant à payer
-invoiceAmountPaid=XXXMontant payé
-invoiceBalance=Nouveau montant
-
-accountOwnerName=Chauffeur
-
-companyName=Killbill, Inc.
-companyAddress=P.O. Box 1234
-companyCityProvincePostalCode=Springfield
-companyCountry=USA
-companyUrl=http://killbilling.org
-
-invoiceItemBundleName=Armes
-invoiceItemDescription=Description
-invoiceItemServicePeriod=Periode de facturation
-invoiceItemAmount=Montant
-
-processedPaymentCurrency=(*) Le payment à été payé en
-processedPaymentRate=Le taux de conversion est
-```
-```python
-sports-monthly = Voiture Sport
-```
+```json
+{
+    "sports-monthly" : "Voiture Sport"
+}
 
 **Query Parameters**
 
@@ -4670,16 +2974,6 @@ invoiceApi.upload_invoice_mp_template(body,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/manualPayTemplate/%7Blocale:.*%7D/ 
-< Content-Type: text/html
-< Content-Length: 0
-```
-```java 
-Some HTML String
-```
 ```ruby
 "
 <meta charset=\"UTF-8\">
@@ -4838,9 +3132,7 @@ Some HTML String
 </html>
 "
 ```
-```python
-no content
-```
+
 **Request Body**
 
 Contains a mustache manual pay template in HTML format.
@@ -4895,178 +3187,11 @@ invoiceApi.get_invoice_mp_template(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: text/html
-
-"Some_HTML_String"
-```
-```java 
-Some_HTML_String
-```
 ```ruby
 "
 <meta charset=\"UTF-8\">
 
 <html>
-       
-   <head>
-              
-      <style type=\"text/css\"> th {align=left; width=225px; border-bottom: solid 2px black;} </style>
-          
-   </head>
-       
-   <body>
-              
-      <h1>Tenant template: {{text.invoiceTitle}}</h1>
-              
-      <table>
-                     
-         <tr>
-                            
-            <td rowspan=3 width=350px>Insert image here</td>
-                            
-            <td width=100px/>                
-            <td width=225px/>                
-            <td width=225px/>            
-         </tr>
-                     
-         <tr>
-                            
-            <td />                
-            <td align=right>{{text.invoiceDate}}</td>
-                            
-            <td>{{invoice.formattedInvoiceDate}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td />                
-            <td align=right>{{text.invoiceNumber}}</td>
-                            
-            <td>{{invoice.invoiceNumber}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyName}}</td>
-                            
-            <td></td>
-                            
-            <td align=right>{{text.accountOwnerName}}</td>
-                            
-            <td>{{account.name}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyAddress}}</td>
-                            
-            <td />                
-            <td />                
-            <td>{{account.email}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyCityProvincePostalCode}}</td>
-                            
-            <td />                
-            <td />                
-            <td>{{account.phone}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyCountry}}</td>
-                            
-            <td />                
-            <td />                
-            <td />            
-         </tr>
-                     
-         <tr>
-                            
-            <td><{{text.companyUrl}}</td>
-                            
-            <td />                
-            <td />                
-            <td />            
-         </tr>
-                 
-      </table>
-              <br />        <br />        <br />        
-      <table>
-                     
-         <tr>
-                            
-            <th>{{text.invoiceItemBundleName}}</td>                
-            <th>{{text.invoiceItemDescription}}</td>                
-            <th>{{text.invoiceItemServicePeriod}}</td>                
-            <th>{{text.invoiceItemAmount}}</td>            
-         </tr>
-                     {{#invoice.invoiceItems}}            
-         <tr>
-                            
-            <td>{{description}}</td>
-                            
-            <td>{{planName}}</td>
-                            
-            <td>{{formattedStartDate}}{{#formattedEndDate}} - {{formattedEndDate}}{{/formattedEndDate}}</td>
-                            
-            <td>{{invoice.currency}} {{amount}}</td>
-                        
-         </tr>
-                     {{/invoice.invoiceItems}}            
-         <tr>
-                            
-            <td colspan=4 />            
-         </tr>
-                     
-         <tr>
-                            
-            <td colspan=2 />                
-            <td align=right><strong>{{text.invoiceAmount}}</strong></td>
-                            
-            <td align=right><strong>{{invoice.chargedAmount}}</strong></td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td colspan=2 />                
-            <td align=right><strong>{{text.invoiceAmountPaid}}</strong></td>
-                            
-            <td align=right><strong>{{invoice.paidAmount}}</strong></td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td colspan=2 />                
-            <td align=right><strong>{{text.invoiceBalance}}</strong></td>
-                            
-            <td align=right><strong>{{invoice.balance}}</strong></td>
-                        
-         </tr>
-                 
-      </table>
-          
-   </body>
-   
-</html>
-"
-```
-```python
-"<meta charset=\"UTF-8\">
-
- <html>
        
    <head>
               
@@ -5287,16 +3412,6 @@ invoiceApi.upload_invoice_template(body,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/invoices/template
-< Content-Type: text/html
-< Content-Length: 0
-```
-```java
-Some HTML String
-```
 ```ruby
 "
 <meta charset=\"UTF-8\">
@@ -5454,9 +3569,6 @@ Some HTML String
    
 </html>
 "
-```
-```python
-no content
 ```
 
 **Request Body**
@@ -5513,178 +3625,11 @@ invoiceApi.get_invoice_template(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: text/html
-
-Some_HTML_String
-```
-```java 
-Some_HTML_String
-```
 ```ruby
 "
 <meta charset=\"UTF-8\">
 
 <html>
-       
-   <head>
-              
-      <style type=\"text/css\"> th {align=left; width=225px; border-bottom: solid 2px black;} </style>
-          
-   </head>
-       
-   <body>
-              
-      <h1>Tenant template: {{text.invoiceTitle}}</h1>
-              
-      <table>
-                     
-         <tr>
-                            
-            <td rowspan=3 width=350px>Insert image here</td>
-                            
-            <td width=100px/>                
-            <td width=225px/>                
-            <td width=225px/>            
-         </tr>
-                     
-         <tr>
-                            
-            <td />                
-            <td align=right>{{text.invoiceDate}}</td>
-                            
-            <td>{{invoice.formattedInvoiceDate}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td />                
-            <td align=right>{{text.invoiceNumber}}</td>
-                            
-            <td>{{invoice.invoiceNumber}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyName}}</td>
-                            
-            <td></td>
-                            
-            <td align=right>{{text.accountOwnerName}}</td>
-                            
-            <td>{{account.name}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyAddress}}</td>
-                            
-            <td />                
-            <td />                
-            <td>{{account.email}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyCityProvincePostalCode}}</td>
-                            
-            <td />                
-            <td />                
-            <td>{{account.phone}}</td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td>{{text.companyCountry}}</td>
-                            
-            <td />                
-            <td />                
-            <td />            
-         </tr>
-                     
-         <tr>
-                            
-            <td><{{text.companyUrl}}</td>
-                            
-            <td />                
-            <td />                
-            <td />            
-         </tr>
-                 
-      </table>
-              <br />        <br />        <br />        
-      <table>
-                     
-         <tr>
-                            
-            <th>{{text.invoiceItemBundleName}}</td>                
-            <th>{{text.invoiceItemDescription}}</td>                
-            <th>{{text.invoiceItemServicePeriod}}</td>                
-            <th>{{text.invoiceItemAmount}}</td>            
-         </tr>
-                     {{#invoice.invoiceItems}}            
-         <tr>
-                            
-            <td>{{description}}</td>
-                            
-            <td>{{planName}}</td>
-                            
-            <td>{{formattedStartDate}}{{#formattedEndDate}} - {{formattedEndDate}}{{/formattedEndDate}}</td>
-                            
-            <td>{{invoice.currency}} {{amount}}</td>
-                        
-         </tr>
-                     {{/invoice.invoiceItems}}            
-         <tr>
-                            
-            <td colspan=4 />            
-         </tr>
-                     
-         <tr>
-                            
-            <td colspan=2 />                
-            <td align=right><strong>{{text.invoiceAmount}}</strong></td>
-                            
-            <td align=right><strong>{{invoice.chargedAmount}}</strong></td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td colspan=2 />                
-            <td align=right><strong>{{text.invoiceAmountPaid}}</strong></td>
-                            
-            <td align=right><strong>{{invoice.paidAmount}}</strong></td>
-                        
-         </tr>
-                     
-         <tr>
-                            
-            <td colspan=2 />                
-            <td align=right><strong>{{text.invoiceBalance}}</strong></td>
-                            
-            <td align=right><strong>{{invoice.balance}}</strong></td>
-                        
-         </tr>
-                 
-      </table>
-          
-   </body>
-   
-</html>
-"
-```
-```python
-"<meta charset=\"UTF-8\">
-
- <html>
        
    <head>
               
@@ -5842,8 +3787,6 @@ Some_HTML_String
 **Query Parameters**
 
 None.
-
-
 
 **Response**
 
@@ -5906,11 +3849,7 @@ AuditLogs logs = invoiceApi.getInvoiceAuditLogsWithHistory(invoiceId, requestOpt
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
@@ -5946,21 +3885,6 @@ AuditLogs logs = invoiceApi.getInvoiceAuditLogsWithHistory(invoiceId, requestOpt
     }
   }
 ]
-
-```
-
-```java
-[class AuditLog {
-    changeType: INSERT
-    changeDate: 2022-01-31T00:10:47.000Z
-    objectType: INVOICE
-    objectId: 8f6f3405-249f-4b66-a0c2-ee84e884e81d
-    changedBy: SubscriptionBaseTransition
-    reasonCode: null
-    comments: null
-    userToken: a6bb5711-b9b3-4161-a7c1-69f5c3d574c1
-    history: {id=null, createdDate=2022-01-31T00:10:47.000Z, updatedDate=null, recordId=3149, accountRecordId=562, tenantRecordId=1, accountId=60a47168-7d36-4380-8ec7-e48cfe4e65d6, invoiceNumber=null, invoiceDate=2022-01-31, targetDate=2022-01-31, currency=USD, migrated=false, status=COMMITTED, invoiceItems=[], invoicePayments=[], trackingIds=[], processedCurrency=USD, parentInvoice=null, isWrittenOff=false, isRepaired=false, writtenOff=false, repaired=false, tableName=INVOICES, historyTableName=INVOICE_HISTORY}
-}]
 ```
 
 **Query Parameters**
@@ -5992,11 +3916,7 @@ curl \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
@@ -6072,11 +3992,7 @@ curl \
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "changeType": "INSERT",
@@ -6139,7 +4055,6 @@ curl \
     }
   }
 ]
-
 ```
 
 **Query Parameters**
@@ -6206,11 +4121,7 @@ invoiceApi.get_invoices(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "amount": 0,
@@ -6354,99 +4265,6 @@ invoiceApi.get_invoices(api_key, api_secret)
   }
 ]
 ```
-```java
-//First element of the list
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@30849f9
-    amount: 0.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 1a49101b-305e-4b4d-8403-7377596407b6
-    invoiceDate: 2012-08-25
-    targetDate: 2012-08-25
-    invoiceNumber: 1
-    balance: 0.00
-    accountId: 715c9695-4730-4fd7-80db-d5e38dfc9aa0
-    bundleKeys: null
-    credits: null
-    items: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-[
-    {
-       "amount":7.0,
-       "currency":"USD",
-       "status":"COMMITTED",
-       "creditAdj":0.0,
-       "refundAdj":0.0,
-       "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-       "invoiceDate":"2013-08-01",
-       "targetDate":"2013-08-01",
-       "invoiceNumber":"1913",
-       "balance":0.0,
-       "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-       "items":[
-          {
-             "invoiceItemId":"f641ce8a-a874-4e98-ada5-2bd8fdb74945",
-             "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-             "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-             "itemType":"EXTERNAL_CHARGE",
-             "description":"My first charge",
-             "startDate":"2013-08-01",
-             "amount":7.0,
-             "currency":"USD",
-             "auditLogs":[]
-          }
-       ],
-       "isParentInvoice":false,
-       "auditLogs":[]
-    }
-]
-```
-```python
-[{'account_id': '40d6c91b-13f4-4689-8acc-b3455ab956ac',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': '14f2bbf3-bd2d-4e32-86eb-b9d32ce4be74',
- 'invoice_number': '1015',
- 'is_parent_invoice': False,
- 'items': [],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 5, 10)}, {'account_id': '7f6894df-d1d6-499b-8cd0-a09da4d3beaf',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': 'cd98fb3b-25a4-4e1c-8426-0c1080531ad9',
- 'invoice_number': '1016',
- 'is_parent_invoice': False,
- 'items': [],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 5, 10)}]
-```
 
 **Query Parameters**
 
@@ -6516,11 +4334,7 @@ invoiceApi.search_invoices(search_key, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "amount": 0,
@@ -6543,99 +4357,6 @@ invoiceApi.search_invoices(search_key, api_key, api_secret)
     "auditLogs": []
   }
 ]
-```
-```java
-//First element of the list
-class Invoice {
-    org.killbill.billing.client.model.gen.Invoice@30849f9
-    amount: 0.00
-    currency: USD
-    status: COMMITTED
-    creditAdj: 0.00
-    refundAdj: 0.00
-    invoiceId: 1a49101b-305e-4b4d-8403-7377596407b6
-    invoiceDate: 2012-08-25
-    targetDate: 2012-08-25
-    invoiceNumber: 1
-    balance: 0.00
-    accountId: 715c9695-4730-4fd7-80db-d5e38dfc9aa0
-    bundleKeys: null
-    credits: null
-    items: []
-    isParentInvoice: false
-    parentInvoiceId: null
-    parentAccountId: null
-    auditLogs: []
-}
-```
-```ruby
-[
-    {
-       "amount":7.0,
-       "currency":"USD",
-       "status":"COMMITTED",
-       "creditAdj":0.0,
-       "refundAdj":0.0,
-       "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-       "invoiceDate":"2013-08-01",
-       "targetDate":"2013-08-01",
-       "invoiceNumber":"1913",
-       "balance":0.0,
-       "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-       "items":[
-          {
-             "invoiceItemId":"f641ce8a-a874-4e98-ada5-2bd8fdb74945",
-             "invoiceId":"31db9f9a-91ff-49f4-b5a1-5e4fce59a197",
-             "accountId":"be19b229-c076-47aa-aa4d-f53bec505dc7",
-             "itemType":"EXTERNAL_CHARGE",
-             "description":"My first charge",
-             "startDate":"2013-08-01",
-             "amount":7.0,
-             "currency":"USD",
-             "auditLogs":[]
-          }
-       ],
-       "isParentInvoice":false,
-       "auditLogs":[]
-    }
-]
-```
-```python
-[{'account_id': '554f89d7-c9bd-4e48-a28d-5d2d88f0ea19',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': '5ffe67ba-322a-407c-8051-0a5839774a1c',
- 'invoice_number': '1017',
- 'is_parent_invoice': False,
- 'items': [],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 5, 10)}, {'account_id': '58e8ffe1-d01e-4716-bf46-c76b881b6574',
- 'amount': 0.0,
- 'audit_logs': [],
- 'balance': 0.0,
- 'bundle_keys': None,
- 'credit_adj': 0.0,
- 'credits': None,
- 'currency': 'USD',
- 'invoice_date': datetime.date(2018, 5, 10),
- 'invoice_id': '4a836b76-447c-4d5c-9dc7-96f1c9b0cf9c',
- 'invoice_number': '1018',
- 'is_parent_invoice': False,
- 'items': [],
- 'parent_account_id': None,
- 'parent_invoice_id': None,
- 'refund_adj': 0.0,
- 'status': 'COMMITTED',
- 'target_date': datetime.date(2018, 5, 10)}]
 ```
 
 **Query Parameters**
