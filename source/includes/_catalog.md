@@ -110,20 +110,7 @@ catalogApi.upload_catalog_xml(xml_catalog,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/catalog/xml
-< Content-Type: text/xml
-< Content-Length: 0
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -193,11 +180,7 @@ catalogApi.get_catalog_xml(api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: text/xml
-
+```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <catalogs>
     <versions>
@@ -417,570 +400,6 @@ catalogApi.get_catalog_xml(api_key, api_secret)
     <catalogName>SpyCarBasic</catalogName>
   </catalogs>
 ```
-```java
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<catalogs>
-    <versions>
-        <version>
-            <effectiveDate>2013-02-08T00:00:00Z</effectiveDate>
-            <catalogName>SpyCarBasic</catalogName>
-            <currencies>
-                <currency>USD</currency>
-                <currency>GBP</currency>
-            </currencies>
-            <units/>
-            <products>
-                <product name="Sports" prettyName="Sports">
-                    <category>BASE</category>
-                    <included/>
-                    <available/>
-                    <limits/>
-                </product>
-                <product name="Standard" prettyName="Standard">
-                    <category>BASE</category>
-                    <included/>
-                    <available/>
-                    <limits/>
-                </product>
-                <product name="Super" prettyName="Super">
-                    <category>BASE</category>
-                    <included/>
-                    <available/>
-                    <limits/>
-                </product>
-            </products>
-            <rules>
-                <changePolicy>
-                    <changePolicyCase>
-                        <policy>IMMEDIATE</policy>
-                    </changePolicyCase>
-                </changePolicy>
-                <changeAlignment>
-                    <changeAlignmentCase>
-                        <alignment>START_OF_BUNDLE</alignment>
-                    </changeAlignmentCase>
-                </changeAlignment>
-                <cancelPolicy>
-                    <cancelPolicyCase>
-                        <policy>IMMEDIATE</policy>
-                    </cancelPolicyCase>
-                </cancelPolicy>
-                <createAlignment>
-                    <createAlignmentCase>
-                        <alignment>START_OF_BUNDLE</alignment>
-                    </createAlignmentCase>
-                </createAlignment>
-                <billingAlignment>
-                    <billingAlignmentCase>
-                        <alignment>ACCOUNT</alignment>
-                    </billingAlignmentCase>
-                </billingAlignment>
-                <priceList>
-                    <priceListCase>
-                        <toPriceList>DEFAULT</toPriceList>
-                    </priceListCase>
-                </priceList>
-            </rules>
-            <plans>
-                <plan name="sports-monthly" prettyName="sports-monthly">
-                    <product>Sports</product>
-                    <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-                    <initialPhases>
-                        <phase type="TRIAL">
-                            <duration>
-<unit>DAYS</unit>
-<number>30</number>
-                            </duration>
-                            <fixed type="ONE_TIME">
-<fixedPrice/>
-                            </fixed>
-                            <usages/>
-                        </phase>
-                    </initialPhases>
-                    <finalPhase type="EVERGREEN">
-                        <duration>
-                            <unit>UNLIMITED</unit>
-                            <number>-1</number>
-                        </duration>
-                        <recurring>
-                            <billingPeriod>MONTHLY</billingPeriod>
-                            <recurringPrice>
-<price>
-    <currency>GBP</currency>
-    <value>375.00</value>
-</price>
-<price>
-    <currency>USD</currency>
-    <value>500.00</value>
-</price>
-                            </recurringPrice>
-                        </recurring>
-                        <usages/>
-                    </finalPhase>
-                    <plansAllowedInBundle>-1</plansAllowedInBundle>
-                </plan>
-                <plan name="standard-monthly" prettyName="standard-monthly">
-                    <product>Standard</product>
-                    <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-                    <initialPhases>
-                        <phase type="TRIAL">
-                            <duration>
-<unit>DAYS</unit>
-<number>30</number>
-                            </duration>
-                            <fixed type="ONE_TIME">
-<fixedPrice/>
-                            </fixed>
-                            <usages/>
-                        </phase>
-                    </initialPhases>
-                    <finalPhase type="EVERGREEN">
-                        <duration>
-                            <unit>UNLIMITED</unit>
-                            <number>-1</number>
-                        </duration>
-                        <recurring>
-                            <billingPeriod>MONTHLY</billingPeriod>
-                            <recurringPrice>
-<price>
-    <currency>GBP</currency>
-    <value>75.00</value>
-</price>
-<price>
-    <currency>USD</currency>
-    <value>100.00</value>
-</price>
-                            </recurringPrice>
-                        </recurring>
-                        <usages/>
-                    </finalPhase>
-                    <plansAllowedInBundle>-1</plansAllowedInBundle>
-                </plan>
-                <plan name="super-monthly" prettyName="super-monthly">
-                    <product>Super</product>
-                    <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-                    <initialPhases>
-                        <phase type="TRIAL">
-                            <duration>
-<unit>DAYS</unit>
-<number>30</number>
-                            </duration>
-                            <fixed type="ONE_TIME">
-<fixedPrice/>
-                            </fixed>
-                            <usages/>
-                        </phase>
-                    </initialPhases>
-                    <finalPhase type="EVERGREEN">
-                        <duration>
-                            <unit>UNLIMITED</unit>
-                            <number>-1</number>
-                        </duration>
-                        <recurring>
-                            <billingPeriod>MONTHLY</billingPeriod>
-                            <recurringPrice>
-<price>
-    <currency>GBP</currency>
-    <value>750.00</value>
-</price>
-<price>
-    <currency>USD</currency>
-    <value>1000.00</value>
-</price>
-                            </recurringPrice>
-                        </recurring>
-                        <usages/>
-                    </finalPhase>
-                    <plansAllowedInBundle>-1</plansAllowedInBundle>
-                </plan>
-            </plans>
-            <priceLists>
-                <defaultPriceList name="DEFAULT">
-                    <plans>
-                        <plan>sports-monthly</plan>
-                        <plan>standard-monthly</plan>
-                        <plan>super-monthly</plan>
-                    </plans>
-                </defaultPriceList>
-            </priceLists>
-        </version>
-    </versions>
-    <catalogName>SpyCarBasic</catalogName>
-</catalogs>
-
-```
-```ruby
-<?xml version="1.0" encoding="UTF-8"?>
-<catalogs>
-   <versions>
-      <version>
-         <effectiveDate>2013-02-08T00:00:00Z</effectiveDate>
-         <catalogName>Movies</catalogName>
-         <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-         <currencies>
-            <currency>USD</currency>
-         </currencies>
-         <units />
-         <products>
-            <product name="Basic">
-               <category>BASE</category>
-               <included />
-               <available />
-               <limits />
-            </product>
-         </products>
-         <rules>
-            <changePolicy>
-               <changePolicyCase>
-                  <policy>END_OF_TERM</policy>
-               </changePolicyCase>
-            </changePolicy>
-            <changeAlignment>
-               <changeAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </changeAlignmentCase>
-            </changeAlignment>
-            <cancelPolicy>
-               <cancelPolicyCase>
-                  <productCategory>BASE</productCategory>
-                  <policy>END_OF_TERM</policy>
-               </cancelPolicyCase>
-               <cancelPolicyCase>
-                  <policy>IMMEDIATE</policy>
-               </cancelPolicyCase>
-            </cancelPolicy>
-            <createAlignment>
-               <createAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </createAlignmentCase>
-            </createAlignment>
-            <billingAlignment>
-               <billingAlignmentCase>
-                  <alignment>ACCOUNT</alignment>
-               </billingAlignmentCase>
-            </billingAlignment>
-            <priceList>
-               <priceListCase>
-                  <toPriceList>DEFAULT</toPriceList>
-               </priceListCase>
-            </priceList>
-         </rules>
-         <plans>
-            <plan name="basic-monthly">
-               <product>Basic</product>
-               <initialPhases />
-               <finalPhase type="EVERGREEN">
-                  <duration>
-                     <unit>UNLIMITED</unit>
-                     <number>-1</number>
-                  </duration>
-                  <recurring>
-                     <billingPeriod>MONTHLY</billingPeriod>
-                     <recurringPrice>
-                        <price>
-                           <currency>USD</currency>
-                           <value>1000.00</value>
-                        </price>
-                     </recurringPrice>
-                  </recurring>
-                  <usages />
-               </finalPhase>
-               <plansAllowedInBundle>-1</plansAllowedInBundle>
-            </plan>
-         </plans>
-         <priceLists>
-            <defaultPriceList name="DEFAULT">
-               <plans>
-                  <plan>basic-monthly</plan>
-               </plans>
-            </defaultPriceList>
-         </priceLists>
-      </version>
-      <version>
-         <effectiveDate>2013-02-08T00:00:01Z</effectiveDate>
-         <catalogName>Movies</catalogName>
-         <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-         <currencies>
-            <currency>USD</currency>
-         </currencies>
-         <units />
-         <products>
-            <product name="Basic">
-               <category>BASE</category>
-               <included />
-               <available />
-               <limits />
-            </product>
-         </products>
-         <rules>
-            <changePolicy>
-               <changePolicyCase>
-                  <policy>END_OF_TERM</policy>
-               </changePolicyCase>
-            </changePolicy>
-            <changeAlignment>
-               <changeAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </changeAlignmentCase>
-            </changeAlignment>
-            <cancelPolicy>
-               <cancelPolicyCase>
-                  <productCategory>BASE</productCategory>
-                  <policy>END_OF_TERM</policy>
-               </cancelPolicyCase>
-               <cancelPolicyCase>
-                  <policy>IMMEDIATE</policy>
-               </cancelPolicyCase>
-            </cancelPolicy>
-            <createAlignment>
-               <createAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </createAlignmentCase>
-            </createAlignment>
-            <billingAlignment>
-               <billingAlignmentCase>
-                  <alignment>ACCOUNT</alignment>
-               </billingAlignmentCase>
-            </billingAlignment>
-            <priceList>
-               <priceListCase>
-                  <toPriceList>DEFAULT</toPriceList>
-               </priceListCase>
-            </priceList>
-         </rules>
-         <plans>
-            <plan name="basic-monthly">
-               <product>Basic</product>
-               <initialPhases>
-                  <phase type="TRIAL">
-                     <duration>
-                        <unit>DAYS</unit>
-                        <number>30</number>
-                     </duration>
-                     <fixed type="ONE_TIME">
-                        <fixedPrice />
-                     </fixed>
-                     <usages />
-                  </phase>
-               </initialPhases>
-               <finalPhase type="EVERGREEN">
-                  <duration>
-                     <unit>UNLIMITED</unit>
-                     <number>-1</number>
-                  </duration>
-                  <recurring>
-                     <billingPeriod>MONTHLY</billingPeriod>
-                     <recurringPrice>
-                        <price>
-                           <currency>USD</currency>
-                           <value>1000.00</value>
-                        </price>
-                     </recurringPrice>
-                  </recurring>
-                  <usages />
-               </finalPhase>
-               <plansAllowedInBundle>-1</plansAllowedInBundle>
-            </plan>
-         </plans>
-         <priceLists>
-            <defaultPriceList name="DEFAULT">
-               <plans>
-                  <plan>basic-monthly</plan>
-               </plans>
-            </defaultPriceList>
-         </priceLists>
-      </version>
-   </versions>
-   <catalogName>Movies</catalogName>
-   <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-</catalogs>
-```
-```python
-<?xml version="1.0" encoding="UTF-8"?>
-<catalogs>
-   <versions>
-      <version>
-         <effectiveDate>2013-02-08T00:00:00Z</effectiveDate>
-         <catalogName>Movies</catalogName>
-         <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-         <currencies>
-            <currency>USD</currency>
-         </currencies>
-         <units />
-         <products>
-            <product name="Basic">
-               <category>BASE</category>
-               <included />
-               <available />
-               <limits />
-            </product>
-         </products>
-         <rules>
-            <changePolicy>
-               <changePolicyCase>
-                  <policy>END_OF_TERM</policy>
-               </changePolicyCase>
-            </changePolicy>
-            <changeAlignment>
-               <changeAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </changeAlignmentCase>
-            </changeAlignment>
-            <cancelPolicy>
-               <cancelPolicyCase>
-                  <productCategory>BASE</productCategory>
-                  <policy>END_OF_TERM</policy>
-               </cancelPolicyCase>
-               <cancelPolicyCase>
-                  <policy>IMMEDIATE</policy>
-               </cancelPolicyCase>
-            </cancelPolicy>
-            <createAlignment>
-               <createAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </createAlignmentCase>
-            </createAlignment>
-            <billingAlignment>
-               <billingAlignmentCase>
-                  <alignment>ACCOUNT</alignment>
-               </billingAlignmentCase>
-            </billingAlignment>
-            <priceList>
-               <priceListCase>
-                  <toPriceList>DEFAULT</toPriceList>
-               </priceListCase>
-            </priceList>
-         </rules>
-         <plans>
-            <plan name="basic-monthly">
-               <product>Basic</product>
-               <initialPhases />
-               <finalPhase type="EVERGREEN">
-                  <duration>
-                     <unit>UNLIMITED</unit>
-                     <number>-1</number>
-                  </duration>
-                  <recurring>
-                     <billingPeriod>MONTHLY</billingPeriod>
-                     <recurringPrice>
-                        <price>
-                           <currency>USD</currency>
-                           <value>1000.00</value>
-                        </price>
-                     </recurringPrice>
-                  </recurring>
-                  <usages />
-               </finalPhase>
-               <plansAllowedInBundle>-1</plansAllowedInBundle>
-            </plan>
-         </plans>
-         <priceLists>
-            <defaultPriceList name="DEFAULT">
-               <plans>
-                  <plan>basic-monthly</plan>
-               </plans>
-            </defaultPriceList>
-         </priceLists>
-      </version>
-      <version>
-         <effectiveDate>2013-02-08T00:00:01Z</effectiveDate>
-         <catalogName>Movies</catalogName>
-         <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-         <currencies>
-            <currency>USD</currency>
-         </currencies>
-         <units />
-         <products>
-            <product name="Basic">
-               <category>BASE</category>
-               <included />
-               <available />
-               <limits />
-            </product>
-         </products>
-         <rules>
-            <changePolicy>
-               <changePolicyCase>
-                  <policy>END_OF_TERM</policy>
-               </changePolicyCase>
-            </changePolicy>
-            <changeAlignment>
-               <changeAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </changeAlignmentCase>
-            </changeAlignment>
-            <cancelPolicy>
-               <cancelPolicyCase>
-                  <productCategory>BASE</productCategory>
-                  <policy>END_OF_TERM</policy>
-               </cancelPolicyCase>
-               <cancelPolicyCase>
-                  <policy>IMMEDIATE</policy>
-               </cancelPolicyCase>
-            </cancelPolicy>
-            <createAlignment>
-               <createAlignmentCase>
-                  <alignment>START_OF_BUNDLE</alignment>
-               </createAlignmentCase>
-            </createAlignment>
-            <billingAlignment>
-               <billingAlignmentCase>
-                  <alignment>ACCOUNT</alignment>
-               </billingAlignmentCase>
-            </billingAlignment>
-            <priceList>
-               <priceListCase>
-                  <toPriceList>DEFAULT</toPriceList>
-               </priceListCase>
-            </priceList>
-         </rules>
-         <plans>
-            <plan name="basic-monthly">
-               <product>Basic</product>
-               <initialPhases>
-                  <phase type="TRIAL">
-                     <duration>
-                        <unit>DAYS</unit>
-                        <number>30</number>
-                     </duration>
-                     <fixed type="ONE_TIME">
-                        <fixedPrice />
-                     </fixed>
-                     <usages />
-                  </phase>
-               </initialPhases>
-               <finalPhase type="EVERGREEN">
-                  <duration>
-                     <unit>UNLIMITED</unit>
-                     <number>-1</number>
-                  </duration>
-                  <recurring>
-                     <billingPeriod>MONTHLY</billingPeriod>
-                     <recurringPrice>
-                        <price>
-                           <currency>USD</currency>
-                           <value>1000.00</value>
-                        </price>
-                     </recurringPrice>
-                  </recurring>
-                  <usages />
-               </finalPhase>
-               <plansAllowedInBundle>-1</plansAllowedInBundle>
-            </plan>
-         </plans>
-         <priceLists>
-            <defaultPriceList name="DEFAULT">
-               <plans>
-                  <plan>basic-monthly</plan>
-               </plans>
-            </defaultPriceList>
-         </priceLists>
-      </version>
-   </versions>
-   <catalogName>Movies</catalogName>
-   <recurringBillingMode>IN_ADVANCE</recurringBillingMode>
-</catalogs>
-```
 
 **Query Parameters**
 
@@ -1038,1463 +457,163 @@ catalogApi.get_catalog_json(api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
-[
-  {
-    "name": "SpyCarBasic",
-    "effectiveDate": "2013-02-08T00:00:00.000+0000",
-    "currencies": [
-      "USD",
-      "GBP"
-    ],
-    "units": [],
-    "products": [
-      {
-        "type": "ADD_ON",
-        "name": "Super",
-        "prettyName": "Super",
-        "plans": [
-          {
-            "name": "super-monthly",
-            "prettyName": "super-monthly",
-            "billingPeriod": "MONTHLY",
-            "phases": [
-              {
-                "type": "TRIAL",
-                "prices": [],
-                "fixedPrices": [],
-                "duration": {
-                  "unit": "DAYS",
-                  "number": 30
-                },
-                "usages": []
+```json
+{
+  "name": "SpyCarBasic",
+  "effectiveDate": "2013-02-08T00:00:00.000+0000",
+  "currencies": [
+    "USD",
+    "GBP"
+  ],
+  "units": [],
+  "products": [
+    {
+      "type": "ADD_ON",
+      "name": "Super",
+      "prettyName": "Super",
+      "plans": [
+        {
+          "name": "super-monthly",
+          "prettyName": "super-monthly",
+          "billingPeriod": "MONTHLY",
+          "phases": [
+            {
+              "type": "TRIAL",
+              "prices": [],
+              "fixedPrices": [],
+              "duration": {
+                "unit": "DAYS",
+                "number": 30
               },
-              {
-                "type": "EVERGREEN",
-                "prices": [
-                  {
-                    "currency": "GBP",
-                    "value": 750
-                  },
-                  {
-                    "currency": "USD",
-                    "value": 1000
-                  }
-                ],
-                "fixedPrices": [],
-                "duration": {
-                  "unit": "UNLIMITED",
-                  "number": -1
+              "usages": []
+            },
+            {
+              "type": "EVERGREEN",
+              "prices": [
+                {
+                  "currency": "GBP",
+                  "value": 750
                 },
-                "usages": []
-              }
-            ]
-          }
-        ],
-        "included": [],
-        "available": []
-      },
-      {
-        "type": "BASE",
-        "name": "Standard",
-        "prettyName": "Standard",
-        "plans": [
-          {
-            "name": "standard-monthly",
-            "prettyName": "standard-monthly",
-            "billingPeriod": "MONTHLY",
-            "phases": [
-              {
-                "type": "TRIAL",
-                "prices": [],
-                "fixedPrices": [],
-                "duration": {
-                  "unit": "DAYS",
-                  "number": 30
-                },
-                "usages": []
+                {
+                  "currency": "USD",
+                  "value": 1000
+                }
+              ],
+              "fixedPrices": [],
+              "duration": {
+                "unit": "UNLIMITED",
+                "number": -1
               },
-              {
-                "type": "EVERGREEN",
-                "prices": [
-                  {
-                    "currency": "GBP",
-                    "value": 75
-                  },
-                  {
-                    "currency": "USD",
-                    "value": 100
-                  }
-                ],
-                "fixedPrices": [],
-                "duration": {
-                  "unit": "UNLIMITED",
-                  "number": -1
-                },
-                "usages": []
-              }
-            ]
-          }
-        ],
-        "included": [],
-        "available": []
-      },
-      {
-        "type": "BASE",
-        "name": "Sports",
-        "prettyName": "Sports",
-        "plans": [
-          {
-            "name": "sports-monthly",
-            "prettyName": "sports-monthly",
-            "billingPeriod": "MONTHLY",
-            "phases": [
-              {
-                "type": "TRIAL",
-                "prices": [],
-                "fixedPrices": [],
-                "duration": {
-                  "unit": "DAYS",
-                  "number": 30
-                },
-                "usages": []
+              "usages": []
+            }
+          ]
+        }
+      ],
+      "included": [],
+      "available": []
+    },
+    {
+      "type": "BASE",
+      "name": "Standard",
+      "prettyName": "Standard",
+      "plans": [
+        {
+          "name": "standard-monthly",
+          "prettyName": "standard-monthly",
+          "billingPeriod": "MONTHLY",
+          "phases": [
+            {
+              "type": "TRIAL",
+              "prices": [],
+              "fixedPrices": [],
+              "duration": {
+                "unit": "DAYS",
+                "number": 30
               },
-              {
-                "type": "EVERGREEN",
-                "prices": [
-                  {
-                    "currency": "GBP",
-                    "value": 375
-                  },
-                  {
-                    "currency": "USD",
-                    "value": 500
-                  }
-                ],
-                "fixedPrices": [],
-                "duration": {
-                  "unit": "UNLIMITED",
-                  "number": -1
+              "usages": []
+            },
+            {
+              "type": "EVERGREEN",
+              "prices": [
+                {
+                  "currency": "GBP",
+                  "value": 75
                 },
-                "usages": []
-              }
-            ]
-          }
-        ],
-        "included": [],
-        "available": []
-      }
-    ],
-    "priceLists": [
-      {
-        "name": "DEFAULT",
-        "plans": [
-          "sports-monthly",
-          "standard-monthly",
-          "super-monthly"
-        ]
-      }
-    ]
-  }
-]
-```
-```java
-class Catalog {
-    name: Firearms
-    effectiveDate: 2011-01-01T00:00:00.000Z
-    currencies: [USD, EUR, GBP]
-    units: [class Unit {
-        name: bullets
-        prettyName: bullets
-    }, class Unit {
-        name: stones
-        prettyName: stones
-    }]
-    products: [class Product {
-        type: BASE
-        name: Assault-Rifle
-        prettyName: Assault-Rifle
-        plans: [class Plan {
-            name: assault-rifle-annual
-            prettyName: assault-rifle-annual
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
+                {
+                  "currency": "USD",
+                  "value": 100
                 }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 5999.95
-                }, class Price {
-                    currency: EUR
-                    value: 3499.95
-                }, class Price {
-                    currency: GBP
-                    value: 3999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: assault-rifle-annual-gunclub-discount
-            prettyName: assault-rifle-annual-gunclub-discount
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 99.95
-                }, class Price {
-                    currency: EUR
-                    value: 99.95
-                }, class Price {
-                    currency: GBP
-                    value: 99.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 6
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 5999.95
-                }, class Price {
-                    currency: EUR
-                    value: 3499.95
-                }, class Price {
-                    currency: GBP
-                    value: 3999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: assault-rifle-annual-rescue
-            prettyName: assault-rifle-annual-rescue
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 5999.95
-                }, class Price {
-                    currency: EUR
-                    value: 3499.95
-                }, class Price {
-                    currency: GBP
-                    value: 3999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: YEARS
-                    number: 1
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 5999.95
-                }, class Price {
-                    currency: EUR
-                    value: 3499.95
-                }, class Price {
-                    currency: GBP
-                    value: 3999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: assault-rifle-monthly
-            prettyName: assault-rifle-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 599.95
-                }, class Price {
-                    currency: EUR
-                    value: 349.95
-                }, class Price {
-                    currency: GBP
-                    value: 399.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: [Cleaning, Telescopic-Scope]
-        available: [Bullets, Laser-Scope]
-    }, class Product {
-        type: ADD_ON
-        name: Holster
-        prettyName: Holster
-        plans: [class Plan {
-            name: holster-monthly-regular
-            prettyName: holster-monthly-regular
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 199.95
-                }, class Price {
-                    currency: EUR
-                    value: 199.95
-                }, class Price {
-                    currency: GBP
-                    value: 199.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: holster-monthly-special
-            prettyName: holster-monthly-special
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 199.95
-                }, class Price {
-                    currency: EUR
-                    value: 199.95
-                }, class Price {
-                    currency: GBP
-                    value: 199.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: ADD_ON
-        name: Refurbish-Maintenance
-        prettyName: Refurbish-Maintenance
-        plans: [class Plan {
-            name: refurbish-maintenance
-            prettyName: refurbish-maintenance
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: FIXEDTERM
-                prices: [class Price {
-                    currency: USD
-                    value: 199.95
-                }, class Price {
-                    currency: EUR
-                    value: 199.95
-                }, class Price {
-                    currency: GBP
-                    value: 199.95
-                }]
-                fixedPrices: [class Price {
-                    currency: USD
-                    value: 599.95
-                }, class Price {
-                    currency: EUR
-                    value: 599.95
-                }, class Price {
-                    currency: GBP
-                    value: 599.95
-                }]
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 12
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: BASE
-        name: Trebuchet
-        prettyName: Trebuchet
-        plans: [class Plan {
-            name: trebuchet-usage-in-arrear
-            prettyName: Trebuchet Monthly Plan
-            billingPeriod: NO_BILLING_PERIOD
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: [class Usage {
-                    billingPeriod: MONTHLY
-                    tiers: [class Tier {
-                        limits: [class Limit {
-                            unit: stones
-                            max: 100.0
-                            min: -1.0
-                        }]
-                        fixedPrice: []
-                        recurringPrice: [class Price {
-                            currency: USD
-                            value: 100
-                        }]
-                        blocks: []
-                    }, class Tier {
-                        limits: [class Limit {
-                            unit: stones
-                            max: -1.0
-                            min: -1.0
-                        }]
-                        fixedPrice: []
-                        recurringPrice: [class Price {
-                            currency: USD
-                            value: 1000
-                        }]
-                        blocks: []
-                    }]
-                }]
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: BASE
-        name: Blowdart
-        prettyName: Blowdart
-        plans: [class Plan {
-            name: blowdart-monthly
-            prettyName: blowdart-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 9.95
-                }, class Price {
-                    currency: EUR
-                    value: 9.95
-                }, class Price {
-                    currency: GBP
-                    value: 9.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 6
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: GBP
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: blowdart-monthly-notrial
-            prettyName: blowdart-monthly-notrial
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: GBP
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: blowdart-monthly-trial
-            prettyName: blowdart-monthly-trial
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: GBP
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: ADD_ON
-        name: Extra-Ammo
-        prettyName: Extra-Ammo
-        plans: [class Plan {
-            name: extra-ammo-monthly
-            prettyName: extra-ammo-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 999.95
-                }, class Price {
-                    currency: EUR
-                    value: 499.95
-                }, class Price {
-                    currency: GBP
-                    value: 999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: BASE
-        name: Shotgun
-        prettyName: Shotgun
-        plans: [class Plan {
-            name: shotgun-annual
-            prettyName: shotgun-annual
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 2399.95
-                }, class Price {
-                    currency: EUR
-                    value: 1499.95
-                }, class Price {
-                    currency: GBP
-                    value: 1699.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: shotgun-annual-gunclub-discount
-            prettyName: shotgun-annual-gunclub-discount
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 19.95
-                }, class Price {
-                    currency: EUR
-                    value: 49.95
-                }, class Price {
-                    currency: GBP
-                    value: 69.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 6
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 2399.95
-                }, class Price {
-                    currency: EUR
-                    value: 1499.95
-                }, class Price {
-                    currency: GBP
-                    value: 1699.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: shotgun-monthly
-            prettyName: Shotgun Monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 249.95
-                }, class Price {
-                    currency: EUR
-                    value: 149.95
-                }, class Price {
-                    currency: GBP
-                    value: 169.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: [Cleaning]
-        available: [Bullets, Holster, Laser-Scope, Telescopic-Scope]
-    }, class Product {
-        type: ADD_ON
-        name: Cleaning
-        prettyName: Cleaning
-        plans: [class Plan {
-            name: cleaning-monthly
-            prettyName: cleaning-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 2.95
-                }, class Price {
-                    currency: EUR
-                    value: 1.95
-                }, class Price {
-                    currency: GBP
-                    value: 0.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: ADD_ON
-        name: Laser-Scope
-        prettyName: Laser-Scope
-        plans: [class Plan {
-            name: laser-scope-monthly
-            prettyName: laser-scope-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 999.95
-                }, class Price {
-                    currency: EUR
-                    value: 499.95
-                }, class Price {
-                    currency: GBP
-                    value: 999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 1
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 1999.95
-                }, class Price {
-                    currency: EUR
-                    value: 1499.95
-                }, class Price {
-                    currency: GBP
-                    value: 1999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: STANDALONE
-        name: Knife
-        prettyName: Knife
-        plans: [class Plan {
-            name: knife-monthly-notrial
-            prettyName: knife-monthly-notrial
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: GBP
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: BASE
-        name: Pistol
-        prettyName: Pistol
-        plans: [class Plan {
-            name: pistol-annual
-            prettyName: pistol-annual
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 199.95
-                }, class Price {
-                    currency: EUR
-                    value: 199.95
-                }, class Price {
-                    currency: GBP
-                    value: 199.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-annual-gunclub-discount
-            prettyName: pistol-annual-gunclub-discount
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 9.95
-                }, class Price {
-                    currency: EUR
-                    value: 9.95
-                }, class Price {
-                    currency: GBP
-                    value: 9.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 6
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 199.95
-                }, class Price {
-                    currency: EUR
-                    value: 199.95
-                }, class Price {
-                    currency: GBP
-                    value: 199.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-annual-gunclub-discount-notrial
-            prettyName: pistol-annual-gunclub-discount-notrial
-            billingPeriod: ANNUAL
-            phases: [class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 9.95
-                }, class Price {
-                    currency: EUR
-                    value: 9.95
-                }, class Price {
-                    currency: GBP
-                    value: 9.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 6
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 199.95
-                }, class Price {
-                    currency: EUR
-                    value: 199.95
-                }, class Price {
-                    currency: GBP
-                    value: 199.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-monthly
-            prettyName: pistol-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: GBP
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: USD
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-monthly-fixedterm
-            prettyName: pistol-monthly-fixedterm
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: FIXEDTERM
-                prices: [class Price {
-                    currency: GBP
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: USD
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 12
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-monthly-notrial
-            prettyName: pistol-monthly-notrial
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 19.95
-                }, class Price {
-                    currency: EUR
-                    value: 19.95
-                }, class Price {
-                    currency: GBP
-                    value: 19.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-quarterly
-            prettyName: pistol-quarterly
-            billingPeriod: QUARTERLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: GBP
-                    value: 69.95
-                }, class Price {
-                    currency: EUR
-                    value: 69.95
-                }, class Price {
-                    currency: USD
-                    value: 69.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-thirty-days
-            prettyName: pistol-thirty-days
-            billingPeriod: THIRTY_DAYS
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: GBP
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: USD
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }, class Plan {
-            name: pistol-weekly
-            prettyName: pistol-weekly
-            billingPeriod: WEEKLY
-            phases: [class Phase {
-                type: TRIAL
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: DAYS
-                    number: 30
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: GBP
-                    value: 29.95
-                }, class Price {
-                    currency: EUR
-                    value: 29.95
-                }, class Price {
-                    currency: USD
-                    value: 29.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: [Bullets, Cleaning, Refurbish-Maintenance]
-    }, class Product {
-        type: ADD_ON
-        name: Bullets
-        prettyName: Bullets
-        plans: [class Plan {
-            name: bullets-usage-in-arrear
-            prettyName: Bullet Monthly Plan
-            billingPeriod: NO_BILLING_PERIOD
-            phases: [class Phase {
-                type: EVERGREEN
-                prices: []
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: [class Usage {
-                    billingPeriod: MONTHLY
-                    tiers: [class Tier {
-                        limits: []
-                        fixedPrice: []
-                        recurringPrice: []
-                        blocks: [class TieredBlock {
-                            unit: bullets
-                            size: 100.0
-                            max: 10.0
-                            prices: [class Price {
-                                currency: USD
-                                value: 2.95
-                            }, class Price {
-                                currency: EUR
-                                value: 1.95
-                            }, class Price {
-                                currency: GBP
-                                value: 0.95
-                            }]
-                        }]
-                    }, class Tier {
-                        limits: []
-                        fixedPrice: []
-                        recurringPrice: []
-                        blocks: [class TieredBlock {
-                            unit: bullets
-                            size: 1000.0
-                            max: 100.0
-                            prices: [class Price {
-                                currency: USD
-                                value: 5.95
-                            }, class Price {
-                                currency: EUR
-                                value: 4.95
-                            }, class Price {
-                                currency: GBP
-                                value: 3.95
-                            }]
-                        }]
-                    }]
-                }]
-            }]
-        }]
-        included: []
-        available: []
-    }, class Product {
-        type: ADD_ON
-        name: Telescopic-Scope
-        prettyName: Telescopic-Scope
-        plans: [class Plan {
-            name: telescopic-scope-monthly
-            prettyName: telescopic-scope-monthly
-            billingPeriod: MONTHLY
-            phases: [class Phase {
-                type: DISCOUNT
-                prices: [class Price {
-                    currency: USD
-                    value: 399.95
-                }, class Price {
-                    currency: EUR
-                    value: 299.95
-                }, class Price {
-                    currency: GBP
-                    value: 399.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: MONTHS
-                    number: 1
-                }
-                usages: []
-            }, class Phase {
-                type: EVERGREEN
-                prices: [class Price {
-                    currency: USD
-                    value: 999.95
-                }, class Price {
-                    currency: EUR
-                    value: 499.95
-                }, class Price {
-                    currency: GBP
-                    value: 999.95
-                }]
-                fixedPrices: []
-                duration: class Duration {
-                    unit: UNLIMITED
-                    number: -1
-                }
-                usages: []
-            }]
-        }]
-        included: []
-        available: []
-    }]
-    priceLists: [class PriceList {
-        name: DEFAULT
-        plans: [assault-rifle-annual, assault-rifle-monthly, blowdart-monthly, bullets-usage-in-arrear, cleaning-monthly, extra-ammo-monthly, holster-monthly-regular, holster-monthly-special, laser-scope-monthly, pistol-annual, pistol-monthly, pistol-quarterly, pistol-thirty-days, pistol-weekly, refurbish-maintenance, shotgun-annual, shotgun-monthly, telescopic-scope-monthly, trebuchet-usage-in-arrear]
-    }, class PriceList {
-        name: gunclubDiscount
-        plans: [assault-rifle-annual-gunclub-discount, pistol-annual-gunclub-discount, shotgun-annual-gunclub-discount]
-    }, class PriceList {
-        name: gunclubDiscountNoTrial
-        plans: [pistol-annual-gunclub-discount-notrial]
-    }, class PriceList {
-        name: rescue
-        plans: [assault-rifle-annual-rescue]
-    }, class PriceList {
-        name: fixedTerm
-        plans: [pistol-monthly-fixedterm]
-    }, class PriceList {
-        name: notrial
-        plans: [blowdart-monthly-notrial, knife-monthly-notrial, pistol-monthly-notrial]
-    }, class PriceList {
-        name: trial
-        plans: [blowdart-monthly-trial]
-    }]
-}
-```
-```ruby
-[
-   {
-      "name":"Movies",
-      "effectiveDate":"2013-02-08T00:00:00.000+0000",
-      "currencies":[
-         "USD"
+              ],
+              "fixedPrices": [],
+              "duration": {
+                "unit": "UNLIMITED",
+                "number": -1
+              },
+              "usages": []
+            }
+          ]
+        }
       ],
-      "units":[
-
+      "included": [],
+      "available": []
+    },
+    {
+      "type": "BASE",
+      "name": "Sports",
+      "prettyName": "Sports",
+      "plans": [
+        {
+          "name": "sports-monthly",
+          "prettyName": "sports-monthly",
+          "billingPeriod": "MONTHLY",
+          "phases": [
+            {
+              "type": "TRIAL",
+              "prices": [],
+              "fixedPrices": [],
+              "duration": {
+                "unit": "DAYS",
+                "number": 30
+              },
+              "usages": []
+            },
+            {
+              "type": "EVERGREEN",
+              "prices": [
+                {
+                  "currency": "GBP",
+                  "value": 375
+                },
+                {
+                  "currency": "USD",
+                  "value": 500
+                }
+              ],
+              "fixedPrices": [],
+              "duration": {
+                "unit": "UNLIMITED",
+                "number": -1
+              },
+              "usages": []
+            }
+          ]
+        }
       ],
-      "products":[
-         {
-            "type":"BASE",
-            "name":"Basic",
-            "prettyName":"Basic",
-            "plans":[
-               {
-                  "name":"basic-monthly",
-                  "prettyName":"basic-monthly",
-                  "billingPeriod":"MONTHLY",
-                  "phases":[
-                     {
-                        "type":"EVERGREEN",
-                        "prices":[
-                           {
-                              "currency":"USD",
-                              "value":1000.0
-                           }
-                        ],
-                        "fixedPrices":[
-
-                        ],
-                        "duration":{
-                           "unit":"UNLIMITED",
-                           "number":-1
-                        },
-                        "usages":[
-
-                        ]
-                     }
-                  ]
-               }
-            ],
-            "included":[
-
-            ],
-            "available":[
-
-            ]
-         }
-      ],
-      "priceLists":[
-         {
-            "name":"DEFAULT",
-            "plans":[
-               "basic-monthly"
-            ]
-         }
+      "included": [],
+      "available": []
+    }
+  ],
+  "priceLists": [
+    {
+      "name": "DEFAULT",
+      "plans": [
+        "sports-monthly",
+        "standard-monthly",
+        "super-monthly"
       ]
-   }
-]
-```
-```python
-[{'currencies': ['USD', 'GBP'],
- 'effective_date': datetime.datetime(2013, 2, 8, 0, 0, tzinfo=tzutc()),
- 'name': 'SpyCarBasic',
- 'price_lists': [{'name': 'DEFAULT',
-                  'plans': ['sports-monthly',
-                            'standard-monthly',
-                            'super-monthly']}],
- 'products': [{'available': [],
-               'included': [],
-               'name': 'Super',
-               'plans': [{'billing_period': 'MONTHLY',
-                          'name': 'super-monthly',
-                          'phases': [{'duration': {'number': 30,
-                                                   'unit': 'DAYS'},
-                                      'fixed_prices': [],
-                                      'prices': [],
-                                      'type': 'TRIAL',
-                                      'usages': []},
-                                     {'duration': {'number': -1,
-                                                   'unit': 'UNLIMITED'},
-                                      'fixed_prices': [],
-                                      'prices': [{'currency': 'GBP',
-                                                  'value': 750.0},
-                                                 {'currency': 'USD',
-                                                  'value': 1000.0}],
-                                      'type': 'EVERGREEN',
-                                      'usages': []}],
-                          'pretty_name': 'super-monthly'}],
-               'pretty_name': 'Super',
-               'type': 'BASE'},
-              {'available': [],
-               'included': [],
-               'name': 'Standard',
-               'plans': [{'billing_period': 'MONTHLY',
-                          'name': 'standard-monthly',
-                          'phases': [{'duration': {'number': 30,
-                                                   'unit': 'DAYS'},
-                                      'fixed_prices': [],
-                                      'prices': [],
-                                      'type': 'TRIAL',
-                                      'usages': []},
-                                     {'duration': {'number': -1,
-                                                   'unit': 'UNLIMITED'},
-                                      'fixed_prices': [],
-                                      'prices': [{'currency': 'GBP',
-                                                  'value': 75.0},
-                                                 {'currency': 'USD',
-                                                  'value': 100.0}],
-                                      'type': 'EVERGREEN',
-                                      'usages': []}],
-                          'pretty_name': 'standard-monthly'}],
-               'pretty_name': 'Standard',
-               'type': 'BASE'},
-
-{'available': [],
-               'included': [],
-               'name': 'Sports',
-               'plans': [{'billing_period': 'MONTHLY',
-                          'name': 'sports-monthly',
-                          'phases': [{'duration': {'number': 30,
-                                                   'unit': 'DAYS'},
-                                      'fixed_prices': [],
-                                      'prices': [],
-                                      'type': 'TRIAL',
-                                      'usages': []},
-                                     {'duration': {'number': -1,
-                                                   'unit': 'UNLIMITED'},
-                                      'fixed_prices': [],
-                                      'prices': [{'currency': 'GBP',
-                                                  'value': 375.0},
-                                                 {'currency': 'USD',
-                                                  'value': 500.0}],
-                                      'type': 'EVERGREEN',
-                                      'usages': []}],
-                          'pretty_name': 'sports-monthly'}],
-               'pretty_name': 'Sports',
-               'type': 'BASE'}],
- 'units': []}]
+    }
+  ]
+}
 ```
 
 **Query Parameters**
@@ -2547,24 +666,12 @@ catalogApi.get_catalog_versions(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   "2013-02-08T00:00:00.000Z"
 ]
 ```
-```java
-2013-02-08T00:00:00.000Z
-```
-```ruby
-["2013-02-08T00:00:00.000Z"]
-```
-```python
-[datetime.datetime(2013, 2, 8, 0, 0, tzinfo=tzutc())]
-```
+
 
 **Query Parameters**
 
@@ -2616,11 +723,7 @@ catalogApi.get_available_base_plans(api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 [
   {
     "product": "Sports",
@@ -2656,71 +759,7 @@ catalogApi.get_available_base_plans(api_key, api_secret)
   }
 ]
 ```
-```java
-//First element of the list
-class PlanDetail {
-    product: Assault-Rifle
-    plan: assault-rifle-annual
-    priceList: DEFAULT
-    finalPhaseBillingPeriod: ANNUAL
-    finalPhaseRecurringPrice: [class Price {
-        currency: USD
-        value: 5999.95
-    }, class Price {
-        currency: EUR
-        value: 3499.95
-    }, class Price {
-        currency: GBP
-        value: 3999.95
-    }]
-}
-```
-```ruby
-[
-   {
-      "product":"Basic",
-      "plan":"basic-annual",
-      "finalPhaseBillingPeriod":"ANNUAL",
-      "priceList":"DEFAULT",
-      "finalPhaseRecurringPrice":[
-         {
-            "currency":"USD",
-            "value":10000.0
-         }
-      ]
-   },
-   {
-      "product":"Basic",
-      "plan":"basic-monthly",
-      "finalPhaseBillingPeriod":"MONTHLY",
-      "priceList":"DEFAULT",
-      "finalPhaseRecurringPrice":[
-         {
-            "currency":"USD",
-            "value":1000.0
-         }
-      ]
-   }
-]
-```
-```python
-[{'final_phase_billing_period': 'MONTHLY',
- 'final_phase_recurring_price': [{'currency': 'GBP', 'value': 375.0},
-                                 {'currency': 'USD', 'value': 500.0}],
- 'plan': 'sports-monthly',
- 'price_list': 'DEFAULT',
- 'product': 'Sports'}, {'final_phase_billing_period': 'MONTHLY',
- 'final_phase_recurring_price': [{'currency': 'GBP', 'value': 75.0},
-                                 {'currency': 'USD', 'value': 100.0}],
- 'plan': 'standard-monthly',
- 'price_list': 'DEFAULT',
- 'product': 'Standard'}, {'final_phase_billing_period': 'MONTHLY',
- 'final_phase_recurring_price': [{'currency': 'GBP', 'value': 750.0},
-                                 {'currency': 'USD', 'value': 1000.0}],
- 'plan': 'super-monthly',
- 'price_list': 'DEFAULT',
- 'product': 'Super'}]
-```
+
 
 **Query Parameters**
 
@@ -2779,61 +818,23 @@ catalogApi.get_available_addons(api_key,
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
+```json
+[
+   {
+      "product":"Basic",
+      "plan":"basic-annual",
+      "finalPhaseBillingPeriod":"ANNUAL",
+      "priceList":"DEFAULT",
+      "finalPhaseRecurringPrice":[
+         {
+            "currency":"USD",
+            "value":10000.0
+         }
+      ]
+   }
+]
+```
 
-[
-   {
-      "product":"Basic",
-      "plan":"basic-annual",
-      "finalPhaseBillingPeriod":"ANNUAL",
-      "priceList":"DEFAULT",
-      "finalPhaseRecurringPrice":[
-         {
-            "currency":"USD",
-            "value":10000.0
-         }
-      ]
-   }
-]
-```
-```java
-//First element of the list
-class PlanDetail {
-    product: Bullets
-    plan: bullets-usage-in-arrear
-    priceList: DEFAULT
-    finalPhaseBillingPeriod: NO_BILLING_PERIOD
-    finalPhaseRecurringPrice: []
-}
-```
-```ruby
-[
-   {
-      "product":"Basic",
-      "plan":"basic-annual",
-      "finalPhaseBillingPeriod":"ANNUAL",
-      "priceList":"DEFAULT",
-      "finalPhaseRecurringPrice":[
-         {
-            "currency":"USD",
-            "value":10000.0
-         }
-      ]
-   }
-]
-```
-```python
-[{'product': 'Basic',
-  'plan': 'basic-annual',
-  'final_phase_billing_period': 'ANNUAL',
-  'price_list': 'DEFAULT',
-  'final_phase_recurring_price':[{'currency': 'USD',
-                                  'value': 10000.0}]
-}]
-```
 
 **Query Parameters**
 
@@ -2889,17 +890,7 @@ catalogApi.delete_catalog(created_by, api_key, api_secret)
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 204 No Content
-```
-```java
-no content
-```
-```ruby
-no content
-```
-```python
+```json
 no content
 ```
 
@@ -2961,10 +952,7 @@ TODO
 ```
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 Created
-< Content-Type: application/json
+```json
 {
   "catalogValidationErrors": [
     {
@@ -2973,17 +961,7 @@ TODO
   ]
 }
 ```
-```java
-[class CatalogValidationError {
-    errorDescription: Catalog name 'ExampleCatalog' is different from existing catalog name 'Firearms'
-}]
-```
-```ruby
-no content
-```
-```python
-no content
-```
+
 
 **Request Body**
 
@@ -3042,11 +1020,7 @@ catalogApi.get_phase_for_subscription_and_date(api_key,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "type": "TRIAL",
   "prices": [],
@@ -3058,34 +1032,7 @@ catalogApi.get_phase_for_subscription_and_date(api_key,
   "usages": []
 } 
 ```
-```java
-TODO
-```
-```ruby
-{
-   "duration":{
-      "number":30,
-      "unit":"DAYS"
-   },
-   "fixed_prices":[
 
-   ],
-   "prices":[
-
-   ],
-   "type":"TRIAL",
-   "usages":[
-
-   ]
-}
-```
-```python
-{'duration': {'number': 30, 'unit': 'DAYS'},
- 'fixed_prices': [],
- 'prices': [],
- 'type': 'TRIAL',
- 'usages': []}
-```
 
 **Query Parameters**
 
@@ -3139,7 +1086,7 @@ catalogApi.get_plan_for_subscription_and_date(api_key,
 
 > Example Response:
 
-```shell
+```json
 {
   "name": "standard-monthly",
   "prettyName": "standard-monthly",
@@ -3176,73 +1123,6 @@ catalogApi.get_plan_for_subscription_and_date(api_key,
     }
   ]
 }
-```
-```java
-TODO
-```
-```ruby
-{
-   "billing_period":"MONTHLY",
-   "name":"standard-monthly",
-   "phases":[
-      {
-         "duration":{
-            "number":30,
-            "unit":"DAYS"
-         },
-         "fixed_prices":[
-
-         ],
-         "prices":[
-
-         ],
-         "type":"TRIAL",
-         "usages":[
-
-         ]
-      },
-      {
-         "duration":{
-            "number":-1,
-            "unit":"UNLIMITED"
-         },
-         "fixed_prices":[
-
-         ],
-         "prices":[
-            {
-               "currency":"GBP",
-               "value":75.0
-            },
-            {
-               "currency":"USD",
-               "value":100.0
-            }
-         ],
-         "type":"EVERGREEN",
-         "usages":[
-
-         ]
-      }
-   ],
-   "pretty_name":"standard-monthly"
-}
-```
-```python
-{'billing_period': 'MONTHLY',
- 'name': 'standard-monthly',
- 'phases': [{'duration': {'number': 30, 'unit': 'DAYS'},
-             'fixed_prices': [],
-             'prices': [],
-             'type': 'TRIAL',
-             'usages': []},
-            {'duration': {'number': -1, 'unit': 'UNLIMITED'},
-             'fixed_prices': [],
-             'prices': [{'currency': 'GBP', 'value': 75.0},
-                        {'currency': 'USD', 'value': 100.0}],
-             'type': 'EVERGREEN',
-             'usages': []}],
- 'pretty_name': 'standard-monthly'}
 ```
 
 **Query Parameters**
@@ -3298,7 +1178,7 @@ catalogApi.get_price_list_for_subscription_and_date(api_key,
 
 > Example Response:
 
-```shell
+```json
 {
   "name": "DEFAULT",
   "plans": [
@@ -3307,23 +1187,6 @@ catalogApi.get_price_list_for_subscription_and_date(api_key,
     "super-monthly"
   ]
 }
-```
-```java 
-TODO
-```
-```ruby
-{
-   "name":"DEFAULT",
-   "plans":[
-      "sports-monthly",
-      "standard-monthly",
-      "super-monthly"
-   ]
-}
-```
-```python
-{'name': 'DEFAULT',
- 'plans': ['sports-monthly', 'standard-monthly', 'super-monthly']}
 ```
 
 **Query Parameters**
@@ -3377,11 +1240,7 @@ catalogApi.get_product_for_subscription_and_date(api_key,
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 200 OK
-< Content-Type: application/json
-
+```json
 {
   "type": "BASE",
   "name": "Standard",
@@ -3390,33 +1249,6 @@ catalogApi.get_product_for_subscription_and_date(api_key,
   "included": [],
   "available": []
 }
-```
-```java 
-TODO
-```
-```ruby
-{
-   "available":[
-
-   ],
-   "included":[
-
-   ],
-   "name":"Standard",
-   "plans":[
-
-   ],
-   "pretty_name":"Standard",
-   "type":"BASE"
-}
-```
-```python
-{'available': [],
- 'included': [],
- 'name': 'Standard',
- 'plans': [],
- 'pretty_name': 'Standard',
- 'type': 'BASE'}
 ```
 
 **Query Parameters**
@@ -3531,23 +1363,9 @@ catalogApi.add_simple_plan(body, created_by, api_key, api_secret)
 
 > Example Response:
 
-```shell
-# Subset of headers returned when specifying -v curl option
-< HTTP/1.1 201 Created
-< Location: http://localhost:8080/1.0/kb/catalog
-< Content-Type: application/json
-< Content-Length: 0
-```
-```java
-TODO
-```
-```ruby
+```json
 no content
 ```
-```python
-no content
-```
-
 
 **Request Body**
 
