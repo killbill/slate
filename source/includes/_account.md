@@ -2170,6 +2170,8 @@ Map<String, String> NULL_PLUGIN_PROPERTIES = null;
 Payment payment = accountApi.processPaymentByExternalKey(authTransaction, 
 													                            externalKey, 
 		                                                  paymentMethodId, 
+                                                         externalKey,
+                                                         paymentMethodId, 
 		                                                  NULL_PLUGIN_NAMES,
 		                                                  NULL_PLUGIN_PROPERTIES, 
 		                                                  requestOptions);
@@ -2218,11 +2220,11 @@ payment_method_id = '80c7b386-97b2-424c-bb4e-0017f92bc6eb'
 # transaction_type could be 'AUTHORIZE', 'PURCHASE' or 'CREDIT'
 body = PaymentTransaction(amount=50, transaction_type='AUTHORIZE')
 
-accountApi.process_payment_by_external_key((body,
+accountApi.process_payment_by_external_key(body,
                                            external_key,
                                            created_by,
                                            api_key,
-                                           api_secret)
+                                           api_secret,
                                            payment_method_id=payment_method_id)
 ```
 
