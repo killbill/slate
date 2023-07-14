@@ -32823,21 +32823,17 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
-
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"tagId"</span>: <span class="s2">"13fe6f2c-91af-4635-aa9c-52e04d99b5ec"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"ACCOUNT"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"212211f8-a264-4ddf-b609-709ae652aec4"</span>,
-    <span class="s2">"tagDefinitionId"</span>: <span class="s2">"1ac0218e-0d2b-4c65-841f-cff8af92a100"</span>,
-    <span class="s2">"tagDefinitionName"</span>: <span class="s2">"sleepy"</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><h3 id='tag-search-tags'>Search tags</h3>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"tagId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13fe6f2c-91af-4635-aa9c-52e04d99b5ec"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCOUNT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"212211f8-a264-4ddf-b609-709ae652aec4"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tagDefinitionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1ac0218e-0d2b-4c65-841f-cff8af92a100"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tagDefinitionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sleepy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre><h3 id='tag-search-tags'>Search tags</h3>
 <p>Searches for a specific tag</p>
 
 <p><strong>HTTP Request</strong></p>
@@ -32896,21 +32892,17 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
-
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"tagId"</span>: <span class="s2">"13fe6f2c-91af-4635-aa9c-52e04d99b5ec"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"ACCOUNT"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"212211f8-a264-4ddf-b609-709ae652aec4"</span>,
-    <span class="s2">"tagDefinitionId"</span>: <span class="s2">"1ac0218e-0d2b-4c65-841f-cff8af92a100"</span>,
-    <span class="s2">"tagDefinitionName"</span>: <span class="s2">"sleepy"</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><h3 id='tag-retrieve-tag-audit-logs'>Retrieve tag audit logs</h3>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"tagId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13fe6f2c-91af-4635-aa9c-52e04d99b5ec"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCOUNT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"212211f8-a264-4ddf-b609-709ae652aec4"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tagDefinitionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1ac0218e-0d2b-4c65-841f-cff8af92a100"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tagDefinitionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sleepy"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre><h3 id='tag-retrieve-tag-audit-logs'>Retrieve tag audit logs</h3>
 <p>Retrieves audit logs with history for a specific tag</p>
 
 <p><strong>HTTP Request</strong> </p>
@@ -32939,38 +32931,34 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INSERT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-09-01T06:00:05.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAG"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6e22dbf7-a493-4402-b1e3-4bec54c39f31"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_fixed_and_recurrring_items"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Closing account"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"06d4fa80-f6ab-4760-aa97-2cd4ab83fd37"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"history"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-09-01T06:00:05.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-09-01T06:00:05.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tagDefinitionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000-0000-0000-0000-000000000002"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"037a6b81-f351-4e09-b2ea-f76f2fb0189e"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCOUNT"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAG"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAG_HISTORY"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"changeType"</span>: <span class="s2">"INSERT"</span>,
-    <span class="s2">"changeDate"</span>: <span class="s2">"2013-09-01T06:00:05.000Z"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"TAG"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"6e22dbf7-a493-4402-b1e3-4bec54c39f31"</span>,
-    <span class="s2">"changedBy"</span>: <span class="s2">"test_fixed_and_recurrring_items"</span>,
-    <span class="s2">"reasonCode"</span>: null,
-    <span class="s2">"comments"</span>: <span class="s2">"Closing account"</span>,
-    <span class="s2">"userToken"</span>: <span class="s2">"06d4fa80-f6ab-4760-aa97-2cd4ab83fd37"</span>,
-    <span class="s2">"history"</span>: <span class="o">{</span>
-      <span class="s2">"id"</span>: null,
-      <span class="s2">"createdDate"</span>: <span class="s2">"2013-09-01T06:00:05.000Z"</span>,
-      <span class="s2">"updatedDate"</span>: <span class="s2">"2013-09-01T06:00:05.000Z"</span>,
-      <span class="s2">"recordId"</span>: 1,
-      <span class="s2">"accountRecordId"</span>: 11,
-      <span class="s2">"tenantRecordId"</span>: 2,
-      <span class="s2">"tagDefinitionId"</span>: <span class="s2">"00000000-0000-0000-0000-000000000002"</span>,
-      <span class="s2">"objectId"</span>: <span class="s2">"037a6b81-f351-4e09-b2ea-f76f2fb0189e"</span>,
-      <span class="s2">"objectType"</span>: <span class="s2">"ACCOUNT"</span>,
-      <span class="s2">"isActive"</span>: <span class="nb">true</span>,
-      <span class="s2">"tableName"</span>: <span class="s2">"TAG"</span>,
-      <span class="s2">"historyTableName"</span>: <span class="s2">"TAG_HISTORY"</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-
-</code></pre><h1 id='tag-definition'>Tag Definition</h1>
+</span></code></pre><h1 id='tag-definition'>Tag Definition</h1>
 <p>These APIs manage a tag definition resource object, which provides the definition for a user-defined tag.</p>
 <h2 id='tag-definition-tag-definition-resource'>Tag Definition Resource</h2>
 <p>Each tag is associated with a specific tag definition. A tag definition is a schema or template, and a tag is an instance of it. Please refer to the section <a href="https://killbill.github.io/slate/#account-tags">AccountTags</a> for an overview of tags. The system provides some <code>System tag definitions</code> that can be used to add tags to a particular object. Users may define their own tags; however, when using <code>User Tags</code>, one must first create the associated tag definition.</p>
@@ -33049,13 +33037,8 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 201 
-&lt; Location: http://127.0.0.1:8080/1.0/kb/tagDefinitions/93f2bc59-e18d-4a5e-a645-9386c76fc03f
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight ruby tab-ruby"><code></code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
+</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A TagDefinition resource object with at least the following attributes: <strong>name</strong>, <strong>description</strong>, and <strong>applicableObjectTypes</strong>. The list of <strong>applicableObjectTypes</strong> may not be empty. </p>
@@ -33087,29 +33070,27 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"93f2bc59-e18d-4a5e-a645-9386c76fc03f"</span>,
-    <span class="s2">"isControlTag"</span>: <span class="nb">false</span>,
-    <span class="s2">"name"</span>: <span class="s2">"good_customer"</span>,
-    <span class="s2">"description"</span>: <span class="s2">"a good customer"</span>,
-    <span class="s2">"applicableObjectTypes"</span>: <span class="o">[</span>
-      <span class="s2">"ACCOUNT"</span>
-    <span class="o">]</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-<span class="o">}</span>,
-<span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"00000000-0000-0000-0000-000000000001"</span>,
-    <span class="s2">"isControlTag"</span>: <span class="nb">true</span>,
-    <span class="s2">"name"</span>: <span class="s2">"AUTO_PAY_OFF"</span>,
-    <span class="s2">"description"</span>: <span class="s2">"Suspends payments until removed."</span>,
-    <span class="s2">"applicableObjectTypes"</span>: <span class="o">[</span>
-      <span class="s2">"ACCOUNT"</span>
-    <span class="o">]</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-<span class="o">}</span>,
- ...
-
-</code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight ruby tab-ruby"><code></code></pre><pre class="highlight python tab-python"><code></code></pre>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"93f2bc59-e18d-4a5e-a645-9386c76fc03f"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isControlTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"good_customer"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a good customer"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"applicableObjectTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"ACCOUNT"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00000000-0000-0000-0000-000000000001"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isControlTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTO_PAY_OFF"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Suspends payments until removed."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"applicableObjectTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"ACCOUNT"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -33155,17 +33136,17 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="o">{</span>
-    <span class="s2">"id"</span>: <span class="s2">"93f2bc59-e18d-4a5e-a645-9386c76fc03f"</span>,
-    <span class="s2">"isControlTag"</span>: <span class="nb">false</span>,
-    <span class="s2">"name"</span>: <span class="s2">"good_customer"</span>,
-    <span class="s2">"description"</span>: <span class="s2">"a good customer"</span>,
-    <span class="s2">"applicableObjectTypes"</span>: <span class="o">[</span>
-      <span class="s2">"ACCOUNT"</span>
-    <span class="o">]</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight ruby tab-ruby"><code></code></pre><pre class="highlight python tab-python"><code></code></pre>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"93f2bc59-e18d-4a5e-a645-9386c76fc03f"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isControlTag"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"good_customer"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a good customer"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"applicableObjectTypes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="s2">"ACCOUNT"</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -33215,11 +33196,8 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 
-&lt; Content-Type: application/json
-
-</code></pre><pre class="highlight java tab-java"><code></code></pre><pre class="highlight ruby tab-ruby"><code></code></pre><pre class="highlight python tab-python"><code></code></pre>
+<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -33249,38 +33227,34 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INSERT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-26T01:56:48.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAG_DEFINITION"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"92991586-df8a-4d8d-9d55-61172c52fa45"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"039f01ea-460a-4edd-bfbc-39a68149cad2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"history"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-26T01:56:48.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-26T01:56:48.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"good_customer"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"applicableObjectTypes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ACCOUNT"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a good customer"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAG_DEFINITIONS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TAG_DEFINITION_HISTORY"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"changeType"</span>: <span class="s2">"INSERT"</span>,
-    <span class="s2">"changeDate"</span>: <span class="s2">"2019-02-26T01:56:48.000Z"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"TAG_DEFINITION"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"92991586-df8a-4d8d-9d55-61172c52fa45"</span>,
-    <span class="s2">"changedBy"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"reasonCode"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"comments"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"userToken"</span>: <span class="s2">"039f01ea-460a-4edd-bfbc-39a68149cad2"</span>,
-    <span class="s2">"history"</span>: <span class="o">{</span>
-      <span class="s2">"id"</span>: null,
-      <span class="s2">"createdDate"</span>: <span class="s2">"2019-02-26T01:56:48.000Z"</span>,
-      <span class="s2">"updatedDate"</span>: <span class="s2">"2019-02-26T01:56:48.000Z"</span>,
-      <span class="s2">"recordId"</span>: 1,
-      <span class="s2">"accountRecordId"</span>: 1,
-      <span class="s2">"tenantRecordId"</span>: 1,
-      <span class="s2">"name"</span>: <span class="s2">"good_customer"</span>,
-      <span class="s2">"applicableObjectTypes"</span>: <span class="s2">"ACCOUNT"</span>,
-      <span class="s2">"description"</span>: <span class="s2">"a good customer"</span>,
-      <span class="s2">"isActive"</span>: <span class="nb">true</span>,
-      <span class="s2">"tableName"</span>: <span class="s2">"TAG_DEFINITIONS"</span>,
-      <span class="s2">"historyTableName"</span>: <span class="s2">"TAG_DEFINITION_HISTORY"</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-
-</code></pre>
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
