@@ -9589,71 +9589,16 @@ based on custom business rules. Additional information can be found in our <a hr
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">{</span>
-    <span class="s2">"paymentMethodId"</span>:<span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span>,
-    <span class="s2">"externalKey"</span>:<span class="s2">"coolPaymentMethod"</span>,
-    <span class="s2">"accountId"</span>:<span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span>,
-    <span class="s2">"isDefault"</span>:false,
-    <span class="s2">"pluginName"</span>:<span class="s2">"__EXTERNAL_PAYMENT__"</span>,
-    <span class="s2">"pluginInfo"</span>:null,
-    <span class="s2">"auditLogs"</span>:[]
-<span class="o">}</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">PaymentMethod</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentMethod</span><span class="nd">@c789046</span>
-    <span class="nl">paymentMethodId:</span> <span class="mi">3</span><span class="n">c449da6</span><span class="o">-</span><span class="mi">7</span><span class="n">ec4</span><span class="o">-</span><span class="mi">4</span><span class="n">c74</span><span class="o">-</span><span class="mi">813</span><span class="n">f</span><span class="o">-</span><span class="n">f5055739a0b9</span>
-    <span class="nl">externalKey:</span> <span class="mi">7</span><span class="n">c13b1fb</span><span class="o">-</span><span class="mi">5</span><span class="n">fa5</span><span class="o">-</span><span class="mi">49</span><span class="n">cb</span><span class="o">-</span><span class="n">bbb6</span><span class="o">-</span><span class="mi">50</span><span class="n">b0fa78a988</span>
-    <span class="nl">accountId:</span> <span class="mi">2</span><span class="n">b995dde</span><span class="o">-</span><span class="n">ce30</span><span class="o">-</span><span class="mi">451</span><span class="n">f</span><span class="o">-</span><span class="mi">8</span><span class="n">bbf</span><span class="o">-</span><span class="mi">5</span><span class="n">bb9ed312505</span>
-    <span class="nl">isDefault:</span> <span class="kc">true</span>
-    <span class="nl">pluginName:</span> <span class="n">noop</span>
-    <span class="nl">pluginInfo:</span> <span class="kd">class</span> <span class="nc">PaymentMethodPluginDetail</span> <span class="o">{</span>
-        <span class="nl">externalPaymentMethodId:</span> <span class="n">afcdfd42</span><span class="o">-</span><span class="mi">1</span><span class="n">bad</span><span class="o">-</span><span class="mi">4</span><span class="n">caf</span><span class="o">-</span><span class="mi">86</span><span class="n">be</span><span class="o">-</span><span class="mi">93</span><span class="n">a27da51c55</span>
-        <span class="nl">isDefaultPaymentMethod:</span> <span class="kc">false</span>
-        <span class="nl">properties:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_NAME</span>
-            <span class="nl">value:</span> <span class="n">Bozo</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_CITY</span>
-            <span class="nl">value:</span> <span class="n">SF</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_LAST_4</span>
-            <span class="nl">value:</span> <span class="mi">4365</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_STATE</span>
-            <span class="nl">value:</span> <span class="n">CA</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_COUNTRY</span>
-            <span class="nl">value:</span> <span class="n">Zimbawe</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">}]</span>
-    <span class="o">}</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
-   <span class="s2">"paymentMethodId"</span><span class="ss">:"6a0bf13e-d57f-4f79-84bd-3690135f1923"</span><span class="p">,</span>
-   <span class="s2">"externalKey"</span><span class="ss">:"unknown"</span><span class="p">,</span>
-   <span class="s2">"accountId"</span><span class="ss">:"f9c4801f-0daa-4c46-bea0-59490d07fc5e"</span><span class="p">,</span>
-   <span class="s2">"isDefault"</span><span class="ss">:false</span><span class="p">,</span>
-   <span class="s2">"pluginName"</span><span class="ss">:"__EXTERNAL_PAYMENT__"</span><span class="p">,</span>
-   <span class="s2">"pluginInfo"</span><span class="p">:{</span>
-      <span class="s2">"properties"</span><span class="ss">:[]</span>
-   <span class="p">},</span>
-   <span class="s2">"auditLogs"</span><span class="ss">:[]</span>
-<span class="p">}</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">{</span><span class="s">'account_id'</span><span class="p">:</span> <span class="s">'9f2f95b9-7021-4645-9863-30feac25841a'</span><span class="p">,</span>
- <span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'external_key'</span><span class="p">:</span> <span class="s">'unknown'</span><span class="p">,</span>
- <span class="s">'is_default'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
- <span class="s">'payment_method_id'</span><span class="p">:</span> <span class="s">'0052cddd-0f61-4f68-b653-ca49b5d7f915'</span><span class="p">,</span>
- <span class="s">'plugin_info'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
- <span class="s">'plugin_name'</span><span class="p">:</span> <span class="s">'__EXTERNAL_PAYMENT__'</span><span class="p">}</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="s2">"coolPaymentMethod"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accountId"</span><span class="p">:</span><span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isDefault"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginName"</span><span class="p">:</span><span class="s2">"__EXTERNAL_PAYMENT__"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginInfo"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -9740,47 +9685,16 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">{</span>
-    <span class="s2">"paymentMethodId"</span>:<span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span>,
-    <span class="s2">"externalKey"</span>:<span class="s2">"coolPaymentMethod"</span>,
-    <span class="s2">"accountId"</span>:<span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span>,
-    <span class="s2">"isDefault"</span>:false,
-    <span class="s2">"pluginName"</span>:<span class="s2">"__EXTERNAL_PAYMENT__"</span>,
-    <span class="s2">"pluginInfo"</span>:null,
-    <span class="s2">"auditLogs"</span>:[]
-<span class="o">}</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">PaymentMethod</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentMethod</span><span class="err">@</span><span class="mi">360</span><span class="n">d34cd</span>
-    <span class="nl">paymentMethodId:</span> <span class="n">c46dbe85</span><span class="o">-</span><span class="n">a14b</span><span class="o">-</span><span class="mi">4</span><span class="n">d5b</span><span class="o">-</span><span class="mi">8</span><span class="n">b0d</span><span class="o">-</span><span class="n">e6a07b7ff111</span>
-    <span class="nl">externalKey:</span> <span class="n">foo</span>
-    <span class="nl">accountId:</span> <span class="n">dae298f7</span><span class="o">-</span><span class="mi">62</span><span class="n">b0</span><span class="o">-</span><span class="mi">4774</span><span class="o">-</span><span class="n">a213</span><span class="o">-</span><span class="mi">92</span><span class="n">f968693cdc</span>
-    <span class="nl">isDefault:</span> <span class="kc">true</span>
-    <span class="nl">pluginName:</span> <span class="n">noop</span>
-    <span class="nl">pluginInfo:</span> <span class="kc">null</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">{</span>
-   <span class="s2">"paymentMethodId"</span><span class="ss">:"4307ac7c-04a7-41e1-9cb0-8a4d4420104c"</span><span class="p">,</span>
-   <span class="s2">"externalKey"</span><span class="ss">:"sample_external_key"</span><span class="p">,</span>
-   <span class="s2">"accountId"</span><span class="ss">:"aba041a0-52f3-4d0d-b8e0-dec442dbc51e"</span><span class="p">,</span>
-   <span class="s2">"isDefault"</span><span class="ss">:true</span><span class="p">,</span>
-   <span class="s2">"pluginName"</span><span class="ss">:"__EXTERNAL_PAYMENT__"</span><span class="p">,</span>
-   <span class="s2">"pluginInfo"</span><span class="p">:{</span>
-      <span class="s2">"properties"</span><span class="ss">:[]</span>
-   <span class="p">},</span>
-   <span class="s2">"auditLogs"</span><span class="ss">:[]</span>
-<span class="p">}</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">{</span><span class="s">'account_id'</span><span class="p">:</span> <span class="s">'1d1c63ae-fd71-4e0c-87d4-24a334335c49'</span><span class="p">,</span>
- <span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'external_key'</span><span class="p">:</span> <span class="s">'sample_external_key'</span><span class="p">,</span>
- <span class="s">'is_default'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
- <span class="s">'payment_method_id'</span><span class="p">:</span> <span class="s">'882b2fa0-5946-487a-933c-b2572ea4383c'</span><span class="p">,</span>
- <span class="s">'plugin_info'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
- <span class="s">'plugin_name'</span><span class="p">:</span> <span class="s">'__EXTERNAL_PAYMENT__'</span><span class="p">}</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="s2">"coolPaymentMethod"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accountId"</span><span class="p">:</span><span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isDefault"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginName"</span><span class="p">:</span><span class="s2">"__EXTERNAL_PAYMENT__"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginInfo"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -9876,17 +9790,6 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                                        <span class="n">api_key</span><span class="p">,</span> 
                                        <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>  
-</code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -9967,61 +9870,27 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"paymentMethodId"</span>: <span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span>,
-    <span class="s2">"externalKey"</span>: <span class="s2">"coolPaymentMethod"</span>,
-    <span class="s2">"accountId"</span>: <span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span>,
-    <span class="s2">"isDefault"</span>: <span class="nb">false</span>,
-    <span class="s2">"pluginName"</span>: <span class="s2">"__EXTERNAL_PAYMENT__"</span>,
-    <span class="s2">"pluginInfo"</span>: null,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>,
-  <span class="o">{</span>
-    <span class="s2">"paymentMethodId"</span>: <span class="s2">"dc89832d-18a3-42fd-b3be-cac074fddb36"</span>,
-    <span class="s2">"externalKey"</span>: <span class="s2">"paypal"</span>,
-    <span class="s2">"accountId"</span>: <span class="s2">"ca15adc4-1061-4e54-a9a0-15e773b3b154"</span>,
-    <span class="s2">"isDefault"</span>: <span class="nb">false</span>,
-    <span class="s2">"pluginName"</span>: <span class="s2">"killbill-paypal-express"</span>,
-    <span class="s2">"pluginInfo"</span>: null,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">PaymentMethod</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentMethod</span><span class="err">@</span><span class="mi">3</span><span class="n">b058e2d</span>
-    <span class="nl">paymentMethodId:</span> <span class="mi">98420</span><span class="n">efb</span><span class="o">-</span><span class="mi">142</span><span class="n">f</span><span class="o">-</span><span class="mi">4437</span><span class="o">-</span><span class="mi">9</span><span class="n">a93</span><span class="o">-</span><span class="mi">817</span><span class="n">ded413313</span>
-    <span class="nl">externalKey:</span> <span class="n">e78ae144</span><span class="o">-</span><span class="mi">8727</span><span class="o">-</span><span class="mi">46</span><span class="n">f4</span><span class="o">-</span><span class="mi">8</span><span class="n">cf2</span><span class="o">-</span><span class="mi">63636813</span><span class="n">f232</span>
-    <span class="nl">accountId:</span> <span class="mi">73</span><span class="n">f59eee</span><span class="o">-</span><span class="n">abec</span><span class="o">-</span><span class="mi">4</span><span class="n">d3f</span><span class="o">-</span><span class="n">ab62</span><span class="o">-</span><span class="mi">21</span><span class="n">dba663bd25</span>
-    <span class="nl">isDefault:</span> <span class="kc">true</span>
-    <span class="nl">pluginName:</span> <span class="n">noop</span>
-    <span class="nl">pluginInfo:</span> <span class="kc">null</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">[</span>
-  <span class="p">{</span>
-     <span class="s2">"paymentMethodId"</span><span class="ss">:"6a0bf13e-d57f-4f79-84bd-3690135f1923"</span><span class="p">,</span>
-     <span class="s2">"externalKey"</span><span class="ss">:"unknown"</span><span class="p">,</span>
-     <span class="s2">"accountId"</span><span class="ss">:"f9c4801f-0daa-4c46-bea0-59490d07fc5e"</span><span class="p">,</span>
-     <span class="s2">"isDefault"</span><span class="ss">:false</span><span class="p">,</span>
-     <span class="s2">"pluginName"</span><span class="ss">:"__EXTERNAL_PAYMENT__"</span><span class="p">,</span>
-     <span class="s2">"pluginInfo"</span><span class="p">:{</span>
-        <span class="s2">"properties"</span><span class="ss">:[]</span>
-     <span class="p">},</span>
-     <span class="s2">"auditLogs"</span><span class="ss">:[]</span>
-  <span class="p">}</span>
-<span class="p">]</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">[{</span><span class="s">'account_id'</span><span class="p">:</span> <span class="s">'5d82791d-c47f-4c4b-be11-b68233656b96'</span><span class="p">,</span>
- <span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'external_key'</span><span class="p">:</span> <span class="s">'unknown'</span><span class="p">,</span>
- <span class="s">'is_default'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
- <span class="s">'payment_method_id'</span><span class="p">:</span> <span class="s">'06955087-e191-4da5-99c9-e712b21f6aa6'</span><span class="p">,</span>
- <span class="s">'plugin_info'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
- <span class="s">'plugin_name'</span><span class="p">:</span> <span class="s">'__EXTERNAL_PAYMENT__'</span><span class="p">}]</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coolPaymentMethod"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"__EXTERNAL_PAYMENT__"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginInfo"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dc89832d-18a3-42fd-b3be-cac074fddb36"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paypal"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ca15adc4-1061-4e54-a9a0-15e773b3b154"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"killbill-paypal-express"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginInfo"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -10133,76 +10002,18 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"paymentMethodId"</span>: <span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span>,
-    <span class="s2">"externalKey"</span>: <span class="s2">"coolPaymentMethod"</span>,
-    <span class="s2">"accountId"</span>: <span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span>,
-    <span class="s2">"isDefault"</span>: <span class="nb">false</span>,
-    <span class="s2">"pluginName"</span>: <span class="s2">"__EXTERNAL_PAYMENT__"</span>,
-    <span class="s2">"pluginInfo"</span>: null,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">PaymentMethod</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentMethod</span><span class="err">@</span><span class="mi">6</span><span class="n">b40b41a</span>
-    <span class="nl">paymentMethodId:</span> <span class="mi">62</span><span class="n">c434f7</span><span class="o">-</span><span class="mi">41</span><span class="n">fe</span><span class="o">-</span><span class="mi">497</span><span class="n">d</span><span class="o">-</span><span class="mi">8</span><span class="n">fb0</span><span class="o">-</span><span class="n">c35bb6706180</span>
-    <span class="nl">externalKey:</span> <span class="mi">4</span><span class="n">ac4162a</span><span class="o">-</span><span class="n">ae9c</span><span class="o">-</span><span class="mi">48</span><span class="n">ca</span><span class="o">-</span><span class="n">bb43</span><span class="o">-</span><span class="mi">8</span><span class="n">a4bcd6c2717</span>
-    <span class="nl">accountId:</span> <span class="n">a6941a79</span><span class="o">-</span><span class="mi">8</span><span class="n">b7b</span><span class="o">-</span><span class="mi">4</span><span class="n">da7</span><span class="o">-</span><span class="mi">99</span><span class="n">e0</span><span class="o">-</span><span class="n">bffc3d549f87</span>
-    <span class="nl">isDefault:</span> <span class="kc">true</span>
-    <span class="nl">pluginName:</span> <span class="n">noop</span>
-    <span class="nl">pluginInfo:</span> <span class="kd">class</span> <span class="nc">PaymentMethodPluginDetail</span> <span class="o">{</span>
-        <span class="nl">externalPaymentMethodId:</span> <span class="mi">9</span><span class="n">ddcce2d</span><span class="o">-</span><span class="n">b65f</span><span class="o">-</span><span class="mi">4</span><span class="n">e08</span><span class="o">-</span><span class="mi">8006</span><span class="o">-</span><span class="mi">1395</span><span class="n">e47ba97a</span>
-        <span class="nl">isDefaultPaymentMethod:</span> <span class="kc">false</span>
-        <span class="nl">properties:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_NAME</span>
-            <span class="nl">value:</span> <span class="n">Bozo</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_CITY</span>
-            <span class="nl">value:</span> <span class="n">SF</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_LAST_4</span>
-            <span class="nl">value:</span> <span class="mi">4365</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_STATE</span>
-            <span class="nl">value:</span> <span class="n">CA</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">},</span> <span class="kd">class</span> <span class="nc">PluginProperty</span> <span class="o">{</span>
-            <span class="nl">key:</span> <span class="n">CC_COUNTRY</span>
-            <span class="nl">value:</span> <span class="n">Zimbawe</span>
-            <span class="nl">isUpdatable:</span> <span class="kc">false</span>
-        <span class="o">}]</span>
-    <span class="o">}</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">[</span>
-  <span class="p">{</span>
-     <span class="s2">"paymentMethodId"</span><span class="ss">:"6a0bf13e-d57f-4f79-84bd-3690135f1923"</span><span class="p">,</span>
-     <span class="s2">"externalKey"</span><span class="ss">:"unknown"</span><span class="p">,</span>
-     <span class="s2">"accountId"</span><span class="ss">:"f9c4801f-0daa-4c46-bea0-59490d07fc5e"</span><span class="p">,</span>
-     <span class="s2">"isDefault"</span><span class="ss">:false</span><span class="p">,</span>
-     <span class="s2">"pluginName"</span><span class="ss">:"__EXTERNAL_PAYMENT__"</span><span class="p">,</span>
-     <span class="s2">"pluginInfo"</span><span class="p">:{</span>
-        <span class="s2">"properties"</span><span class="ss">:[]</span>
-     <span class="p">},</span>
-     <span class="s2">"auditLogs"</span><span class="ss">:[]</span>
-  <span class="p">}</span>
-<span class="p">]</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">[{</span><span class="s">'account_id'</span><span class="p">:</span> <span class="s">'81d8b04d-dee1-49bf-bc73-48219df21af9'</span><span class="p">,</span>
- <span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'external_key'</span><span class="p">:</span> <span class="s">'unknown'</span><span class="p">,</span>
- <span class="s">'is_default'</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
- <span class="s">'payment_method_id'</span><span class="p">:</span> <span class="s">'bcecaf3f-16c7-4d65-aed0-b08cc5e34a6b'</span><span class="p">,</span>
- <span class="s">'plugin_info'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
- <span class="s">'plugin_name'</span><span class="p">:</span> <span class="s">'__EXTERNAL_PAYMENT__'</span><span class="p">}]</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coolPaymentMethod"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isDefault"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"__EXTERNAL_PAYMENT__"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pluginInfo"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -10328,36 +10139,6 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                                                      <span class="n">api_key</span><span class="p">,</span>
                                                      <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 201 Created
-&lt; Location: http://127.0.0.1:8080/1.0/kb/paymentMethods/916619a4-02bb-4d3d-b3da-2584ac897b19/customFields
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">CustomField</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">CustomField</span><span class="nd">@c7d0c38a</span>
-    <span class="nl">customFieldId:</span> <span class="kc">null</span>
-    <span class="nl">objectId:</span> <span class="mi">3</span><span class="n">c449da6</span><span class="o">-</span><span class="mi">7</span><span class="n">ec4</span><span class="o">-</span><span class="mi">4</span><span class="n">c74</span><span class="o">-</span><span class="mi">813</span><span class="n">f</span><span class="o">-</span><span class="n">f5055739a0b9</span>
-    <span class="nl">objectType:</span> <span class="n">PAYMENT_METHOD</span>
-    <span class="nl">name:</span> <span class="n">Test</span> <span class="n">Custom</span> <span class="n">Field</span>
-    <span class="nl">value:</span> <span class="n">test_value</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">[</span>
-   <span class="p">{</span>
-      <span class="s2">"customFieldId"</span><span class="ss">:"7fb3dde7-0911-4477-99e3-69d142509bb9"</span><span class="p">,</span>
-      <span class="s2">"objectId"</span><span class="ss">:"4927c1a2-3959-4f71-98e7-ce3ba19c92ac"</span><span class="p">,</span>
-      <span class="s2">"objectType"</span><span class="ss">:"PAYMENT_METHOD"</span><span class="p">,</span>
-      <span class="s2">"name"</span><span class="ss">:"Test Custom Field"</span><span class="p">,</span>
-      <span class="s2">"value"</span><span class="ss">:"test_value"</span><span class="p">,</span>
-      <span class="s2">"auditLogs"</span><span class="ss">:[]</span>
-   <span class="p">}</span>
-<span class="p">]</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A list of objects giving the name and value of the custom field, or fields, to be added. For example:</p>
@@ -10413,46 +10194,17 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"customFieldId"</span>: <span class="s2">"6d4c073b-fd89-4e39-9802-eba65f42492f"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"PAYMENT_METHOD"</span>,
-    <span class="s2">"name"</span>: <span class="s2">"Test Custom Field"</span>,
-    <span class="s2">"value"</span>: <span class="s2">"test_value"</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">CustomField</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">CustomField</span><span class="nd">@c7d0c38a</span>
-    <span class="nl">customFieldId:</span> <span class="kc">null</span>
-    <span class="nl">objectId:</span> <span class="mi">3</span><span class="n">c449da6</span><span class="o">-</span><span class="mi">7</span><span class="n">ec4</span><span class="o">-</span><span class="mi">4</span><span class="n">c74</span><span class="o">-</span><span class="mi">813</span><span class="n">f</span><span class="o">-</span><span class="n">f5055739a0b9</span>
-    <span class="nl">objectType:</span> <span class="n">PAYMENT_METHOD</span>
-    <span class="nl">name:</span> <span class="n">Test</span> <span class="n">Custom</span> <span class="n">Field</span>
-    <span class="nl">value:</span> <span class="n">test_value</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">[</span>
-   <span class="p">{</span>
-      <span class="s2">"customFieldId"</span><span class="ss">:"7fb3dde7-0911-4477-99e3-69d142509bb9"</span><span class="p">,</span>
-      <span class="s2">"objectId"</span><span class="ss">:"4927c1a2-3959-4f71-98e7-ce3ba19c92ac"</span><span class="p">,</span>
-      <span class="s2">"objectType"</span><span class="ss">:"PAYMENT_METHOD"</span><span class="p">,</span>
-      <span class="s2">"name"</span><span class="ss">:"Test Custom Field"</span><span class="p">,</span>
-      <span class="s2">"value"</span><span class="ss">:"test_value"</span><span class="p">,</span>
-      <span class="s2">"auditLogs"</span><span class="ss">:[]</span>
-   <span class="p">}</span>
-<span class="p">]</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">[{</span><span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'custom_field_id'</span><span class="p">:</span> <span class="s">'5670b594-9317-4aeb-bfef-2c2342ec172a'</span><span class="p">,</span>
- <span class="s">'name'</span><span class="p">:</span> <span class="s">'Test Custom Field'</span><span class="p">,</span>
- <span class="s">'object_id'</span><span class="p">:</span> <span class="s">'4927c1a2-3959-4f71-98e7-ce3ba19c92ac'</span><span class="p">,</span>
- <span class="s">'object_type'</span><span class="p">:</span> <span class="s">'PAYMENT_METHOD'</span><span class="p">,</span>
- <span class="s">'value'</span><span class="p">:</span> <span class="s">'test_value'</span><span class="p">}]</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"customFieldId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6d4c073b-fd89-4e39-9802-eba65f42492f"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_METHOD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Custom Field"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_value"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -10536,17 +10288,6 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                                                      <span class="n">api_key</span><span class="p">,</span> 
                                                      <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
@@ -10602,17 +10343,6 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
                                                      <span class="n">created_by</span><span class="p">,</span>
                                                      <span class="n">api_key</span><span class="p">,</span> 
                                                      <span class="n">api_secret</span><span class="p">)</span>
-</code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
 <p><strong>Query Parameters</strong></p>
 
@@ -10674,96 +10404,35 @@ Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only insert
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"changeType"</span>: <span class="s2">"INSERT"</span>,
-    <span class="s2">"changeDate"</span>: <span class="s2">"2018-07-19T14:56:07.000Z"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"PAYMENT_METHOD"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span>,
-    <span class="s2">"changedBy"</span>: <span class="s2">"admin"</span>,
-    <span class="s2">"reasonCode"</span>: null,
-    <span class="s2">"comments"</span>: null,
-    <span class="s2">"userToken"</span>: <span class="s2">"f77892e9-32bd-4d59-8039-5e12798b53fe"</span>,
-    <span class="s2">"history"</span>: 
-    <span class="o">{</span>
-      <span class="s2">"id"</span>: null,
-      <span class="s2">"createdDate"</span>: <span class="s2">"2018-07-19T14:56:07.000Z"</span>,
-      <span class="s2">"updatedDate"</span>: <span class="s2">"2018-07-19T14:56:07.000Z"</span>,
-      <span class="s2">"recordId"</span>: 10,
-      <span class="s2">"accountRecordId"</span>: 35,
-      <span class="s2">"tenantRecordId"</span>: 1,
-      <span class="s2">"externalKey"</span>: <span class="s2">"unknown"</span>,
-      <span class="s2">"accountId"</span>: <span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span>,
-      <span class="s2">"pluginName"</span>: <span class="s2">"__EXTERNAL_PAYMENT__"</span>,
-      <span class="s2">"isActive"</span>: <span class="nb">true</span>,
-      <span class="s2">"active"</span>: <span class="nb">true</span>,
-      <span class="s2">"tableName"</span>: <span class="s2">"PAYMENT_METHODS"</span>,
-      <span class="s2">"historyTableName"</span>: <span class="s2">"PAYMENT_METHOD_HISTORY"</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
-    <span class="nl">changeType:</span> <span class="n">INSERT</span>
-    <span class="nl">changeDate:</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">25</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">03.000</span><span class="n">Z</span>
-    <span class="nl">objectType:</span> <span class="n">PAYMENT_METHOD</span>
-    <span class="nl">objectId:</span> <span class="n">e9d95f16</span><span class="o">-</span><span class="n">a426</span><span class="o">-</span><span class="mi">46</span><span class="n">d0</span><span class="o">-</span><span class="n">b76b</span><span class="o">-</span><span class="mi">90814792</span><span class="n">fb36</span>
-    <span class="nl">changedBy:</span> <span class="n">Toto</span>
-    <span class="nl">reasonCode:</span> <span class="n">i</span> <span class="n">am</span> <span class="n">god</span>
-    <span class="nl">comments:</span> <span class="n">no</span> <span class="n">comment</span>
-    <span class="nl">userToken:</span> <span class="mi">081</span><span class="n">ae8a2</span><span class="o">-</span><span class="n">b267</span><span class="o">-</span><span class="mi">4808</span><span class="o">-</span><span class="mi">8</span><span class="n">ae9</span><span class="o">-</span><span class="n">eb60f4e5a2d5</span>
-    <span class="nl">history:</span> <span class="o">{</span><span class="n">id</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> 
-              <span class="n">createdDate</span><span class="o">=</span><span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">25</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">03.000</span><span class="n">Z</span><span class="o">,</span> 
-              <span class="n">updatedDate</span><span class="o">=</span><span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">25</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">03.000</span><span class="n">Z</span><span class="o">,</span> 
-              <span class="n">recordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> 
-              <span class="n">accountRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> 
-              <span class="n">tenantRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> 
-              <span class="n">externalKey</span><span class="o">=</span><span class="mi">85905</span><span class="n">d6e</span><span class="o">-</span><span class="mi">64</span><span class="n">d6</span><span class="o">-</span><span class="mi">4</span><span class="n">ac9</span><span class="o">-</span><span class="mi">85</span><span class="n">d5</span><span class="o">-</span><span class="mi">0</span><span class="n">ce45d37a426</span><span class="o">,</span> 
-              <span class="n">accountId</span><span class="o">=</span><span class="mi">58780</span><span class="n">aff</span><span class="o">-</span><span class="n">a193</span><span class="o">-</span><span class="mi">4544</span><span class="o">-</span><span class="mi">9</span><span class="n">f82</span><span class="o">-</span><span class="mi">6</span><span class="n">b3d91b040ac</span><span class="o">,</span> 
-              <span class="n">pluginName</span><span class="o">=</span><span class="n">noop</span><span class="o">,</span> 
-              <span class="n">isActive</span><span class="o">=</span><span class="kc">true</span><span class="o">,</span> 
-              <span class="n">active</span><span class="o">=</span><span class="kc">true</span><span class="o">,</span> 
-              <span class="n">tableName</span><span class="o">=</span><span class="n">PAYMENT_METHODS</span><span class="o">,</span> 
-              <span class="n">historyTableName</span><span class="o">=</span><span class="n">PAYMENT_METHOD_HISTORY</span><span class="o">}</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="p">[</span>
-   <span class="p">{</span>
-      <span class="s2">"changeType"</span><span class="ss">:"INSERT"</span><span class="p">,</span>
-      <span class="s2">"changeDate"</span><span class="ss">:"2013-08-01T06:00:00.000Z"</span><span class="p">,</span>
-      <span class="s2">"objectType"</span><span class="ss">:"ACCOUNT_EMAIL"</span><span class="p">,</span>
-      <span class="s2">"objectId"</span><span class="ss">:"a4627e89-a73b-4167-a7ba-92a2881eb3c4"</span><span class="p">,</span>
-      <span class="s2">"changedBy"</span><span class="ss">:"test_account_tags"</span><span class="p">,</span>
-      <span class="s2">"userToken"</span><span class="ss">:"79005abf-a8cf-44e1-84fc-945381d35bd5"</span><span class="p">,</span>
-      <span class="s2">"history"</span><span class="p">:{</span>
-         <span class="s2">"id"</span><span class="ss">:null</span><span class="p">,</span>
-         <span class="s2">"createdDate"</span><span class="ss">:"2013-08-01T06:00:00.000Z"</span><span class="p">,</span>
-         <span class="s2">"updatedDate"</span><span class="ss">:"2013-08-01T06:00:00.000Z"</span><span class="p">,</span>
-         <span class="s2">"recordId"</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span>
-         <span class="s2">"accountRecordId"</span><span class="p">:</span><span class="mi">525</span><span class="p">,</span>
-         <span class="s2">"tenantRecordId"</span><span class="p">:</span><span class="mi">842</span><span class="p">,</span>
-         <span class="s2">"accountId"</span><span class="ss">:"1ced5fc2-b032-4969-a38b-d4db9ab5368f"</span><span class="p">,</span>
-         <span class="s2">"email"</span><span class="ss">:"email@laposte.com"</span><span class="p">,</span>
-         <span class="s2">"isActive"</span><span class="ss">:true</span><span class="p">,</span>
-         <span class="s2">"tableName"</span><span class="ss">:"ACCOUNT_EMAIL"</span><span class="p">,</span>
-         <span class="s2">"historyTableName"</span><span class="ss">:"ACCOUNT_EMAIL_HISTORY"</span>
-      <span class="p">}</span>
-   <span class="p">}</span>
-<span class="p">]</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">[{</span><span class="s">'change_date'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">()),</span>
- <span class="s">'change_type'</span><span class="p">:</span> <span class="s">'INSERT'</span><span class="p">,</span>
- <span class="s">'changed_by'</span><span class="p">:</span> <span class="s">'Me'</span><span class="p">,</span>
- <span class="s">'comments'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
- <span class="s">'history'</span><span class="p">:</span> <span class="p">{</span><span class="s">'created_date'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">()),</span>
-             <span class="s">'id'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
-             <span class="s">'updated_date'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">tzutc</span><span class="p">())},</span>
- <span class="s">'object_id'</span><span class="p">:</span> <span class="s">'bb390282-6757-4f4f-8dd5-456abd9f30b2'</span><span class="p">,</span>
- <span class="s">'object_type'</span><span class="p">:</span> <span class="s">'ACCOUNT_EMAIL'</span><span class="p">,</span>
- <span class="s">'reason_code'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
- <span class="s">'user_token'</span><span class="p">:</span> <span class="s">'548055b7-2c5e-4315-9293-d76c00bd9737'</span><span class="p">}]</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INSERT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T14:56:07.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_METHOD"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f77892e9-32bd-4d59-8039-5e12798b53fe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"history"</span><span class="p">:</span><span class="w"> 
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T14:56:07.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T14:56:07.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"__EXTERNAL_PAYMENT__"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"active"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_METHODS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_METHOD_HISTORY"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -23996,85 +23665,43 @@ that work directly at the transaction level.</p>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
-
-<span class="o">{</span>
-  <span class="s2">"accountId"</span>: <span class="s2">"2ad52f53-85ae-408a-9879-32a7e59dd03d"</span>,
-  <span class="s2">"paymentId"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-  <span class="s2">"paymentNumber"</span>: <span class="s2">"47"</span>,
-  <span class="s2">"paymentExternalKey"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-  <span class="s2">"authAmount"</span>: 0,
-  <span class="s2">"capturedAmount"</span>: 0,
-  <span class="s2">"purchasedAmount"</span>: 0,
-  <span class="s2">"refundedAmount"</span>: 0,
-  <span class="s2">"creditedAmount"</span>: 0,
-  <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
-  <span class="s2">"paymentMethodId"</span>: <span class="s2">"c02fa9b0-ae95-42ae-9010-bc11cb160947"</span>,
-  <span class="s2">"transactions"</span>: <span class="o">[</span>
-    <span class="o">{</span>
-      <span class="s2">"transactionId"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-      <span class="s2">"transactionExternalKey"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-      <span class="s2">"paymentId"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-      <span class="s2">"paymentExternalKey"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-      <span class="s2">"transactionType"</span>: <span class="s2">"AUTHORIZE"</span>,
-      <span class="s2">"amount"</span>: 0,
-      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"effectiveDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"processedAmount"</span>: 0,
-      <span class="s2">"processedCurrency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"status"</span>: <span class="s2">"SUCCESS"</span>,
-      <span class="s2">"gatewayErrorCode"</span>: null,
-      <span class="s2">"gatewayErrorMsg"</span>: null,
-      <span class="s2">"firstPaymentReferenceId"</span>: null,
-      <span class="s2">"secondPaymentReferenceId"</span>: null,
-      <span class="s2">"properties"</span>: null,
-      <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-    <span class="o">}</span>
-  <span class="o">]</span>,
-  <span class="s2">"paymentAttempts"</span>: null,
-  <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="nd">@dd818d6d</span>
-    <span class="nl">accountId:</span> <span class="mi">3093</span><span class="n">aa3e</span><span class="o">-</span><span class="mi">63</span><span class="n">c6</span><span class="o">-</span><span class="mi">4</span><span class="n">ffe</span><span class="o">-</span><span class="mi">92</span><span class="n">d1</span><span class="o">-</span><span class="mi">60</span><span class="n">a0e34f2397</span>
-    <span class="nl">paymentId:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-    <span class="nl">paymentNumber:</span> <span class="mi">42</span>
-    <span class="nl">paymentExternalKey:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-    <span class="nl">authAmount:</span> <span class="mi">0</span>
-    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
-    <span class="nl">purchasedAmount:</span> <span class="mi">0</span>
-    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
-    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
-    <span class="nl">currency:</span> <span class="n">USD</span>
-    <span class="nl">paymentMethodId:</span> <span class="n">aa00971a</span><span class="o">-</span><span class="mi">6310</span><span class="o">-</span><span class="mi">43</span><span class="n">e1</span><span class="o">-</span><span class="n">af83</span><span class="o">-</span><span class="mi">28</span><span class="n">fca1edadd3</span>
-    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@c3eadd4f</span>
-        <span class="nl">transactionId:</span> <span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span>
-        <span class="nl">transactionExternalKey:</span> <span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span>
-        <span class="nl">paymentId:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-        <span class="nl">paymentExternalKey:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
-        <span class="nl">amount:</span> <span class="mf">1.00</span>
-        <span class="nl">currency:</span> <span class="n">USD</span>
-        <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span>
-        <span class="nl">processedAmount:</span> <span class="mf">0.00</span>
-        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
-        <span class="nl">status:</span> <span class="n">UNKNOWN</span>
-        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
-        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
-        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
-        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
-        <span class="nl">properties:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="o">[]</span>
-    <span class="o">}]</span>
-    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2ad52f53-85ae-408a-9879-32a7e59dd03d"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"47"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"authAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"capturedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"purchasedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"refundedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creditedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c02fa9b0-ae95-42ae-9010-bc11cb160947"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"paymentExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTHORIZE"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorMsg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"firstPaymentReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"secondPaymentReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"paymentAttempts"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -24134,85 +23761,43 @@ that work directly at the transaction level.</p>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
-
-<span class="o">{</span>
-  <span class="s2">"accountId"</span>: <span class="s2">"2ad52f53-85ae-408a-9879-32a7e59dd03d"</span>,
-  <span class="s2">"paymentId"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-  <span class="s2">"paymentNumber"</span>: <span class="s2">"47"</span>,
-  <span class="s2">"paymentExternalKey"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-  <span class="s2">"authAmount"</span>: 0,
-  <span class="s2">"capturedAmount"</span>: 0,
-  <span class="s2">"purchasedAmount"</span>: 0,
-  <span class="s2">"refundedAmount"</span>: 0,
-  <span class="s2">"creditedAmount"</span>: 0,
-  <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
-  <span class="s2">"paymentMethodId"</span>: <span class="s2">"c02fa9b0-ae95-42ae-9010-bc11cb160947"</span>,
-  <span class="s2">"transactions"</span>: <span class="o">[</span>
-    <span class="o">{</span>
-      <span class="s2">"transactionId"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-      <span class="s2">"transactionExternalKey"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-      <span class="s2">"paymentId"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-      <span class="s2">"paymentExternalKey"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-      <span class="s2">"transactionType"</span>: <span class="s2">"AUTHORIZE"</span>,
-      <span class="s2">"amount"</span>: 0,
-      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"effectiveDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"processedAmount"</span>: 0,
-      <span class="s2">"processedCurrency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"status"</span>: <span class="s2">"SUCCESS"</span>,
-      <span class="s2">"gatewayErrorCode"</span>: null,
-      <span class="s2">"gatewayErrorMsg"</span>: null,
-      <span class="s2">"firstPaymentReferenceId"</span>: null,
-      <span class="s2">"secondPaymentReferenceId"</span>: null,
-      <span class="s2">"properties"</span>: null,
-      <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-    <span class="o">}</span>
-  <span class="o">]</span>,
-  <span class="s2">"paymentAttempts"</span>: null,
-  <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="nd">@dd818d6d</span>
-    <span class="nl">accountId:</span> <span class="mi">3093</span><span class="n">aa3e</span><span class="o">-</span><span class="mi">63</span><span class="n">c6</span><span class="o">-</span><span class="mi">4</span><span class="n">ffe</span><span class="o">-</span><span class="mi">92</span><span class="n">d1</span><span class="o">-</span><span class="mi">60</span><span class="n">a0e34f2397</span>
-    <span class="nl">paymentId:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-    <span class="nl">paymentNumber:</span> <span class="mi">42</span>
-    <span class="nl">paymentExternalKey:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-    <span class="nl">authAmount:</span> <span class="mi">0</span>
-    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
-    <span class="nl">purchasedAmount:</span> <span class="mi">0</span>
-    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
-    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
-    <span class="nl">currency:</span> <span class="n">USD</span>
-    <span class="nl">paymentMethodId:</span> <span class="n">aa00971a</span><span class="o">-</span><span class="mi">6310</span><span class="o">-</span><span class="mi">43</span><span class="n">e1</span><span class="o">-</span><span class="n">af83</span><span class="o">-</span><span class="mi">28</span><span class="n">fca1edadd3</span>
-    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="nd">@c3eadd4f</span>
-        <span class="nl">transactionId:</span> <span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span>
-        <span class="nl">transactionExternalKey:</span> <span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span>
-        <span class="nl">paymentId:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-        <span class="nl">paymentExternalKey:</span> <span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span>
-        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
-        <span class="nl">amount:</span> <span class="mf">1.00</span>
-        <span class="nl">currency:</span> <span class="n">USD</span>
-        <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span>
-        <span class="nl">processedAmount:</span> <span class="mf">0.00</span>
-        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
-        <span class="nl">status:</span> <span class="n">UNKNOWN</span>
-        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
-        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
-        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
-        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
-        <span class="nl">properties:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="o">[]</span>
-    <span class="o">}]</span>
-    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2ad52f53-85ae-408a-9879-32a7e59dd03d"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"47"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"authAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"capturedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"purchasedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"refundedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creditedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c02fa9b0-ae95-42ae-9010-bc11cb160947"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"paymentExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTHORIZE"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorMsg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"firstPaymentReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"secondPaymentReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"paymentAttempts"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -24288,53 +23873,6 @@ that work directly at the transaction level.</p>
 </code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 201 Created
-&lt; Location: http://127.0.0.1:8080/1.0/kb/payments/27d15e39-b25c-4dc1-92cf-5487397a48a6/
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="kd">class</span> <span class="nc">Payment</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Payment</span><span class="nd">@b3bf4de6</span>
-    <span class="nl">accountId:</span> <span class="n">f7aadaf2</span><span class="o">-</span><span class="mi">1594</span><span class="o">-</span><span class="mi">4</span><span class="n">bd8</span><span class="o">-</span><span class="n">b8fd</span><span class="o">-</span><span class="n">a09783e04b6d</span>
-    <span class="nl">paymentId:</span> <span class="mi">27</span><span class="n">d15e39</span><span class="o">-</span><span class="n">b25c</span><span class="o">-</span><span class="mi">4</span><span class="n">dc1</span><span class="o">-</span><span class="mi">92</span><span class="n">cf</span><span class="o">-</span><span class="mi">5487397</span><span class="n">a48a6</span>
-    <span class="nl">paymentNumber:</span> <span class="mi">43</span>
-    <span class="nl">paymentExternalKey:</span> <span class="mi">27</span><span class="n">d15e39</span><span class="o">-</span><span class="n">b25c</span><span class="o">-</span><span class="mi">4</span><span class="n">dc1</span><span class="o">-</span><span class="mi">92</span><span class="n">cf</span><span class="o">-</span><span class="mi">5487397</span><span class="n">a48a6</span>
-    <span class="nl">authAmount:</span> <span class="mi">0</span>
-    <span class="nl">capturedAmount:</span> <span class="mi">0</span>
-    <span class="nl">purchasedAmount:</span> <span class="mf">10.00</span>
-    <span class="nl">refundedAmount:</span> <span class="mi">0</span>
-    <span class="nl">creditedAmount:</span> <span class="mi">0</span>
-    <span class="nl">currency:</span> <span class="n">USD</span>
-    <span class="nl">paymentMethodId:</span> <span class="mi">47953</span><span class="n">e4d</span><span class="o">-</span><span class="mi">2</span><span class="n">b52</span><span class="o">-</span><span class="mi">4</span><span class="n">ac2</span><span class="o">-</span><span class="n">a016</span><span class="o">-</span><span class="mi">340</span><span class="n">eb0074444</span>
-    <span class="nl">transactions:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">PaymentTransaction</span> <span class="o">{</span>
-        <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">PaymentTransaction</span><span class="err">@</span><span class="mi">38</span><span class="n">b46552</span>
-        <span class="nl">transactionId:</span> <span class="mi">37</span><span class="n">d15a2f</span><span class="o">-</span><span class="mi">55</span><span class="n">ac</span><span class="o">-</span><span class="mi">40</span><span class="n">ab</span><span class="o">-</span><span class="n">a873</span><span class="o">-</span><span class="mi">08</span><span class="n">faae78f213</span>
-        <span class="nl">transactionExternalKey:</span> <span class="mi">37</span><span class="n">d15a2f</span><span class="o">-</span><span class="mi">55</span><span class="n">ac</span><span class="o">-</span><span class="mi">40</span><span class="n">ab</span><span class="o">-</span><span class="n">a873</span><span class="o">-</span><span class="mi">08</span><span class="n">faae78f213</span>
-        <span class="nl">paymentId:</span> <span class="mi">27</span><span class="n">d15e39</span><span class="o">-</span><span class="n">b25c</span><span class="o">-</span><span class="mi">4</span><span class="n">dc1</span><span class="o">-</span><span class="mi">92</span><span class="n">cf</span><span class="o">-</span><span class="mi">5487397</span><span class="n">a48a6</span>
-        <span class="nl">paymentExternalKey:</span> <span class="mi">27</span><span class="n">d15e39</span><span class="o">-</span><span class="n">b25c</span><span class="o">-</span><span class="mi">4</span><span class="n">dc1</span><span class="o">-</span><span class="mi">92</span><span class="n">cf</span><span class="o">-</span><span class="mi">5487397</span><span class="n">a48a6</span>
-        <span class="nl">transactionType:</span> <span class="n">PURCHASE</span>
-        <span class="nl">amount:</span> <span class="mf">10.00</span>
-        <span class="nl">currency:</span> <span class="n">USD</span>
-        <span class="nl">effectiveDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">07</span><span class="nl">T09:</span><span class="mi">16</span><span class="o">:</span><span class="mf">52.000</span><span class="n">Z</span>
-        <span class="nl">processedAmount:</span> <span class="mf">10.00</span>
-        <span class="nl">processedCurrency:</span> <span class="n">USD</span>
-        <span class="nl">status:</span> <span class="n">SUCCESS</span>
-        <span class="nl">gatewayErrorCode:</span> <span class="kc">null</span>
-        <span class="nl">gatewayErrorMsg:</span> <span class="kc">null</span>
-        <span class="nl">firstPaymentReferenceId:</span> <span class="kc">null</span>
-        <span class="nl">secondPaymentReferenceId:</span> <span class="kc">null</span>
-        <span class="nl">properties:</span> <span class="kc">null</span>
-        <span class="nl">auditLogs:</span> <span class="o">[]</span>
-    <span class="o">}]</span>
-    <span class="nl">paymentAttempts:</span> <span class="kc">null</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
-</code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A <code>PaymentTransaction</code> object including, at least, a <code>paymentId</code> and a <code>status</code> (SUCCESS or PAYMENT_FAILURE)</p>
@@ -24377,100 +23915,73 @@ that work directly at the transaction level.</p>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt; Content-Type: application/json
-
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"changeType"</span>: <span class="s2">"INSERT"</span>,
-    <span class="s2">"changeDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"TRANSACTION"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-    <span class="s2">"changedBy"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"reasonCode"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"comments"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"userToken"</span>: <span class="s2">"84ac4088-dc76-4fde-9ff0-63e228b5e6fc"</span>,
-    <span class="s2">"history"</span>: <span class="o">{</span>
-      <span class="s2">"id"</span>: null,
-      <span class="s2">"createdDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"updatedDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"recordId"</span>: 63,
-      <span class="s2">"accountRecordId"</span>: 120,
-      <span class="s2">"tenantRecordId"</span>: 101,
-      <span class="s2">"attemptId"</span>: null,
-      <span class="s2">"paymentId"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-      <span class="s2">"transactionExternalKey"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-      <span class="s2">"transactionType"</span>: <span class="s2">"AUTHORIZE"</span>,
-      <span class="s2">"effectiveDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"transactionStatus"</span>: <span class="s2">"UNKNOWN"</span>,
-      <span class="s2">"amount"</span>: 0,
-      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"processedAmount"</span>: null,
-      <span class="s2">"processedCurrency"</span>: null,
-      <span class="s2">"gatewayErrorCode"</span>: null,
-      <span class="s2">"gatewayErrorMsg"</span>: null,
-      <span class="s2">"tableName"</span>: <span class="s2">"PAYMENT_TRANSACTIONS"</span>,
-      <span class="s2">"historyTableName"</span>: <span class="s2">"PAYMENT_TRANSACTION_HISTORY"</span>
-    <span class="o">}</span>
-  <span class="o">}</span>,
-  <span class="o">{</span>
-    <span class="s2">"changeType"</span>: <span class="s2">"UPDATE"</span>,
-    <span class="s2">"changeDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"TRANSACTION"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-    <span class="s2">"changedBy"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"reasonCode"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"comments"</span>: <span class="s2">"demo"</span>,
-    <span class="s2">"userToken"</span>: <span class="s2">"84ac4088-dc76-4fde-9ff0-63e228b5e6fc"</span>,
-    <span class="s2">"history"</span>: <span class="o">{</span>
-      <span class="s2">"id"</span>: null,
-      <span class="s2">"createdDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"updatedDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"recordId"</span>: 63,
-      <span class="s2">"accountRecordId"</span>: 120,
-      <span class="s2">"tenantRecordId"</span>: 101,
-      <span class="s2">"attemptId"</span>: null,
-      <span class="s2">"paymentId"</span>: <span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span>,
-      <span class="s2">"transactionExternalKey"</span>: <span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span>,
-      <span class="s2">"transactionType"</span>: <span class="s2">"AUTHORIZE"</span>,
-      <span class="s2">"effectiveDate"</span>: <span class="s2">"2018-07-18T18:58:11.000Z"</span>,
-      <span class="s2">"transactionStatus"</span>: <span class="s2">"SUCCESS"</span>,
-      <span class="s2">"amount"</span>: 0,
-      <span class="s2">"currency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"processedAmount"</span>: 0,
-      <span class="s2">"processedCurrency"</span>: <span class="s2">"USD"</span>,
-      <span class="s2">"gatewayErrorCode"</span>: null,
-      <span class="s2">"gatewayErrorMsg"</span>: null,
-      <span class="s2">"tableName"</span>: <span class="s2">"PAYMENT_TRANSACTIONS"</span>,
-      <span class="s2">"historyTableName"</span>: <span class="s2">"PAYMENT_TRANSACTION_HISTORY"</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="o">[</span><span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
-    <span class="nl">changeType:</span> <span class="n">INSERT</span>
-    <span class="nl">changeDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span>
-    <span class="nl">objectType:</span> <span class="n">TRANSACTION</span>
-    <span class="nl">objectId:</span> <span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span>
-    <span class="nl">changedBy:</span> <span class="n">Kill</span> <span class="n">Bill</span> <span class="n">Client</span> <span class="n">Tutorial</span>
-    <span class="nl">reasonCode:</span> <span class="n">Demonstrating</span> <span class="n">Kill</span> <span class="n">Bill</span> <span class="n">Client</span>
-    <span class="nl">comments:</span> <span class="n">Demonstrating</span> <span class="n">Kill</span> <span class="n">Bill</span> <span class="n">Client</span>
-    <span class="nl">userToken:</span> <span class="n">d05cc121</span><span class="o">-</span><span class="mi">5</span><span class="n">a34</span><span class="o">-</span><span class="mi">4</span><span class="n">b9e</span><span class="o">-</span><span class="n">b876</span><span class="o">-</span><span class="n">c48bab354418</span>
-    <span class="nl">history:</span> <span class="o">{</span><span class="n">id</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">createdDate</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">updatedDate</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">recordId</span><span class="o">=</span><span class="mi">42</span><span class="o">,</span> <span class="n">accountRecordId</span><span class="o">=</span><span class="mi">39</span><span class="o">,</span> <span class="n">tenantRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">attemptId</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">paymentId</span><span class="o">=</span><span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span><span class="o">,</span> <span class="n">transactionExternalKey</span><span class="o">=</span><span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span><span class="o">,</span> <span class="n">transactionType</span><span class="o">=</span><span class="n">PURCHASE</span><span class="o">,</span> <span class="n">effectiveDate</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">transactionStatus</span><span class="o">=</span><span class="n">UNKNOWN</span><span class="o">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="o">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">processedAmount</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">processedCurrency</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">gatewayErrorCode</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">gatewayErrorMsg</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">tableName</span><span class="o">=</span><span class="n">PAYMENT_TRANSACTIONS</span><span class="o">,</span> <span class="n">historyTableName</span><span class="o">=</span><span class="n">PAYMENT_TRANSACTION_HISTORY</span><span class="o">}</span>
-<span class="o">},</span> <span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
-    <span class="nl">changeType:</span> <span class="n">UPDATE</span>
-    <span class="nl">changeDate:</span> <span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span>
-    <span class="nl">objectType:</span> <span class="n">TRANSACTION</span>
-    <span class="nl">objectId:</span> <span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span>
-    <span class="nl">changedBy:</span> <span class="n">Kill</span> <span class="n">Bill</span> <span class="n">Client</span> <span class="n">Tutorial</span>
-    <span class="nl">reasonCode:</span> <span class="n">Demonstrating</span> <span class="n">Kill</span> <span class="n">Bill</span> <span class="n">Client</span>
-    <span class="nl">comments:</span> <span class="n">Demonstrating</span> <span class="n">Kill</span> <span class="n">Bill</span> <span class="n">Client</span>
-    <span class="nl">userToken:</span> <span class="n">d05cc121</span><span class="o">-</span><span class="mi">5</span><span class="n">a34</span><span class="o">-</span><span class="mi">4</span><span class="n">b9e</span><span class="o">-</span><span class="n">b876</span><span class="o">-</span><span class="n">c48bab354418</span>
-    <span class="nl">history:</span> <span class="o">{</span><span class="n">id</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">createdDate</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">updatedDate</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">recordId</span><span class="o">=</span><span class="mi">42</span><span class="o">,</span> <span class="n">accountRecordId</span><span class="o">=</span><span class="mi">39</span><span class="o">,</span> <span class="n">tenantRecordId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">attemptId</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">paymentId</span><span class="o">=</span><span class="mi">59</span><span class="n">f1e0cb</span><span class="o">-</span><span class="mi">58</span><span class="n">ae</span><span class="o">-</span><span class="mi">481</span><span class="n">a</span><span class="o">-</span><span class="n">afbb</span><span class="o">-</span><span class="mi">6709</span><span class="n">e86066de</span><span class="o">,</span> <span class="n">transactionExternalKey</span><span class="o">=</span><span class="mi">41</span><span class="n">f4d299</span><span class="o">-</span><span class="mi">4371</span><span class="o">-</span><span class="mi">4876</span><span class="o">-</span><span class="mi">96</span><span class="n">b4</span><span class="o">-</span><span class="mi">0</span><span class="n">b3cc81b246b</span><span class="o">,</span> <span class="n">transactionType</span><span class="o">=</span><span class="n">PURCHASE</span><span class="o">,</span> <span class="n">effectiveDate</span><span class="o">=</span><span class="mi">2021</span><span class="o">-</span><span class="mo">05</span><span class="o">-</span><span class="mo">05</span><span class="nl">T11:</span><span class="mi">54</span><span class="o">:</span><span class="mf">19.000</span><span class="n">Z</span><span class="o">,</span> <span class="n">transactionStatus</span><span class="o">=</span><span class="n">UNKNOWN</span><span class="o">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="o">,</span> <span class="n">currency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">processedAmount</span><span class="o">=</span><span class="mf">0.0</span><span class="o">,</span> <span class="n">processedCurrency</span><span class="o">=</span><span class="n">USD</span><span class="o">,</span> <span class="n">gatewayErrorCode</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">gatewayErrorMsg</span><span class="o">=</span><span class="kc">null</span><span class="o">,</span> <span class="n">tableName</span><span class="o">=</span><span class="n">PAYMENT_TRANSACTIONS</span><span class="o">,</span> <span class="n">historyTableName</span><span class="o">=</span><span class="n">PAYMENT_TRANSACTION_HISTORY</span><span class="o">}</span>
-<span class="o">}]</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">TODO</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INSERT"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRANSACTION"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84ac4088-dc76-4fde-9ff0-63e228b5e6fc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"history"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"attemptId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTHORIZE"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNKNOWN"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedAmount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedCurrency"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorMsg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_TRANSACTIONS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_TRANSACTION_HISTORY"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UPDATE"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRANSACTION"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"comments"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84ac4088-dc76-4fde-9ff0-63e228b5e6fc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"history"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"attemptId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8edd4c6-2f85-4375-95f3-e78ca4d85b82"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"07655b3c-7f17-4172-b193-ece48e5741ad"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AUTHORIZE"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-18T18:58:11.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"transactionStatus"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"processedCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"gatewayErrorMsg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_TRANSACTIONS"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_TRANSACTION_HISTORY"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -24530,27 +24041,6 @@ that work directly at the transaction level.</p>
                                                        <span class="n">api_key</span><span class="p">,</span>
                                                        <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 201 Created
-&lt; Location: http://127.0.0.1:8080/1.0/kb/paymentTransactions/41f4d299-4371-4876-96b4-0b3cc81b246b/customFields
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">CustomField</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">CustomField</span><span class="nd">@c7d0c38a</span>
-    <span class="nl">customFieldId:</span> <span class="kc">null</span>
-    <span class="nl">objectId:</span> <span class="n">cca08349</span><span class="o">-</span><span class="mi">8</span><span class="n">b26</span><span class="o">-</span><span class="mi">41</span><span class="n">c7</span><span class="o">-</span><span class="n">bfcc</span><span class="o">-</span><span class="mi">2</span><span class="n">e3cf70a0f28</span>
-    <span class="nl">objectType:</span> <span class="n">TRANSACTION</span>
-    <span class="nl">name:</span> <span class="n">Test</span> <span class="n">Custom</span> <span class="n">Field</span>
-    <span class="nl">value:</span> <span class="n">test_value</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A JSON string representing the custom field object or objects to be added. For example:</p>
@@ -24596,37 +24086,17 @@ that work directly at the transaction level.</p>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"customFieldId"</span>: <span class="s2">"e4bac228-872d-4966-8072-2c3ac06442ed"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"8fe697d4-2c25-482c-aa45-f6cd5a48186d"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"TRANSACTION"</span>,
-    <span class="s2">"name"</span>: <span class="s2">"Test Custom Field"</span>,
-    <span class="s2">"value"</span>: <span class="s2">"test_value"</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">CustomField</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">CustomField</span><span class="nd">@c7d0c38a</span>
-    <span class="nl">customFieldId:</span> <span class="kc">null</span>
-    <span class="nl">objectId:</span> <span class="n">cca08349</span><span class="o">-</span><span class="mi">8</span><span class="n">b26</span><span class="o">-</span><span class="mi">41</span><span class="n">c7</span><span class="o">-</span><span class="n">bfcc</span><span class="o">-</span><span class="mi">2</span><span class="n">e3cf70a0f28</span>
-    <span class="nl">objectType:</span> <span class="n">TRANSACTION</span>
-    <span class="nl">name:</span> <span class="n">Test</span> <span class="n">Custom</span> <span class="n">Field</span>
-    <span class="nl">value:</span> <span class="n">test_value</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">[{</span><span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'custom_field_id'</span><span class="p">:</span> <span class="s">'893e0286-2b48-493b-99af-aac9b172dc75'</span><span class="p">,</span>
- <span class="s">'name'</span><span class="p">:</span> <span class="s">'Test Custom Field'</span><span class="p">,</span>
- <span class="s">'object_id'</span><span class="p">:</span> <span class="s">'924bebe7-58e7-40e8-a5ed-192efb59d8ee'</span><span class="p">,</span>
- <span class="s">'object_type'</span><span class="p">:</span> <span class="s">'TRANSACTION'</span><span class="p">,</span>
- <span class="s">'value'</span><span class="p">:</span> <span class="s">'test_value'</span><span class="p">}]</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"customFieldId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e4bac228-872d-4966-8072-2c3ac06442ed"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8fe697d4-2c25-482c-aa45-f6cd5a48186d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRANSACTION"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Custom Field"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_value"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -24700,17 +24170,6 @@ that work directly at the transaction level.</p>
                                                        <span class="n">api_key</span><span class="p">,</span>
                                                        <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
 <p><strong>Requst Body</strong></p>
 
 <p>A JSON string representing a list of custom fields to substitute for the existing ones.
@@ -24762,17 +24221,6 @@ For example:</p>
                                                        <span class="n">created_by</span><span class="p">,</span>
                                                        <span class="n">api_key</span><span class="p">,</span>
                                                        <span class="n">api_secret</span><span class="p">)</span>
-</code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
 <p><strong>Query Parameters</strong></p>
 
@@ -24843,27 +24291,6 @@ For example:</p>
                                               <span class="n">api_key</span><span class="p">,</span>
                                               <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 201 Created
-&lt; Location: http://127.0.0.1:8080/1.0/kb/paymentTransactions/8fe697d4-2c25-482c-aa45-f6cd5a48186d/
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">Tag</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Tag</span><span class="nd">@bd138472</span>
-    <span class="nl">tagId:</span> <span class="mi">1</span><span class="n">bb4b638</span><span class="o">-</span><span class="mi">3886</span><span class="o">-</span><span class="mi">4</span><span class="n">f73</span><span class="o">-</span><span class="mi">90</span><span class="n">a5</span><span class="o">-</span><span class="mi">89</span><span class="n">eb6d1bcf7f</span>
-    <span class="nl">objectType:</span> <span class="n">TRANSACTION</span>
-    <span class="nl">objectId:</span> <span class="mi">917992</span><span class="n">d3</span><span class="o">-</span><span class="mi">5</span><span class="n">f1f</span><span class="o">-</span><span class="mi">4828</span><span class="o">-</span><span class="mi">9</span><span class="n">fff</span><span class="o">-</span><span class="mi">799</span><span class="n">cc4211aa9</span>
-    <span class="nl">tagDefinitionId:</span> <span class="mi">353752</span><span class="n">dd</span><span class="o">-</span><span class="mi">9041</span><span class="o">-</span><span class="mi">4450</span><span class="o">-</span><span class="n">b782</span><span class="o">-</span><span class="n">a8bb03a923c8</span>
-    <span class="nl">tagDefinitionName:</span> <span class="n">AUTO_PAY_OFF</span>
-    <span class="nl">auditLogs:</span> <span class="o">[]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>Provides a list of tag definition Ids in JSON format</p>
@@ -24912,47 +24339,17 @@ For example:</p>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 200 OK
-&lt;
-<span class="o">[</span>
-  <span class="o">{</span>
-    <span class="s2">"tagId"</span>: <span class="s2">"890e3b13-3114-478b-9365-50f1a2682143"</span>,
-    <span class="s2">"objectType"</span>: <span class="s2">"TRANSACTION"</span>,
-    <span class="s2">"objectId"</span>: <span class="s2">"8fe697d4-2c25-482c-aa45-f6cd5a48186d"</span>,
-    <span class="s2">"tagDefinitionId"</span>: <span class="s2">"353752dd-9041-4450-b782-a8bb03a923c8"</span>,
-    <span class="s2">"tagDefinitionName"</span>: <span class="s2">"foo"</span>,
-    <span class="s2">"auditLogs"</span>: <span class="o">[]</span>
-  <span class="o">}</span>
-<span class="o">]</span>
-</code></pre><pre class="highlight java tab-java"><code><span class="c1">//First element of the list</span>
-<span class="kd">class</span> <span class="nc">Tag</span> <span class="o">{</span>
-    <span class="n">org</span><span class="o">.</span><span class="na">killbill</span><span class="o">.</span><span class="na">billing</span><span class="o">.</span><span class="na">client</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">gen</span><span class="o">.</span><span class="na">Tag</span><span class="nd">@cae768d7</span>
-    <span class="nl">tagId:</span> <span class="n">d724f79d</span><span class="o">-</span><span class="n">fad1</span><span class="o">-</span><span class="mi">4758</span><span class="o">-</span><span class="n">b35e</span><span class="o">-</span><span class="n">d62708450d90</span>
-    <span class="nl">objectType:</span> <span class="n">TRANSACTION</span>
-    <span class="nl">objectId:</span> <span class="n">e659f0f3</span><span class="o">-</span><span class="mi">745</span><span class="n">c</span><span class="o">-</span><span class="mi">46</span><span class="n">d5</span><span class="o">-</span><span class="mi">953</span><span class="n">c</span><span class="o">-</span><span class="mi">28</span><span class="n">fe9282fc7d</span>
-    <span class="nl">tagDefinitionId:</span> <span class="mi">353752</span><span class="n">dd</span><span class="o">-</span><span class="mi">9041</span><span class="o">-</span><span class="mi">4450</span><span class="o">-</span><span class="n">b782</span><span class="o">-</span><span class="n">a8bb03a923c8</span>
-    <span class="nl">tagDefinitionName:</span> <span class="n">foo</span>
-    <span class="nl">auditLogs:</span> <span class="o">[</span><span class="kd">class</span> <span class="nc">AuditLog</span> <span class="o">{</span>
-        <span class="nl">changeType:</span> <span class="n">INSERT</span>
-        <span class="nl">changeDate:</span> <span class="mi">2012</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">25</span><span class="nl">T00:</span><span class="mo">00</span><span class="o">:</span><span class="mf">02.000</span><span class="n">Z</span>
-        <span class="nl">objectType:</span> <span class="n">TAG</span>
-        <span class="nl">objectId:</span> <span class="n">d724f79d</span><span class="o">-</span><span class="n">fad1</span><span class="o">-</span><span class="mi">4758</span><span class="o">-</span><span class="n">b35e</span><span class="o">-</span><span class="n">d62708450d90</span>
-        <span class="nl">changedBy:</span> <span class="n">Toto</span>
-        <span class="nl">reasonCode:</span> <span class="n">i</span> <span class="n">am</span> <span class="n">god</span>
-        <span class="nl">comments:</span> <span class="n">no</span> <span class="n">comment</span>
-        <span class="nl">userToken:</span> <span class="n">e36f7ba5</span><span class="o">-</span><span class="n">fb5b</span><span class="o">-</span><span class="mi">41</span><span class="n">c0</span><span class="o">-</span><span class="n">b47c</span><span class="o">-</span><span class="mi">77</span><span class="n">c48ab37dd9</span>
-        <span class="nl">history:</span> <span class="kc">null</span>
-    <span class="o">}]</span>
-<span class="o">}</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="p">[{</span><span class="s">'audit_logs'</span><span class="p">:</span> <span class="p">[],</span>
- <span class="s">'object_id'</span><span class="p">:</span> <span class="s">'41b6b214-c3f7-40ea-89cd-6a4ecbd9083b'</span><span class="p">,</span>
- <span class="s">'object_type'</span><span class="p">:</span> <span class="s">'TRANSACTION'</span><span class="p">,</span>
- <span class="s">'tag_definition_id'</span><span class="p">:</span> <span class="s">'353752dd-9041-4450-b782-a8bb03a923c8'</span><span class="p">,</span>
- <span class="s">'tag_definition_name'</span><span class="p">:</span> <span class="s">'foo'</span><span class="p">,</span>
- <span class="s">'tag_id'</span><span class="p">:</span> <span class="s">'865e0c77-def7-4880-ac80-11c21a5e571d'</span><span class="p">}]</span>
-</code></pre>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"tagId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"890e3b13-3114-478b-9365-50f1a2682143"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRANSACTION"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8fe697d4-2c25-482c-aa45-f6cd5a48186d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tagDefinitionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tagDefinitionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -25023,17 +24420,6 @@ For example:</p>
                                               <span class="n">api_key</span><span class="p">,</span>
                                               <span class="n">api_secret</span><span class="p">,</span>
                                               <span class="n">tag_def</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
-</code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># Subset of headers returned when specifying -v curl option</span>
-&lt; HTTP/1.1 204 No Content
-&lt; Content-Type: application/json
-&lt; Content-Length: 0
-</code></pre><pre class="highlight java tab-java"><code><span class="n">no</span> <span class="n">content</span>
-</code></pre><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="n">no</span> <span class="n">content</span>
 </code></pre>
 <p><strong>Query Parameters</strong></p>
 
