@@ -2,8 +2,7 @@
 includes:
   - tenant
   - catalog
-  - account
-  - payment-method
+  - account  
   - subscription
   - bundle
   - invoice

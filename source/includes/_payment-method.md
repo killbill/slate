@@ -1,6 +1,6 @@
-# Payment Method
+ Payment Method
 
-## Payment Method Resource
+# Payment Method Resource
 
 The `Payment Method` resource represents the payment methods associated with a customer `Account`. There are two parts to the state associated with this resource, a first generic set of attributes kept by Kill Bill core subsystem, and another set of attributes kept at the (payment) plugin level.
 
