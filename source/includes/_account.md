@@ -99,51 +99,6 @@ accountApi.create_account(body,
                           created_by, 
                           api_key, 
                           api_secret)
-```json
-{
-"auditLogs":[],
-"externalKey":"36c05a84-563b-4794-8958-772d93e677e1",
-"accountId":"36c05a84-563b-4794-8958-772d93e677e1",
-"referenceTime":
-  {
-    "year":2023,
-    "dayOfYear":67,
-    "equalNow":false,
-    "weekyear":2023,
-    "chronology":{
-      "zone":{
-        "ID":"UTC"
-      }
-    },
-    "weekOfWeekyear":10,
-    "secondOfMinute":16,
-    "millisOfDay":59476000,
-    "monthOfYear":3,
-    "dayOfWeek":3,
-    "beforeNow":true,
-    "minuteOfDay":991,
-    "dayOfMonth":8,
-    "era":1,
-    "zone":{
-      "ID":"UTC"
-    },
-    "yearOfCentury":23,
-    "hourOfDay":16,
-    "centuryOfEra":20,
-    "secondOfDay":59476,
-    "millis":1678293076000,
-    "yearOfEra":2023,
-    "minuteOfHour":31,
-    "millisOfSecond":0,
-    "afterNow":false
-  },
-  "paymentDelegatedToParent":false,
-  "name":"John Doe",
-  "timeZone":"UTC",
-  "currency":"USD",
-  "billCycleDayLocal":0,
-  "email":"john@laposte.com"
-}
 ```
 
 **Request Body**
@@ -446,31 +401,6 @@ accountApi.update_account(account_id,
                           api_secret)
 ```
 
-> Example Response:
-
-```json
-{
-   "accountId":"37e759ed-e769-4e81-9e39-afb75a33056d",
-   "name":"Another Name",
-   "externalKey":"1521656367-130272",
-   "email":"kill@bill.com",
-   "billCycleDayLocal":0,
-   "currency":"USD",
-   "isPaymentDelegatedToParent":false,
-   "timeZone":"UTC",
-   "address1":"7, yoyo road",
-   "address2":"Apt 5",
-   "postalCode":"94105",
-   "company":"Unemployed",
-   "city":"San Francisco",
-   "state":"California",
-   "country":"US",
-   "locale":"fr_FR",
-   "notes":"My notes",
-   "auditLogs":[]
-}
-```
-
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -545,12 +475,6 @@ accountApi.close_account(account_id,
                          created_by,
                          api_key,
                          api_secret)
-```
-
-> Example Response:
-
-```json
-no content
 ```
 
 **Query Parameters**
@@ -902,11 +826,6 @@ accountApi.add_email(account_id,
                      api_secret)
 ```
 
-> Example Response:
-
-```json
-no content
-```
 **Request Body**
 
 The request body identifies a subset of the `account` attributes as a JSON string. The attributes required are `accountId` and `email` (the email to be added). `accountId` is required in the body even though it is given in the path. No other attributes should be included.
@@ -1033,12 +952,6 @@ accountApi.remove_email(account_id,
                         api_secret)
 ```
 
-> Example Response:
-
-```json
-no content
-```
-
 **Query Parameters**
 
 None.
@@ -1049,7 +962,7 @@ If successful, returns a status code of 204 and without any data.
 
 ## Bundle
 
-This endpoint provides an API to list the Bundles associated with this account. A Bundle is a set of Subscriptions and related information. See [Bundle](https://github.com/killbill/slate/bundle.html) for details on Bundles.
+This endpoint provides an API to list the Bundles associated with this account. A Bundle is a set of Subscriptions and related information. See [Bundle](#bundle) for details on Bundles.
 
 ### Retrieve bundles for account
 
@@ -1472,7 +1385,7 @@ If successful, returns a status code of 200 and a list of bundle objects.
 
 ## Invoice
 
-This endpoint provides an API to list the Invoices associated with this account. See section [Invoice](https://github.com/killbill/slate/invoice.html) for details on invoices.
+This endpoint provides an API to list the Invoices associated with this account. See section [Invoice](#invoice) for details on invoices.
 
 ### Retrieve account invoices
 
@@ -1675,7 +1588,7 @@ If successful, returns a status of 200 and a list of invoice objects for this ac
 
 ## Payment 
 
-These endpoints are used to make or manage payments associated with this account. See section [Payment](https://github.com/killbill/slate/payment.html) for details on payments.
+These endpoints are used to make or manage payments associated with this account. See section [Payment](#payment) for details on payments.
 
 ### Trigger a payment for all unpaid invoices
 
@@ -1752,12 +1665,6 @@ accountApi.pay_all_invoices(account_id,
                             external_payment=True,
                             payment_method_id=None,
                             target_date=None)
-```
-
-> Example Response:
-
-```json
-no content
 ```
 
 **Query Parameters**
@@ -2075,44 +1982,9 @@ accountApi.process_payment(account_id,
                            payment_method_id=payment_method_id)
 ```
 
-> Example Response:
-
-```json
-{
-   "accountId":"2ad4cae9-c44a-43f9-b3f8-2e3e4e097838",
-   "paymentId":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-   "paymentNumber":"333",
-   "paymentExternalKey":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-   "authAmount":50.0,
-   "capturedAmount":0,
-   "purchasedAmount":0,
-   "refundedAmount":0,
-   "creditedAmount":0,
-   "currency":"USD",
-   "paymentMethodId":"132d59c0-8c28-4115-947d-f57d430bc458",
-   "transactions":[
-      {
-         "transactionId":"e038a04e-5304-4570-ab89-b7f04e8f496c",
-         "transactionExternalKey":"e038a04e-5304-4570-ab89-b7f04e8f496c",
-         "paymentId":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-         "paymentExternalKey":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-         "transactionType":"AUTHORIZE",
-         "amount":50.0,
-         "currency":"USD",
-         "effectiveDate":"2013-08-01T06:00:01.000Z",
-         "processedAmount":50.0,
-         "processedCurrency":"USD",
-         "status":"SUCCESS",
-         "auditLogs":[]
-      }
-   ],
-   "auditLogs":[]
-}
-```
-
 **Request Body**
 
-The request body is a JSON string representing the payment transaction. See section [Payment Transaction](https://github.com/killbill/slate/payment-transaction.html) for details on payment transactions.
+The request body is a JSON string representing the payment transaction. See section [Payment Transaction](#payment-transaction) for details on payment transactions.
 
 **Query Parameters**
 
@@ -2226,44 +2098,9 @@ accountApi.process_payment_by_external_key(body,
                                            payment_method_id=payment_method_id)
 ```
 
-> Example Response:
-
-```json
-{
-   "accountId":"2ad4cae9-c44a-43f9-b3f8-2e3e4e097838",
-   "paymentId":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-   "paymentNumber":"333",
-   "paymentExternalKey":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-   "authAmount":50.0,
-   "capturedAmount":0,
-   "purchasedAmount":0,
-   "refundedAmount":0,
-   "creditedAmount":0,
-   "currency":"USD",
-   "paymentMethodId":"132d59c0-8c28-4115-947d-f57d430bc458",
-   "transactions":[
-      {
-         "transactionId":"e038a04e-5304-4570-ab89-b7f04e8f496c",
-         "transactionExternalKey":"e038a04e-5304-4570-ab89-b7f04e8f496c",
-         "paymentId":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-         "paymentExternalKey":"b4c5b34f-cd3e-4269-9f71-55daf8edde60",
-         "transactionType":"AUTHORIZE",
-         "amount":50.0,
-         "currency":"USD",
-         "effectiveDate":"2013-08-01T06:00:01.000Z",
-         "processedAmount":50.0,
-         "processedCurrency":"USD",
-         "status":"SUCCESS",
-         "auditLogs":[]
-      }
-   ],
-   "auditLogs":[]
-}
-```
-
 **Request Body**
 
-The request body is a JSON string representing the payment transaction. See section [Payment Transaction](https://github.com/killbill/slate/payment-transaction.html) for details on payment transactions.
+The request body is a JSON string representing the payment transaction. See section [Payment Transaction](#payment-transaction) for details on payment transactions.
 
 **Query Parameters**
 
@@ -2350,22 +2187,6 @@ accountApi.create_payment_method(account_id,
                                  created_by, 
                                  api_key, 
                                  api_secret)
-```
-
-> Example Response:
-
-```json
-{
-   "paymentMethodId":"059ecfb8-6b4d-4a89-9537-63a687e6cf10",
-   "externalKey":"ExternalKey",
-   "accountId":"fa488b6e-c52a-450a-94bf-6607ae8b484f",
-   "isDefault":true,
-   "pluginName":"__EXTERNAL_PAYMENT__",
-   "pluginInfo":{
-      "properties":[]
-   },
-   "auditLogs":[]
-}
 ```
 
 **Request Body**
@@ -2524,11 +2345,6 @@ accountApi.set_default_payment_method(account_id,
                                       api_key, 
                                       api_secret)
 ```
-> Example Response:
-
-```json
-no content
-```
 
 **Query Parameters**
 
@@ -2598,11 +2414,6 @@ accountApi.refresh_payment_methods(account_id,
                                    created_by,
                                    api_key,
                                    api_secret)
-```
-> Example Response:
-
-```json
-no content
 ```
 
 **Query Parameters**
@@ -2804,12 +2615,6 @@ accountApi.add_account_blocking_state(account_id,
                                       created_by, 
                                       api_key, 
                                       api_secret)
-```
-
-> Example Response:
-
-```json
-no content
 ```
 
 **Request Body**
@@ -3056,11 +2861,6 @@ accountApi.transfer_child_credit_to_parent(child_account_id,
                                            api_key, 
                                            api_secret)
 ```
-> Example Response:
-
-```json
-no content
-```
 
 **Query Parameters**
 
@@ -3141,21 +2941,6 @@ accountApi.create_account_custom_fields(account_id,
                                         created_by,
                                         api_key,
                                         api_secret)
-```
-
-> Example Response:
-
-```json
-[
-   {
-      "customFieldId":"6e571e22-b794-413c-be6f-1b2aa4bf9824",
-      "objectId":"0149ffc6-fdfd-40b1-8cf4-29a66aef51d4",
-      "objectType":"ACCOUNT",
-      "name":"Test Custom Field",
-      "value":"test_value",
-      "auditLogs":[]
-   }
-]
 ```
 
 **Request Body**
@@ -3389,12 +3174,6 @@ account.modify_account_custom_fields(account_id,
                                      api_secret)
 ```
 
-> Example Response:
-
-```json
-no content
-```
-
 **Request Body**
 
 A list of objects specifying the id and the new value for the custom fields to be modified. For example:
@@ -3466,12 +3245,6 @@ account.delete_account_custom_fields(account_id,
                                      api_key,
                                      api_secret,
                                      custom_field=custom_field)
-```
-
-> Example Response:
-
-```json
-no content
 ```
 
 **Query Parameters**
@@ -3556,20 +3329,6 @@ accountApi.create_account_tags(account_id,
                                created_by, 
                                api_key, 
                                api_secret)
-```
-> Example Response:
-
-```json
-[
-   {
-      "tagId":"a46cfeb6-e175-42db-be62-7f117326ab4e",
-      "objectType":"ACCOUNT",
-      "objectId":"28af3cb9-275b-4ac4-a55d-a0536e479069",
-      "tagDefinitionId":"00000000-0000-0000-0000-000000000006",
-      "tagDefinitionName":"TEST",
-      "auditLogs":[]
-   }
-]
 ```
 
 **Request Body**
@@ -3792,11 +3551,6 @@ accountApi.delete_account_tags(account_id,
                                api_key, 
                                api_secret, 
                                tag_def=tag)
-```
-> Example Response:
-
-```json
-no content
 ```
 
 **Query Parameters**
