@@ -108,11 +108,6 @@ catalogApi.upload_catalog_xml(xml_catalog,
                               api_key, 
                               api_secret)
 ```
-> Example Response:
-
-```json
-no content
-```
 
 **Request Body**
 
@@ -891,11 +886,6 @@ catalogApi = killbill.api.CatalogApi()
         
 catalogApi.delete_catalog(created_by, api_key, api_secret)
 ```
-> Example Response:
-
-```json
-no content
-```
 
 **Query Parameters**
 
@@ -1362,12 +1352,6 @@ body = SimplePlan(plan_id='basic-annual',
                   trial_time_unit='UNLIMITED')
                   
 catalogApi.add_simple_plan(body, created_by, api_key, api_secret)
-```
-
-> Example Response:
-
-```json
-no content
 ```
 
 **Request Body**
