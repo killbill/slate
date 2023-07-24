@@ -12812,11 +12812,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                               <span class="n">api_key</span><span class="p">,</span>
                               <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A bundle resource containing the new external key</p>
@@ -12903,114 +12898,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                           <span class="n">api_key</span><span class="p">,</span> 
                           <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-   </span><span class="s2">"accountId"</span><span class="p">:</span><span class="s2">"71499886-296d-4b0f-8b76-0eed352d8801"</span><span class="p">,</span><span class="w">
-   </span><span class="s2">"bundleId"</span><span class="p">:</span><span class="s2">"cff04ff5-19ba-4bdc-8aca-ed486d4b845c"</span><span class="p">,</span><span class="w">
-   </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="s2">"25f2de6b-2443-4d7c-8487-22bf6df5a5ec-73709"</span><span class="p">,</span><span class="w">
-   </span><span class="s2">"subscriptions"</span><span class="p">:[</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-         </span><span class="s2">"accountId"</span><span class="p">:</span><span class="s2">"71499886-296d-4b0f-8b76-0eed352d8801"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"bundleId"</span><span class="p">:</span><span class="s2">"cff04ff5-19ba-4bdc-8aca-ed486d4b845c"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"subscriptionId"</span><span class="p">:</span><span class="s2">"46e6fcdc-9f63-4ffc-a091-0cde70f964f0"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="s2">"25f2de6b-2443-4d7c-8487-22bf6df5a5ec-73709"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"startDate"</span><span class="p">:</span><span class="s2">"2013-09-01"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"productName"</span><span class="p">:</span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"productCategory"</span><span class="p">:</span><span class="s2">"BASE"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"billingPeriod"</span><span class="p">:</span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"phaseType"</span><span class="p">:</span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"priceList"</span><span class="p">:</span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"planName"</span><span class="p">:</span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"state"</span><span class="p">:</span><span class="s2">"ACTIVE"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"sourceType"</span><span class="p">:</span><span class="s2">"TRANSFERRED"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"billingStartDate"</span><span class="p">:</span><span class="s2">"2013-09-01"</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"billCycleDayLocal"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w">
-         </span><span class="s2">"events"</span><span class="p">:[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-               </span><span class="s2">"eventId"</span><span class="p">:</span><span class="s2">"605c5696-4046-4597-8a67-7e50d26856cd"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"billingPeriod"</span><span class="p">:</span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="s2">"2013-09-01"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"plan"</span><span class="p">:</span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"product"</span><span class="p">:</span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"priceList"</span><span class="p">:</span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"eventType"</span><span class="p">:</span><span class="s2">"START_ENTITLEMENT"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"isBlockedBilling"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"isBlockedEntitlement"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"serviceName"</span><span class="p">:</span><span class="s2">"entitlement-service"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"serviceStateName"</span><span class="p">:</span><span class="s2">"ENT_STARTED"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"phase"</span><span class="p">:</span><span class="s2">"sports-monthly-evergreen"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-               </span><span class="s2">"eventId"</span><span class="p">:</span><span class="s2">"fbc53e69-0683-4904-bc77-5d244b9ad1c9"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"billingPeriod"</span><span class="p">:</span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="s2">"2013-09-01"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"plan"</span><span class="p">:</span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"product"</span><span class="p">:</span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"priceList"</span><span class="p">:</span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"eventType"</span><span class="p">:</span><span class="s2">"START_BILLING"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"isBlockedBilling"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"isBlockedEntitlement"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"serviceName"</span><span class="p">:</span><span class="s2">"billing-service"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"serviceStateName"</span><span class="p">:</span><span class="s2">"START_BILLING"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"phase"</span><span class="p">:</span><span class="s2">"sports-monthly-evergreen"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-         </span><span class="p">],</span><span class="w">
-         </span><span class="s2">"priceOverrides"</span><span class="p">:[</span><span class="w">
-            </span><span class="p">{</span><span class="w">
-               </span><span class="s2">"planName"</span><span class="p">:</span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"phaseName"</span><span class="p">:</span><span class="s2">"sports-monthly-evergreen"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"phaseType"</span><span class="p">:</span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
-               </span><span class="s2">"recurringPrice"</span><span class="p">:</span><span class="mf">500.0</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-         </span><span class="p">],</span><span class="w">
-         </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-   </span><span class="p">],</span><span class="w">
-   </span><span class="s2">"timeline"</span><span class="p">:{</span><span class="w">
-      </span><span class="s2">"accountId"</span><span class="p">:</span><span class="s2">"71499886-296d-4b0f-8b76-0eed352d8801"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"bundleId"</span><span class="p">:</span><span class="s2">"cff04ff5-19ba-4bdc-8aca-ed486d4b845c"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"externalKey"</span><span class="p">:</span><span class="s2">"25f2de6b-2443-4d7c-8487-22bf6df5a5ec-73709"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"events"</span><span class="p">:[</span><span class="w">
-         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"eventId"</span><span class="p">:</span><span class="s2">"605c5696-4046-4597-8a67-7e50d26856cd"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"billingPeriod"</span><span class="p">:</span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="s2">"2013-09-01"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"plan"</span><span class="p">:</span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"product"</span><span class="p">:</span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"priceList"</span><span class="p">:</span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"eventType"</span><span class="p">:</span><span class="s2">"START_ENTITLEMENT"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"isBlockedBilling"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"isBlockedEntitlement"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"serviceName"</span><span class="p">:</span><span class="s2">"entitlement-service"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"serviceStateName"</span><span class="p">:</span><span class="s2">"ENT_STARTED"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"phase"</span><span class="p">:</span><span class="s2">"sports-monthly-evergreen"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-         </span><span class="p">},</span><span class="w">
-         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"eventId"</span><span class="p">:</span><span class="s2">"fbc53e69-0683-4904-bc77-5d244b9ad1c9"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"billingPeriod"</span><span class="p">:</span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"effectiveDate"</span><span class="p">:</span><span class="s2">"2013-09-01"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"plan"</span><span class="p">:</span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"product"</span><span class="p">:</span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"priceList"</span><span class="p">:</span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"eventType"</span><span class="p">:</span><span class="s2">"START_BILLING"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"isBlockedBilling"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"isBlockedEntitlement"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"serviceName"</span><span class="p">:</span><span class="s2">"billing-service"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"serviceStateName"</span><span class="p">:</span><span class="s2">"START_BILLING"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"phase"</span><span class="p">:</span><span class="s2">"sports-monthly-evergreen"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-         </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-   </span><span class="p">},</span><span class="w">
-   </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A bundle resource containing at least the new account id</p>
@@ -13107,11 +12994,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                        <span class="n">api_key</span><span class="p">,</span> 
                        <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -13177,11 +13059,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                         <span class="n">api_key</span><span class="p">,</span> 
                         <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -13289,11 +13166,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                     <span class="n">api_key</span><span class="p">,</span>
                                     <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A blocking state resource representing the intended new blocking state. For example,</p>
@@ -13392,18 +13264,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                       <span class="n">api_key</span><span class="p">,</span>
                                       <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"customFieldId"</span><span class="p">:</span><span class="s2">"6e571e22-b794-413c-be6f-1b2aa4bf9824"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"objectId"</span><span class="p">:</span><span class="s2">"0149ffc6-fdfd-40b1-8cf4-29a66aef51d4"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"objectType"</span><span class="p">:</span><span class="s2">"BUNDLE"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Custom Field"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"value"</span><span class="p">:</span><span class="s2">"test_value"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A list of objects giving the name and value of the custom field, or fields, to be added. For example:</p>
@@ -13545,11 +13405,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                       <span class="n">api_key</span><span class="p">,</span> 
                                       <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
@@ -13608,11 +13463,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                       <span class="n">api_key</span><span class="p">,</span> 
                                       <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -13691,18 +13541,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                              <span class="n">api_key</span><span class="p">,</span> 
                              <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"tagId"</span><span class="p">:</span><span class="s2">"a46cfeb6-e175-42db-be62-7f117326ab4e"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"objectType"</span><span class="p">:</span><span class="s2">"BUNDLE"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"objectId"</span><span class="p">:</span><span class="s2">"28af3cb9-275b-4ac4-a55d-a0536e479069"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"tagDefinitionId"</span><span class="p">:</span><span class="s2">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"tagDefinitionName"</span><span class="p">:</span><span class="s2">"foo"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"auditLogs"</span><span class="p">:[]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>A JSON array containing one or more strings giving the UUID of tag definitions for the user tags to be added.</p>
@@ -13839,11 +13677,6 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                              <span class="n">api_secret</span><span class="p">,</span>
                              <span class="n">tag_def</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -24656,7 +24489,27 @@ curl -v <span class="se">\</span>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMMITTED"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"creditAdj"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"refundAdj"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoiceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5c7656b7-1974-447b-b263-1613448d4c1e"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoiceDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-07-19"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"targetDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-03-01"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoiceNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"17700"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f65913b6-3185-48b2-b0cf-62495b879047"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bundleKeys"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"credits"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="s2">"trackingIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="s2">"isParentInvoice"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"parentInvoiceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"parentAccountId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
@@ -24758,11 +24611,6 @@ This could happen, for example, if a call to a third party payment gateway times
                                           <span class="n">api_key</span><span class="p">,</span>
                                           <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Request Body</strong></p>
 
 <p>An <code>AdminPayment</code> object containing, as a minimum, the new <code>transactionStatus</code> to be captured. The allowed values of the <code>transactionStatus</code> as well as what each <code>transactionStatus</code> means are already explained above. </p>
@@ -24804,11 +24652,6 @@ This could happen, for example, if a call to a third party payment gateway times
 
 <span class="n">adminApi</span><span class="o">.</span><span class="n">invalidates_cache</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <table><thead>
@@ -24861,11 +24704,6 @@ This could happen, for example, if a call to a third party payment gateway times
 
 <span class="n">adminApi</span><span class="o">.</span><span class="n">invalidates_cache_by_account</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -24898,11 +24736,6 @@ This could happen, for example, if a call to a third party payment gateway times
 
 <span class="n">adminApi</span><span class="o">.</span><span class="n">invalidates_cache_by_tenant</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -24936,11 +24769,6 @@ This could happen, for example, if a call to a third party payment gateway times
 
 <span class="n">adminApi</span><span class="o">.</span><span class="n">put_in_rotation</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -24973,11 +24801,6 @@ This could happen, for example, if a call to a third party payment gateway times
 
 <span class="n">adminApi</span><span class="o">.</span><span class="n">put_out_of_rotation</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="err">no</span><span class="w"> </span><span class="err">content</span><span class="w">
-</span></code></pre>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
