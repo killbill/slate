@@ -70,12 +70,12 @@ tenant.external_key = "demo_external_key"
 tenant.api_key = "demo_api_key"
 tenant.api_secret = "demo_api_secret"
 
-use_global_defalut = true
+use_global_default = true
 user = "demo"
 reason = nil
 comment = nil
 
-tenant.create(use_global_defalut,
+tenant.create(use_global_default,
               user,
               reason,
               comment,
@@ -88,6 +88,19 @@ tenantApi = killbill.api.TenantApi()
 body = Tenant(api_key='demo_api_key', api_secret='demo_api_secret')
 
 tenantApi.create_tenant(body, created_by='demo')
+```
+
+```javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+const tenant: killbill.Tenant = {apiKey: `api_key`, apiSecret: `api_secret`};
+const response: AxiosResponse<killbill.Tenant, any> = await api.createTenant(tenant, 'created-by');
+```
+
+```php
+$tenant = new Tenant();
+$tenant->setApiKey('php-tenant1');
+$tenant->setApiSecret('php-tenant1');
+$tenant = $client->getTenantApi()->createTenant($tenant, 'test_user', 'PHP_TEST', 'no comment');
 ```
 
 **Request Body**
@@ -136,13 +149,23 @@ tenantApi.getTenant(tenantId, requestOptions);
 ```ruby
 tenant_id = "ab5981c2-de14-43d6-a35b-a2ed0b28c746"
 
-KillBillClient::Model::Tenant.find_by_id(tenant_id, options)
+tenant = KillBillClient::Model::Tenant.find_by_id(tenant_id, options)
 ```
 
 ```python
 tenantApi = killbill.api.TenantApi()
+tenant = tenantApi.get_tenant(tenant_id='1a723c1a-9287-459f-9e40-eca9f0fd213e')
+```
 
-tenant.get_tenant(tenant_id='3d90ec45-c640-4fd7-abde-798bc582513b')
+```javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+const id='9ab7db57-02a9-430c-bdfa-0a8c24d2e368'
+const response: AxiosResponse<killbill.Tenant, any> = await api.getTenant(id);
+```
+
+```php
+$tenantid='9ab7db57-02a9-430c-bdfa-0a8c24d2e368';
+$tenantdata = $client->getTenantApi()->getTenant($tenantid);
 ```
 
 > Example Response:
@@ -195,13 +218,23 @@ tenantApi.getTenantByApiKey(apiKey, requestOptions);
 ```ruby
 api_key = "demo_api_key"
 
-KillBillClient::Model::Tenant.find_by_api_key(api_key, options)
+tenant = KillBillClient::Model::Tenant.find_by_api_key(api_key, options)
 ```
 
 ```python
 tenantApi = killbill.api.TenantApi()
+tenant = tenantApi.get_tenant_by_api_key(api_key='bob')
+```
 
-tenantApi.get_tenant_by_api_key(api_key='bob')
+```javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+const apiKey = 'bob'
+const response: AxiosResponse<killbill.Tenant, any> = await api.getTenantByApiKey(apiKey);
+```
+
+```php
+$apikey='bob';
+$tenantdata = $client->getTenantApi()->getTenantByApiKey($apikey);
 ```
 
 > Example Response:
@@ -215,6 +248,8 @@ tenantApi.get_tenant_by_api_key(api_key='bob')
   "auditLogs": []
 }
 ```
+
+
 
 
 **Query Parameters**
