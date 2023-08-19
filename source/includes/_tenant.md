@@ -92,15 +92,24 @@ tenantApi.create_tenant(body, created_by='demo')
 
 ```javascript
 const api: killbill.TenantApi = new killbill.TenantApi(config);
+
 const tenant: killbill.Tenant = {apiKey: `api_key`, apiSecret: `api_secret`};
-const response: AxiosResponse<killbill.Tenant, any> = await api.createTenant(tenant, 'created-by');
+
+const response: AxiosResponse<killbill.Tenant, any> = await api.createTenant(tenant, 'created-by', 'reason', 'comment');
 ```
 
 ```php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
 $tenant = new Tenant();
-$tenant->setApiKey('php-tenant1');
-$tenant->setApiSecret('php-tenant1');
-$tenant = $client->getTenantApi()->createTenant($tenant, 'test_user', 'PHP_TEST', 'no comment');
+$tenant->setApiKey('demo_api_key');
+$tenant->setApiSecret('demo_api_secret');
+
+$tenant = $apiInstance->createTenant($tenant, $xKillbillCreatedBy, $keyName, $xKillbillReason, $xKillbillComment);
 ```
 
 **Request Body**
@@ -159,13 +168,18 @@ tenant = tenantApi.get_tenant(tenant_id='1a723c1a-9287-459f-9e40-eca9f0fd213e')
 
 ```javascript
 const api: killbill.TenantApi = new killbill.TenantApi(config);
+
 const id='9ab7db57-02a9-430c-bdfa-0a8c24d2e368'
+
 const response: AxiosResponse<killbill.Tenant, any> = await api.getTenant(id);
 ```
 
 ```php
+$apiInstance = $client->getTenantApi();
+
 $tenantid='9ab7db57-02a9-430c-bdfa-0a8c24d2e368';
-$tenantdata = $client->getTenantApi()->getTenant($tenantid);
+
+$tenantdata = $apiInstance->getTenant($tenantid);
 ```
 
 > Example Response:
@@ -228,13 +242,18 @@ tenant = tenantApi.get_tenant_by_api_key(api_key='bob')
 
 ```javascript
 const api: killbill.TenantApi = new killbill.TenantApi(config);
+
 const apiKey = 'bob'
+
 const response: AxiosResponse<killbill.Tenant, any> = await api.getTenantByApiKey(apiKey);
 ```
 
 ```php
+$apiInstance = $client->getTenantApi();
+
 $apikey='bob';
-$tenantdata = $client->getTenantApi()->getTenantByApiKey($apikey);
+
+$tenantdata = $apiInstance->getTenantByApiKey($apikey);
 ```
 
 > Example Response:
@@ -262,6 +281,351 @@ $tenantdata = $client->getTenantApi()->getTenantByApiKey($apikey);
 
 If successful, returns a status code of 200 and a tenant resource object.  The `apiSecret` attribute is returned as `null`, since it cannot be retrieved.
 
+## Tenant Key-Value Pairs
+
+These endpoints provide a mechanism to register and manage `{key, value}` pairs for a given tenant. This functionality
+is used internally by the system to keep track of all the per-tenant configuration, including system properties, plugin configuration, and others discussed below. In addition, you can add *user* keys to keep track of additional information that may be desired. For example, some global setting that would be accessible for all plugins could be stored here.
+
+### Add a per tenant user key/value
+
+This API adds a key-value pair to the tenant database. If the key already exists, the new value is appended to the existing value. The key is given as a path parameter.
+
+**HTTP Request**
+
+`POST http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}`
+
+> Example Request:
+
+```shell
+curl -v \
+    -X POST \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: text/plain" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \
+    -d "demo_value" \
+    "http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"
+```
+
+```java
+import org.killbill.billing.client.api.gen.TenantApi;
+protected TenantApi tenantApi;
+
+String keyName = "demo_key";
+String body = "demo_value";
+TenantKeyValue result = tenantApi.insertUserKeyValue(keyName, body, requestOptions);
+```
+
+```ruby
+user = "demo"
+reason = nil
+comment = nil
+
+key_name = "demo_key"
+key_value = "demo_value"
+
+tenant_key_value = KillBillClient::Model::Tenant.upload_tenant_user_key_value(key_name,
+                                                           key_value,
+                                                           user,
+                                                           reason,
+                                                           comment,
+                                                           options)
+```
+
+```python
+tenantApi = killbill.api.TenantApi()
+
+key_name = 'demo_key'
+body = 'demo_value'
+
+tenantApi.insert_user_key_value(key_name, body, created_by='demo')
+```
+````javascript
+const key = 'demo_key';
+const value = 'demo_value';
+
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+api.insertUserKeyValue(value, key, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$keyName = "demo_key";
+$body = "demo_value";
+
+$result = $apiInstance->insertUserKeyValue($body, $xKillbillCreatedBy, $keyName, $xKillbillReason, $xKillbillComment);
+````
+
+**Request Body**
+
+The body contains a single string representing the value.
+
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 201 and an empty body. In addition, a `Location` item is returned in the header giving the URL for this key-value pair.
+
+### Retrieve a per tenant user key value
+
+Retrieves the value for a specified key, if it exists, from the tenant database. The key name is given as a path parameter.
+
+**HTTP Request**
+
+`GET http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}`
+
+> Example Request:
+
+```shell
+curl -v \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Accept: application/json" \
+    "http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"
+```
+
+```java
+import org.killbill.billing.client.api.gen.TenantApi;
+protected TenantApi tenantApi;
+
+String keyName = "demo_key";
+
+TenantKeyValue result = tenantApi.getUserKeyValue(keyName, requestOptions);
+```
+
+```ruby
+key_name = "demo_key"
+
+tenant_key_value = KillBillClient::Model::Tenant.get_tenant_user_key_value(key_name, options)
+```
+
+```python
+tenantApi = killbill.api.TenantApi()
+
+key_name = 'demo_key'
+
+tenantKeyValue = tenantApi.get_user_key_value(key_name)
+```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const key = 'demo_key'
+
+const response: AxiosResponse<killbill.TenantKeyValue, any> = await api.getUserKeyValue(key)
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$keyName = "demo_key";
+
+$result = $apiInstance->getUserKeyValue($keyName);
+````
+
+> Example Response:
+
+```json
+{
+  "key": "demo_value",
+  "values": [
+    "demo_value",
+    "demo_value"
+  ]
+}
+```
+
+
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 200 and a tenant key value object. The key value object includes the key name and a JSON array containing the value, if any, or a comma-separated list of values. For example:
+
+{
+"key": "MYKEY",
+"values": [
+"value1",
+"value2"
+]
+}
+
+
+If the key does not exist no error is signalled but the `values` list is empty.
+
+### Delete a per tenant user key/value
+
+Deletes a key and its value, if it exists, from the tenant database. The key is given as a path parameter.
+
+**HTTP Request**
+
+`DELETE http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}`
+
+> Example Request:
+
+```shell
+curl -v \
+    -X DELETE \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \
+    "http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"
+```
+
+```java
+import org.killbill.billing.client.api.gen.TenantApi;
+protected TenantApi tenantApi;
+
+String keyName = "demo_key";
+
+tenantApi.deleteUserKeyValue(keyName, requestOptions);
+```
+
+```ruby
+user = "demo"
+reason = nil
+comment = nil
+key_name = "demo_key"
+
+KillBillClient::Model::Tenant.delete_tenant_user_key_value(key_name,
+                                                           user,
+                                                           reason,
+                                                           comment,
+                                                           options)
+```
+
+```python
+tenantApi = killbill.api.TenantApi()
+
+key_name = 'demo_key'
+
+tenantApi.delete_user_key_value(key_name, created_by='demo')
+```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const key = 'demo_key'
+
+api.deleteUserKeyValue(key, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$keyName = "demo_key"; 
+
+$apiInstance->deleteUserKeyValue($keyName, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
+
+**Query Parameters**
+
+None.
+
+**Returns**
+
+If successful, returns a status code of 204 and an empty body. No error is signalled if the key does not exist.
+
+### Retrieve per tenant keys and values based on a key prefix
+
+This API enables searching for existing keys based on a prefix of the key name. For example, a search string of "MYK" would match keys such as `MYKEY1`, `MYKEY2`, etc. The search string is given as a path parameter.
+
+
+**HTTP Request**
+
+`GET http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig/{keyPrefix}/search`
+
+
+> Example Request:
+
+
+```shell
+curl -v \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Accept: application/json" \
+    "http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig/PER_TENANT/search"
+```
+
+```java
+import org.killbill.billing.client.api.gen.TenantApi;
+protected TenantApi tenantApi;
+
+String keyPrefix = "PER_TENANT";
+
+TenantKeyValues result = tenantApi.getAllPluginConfiguration(keyPrefix, requestOptions);
+```
+
+```ruby
+key_prefix = "PER_TENANT"
+
+tenant_key_values = KillBillClient::Model::Tenant.search_tenant_config(key_prefix, options)
+```
+
+```python
+tenantApi = killbill.api.TenantApi()
+
+tenantKeyValues = tenantApi.get_all_plugin_configuration(key_prefix='PER_TENANT')
+```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const keyPrefix = 'PER_TENANT'
+
+const response: AxiosResponse<killbill.TenantKeyValue, any> = await api.getAllPluginConfiguration(keyPrefix)
+````
+
+````php
+$keyPrefix = "PER_TENANT";
+
+$result = $apiInstance->getAllPluginConfiguration($keyPrefix);
+````
+
+> Example Response:
+
+```json
+{
+  "key": "PER_TENANT_CONFIG",
+  "values": [
+    "{org.killbill.invoice.sanitySafetyBoundEnabled:false}"
+  ]
+}
+```
+
+
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 200 and a tenant key value object containing the key and values for any keys that match the search string.
+
+
 ## Push Notifications
 
 Push notifications are a convenient way to get notified about events from the system.
@@ -275,7 +639,7 @@ See push notification documentation [here](https://docs.killbill.io/latest/push_
 
 ### Register a push notification
 
-Register a callback URL for this tenant for push notifications.The key name is PUSH_NOTIFICATION_CB. The API sets the value of this key, replacing any previous value.
+Register a callback URL for this tenant for push notifications. Inserts a key-value pair corresponding to the tenant where key name is `PUSH_NOTIFICATION_CB` and value is the URL of the push notification handler. The API sets the value of this key, replacing any previous value. 
 
 **HTTP Request**
 
@@ -315,6 +679,22 @@ tenantApi = killbill.api.TenantApi()
 
 tenantApi.register_push_notification_callback(created_by='demo', cb='http://demo/callmeback')
 ```
+
+````javascript
+TODO
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$cb = "http://demo/callmeback";
+
+$result = $apiInstance->registerPushNotificationCallback($xKillbillCreatedBy, $cb, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
@@ -362,6 +742,18 @@ tenantApi = killbill.api.TenantApi()
 tenantApi.get_push_notification_callbacks()
 ```
 
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const response: AxiosResponse<killbill.TenantKeyValue, any> = await api.getPushNotificationCallbacks()
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$result = $apiInstance->getPushNotificationCallbacks();
+````
+
 > Example Response:
 
 ```json
@@ -380,12 +772,7 @@ None.
 
 **Response**
 
-If successful, returns a status code of 200 and a body containing a key-value object as follows:
-
-{
-  "key": "PUSH_NOTIFICATION_CB",
-  "values": list containing the callback URL, if any
-}
+If successful, returns a status code of 200 and a tenant key value object for the key PUSH_NOTIFICATION_CB.
 
 ### Delete a registered push notification
 
@@ -426,6 +813,22 @@ tenantApi = killbill.api.TenantApi()
 tenantApi.delete_push_notification_callbacks(created_by='demo')
 ```
 
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+api.deletePushNotificationCallbacks('created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$apiInstance->deletePushNotificationCallbacks($xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
+
 **Query Parameters**
 
 None.
@@ -433,281 +836,6 @@ None.
 **Response**
 
 If successful, returns a status code of 204 and an empty body.
-
-## Tenant Key-Value Pairs
-
-These endpoints provide a mechanism to register and manage `{key, value}` pairs for a given tenant. This functionality
-is used internally by the system to keep track of all the per-tenant configuration, including system properties, plugin configuration, and others discussed below. In addition, you can add *user* keys to keep track of additional information that may be desired. For example, some global setting that would be accessible for all plugins could be stored here.
-
-### Add a per tenant user key/value
-
-This API adds a key-value pair to the tenant database. If the key already exists its value is replaced. The key is given as a path parameter.
-
-**HTTP Request**
-
-`POST http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}`
-
-> Example Request:
-
-```shell
-curl -v \
-    -X POST \
-    -u admin:password \
-    -H "X-Killbill-ApiKey: bob" \
-    -H "X-Killbill-ApiSecret: lazar" \
-    -H "Content-Type: text/plain" \
-    -H "Accept: application/json" \
-    -H "X-Killbill-CreatedBy: demo" \
-    -H "X-Killbill-Reason: demo" \
-    -H "X-Killbill-Comment: demo" \
-    -d "demo_value" \
-    "http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"
-```
-
-```java
-import org.killbill.billing.client.api.gen.TenantApi;
-protected TenantApi tenantApi;
-
-String keyName = "demo_value";
-String body = "demo_value";
-TenantKeyValue result = tenantApi.insertUserKeyValue(keyName, body, requestOptions);
-```
-
-```ruby
-user = "demo"
-reason = nil
-comment = nil
-
-key_name = "demo_value"
-key_value = "demo_value"
-
-KillBillClient::Model::Tenant.upload_tenant_user_key_value(key_name,
-                                                           key_value,
-                                                           user,
-                                                           reason,
-                                                           comment,
-                                                           options)
-```
-
-```python
-tenantApi = killbill.api.TenantApi()
-
-key_name = 'demo_value'
-body = 'demo_value'
-
-tenantApi.insert_user_key_value(key_name, body, created_by='demo')
-```
-
-**Request Body**
-
-The body contains a single string representing the value.
-
-**Query Parameters**
-
-None.
-
-**Response**
-
-If successful, returns a status code of 201 and an empty body. In addition, a `Location` item is returned in the header giving the URL for this key-value pair.
-
-### Retrieve a per tenant user key value
-
-Retrieves the value for a specified key, if it exists, from the tenant database. The key name is given as a path parameter.
-
-**HTTP Request**
-
-`GET http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}`
-
-> Example Request:
-
-```shell
-curl -v \
-    -u admin:password \
-    -H "X-Killbill-ApiKey: bob" \
-    -H "X-Killbill-ApiSecret: lazar" \
-    -H "Accept: application/json" \
-    "http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_value"
-```
-
-```java
-import org.killbill.billing.client.api.gen.TenantApi;
-protected TenantApi tenantApi;
-
-String keyName = "demo_value";
-
-TenantKeyValue result = tenantApi.getUserKeyValue(keyName, requestOptions);
-```
-
-```ruby
-key_name = "demo_value"
-
-KillBillClient::Model::Tenant.get_tenant_user_key_value(key_name, options)
-```
-
-```python
-tenantApi = killbill.api.TenantApi()
-
-key_name = 'demo_value'
-
-tenantApi.get_user_key_value(key_name)
-```
-
-> Example Response:
-
-```json
-{
-  "key": "demo_value",
-  "values": [
-    "demo_value",
-    "demo_value"
-  ]
-}
-```
-
-
-**Query Parameters**
-
-None.
-
-**Response**
-
-If successful, returns a status code of 200 and a tenant key value object. The key value object includes the key name and a JSON array containing the value, if any, or a comma-separated list of values. For example:
-
-{
-  "key": "MYKEY",
-  "values": [
-    "value1",
-    "value2"
-  ]
-}
-
-
-If the key does not exist no error is signalled but the `values` list is empty.
-
-### Delete a per tenant user key/value
-
-Deletes a key and its value, if it exists, from the tenant database. The key is given as a path parameter.
-
-**HTTP Request**
-
-`DELETE http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}`
-
-> Example Request:
-
-```shell
-curl -v \
-    -X DELETE \
-    -u admin:password \
-    -H "X-Killbill-ApiKey: bob" \
-    -H "X-Killbill-ApiSecret: lazar" \
-    -H "X-Killbill-CreatedBy: demo" \
-    -H "X-Killbill-Reason: demo" \
-    -H "X-Killbill-Comment: demo" \
-    "http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_value"
-```
-
-```java
-import org.killbill.billing.client.api.gen.TenantApi;
-protected TenantApi tenantApi;
-
-String keyName = "demo_value";
-
-tenantApi.deleteUserKeyValue(keyName, requestOptions);
-```
-
-```ruby
-user = "demo"
-reason = nil
-comment = nil
-key_value = "demo_value"
-
-KillBillClient::Model::Tenant.delete_tenant_user_key_value(key_value,
-                                                           user,
-                                                           reason,
-                                                           comment,
-                                                           options)
-```
-
-```python
-tenantApi = killbill.api.TenantApi()
-
-key_name = 'demo_value'
-
-tenantApi.delete_user_key_value(key_name, created_by='demo')
-```
-
-**Query Parameters**
-
-None.
-
-**Returns**
-
-If successful, returns a status code of 204 and an empty body. No error is signalled if the key does not exist.
-
-### Retrieve per tenant keys and values based on a key prefix
-
-This API enables searching for existing keys based on a prefix of the key name. For example, a search string of "MYK" would match keys such as `MYKEY1`, `MYKEY2`, etc. The search string is given as a path parameter.
-
-
-**HTTP Request**
-
-`GET http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig/{keyPrefix}/search`
-
-
-> Example Request:
-
-
-```shell
-curl -v \
-    -u admin:password \
-    -H "X-Killbill-ApiKey: bob" \
-    -H "X-Killbill-ApiSecret: lazar" \
-    -H "Accept: application/json" \
-    "http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig/PER_TENANT/search"
-```
-
-```java
-import org.killbill.billing.client.api.gen.TenantApi;
-protected TenantApi tenantApi;
-
-String keyPrefix = "PER_TENANT";
-
-TenantKeyValues result = tenantApi.getAllPluginConfiguration(keyPrefix, requestOptions);
-```
-
-```ruby
-key_prefix = "PER_TENANT"
-
-KillBillClient::Model::Tenant.search_tenant_config(key_prefix, options)
-```
-
-```python
-tenantApi = killbill.api.TenantApi()
-
-tenantApi.get_all_plugin_configuration(key_prefix='tenant_config')
-```
-
-> Example Response:
-
-```json
-{
-  "key": "PER_TENANT_CONFIG",
-  "values": [
-    "{org.killbill.invoice.sanitySafetyBoundEnabled:false}"
-  ]
-}
-```
-
-
-**Query Parameters**
-
-None.
-
-**Response**
-
-If successful, returns a status code of 200 and a tenant key value object containing the key and values for any keys that match the search string.
-
-
 
 
 ## System Properties Configuration
@@ -723,8 +851,7 @@ This API is used to set the value of specific system properties, overriding the 
 
 For example, in order to disable the invoice safety bound mechanism on a per-tenant level, this API could be used to set the per-tenant system property `org.killbill.invoice.sanitySafetyBoundEnabled` to false.
 
-The API sets the value of the "PER_TENANT_CONFIG" key, replacing any previous value.
-
+The API inserts a key-value pair corresponding to the tenant where key name is `PER_TENANT_CONFIG` and value is the system property to be set. It replaces any previous value.
 
 **HTTP Request**
 
@@ -744,7 +871,7 @@ curl -v \
     -H "X-Killbill-CreatedBy: demo" \
     -H "X-Killbill-Reason: demo" \
     -H "X-Killbill-Comment: demo" \
-    -d "{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}" \
+    -d '{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}' \
     "http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig"
 ```
 
@@ -752,7 +879,7 @@ curl -v \
 import org.killbill.billing.client.api.gen.TenantApi;
 protected TenantApi tenantApi;
 
-String body = "{\"org.killbill.invoice.sanitySafetyBoundEnabled\":\"false\"}";
+String body = "{'org.killbill.invoice.sanitySafetyBoundEnabled':'false'}";
 
 TenantKeyValue result = tenantApi.uploadPerTenantConfiguration(body, requestOptions);
 ```
@@ -767,6 +894,26 @@ body = '{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}'
 
 tenantApi.upload_per_tenant_configuration(body, created_by='demo')
 ```
+
+````javascript
+const body = '{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}';
+
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+api.uploadPerTenantConfiguration(body, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = "{'org.killbill.invoice.sanitySafetyBoundEnabled':'false'}";
+
+$result = $apiInstance->uploadPerTenantConfiguration($body, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
@@ -813,8 +960,20 @@ TODO
 ```python
 tenantApi = killbill.api.TenantApi()
 
-tenantApi.get_per_tenant_configuration()
+tenantKeyValue =  tenantApi.get_per_tenant_configuration()
 ```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const response: AxiosResponse<killbill.TenantKeyValue, any> = await api.getPerTenantConfiguration()
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$result = $apiInstance->getPerTenantConfiguration();
+````
 
 > Example Response:
 
@@ -875,6 +1034,22 @@ tenantApi = killbill.api.TenantApi()
 tenantApi.delete_per_tenant_configuration(created_by='demo')
 ```
 
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+api.deletePerTenantConfiguration('created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$apiInstance->deletePerTenantConfiguration($xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
+
 **Query Parameters**
 
 None.
@@ -886,19 +1061,19 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Plugin Configuration
 
-Plugins also support configuration on a per-tenant level. Please refer to our [plugin configuration manual](https://docs.killbill.io/latest/plugin_development.html#_plugin_configuration) for more details.
+Plugins also support configuration on a per-tenant level. Please refer to our [plugin configuration manual](https://docs.killbill.io/latest/plugin_installation.html#per-tenant-configuration) for more details.
 
 An example of the use of such per-tenant properties is to configure a payment plugin with different API keys,
 one set of keys for each tenant. This allows for a true multi-tenant deployment where plugins have different configuration
 based on the tenant in which they operate.
 
-Upon adding or deleting a new per-tenant plugin configuration, the system will generate a `TENANT_CONFIG_CHANGE`/`TENANT_CONFIG_DELETION` event, which can be handled in the plugin to refresh its configuration. In multi-node scenarios, events will be dispatched on each node, that is, on each plugin instance so they end up with a consistent view. A lot of the logic to handle configuration update has been implemented in our plugin frameworks (see [ruby framework](https://github.com/killbill/killbill-plugin-framework-ruby) and [java framework](https://github.com/killbill/killbill-plugin-framework-java)).
+Upon adding or deleting a new per-tenant plugin configuration, the system will generate a `TENANT_CONFIG_CHANGE`/`TENANT_CONFIG_DELETION` event, which can be handled in the plugin to refresh its configuration. In multi-node scenarios, events will be dispatched on each node, that is, on each plugin instance so they end up with a consistent view. A lot of the logic to handle configuration update has been implemented in our  [plugin framework](https://github.com/killbill/killbill-plugin-framework-java)).
 
 As with the system properties configuration, this is actually a special case of per-tenant key-value pairs. The following endpoints provide the ability to configure plugins on a per-tenant level.
 
 ### Add a per tenant configuration for a plugin
 
-Adds a per tenant key-value pair for the specified plugin. The plugin name is given as a path parameter. The key name is `PLUGIN_CONFIG_*plugin*` where *plugin* is the plugin name. The API sets the value of this key, replacing any previous value.
+Adds a per tenant key-value pair for the specified plugin. The plugin name is given as a path parameter. The API internally inserts a key-value pair corresponding to the tenant with key name=`PLUGIN_CONFIG_*plugin*` where *plugin* is the plugin name. It replaces any previous value.
 
 The value string uploaded is plugin dependent but typically consists of key/value properties,
 or well formatted yml or a properties file.
@@ -924,6 +1099,20 @@ curl -v \
     -H "X-Killbill-Comment: demo" \
     -d @./config.properties \
     "http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/demo_plugin"
+    
+OR 
+
+curl -v \
+     -X POST \
+     -u admin:password \
+     -H 'X-Killbill-ApiKey: bob' \
+     -H 'X-Killbill-ApiSecret: lazar' \
+     -H 'X-Killbill-CreatedBy: admin' \
+     -H 'Content-Type: text/plain' \
+     -d 'org.killbill.billing.plugin.avatax.url=XXX
+org.killbill.billing.plugin.avatax.accountId=YYY
+org.killbill.billing.plugin.avatax.licenseKey=ZZZ' \
+     http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/killbill-avatax
 ```
 
 ```java
@@ -943,7 +1132,7 @@ user = "demo"
 reason = nil
 comment = nil
 
-KillBillClient::Model::Tenant.upload_tenant_plugin_config(plugin_name,
+tenant_key_value = KillBillClient::Model::Tenant.upload_tenant_plugin_config(plugin_name,
                                                           plugin_config,
                                                           user,
                                                           reason,
@@ -959,6 +1148,28 @@ body = 'tenant_config'
 
 tenantApi.upload_plugin_configuration(plugin_name, body, created_by='demo')
 ```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const plugin_name = 'demo_plugin';
+const body = 'tenant_config'
+
+api.uploadPluginConfiguration(body, plugin_name, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$pluginName = "demo_plugin";
+$body = "tenant_config";
+
+$result = $apiInstance->uploadPluginConfiguration($body, $xKillbillCreatedBy, $pluginName, $xKillbillReason, $xKillbillComment);
+````
 
 
 **Request Body**
@@ -1004,7 +1215,7 @@ final TenantKeyValue result = tenantApi.getPluginConfiguration(pluginName, reque
 ```ruby
 plugin_name = "demo_plugin"
 
-KillBillClient::Model::Tenant.get_tenant_plugin_config(plugin_name, options)
+tenant_key_value = KillBillClient::Model::Tenant.get_tenant_plugin_config(plugin_name, options)
 ```
 
 ```python
@@ -1012,8 +1223,24 @@ tenantApi = killbill.api.TenantApi()
 
 plugin_name = 'demo_plugin'
 
-tenantApi.get_plugin_configuration(plugin_name)
+tenantKeyValue = tenantApi.get_plugin_configuration(plugin_name)
 ```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const plugin_name = 'demo_plugin';
+
+const response: AxiosResponse<killbill.TenantKeyValue, any> = await api.getPluginConfiguration(plugin_name)
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$pluginName = "demo_plugin";
+
+$result = $apiInstance->getPluginConfiguration($pluginName);
+````
 
 > Example Response:
 
@@ -1088,6 +1315,26 @@ plugin_name = 'demo_plugin'
 tenantApi.delete_plugin_configuration(plugin_name, created_by='demo')
 ```
 
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const plugin_name = 'demo_plugin';
+
+api.deletePluginConfiguration(plugin_name, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$pluginName = "demo_plugin";
+
+$apiInstance->deletePluginConfiguration($pluginName, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
+
 **Query Parameters**
 
 None.
@@ -1104,15 +1351,17 @@ The endpoints below allow you to override such state machines on a per-tenant le
 
 ### Add a per tenant payment state machine for a plugin
 
-Adds a per tenant key-value pair for the specified plugin. The plugin name is given as a path parameter. The key name is `PLUGIN_PAYMENT_STATE_MACHINE_*plugin*` where *plugin* is the plugin name. The API sets the value of this key, replacing any previous value.
+Adds a per tenant key-value pair for the specified plugin. The plugin name is given as a path parameter. The key name is `PLUGIN_PAYMENT_STATE_MACHINE_*plugin*` where *plugin* is the payment plugin name. The API sets the value of this key, replacing any previous value.
 
 The state machine is defined in an XML file. The complete XML file becomes the value of the key.
 
 **HTTP Request**
 
-Let's say we want to overwrite the default Kill Bill payment state machine for the payment plugin `demo_plugin`, and assuming `SimplePaymentStates.xml`is a valid payment state machine XML file, then the HTTP Request would be:
-
 `POST http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/{pluginName}`
+
+**Request Body**
+
+The request body can be specified as an XML string. Alternatively, the path of the XML file can be specified.
 
 > Example Request:
 
@@ -1135,8 +1384,8 @@ curl -v \
 import org.killbill.billing.client.api.gen.TenantApi;
 protected TenantApi tenantApi;
 
-String pluginName = "noop";
-String stateMachineConfig = getResourceBodyString("SimplePaymentStates.xml");
+String pluginName = "demo_plugin";
+String stateMachineConfig = "<xml>..</xml>";
 
 TenantKeyValue result = tenantApi.uploadPluginPaymentStateMachineConfig(pluginName,
                                                                         stateMachineConfig,
@@ -1151,10 +1400,32 @@ TODO
 tenantApi = killbill.api.TenantApi()
 
 plugin_name = 'demo_plugin'
-body = 'SimplePaymentStates.xml'
+body = '<xml>..</xml>'
 
 tenantApi.upload_plugin_payment_state_machine_config(plugin_name, body, created_by='demo')
 ```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const plugin_name = 'demo_plugin';
+const body = '<xml>..</xml>'
+
+api.uploadPluginPaymentStateMachineConfig(body, plugin_name, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$pluginName = "demo_plugin";
+$body = "<xml>..</xml>";
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$result = $apiInstance->uploadPluginPaymentStateMachineConfig($body, $xKillbillCreatedBy, $pluginName, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
@@ -1166,7 +1437,7 @@ If successful, returns a status code of 201 and an empty body. In addition, a `L
 
 ### Retrieve a per tenant payment state machine for a plugin
 
-Retrieves the value for the appropriate payment state machine key for the specified plugin. If present, this value should be the complete XML file that defines the state machine.
+Retrieves the complete XML file corresponding to the payment state machine for the specified plugin if it exists.
 
 **HTTP Request**
 
@@ -1187,7 +1458,7 @@ curl -v \
 import org.killbill.billing.client.api.gen.TenantApi;
 protected TenantApi tenantApi;
 
-String pluginName = "noop";
+String pluginName = "demo_plugin";
 
 TenantKeyValue result = tenantApi.getPluginPaymentStateMachineConfig(pluginName, requestOptions);
 ```
@@ -1201,8 +1472,24 @@ tenantApi = killbill.api.TenantApi()
 
 plugin_name = 'demo_plugin'
 
-tenantApi.get_plugin_payment_state_machine_config(plugin_name)
+tenantKeyValue = tenantApi.get_plugin_payment_state_machine_config(plugin_name)
 ```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const plugin_name = 'demo_plugin';
+
+const response: AxiosResponse<killbill.TenantKeyValue, any> = await api.getPluginPaymentStateMachineConfig(plugin_name)
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$pluginName = "demo_plugin";
+
+$result = $apiInstance->getPluginPaymentStateMachineConfig($pluginName);
+````
 
 > Example Response:
 
@@ -1284,7 +1571,7 @@ None.
 
 **Response**
 
-If successful, returns a status code of 200 and a key value object for the key `PLUGIN_PAYMENT_STATE_MACHINE_*plugin*`. The value of this key should be the complete XML file that defines the payment state machine.
+If successful, returns a status code of 200 and a key value object for the key `PLUGIN_PAYMENT_STATE_MACHINE_*plugin*`. 
 
 ### Delete a per tenant payment state machine for a plugin
 
@@ -1312,7 +1599,7 @@ curl -v \
 import org.killbill.billing.client.api.gen.TenantApi;
 protected TenantApi tenantApi;
 
-String pluginName = "noop";
+String pluginName = "demo_plugin";
 
 tenantApi.deletePluginPaymentStateMachineConfig(pluginName, requestOptions);
 ```
@@ -1328,6 +1615,26 @@ plugin_name = 'demo_plugin'
 
 tenantApi.delete_plugin_payment_state_machine_config(plugin_name, created_by='demo')
 ```
+
+````javascript
+const api: killbill.TenantApi = new killbill.TenantApi(config);
+
+const plugin_name = 'demo_plugin';
+
+api.deletePluginPaymentStateMachineConfig(plugin_name, 'created-by', 'reason', 'comment')
+````
+
+````php
+$apiInstance = $client->getTenantApi();
+
+$pluginName = "demo_plugin";
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$apiInstance->deletePluginPaymentStateMachineConfig($pluginName, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
