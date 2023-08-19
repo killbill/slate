@@ -120,7 +120,6 @@ $account->setName('TestPHPAccount');
 $account->setEmail('TestPHPAccount@email.com');
 $account->setCurrency('USD');
 
-
 $apiInstance->createAccount($account,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
 
@@ -217,7 +216,7 @@ $apiInstance = $client->getAccountApi();
 
 $accountID = '36c05a84-563b-4794-8958-772d93e677e1';
 
-$testaccount = $apiInstance->getAccount($accountID);
+$account = $apiInstance->getAccount($accountID);
 ```
 > Example Response:
 
@@ -329,7 +328,7 @@ $apiInstance = $client->getAccountApi();
 
 $externalKey = 'external_key';
 
-$testaccount = $apiInstance->getAccountByKey($externalKey);
+$account = $apiInstance->getAccountByKey($externalKey);
 ```
 > Example Response:
 
@@ -642,7 +641,7 @@ const response: AxiosResponse<killbill.Account[], any> = await api.getAccounts()
 ```php
 $apiInstance = $client->getAccountApi();
 
-$testaccount = $apiInstance->getAccounts();
+$account = $apiInstance->getAccounts();
 ```
 
 > Example Response:
@@ -789,7 +788,8 @@ const response: AxiosResponse<killbill.Account[], any> = await api.searchAccount
 $apiInstance = $client->getAccountApi();
 
 $searchKey = 'search_key';
-$testaccount = $apiInstance->searchAccounts($searchKey);
+
+$account = $apiInstance->searchAccounts($searchKey);
 ```
 > Example Response:
 
@@ -1019,7 +1019,7 @@ $apiInstance = $client->getAccountApi();
 
 $accountID = 'f7fde238-850a-4a7b-b075-48b582ee3495';
 
-$testaccount  = $apiInstance->getEmails($accountID);
+$emails  = $apiInstance->getEmails($accountID);
 ```
 > Example Response:
 
@@ -1178,7 +1178,10 @@ const response: AxiosResponse<killbill.Bundle[], any> = await api.getAccountBund
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
 
+$bundles  = $apiInstance-> getAccountBundles($accountID);
 ```
 > Example Response:
 
@@ -1395,7 +1398,10 @@ const response: AxiosResponse<killbill.Bundle[], any> = await api.getAccountBund
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
 
+$bundles  = $apiInstance-> getAccountBundlesPaginated($accountID);
 ```
 
 > Example Response:
@@ -1625,12 +1631,15 @@ accountApi.get_invoices_for_account(account_id, api_key, api_secret)
 
 ```javascript
 const api: killbill.AccountApi = new killbill.AccountApi(config);
-const accountID: string = 'be484bff-58dc-4ceb-906f-61dc9e317b0f';
+const accountID: string = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
 const response: AxiosResponse<killbill.Invoice[], any> = await api.getInvoicesForAccount(accountID);
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
 
+$invoices  = $apiInstance-> getInvoicesForAccount($accountID);
 ```
 
 > Example Response:
@@ -1735,7 +1744,10 @@ const response: AxiosResponse<killbill.Invoice[], any> = await api.getInvoicesFo
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
 
+$invoices  = $apiInstance-> getInvoicesForAccountPaginated($accountID);
 ```
 
 > Example Response:
@@ -1875,7 +1887,11 @@ api.payAllInvoices(accountID,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+$xKillbillCreatedBy = "user";
 
+$apiInstance-> payAllInvoices($accountID,$xKillbillCreatedBy);
 ```
 **Query Parameters**
 
@@ -1946,7 +1962,10 @@ const response: AxiosResponse<killbill.InvoicePayment[], any> = await api.getInv
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = '110952d7-1b7e-482c-b6bb-103e46794927';
 
+$invoicePayments  = $apiInstance-> getInvoicePayments($accountID);
 ```
 
 > Example Response:
@@ -2055,7 +2074,10 @@ const response: AxiosResponse<killbill.InvoicePayment[], any> = await api.getPay
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
+$accountID = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
 
+$accountPayments  = $apiInstance-> getPaymentsForAccount($accountID);
 ```
 > Example Response:
 
