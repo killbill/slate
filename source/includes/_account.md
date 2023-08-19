@@ -108,7 +108,20 @@ api.createAccount(body,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$account = new Account();
+
+$account->setName('TestPHPAccount');
+$account->setEmail('TestPHPAccount@email.com');
+$account->setCurrency('USD');
+
+
+$apiInstance->createAccount($account,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
 
 **Request Body**
@@ -195,12 +208,16 @@ accountApi.get_account(account_id, api_key, api_secret)
 
 ```javascript
 const api: killbill.AccountApi = new killbill.AccountApi(config);
-const accountID: string = 'be484bff-58dc-4ceb-906f-61dc9e317b0f';
+const accountID: string = '36c05a84-563b-4794-8958-772d93e677e1';
 const response: AxiosResponse<killbill.Account> = await api.getAccount(accountID);
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$accountID = '36c05a84-563b-4794-8958-772d93e677e1';
+
+$testaccount = $apiInstance->getAccount($accountID);
 ```
 > Example Response:
 
@@ -308,7 +325,11 @@ const response: AxiosResponse<killbill.Account, any> = await api.getAccountByKey
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$externalKey = 'external_key';
+
+$testaccount = $apiInstance->getAccountByKey($externalKey);
 ```
 > Example Response:
 
@@ -436,7 +457,17 @@ api.updateAccount(body,'07c0cef4-41c5-4606-b2cd-661332cdd41c','created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$account = new Account();
+$account->setName('Another Name');
+$accountID = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+
+$apiInstance->updateAccount($account,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
 ```
 
 
@@ -523,7 +554,12 @@ api.closeAccount(accountID,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$accountID = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+
+$apiInstance->closeAccount($accountID,$xKillbillCreatedBy);
 ```
 
 **Query Parameters**
@@ -604,8 +640,11 @@ const response: AxiosResponse<killbill.Account[], any> = await api.getAccounts()
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$testaccount = $apiInstance->getAccounts();
 ```
+
 > Example Response:
 
 ```json
@@ -747,7 +786,10 @@ const response: AxiosResponse<killbill.Account[], any> = await api.searchAccount
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$searchKey = 'search_key';
+$testaccount = $apiInstance->searchAccounts($searchKey);
 ```
 > Example Response:
 
@@ -899,7 +941,20 @@ api.addEmail(body, '03fc2b57-06be-4691-a260-c897d5c1e13e', 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$accountEmail = new AccountEmail();
+
+$accountEmail->setEmail('email@laposte.com');
+$accountEmail->setAccountId('03fc2b57-06be-4691-a260-c897d5c1e13e');
+
+$accountID = '03fc2b57-06be-4691-a260-c897d5c1e13e';
+
+$apiInstance->addEmail($accountEmail,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
 ```
 
 **Request Body**
@@ -960,7 +1015,11 @@ const response: AxiosResponse<killbill.AccountEmail[], any> = await api.getEmail
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$accountID = 'f7fde238-850a-4a7b-b075-48b582ee3495';
+
+$testaccount  = $apiInstance->getEmails($accountID);
 ```
 > Example Response:
 
@@ -1044,7 +1103,16 @@ api.removeEmail(accountID,email,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$accountID = 'be484bff-58dc-4ceb-906f-61dc9e317b0f';
+$accountEmail = 'email@laposte.com';
+
+$apiInstance->removeEmail($accountID,$accountEmail,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
 
 **Query Parameters**
