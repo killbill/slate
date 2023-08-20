@@ -2241,7 +2241,20 @@ api.processPayment(body,'b0da8392-49ba-43f2-8fac-3f9f85b8ff61','created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentTransaction = new PaymentTransaction();
+
+$paymentTransaction->setAmount('50');
+$paymentTransaction->setTransactionType('AUTHORIZE');
+
+$accountID = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+
+$apiInstance-> processPayment($paymentTransaction,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
 ```
 
 **Request Body**
@@ -2367,7 +2380,20 @@ api.processPaymentByExternalKey(body,'sample_external_key','created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentTransaction = new PaymentTransaction();
+
+$paymentTransaction->setAmount('50');
+$paymentTransaction->setTransactionType('AUTHORIZE');
+
+$externalKey = 'sample_external_key';
+
+$apiInstance-> processPaymentByExternalKey($paymentTransaction,$xKillbillCreatedBy,$externalKey,$xKillbillReason,$xKillbillComment);
 ```
 **Request Body**
 
@@ -2467,7 +2493,20 @@ api.createPaymentMethod(body,'059ecfb8-6b4d-4a89-9537-63a687e6cf10','created_by'
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentMethod = new PaymentMethod();
+
+$paymentMethod->setExternalKey("ExternalKey");
+$paymentMethod-> setPluginName('__EXTERNAL_PAYMENT__');
+
+$accountID = "059ecfb8-6b4d-4a89-9537-63a687e6cf10";
+
+$apiInstance-> createPaymentMethod($paymentMethod,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
 ```
 
 **Request Body**
@@ -2540,7 +2579,11 @@ const response: AxiosResponse<killbill.PaymentMethod[], any> = await api.getPaym
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$accountID = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+
+$accountPaymentMethods = $apiInstance-> getPaymentMethodsForAccount($accountID);
 ```
 > Example Response:
 
@@ -2645,7 +2688,14 @@ api.setDefaultPaymentMethod(accountID,paymentMethodId,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+
+$paymentMethodID = "4f124c0d-cee7-49b1-a181-3b0738c685d7";
+$accountID = "88a5987a-1e1c-47c5-ba95-34ef14db3d46";
+
+$apiInstance-> setDefaultPaymentMethod($accountID,$paymentMethodID,$xKillbillCreatedBy);
 ```
 
 **Query Parameters**
@@ -2724,7 +2774,13 @@ api.refreshPaymentMethods(accountID,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+
+$accountID = "88a5987a-1e1c-47c5-ba95-34ef14db3d46";
+
+$apiInstance-> refreshPaymentMethods($accountID,$xKillbillCreatedBy);
 ```
 **Query Parameters**
 
@@ -2787,7 +2843,11 @@ const response: AxiosResponse<killbill.OverdueState, any> = await api.getOverdue
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$accountID = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+
+$accountOverdue = $apiInstance-> getOverdueAccount($accountID);
 ```
 > Example Response:
 
@@ -2946,7 +3006,20 @@ api.addAccountBlockingState(body,'07c0cef4-41c5-4606-b2cd-661332cdd41c','created
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$xKillbillCreatedBy = "user";
+
+$blockingState = new  BlockingState();
+$blockingState->setStateName('ACCT_PAUSED');
+$blockingState->setService('billing');
+$blockingState->setIsBlockChange('false');
+$blockingState->setIsBlockBilling('false');
+$blockingState->setIsBlockEntitlement('false');
+
+$accountID = "07c0cef4-41c5-4606-b2cd-661332cdd41c";
+
+$apiInstance-> addAccountBlockingState($blockingState,$xKillbillCreatedBy,$accountID);
 ```
 **Request Body**
 
@@ -3024,7 +3097,11 @@ const response: AxiosResponse<killbill.BlockingState[], any> = await api.getBloc
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$accountID = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+
+$accountBlockingStates = $apiInstance-> getBlockingStates($accountID);
 ```
 
 > Example Response:
@@ -3122,7 +3199,11 @@ const response: AxiosResponse<killbill.Account[], any> = await api.getChildrenAc
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+
+$childAccounts = $apiInstance-> getChildrenAccounts($accountID);
 ```
 
 > Example Response:
@@ -3221,7 +3302,11 @@ api.transferChildCreditToParent(childAccountID, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getAccountApi();
 
+$childAccountID = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+
+$apiInstance-> transferChildCreditToParent($childAccountID,$xKillbillCreatedBy);
 ```
 
 **Query Parameters**
