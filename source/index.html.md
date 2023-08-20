@@ -1,21 +1,6 @@
 ---
 includes:
-  - tenant
-  - catalog
-  - account
-  - payment-method
-  - subscription
-  - bundle
-  - invoice
-  - credit
-  - payment
-  - payment-transaction
-  - invoice-payment
-  - usage
-  - custom-field
-  - tag
-  - tag-definition
-  - admin
+  
 
 title: Kill Bill
 
@@ -404,3 +389,20 @@ In addition to these error codes, the system will often return some json to prov
 ## Additional Resources
 
 Our main documentation is found [here](http://docs.killbill.io).
+
+# [Tenant](tenant.html)
+# [Catalog](catalog.html)
+# [Account](account.html)
+# [Payment Method](payment-method.html)
+# [Subscription](subscription.html)
+# [Bundle](bundle.html)
+# [Invoice](invoice.html)
+# [Credit](credit.html)
+# [Payment](payment.html)
+# [Payment Transaction](payment-transaction.html)
+# [Invoice Payment](invoice-payment.html)
+# [Usage](usage.html)
+# [Custom Field](custom-field.html)
+# [Tag](tag.html)
+# [Tag Definition](tag-definition.html)
+# [Admin](admin.html)

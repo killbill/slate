@@ -6,7 +6,7 @@ The `Credit` resource represents the credits created on behalf of the customer `
 invoice item. The credits are visible at the level of the `Account`, i.e account credit, and those will automatically be consumed by the system on
 subsequent invoices to bring the balance to zero -- or reduce the balance if there is not enough credit to pay the full amount.
 
-See section [Invoice Resource](#invoice) for the description of the `InvoiceItem` attributes.
+See section [Invoice Resource](invoice.html) for the description of the `InvoiceItem` attributes.
 
 
 ## Credit

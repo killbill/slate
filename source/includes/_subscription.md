@@ -93,7 +93,7 @@ These endpoints support the basic CRUD operations on Subscriptions.
 
 ### Create a subscription
 
-This API creates a base product subscription. It also creates a bundle to contain the subscription. See [Bundle](https://killbill.github.io/slate/#bundle) for further information.
+This API creates a base product subscription. It also creates a bundle to contain the subscription. See [Bundle](bundle.html) for further information.
 
 **HTTP Request** 
 
@@ -1075,7 +1075,7 @@ The new BCD needs to be specified in the request body via the `billCycleDayLocal
 
 By default the effective date must be in the future so as to not modify existing invoices. Setting **forceNewBcdWithPastEffectiveDate** to true allows the date to be set in the past. 
 
-Secondly, even after this endpoint is executed, the [Retrieve a Subscription](https://killbill.github.io/slate/?shell#subscription-retrieve-a-subscription-by-id) endpoint will still return the old BCD until an invoice is generated on the new BCD.
+Secondly, even after this endpoint is executed, the [Retrieve a Subscription](subscription.html#subscription-retrieve-a-subscription-by-id) endpoint will still return the old BCD until an invoice is generated on the new BCD.
 
 
 **Response**
@@ -1491,7 +1491,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Blocking State
 
-See section [Account Blocking State](#account-blocking-state) for an introduction to blocking states.
+See section [Account Blocking State](account.html#account-blocking-state) for an introduction to blocking states.
 
 ### Block a subscription
 
@@ -1612,7 +1612,7 @@ If successful, returns a status code of 201 and an empty body.
 
 ## Custom Fields
 
-`Custom fields` are `{key, value}` attributes that can be attached to any customer resources. For more on custom fields see [Custom Fields](#custom-fields). These endpoints manage custom fields associated with `Subscription` objects.
+`Custom fields` are `{key, value}` attributes that can be attached to any customer resources. For more on custom fields see [Custom Fields](custom-field.html). These endpoints manage custom fields associated with `Subscription` objects.
 
 ### Add custom fields to subscription
 
@@ -1932,7 +1932,7 @@ If successful, returns a status code of 204 and an empty body.
 ## Tags
 
 
-See section [Account Tags](#account-tags) for an introduction.
+See section [Account Tags](account.html#account-tags) for an introduction.
 
 The are no `system` tags applicable for a `Subscription`.
 
@@ -2260,7 +2260,7 @@ If successful, returns a status code of 200 and a list of audit logs.
 
 ### Retrieve subscription event audit logs with history by subscription event id
 
-Retrieve a list of audit log records showing events that occurred involving changes to the subscription, based on a subscription event id. History information (a copy of the full subscription object) is included with each record. The id of a subscription event comes from the [timeline api](#account-retrieve-account-timeline).
+Retrieve a list of audit log records showing events that occurred involving changes to the subscription, based on a subscription event id. History information (a copy of the full subscription object) is included with each record. The id of a subscription event comes from the [timeline api](account.html#account-retrieve-account-timeline).
 
 **HTTP Request** 
 

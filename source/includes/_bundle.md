@@ -632,7 +632,7 @@ If successful, returns a status code of 201. In addition, a Location header cont
 
 ## Blocking State
 
-See section [Account Blocking State](#account-blocking-state) for an introduction.
+See section [Account Blocking State](account.html#account-blocking-state) for an introduction.
 
 ### Pause a bundle
 
@@ -757,7 +757,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ### Block a bundle
 
-Provides a low level interface to add a `BlockingState` event for this bundle. Note that the previous [pause](#bundle-pause-a-bundle) and [resume](#bundle-resume-a-bundle) operations can be achieved using this API.
+Provides a low level interface to add a `BlockingState` event for this bundle. Note that the previous [pause](bundle.html#bundle-pause-a-bundle) and [resume](bundle.html#bundle-resume-a-bundle) operations can be achieved using this API.
 
 
 **HTTP Request** 
@@ -877,7 +877,7 @@ If successful, returns a status code of 201 and an empty body.
 
 ## Custom Fields
 
-`Custom fields` are `{key, value}` attributes that can be attached to any customer resources. For more on custom fields see [Custom Fields](#custom-fields). These endpoints manage custom fields associated with `Bundle` objects.
+`Custom fields` are `{key, value}` attributes that can be attached to any customer resources. For more on custom fields see [Custom Fields](custom-field.html). These endpoints manage custom fields associated with `Bundle` objects.
 
 ### Add custom fields to bundle
 
@@ -1189,7 +1189,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Tags
 
-See section [Account Tags](#account-tags) for an introduction.
+See section [Account Tags](account.html#account-tags) for an introduction.
 
 The are no `system` tags applicable for a `Bundle`.
 

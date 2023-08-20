@@ -437,7 +437,7 @@ If successful, returns a status code of 201 and an invoice item object.
 
 ### Create tax items
 
-Normally, tax items are added to an invoice by a plugin, which intercepts the invoice during its creation and adds the required tax items on the fly. However, sometimes you may want to add tax items directly. This API adds a tax item to an account, which will result in the creation of a new invoice. Also, it is worth noting, that the tax items are not linked to any existing `invoiceItem`s. Consequently, specifying fields like `linkedInvoiceItemId`, `subscriptionId` while creating the tax item has no effect. These fields do not get saved on the database and will not be returned in subsequent `GET` requests.
+Normally, tax items are added to an invoice by a plugin, which intercepts the invoice during its creation and adds the required tax items on the fly. However, sometimes you may want to add tax items directly. This API adds a tax item to an account, which will result in the creation of a new invoice. Also, it is worth noting, that the tax items are not linked to any existing `invoiceItems`. Consequently, specifying fields like `linkedInvoiceItemId`, `subscriptionId` while creating the tax item has no effect. These fields do not get saved on the database and will not be returned in subsequent `GET` requests.
 
 **HTTP Request** 
 
@@ -1292,7 +1292,7 @@ In some situations, it is necessary to preview what a given customer will be inv
 * Given a `targetDate`, what invoice will the system generate?
 * Given a change in a subscription, such as a new subscription, change of plan, or cancellation, what invoice will the system generate?
 
-A dry run is based on a [dry run resource object](https://killbill.github.io/slate/#invoice-invoicedryrun-resource).
+A dry run is based on a [dry run resource object](invoice.html#invoice-invoicedryrun-resource).
 
 
 ### Generate a dry run invoice
@@ -1530,7 +1530,7 @@ invoiceApi.generate_dry_run_invoice(body,
 
 **Request Body**
 
-A [dry run resource object](https://killbill.github.io/slate/#invoice-invoicedryrun-resource). The **dryRunType** and sometimes **dryRunAction** must be specified. Other attributes depend on these:
+A [dry run resource object](invoice.html#invoice-invoicedryrun-resource). The **dryRunType** and sometimes **dryRunAction** must be specified. Other attributes depend on these:
 
 | **dryRunType** | **dryRunAction** | **Other Required Attributes** |**Other Optional Attributes** |**Description**
 |--|--|--|--|--|
@@ -1563,12 +1563,12 @@ If successful, returns a status code of 200 and an invoice resource object.
 
 An invoice group is a group of invoices. An invoice group plugin can be used to split an invoice into multiple invoices. Such split invoices belong to a single invoice group. 
 
-Note that Kill Bill does not provide any reference implementation for an invoice group plugin. So anyone wishing to use this feature would need to create an invoice plugin and implement the [InvoicePluginApi#getInvoiceGrouping](https://github.com/killbill/killbill-plugin-api/blob/20e10d463b67b0434e1b9f4dd62ed34ebe84bd9b/invoice/src/main/java/org/killbill/billing/invoice/plugin/api/InvoicePluginApi.java#L41) method. We provide a [demo plugin](https://github.com/killbill/killbill-invgrp-demo) that demonstrates how an invoice group plugin can be implemented. When such a plugin is configured, an [invoice group run](https://killbill.github.io/slate/#invoice-trigger-an-invoice-group-run) would result in the generation of multiple invoices.
+Note that Kill Bill does not provide any reference implementation for an invoice group plugin. So anyone wishing to use this feature would need to create an invoice plugin and implement the [InvoicePluginApi#getInvoiceGrouping](https://github.com/killbill/killbill-plugin-api/blob/20e10d463b67b0434e1b9f4dd62ed34ebe84bd9b/invoice/src/main/java/org/killbill/billing/invoice/plugin/api/InvoicePluginApi.java#L41) method. We provide a [demo plugin](https://github.com/killbill/killbill-invgrp-demo) that demonstrates how an invoice group plugin can be implemented. When such a plugin is configured, an [invoice group run](invoice.html#invoice-trigger-an-invoice-group-run) would result in the generation of multiple invoices.
 
 
 ### Trigger an invoice group run
 
-Triggers an invoice group run for the associated account. This would result in the creation of split invoices only if an invoice group plugin is configured. Otherwise, this endpoint behaves the same way as the [Trigger an invoice run](https://killbill.github.io/slate/#invoice-trigger-an-invoice-run) endpoint.
+Triggers an invoice group run for the associated account. This would result in the creation of split invoices only if an invoice group plugin is configured. Otherwise, this endpoint behaves the same way as the [Trigger an invoice run](invoice.html#invoice-trigger-an-invoice-run) endpoint.
 
 **HTTP Request** 
 
@@ -1784,7 +1784,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 
 ## Payments
 
-These endpoints relate to payments on an invoice. More information can be found at [Invoice Payments](https://killbill.github.io/slate/#invoice-payment).
+These endpoints relate to payments on an invoice. More information can be found at [Invoice Payments](invoice-payment.html).
 
 ### Trigger a payment for an invoice
 
@@ -1980,7 +1980,7 @@ If successful, returns a status code of 200 and a List of InvoicePayment resourc
 
 ## Custom Fields
 
-Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to invoices. For details on Custom Fields see [Custom Field](https://killbill.github.io/slate/#custom-field).
+Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to invoices. For details on Custom Fields see [Custom Field](custom-field.html).
 
 ### Add custom fields to an invoice
 
@@ -2053,7 +2053,7 @@ invoiceApi.create_invoice_custom_fields(invoice_id,
 
 **Request Body**
 
-A list of [Custom Field](https://killbill.github.io/slate/?java#custom-field-custom-field-resource) objects. Each object should specify at least the the `name` and `value` attribute. For example:
+A list of [Custom Field](custom-field.html#custom-field-custom-field-resource) objects. Each object should specify at least the the `name` and `value` attribute. For example:
 
 [ { "name": "CF1", "value": "123" } ]
 
@@ -2210,7 +2210,7 @@ invoiceApi.modify_invoice_custom_fields(invoice_id,
 **Requst Body**
 
 
-A list of [Custom Field](https://killbill.github.io/slate/?java#custom-field-custom-field-resource) objects representing the fields to substitute for existing ones. Each object should specify at least the the `customFieldId` and `value` attribute. For example:
+A list of [Custom Field](custom-field.html#custom-field-custom-field-resource) objects representing the fields to substitute for existing ones. Each object should specify at least the the `customFieldId` and `value` attribute. For example:
 
 [ { "customFieldId": "6d4c073b-fd89-4e39-9802-eba65f42492f", "value": "123" } ]
 
@@ -2296,7 +2296,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Tags
 
-See [Account Tags](https://killbill.github.io/slate/#account-tags) for an introduction.
+See [Account Tags](account.html#account-tags) for an introduction.
 
 The only `system` tag applicable for an `Invoice` is `WRITTEN_OFF` (`00000000-0000-0000-0000-000000000004`), which as it's name indicates, is used to write off an unpaid invoice, bringing its balance to $0.
 

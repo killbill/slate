@@ -1,6 +1,6 @@
 # Payment Transaction
 
-Payment transactions belong to a [Payment](https://killbill.github.io/slate/#payment-payment-resource) object.
+Payment transactions belong to a [Payment](payment.html#payment-payment-resource) object.
 
 They represent a particular payment operation, such as authorization, chargeback, refund, etc. Most operations happen at the `Payment` level, but there are a few endpoints
 that work directly at the transaction level.
@@ -410,7 +410,7 @@ If successful, returns a status code of 200 and a list of account audit logs wit
 
 ## Custom Fields
 
-Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to `PaymentTransaction` objects. For details on Custom Fields see [Custom Field](https://killbill.github.io/slate/#custom-field).
+Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to `PaymentTransaction` objects. For details on Custom Fields see [Custom Field](custom-field.html).
 
 ### Add custom fields to payment transaction
 
@@ -693,7 +693,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Tags
 
-See [Account Tags](https://killbill.github.io/slate/#account-tags) for an introduction.
+See [Account Tags](account.html#account-tags) for an introduction.
 
 The are no `system` tags applicable to a Payment Transaction.
 

@@ -42,16 +42,16 @@ A Payment is represented by a `Payment` resource object. The attributes for the 
 
 * **paymentAttempts**: Number of payment attempts; this is only effective when the system has been configured to retry failed transactions.
 
-The attributes for a `PaymentTransaction` are described [here](#payment-transaction-payments-transactions).
+The attributes for a `PaymentTransaction` are described [here](payment-transaction.html#payment-transaction-payments-transactions).
 
 
 ## Payments
 
-These endpoints initiate transactions on an existing Payment. To begin a new Payment, see [Trigger a Payment](https://killbill.github.io/slate/?shell#account-trigger-a-payment-authorization-purchase-or-credit) in the Account API. 
+These endpoints initiate transactions on an existing Payment. To begin a new Payment, see [Trigger a Payment](account.html#account-trigger-a-payment-authorization-purchase-or-credit) in the Account API. 
 
 ### Capture an existing authorization [using paymentId]
 
-Attempts to capture a payment amount based on a prior authorization. (A prior authorization may be created via the [Trigger a Payment](https://killbill.github.io/slate/index.html?shell#account-trigger-a-payment-authorization-purchase-or-credit) endpoint). The Payment is identified by its `paymentId` provided as a path parameter.
+Attempts to capture a payment amount based on a prior authorization. (A prior authorization may be created via the [Trigger a Payment](account.html#account-trigger-a-payment-authorization-purchase-or-credit) endpoint). The Payment is identified by its `paymentId` provided as a path parameter.
 
 **HTTP Request** 
 
@@ -134,7 +134,7 @@ If successful, returns a status code of 201 and an empty body. A Location header
 
 ### Capture an existing authorization [using paymentExternalKey]
 
-Requests a payment amount based on a prior authorization.(A prior authorization may be created via the [Trigger a Payment](https://killbill.github.io/slate/index.html?shell#account-trigger-a-payment-authorization-purchase-or-credit) endpoint).The payment is identified by its external key given in the request body.
+Requests a payment amount based on a prior authorization.(A prior authorization may be created via the [Trigger a Payment](account.html#account-trigger-a-payment-authorization-purchase-or-credit) endpoint).The payment is identified by its external key given in the request body.
 
 **HTTP Request** 
 
@@ -1343,7 +1343,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ### Combo api to create a new payment transaction on a existing (or not) account
 
-This API creates a PaymentTransaction of type AUTHORIZE, PURCHASE, or CREDIT. This is the same as the API [Trigger a Payment](https://killbill.github.io/slate/#account-trigger-a-payment-authorization-purchase-or-credit) described with the Account endpoints. However, this API can optionally create a new Account and register a new PaymentMethod at the same time.
+This API creates a PaymentTransaction of type AUTHORIZE, PURCHASE, or CREDIT. This is the same as the API [Trigger a Payment](account.html#account-trigger-a-payment-authorization-purchase-or-credit) described with the Account endpoints. However, this API can optionally create a new Account and register a new PaymentMethod at the same time.
 
 **HTTP Request** 
 
@@ -1482,7 +1482,7 @@ If successful, returns a status code of 201 and an empty body. In addition, a `L
 
 ## Custom Fields
 
-Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to Payment objects. For details on Custom Fields see [Custom Field](https://killbill.github.io/slate/#custom-field).
+Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to Payment objects. For details on Custom Fields see [Custom Field](custom-field.html#custom-field).
 
 ### Add custom fields to payment
 
@@ -1556,7 +1556,7 @@ paymentApi.create_payment_custom_fields(payment_id,
 
 **Request Body**
 
-A list of [Custom Field](https://killbill.github.io/slate/?java#custom-field-custom-field-resource) objects. Each object should specify at least the the `name` and `value` attribute. For example:
+A list of [Custom Field](custom-field.html#custom-field-custom-field-resource) objects. Each object should specify at least the the `name` and `value` attribute. For example:
 
 [ { "name": "CF1", "value": "123" } ]
 
@@ -1703,7 +1703,7 @@ paymentApi.modify_payment_custom_fields(payment_id,
 
 **Requst Body**
 
-A list of [Custom Field](https://killbill.github.io/slate/?java#custom-field-custom-field-resource) objects representing the fields to substitute for existing ones. Each object should specify at least the the `customFieldId` and `value` attribute. For example:
+A list of [Custom Field](custom-field.html#custom-field-custom-field-resource) objects representing the fields to substitute for existing ones. Each object should specify at least the the `customFieldId` and `value` attribute. For example:
 
 [ { "customFieldId": "6d4c073b-fd89-4e39-9802-eba65f42492f", "value": "123" } ]
 
@@ -1783,7 +1783,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Tags
 
-See [Account Tags](https://killbill.github.io/slate/#account-tags) for an introduction.
+See [Account Tags](account.html#account-tags) for an introduction.
 
 The are no `system` tags applicable to a Payment.
 

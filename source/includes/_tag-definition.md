@@ -4,7 +4,7 @@ These APIs manage a tag definition resource object, which provides the definitio
 
 ## Tag Definition Resource
 
-Each tag is associated with a specific tag definition. A tag definition is a schema or template, and a tag is an instance of it. Please refer to the section [AccountTags](https://killbill.github.io/slate/#account-tags) for an overview of tags. The system provides some `System tag definitions` that can be used to add tags to a particular object. Users may define their own tags; however, when using `User Tags`, one must first create the associated tag definition.
+Each tag is associated with a specific tag definition. A tag definition is a schema or template, and a tag is an instance of it. Please refer to the section [AccountTags](account.html#account-tags) for an overview of tags. The system provides some `System tag definitions` that can be used to add tags to a particular object. Users may define their own tags; however, when using `User Tags`, one must first create the associated tag definition.
 
 The tag definition resource includes the following attributes:
 
