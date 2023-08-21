@@ -100,7 +100,27 @@ accountApi.create_account(body,
                           api_key, 
                           api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.Account = {name: 'John Doe',email: 'john1@laposte.com',currency: 'USD'};
+api.createAccount(body,'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$account = new Account();
+
+$account->setName('TestPHPAccount');
+$account->setEmail('TestPHPAccount@email.com');
+$account->setCurrency('USD');
+
+$apiInstance->createAccount($account,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
 **Request Body**
 
 The body of the request is a JSON string specifying any attributes of the resource that need to be assigned an initial value. No attributes are required. For any attributes omitted, the following defaults are generated:
@@ -183,7 +203,19 @@ account_id = '36c05a84-563b-4794-8958-772d93e677e1'
 
 accountApi.get_account(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '36c05a84-563b-4794-8958-772d93e677e1';
+const response: AxiosResponse<killbill.Account> = await api.getAccount(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '36c05a84-563b-4794-8958-772d93e677e1';
+
+$account = $apiInstance->getAccount($accountID);
+```
 > Example Response:
 
 ```json
@@ -281,6 +313,19 @@ accountApi = killbill.api.AccountApi()
 external_key = '36c05a84-563b-4794-8958-772d93e677e1'
 
 accountApi.get_account(external_key, api_key, api_secret)
+```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const externalKey: string = 'external_key';
+const response: AxiosResponse<killbill.Account, any> = await api.getAccountByKey(externalKey);
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+
+$externalKey = 'external_key';
+
+$account = $apiInstance->getAccountByKey($externalKey);
 ```
 > Example Response:
 
@@ -400,6 +445,25 @@ accountApi.update_account(account_id,
                           api_key, 
                           api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.Account = {name: 'Another Name'}; 
+api.updateAccount(body,'07c0cef4-41c5-4606-b2cd-661332cdd41c','created_by');
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$account = new Account();
+$account->setName('Another Name');
+$accountID = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+
+$apiInstance->updateAccount($account,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
+```
 
 **Query Parameters**
 
@@ -476,7 +540,20 @@ accountApi.close_account(account_id,
                          api_key,
                          api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '07c0cef4-41c5-4606-b2cd-661332cdd41c'
+api.closeAccount(accountID,'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$accountID = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+
+$apiInstance->closeAccount($accountID,$xKillbillCreatedBy);
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -548,7 +625,16 @@ accountApi = killbill.api.AccountApi()
 
 accountApi.get_accounts(api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const response: AxiosResponse<killbill.Account[], any> = await api.getAccounts();
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$account = $apiInstance->getAccounts();
+```
 > Example Response:
 
 ```json
@@ -682,7 +768,19 @@ search_key = 'John'
 
 accountApi.search_accounts(search_key, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const searchKey: string = 'search_key';
+const response: AxiosResponse<killbill.Account[], any> = await api.searchAccounts(searchKey);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$searchKey = 'search_key';
+
+$account = $apiInstance->searchAccounts($searchKey);
+```
 > Example Response:
 
 ```json
@@ -825,7 +923,28 @@ accountApi.add_email(account_id,
                      api_key,
                      api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.AccountEmail = { email: 'email@laposte.com' };
+api.addEmail(body, '03fc2b57-06be-4691-a260-c897d5c1e13e', 'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$accountEmail = new AccountEmail();
+
+$accountEmail->setEmail('email@laposte.com');
+$accountEmail->setAccountId('03fc2b57-06be-4691-a260-c897d5c1e13e');
+
+$accountID = '03fc2b57-06be-4691-a260-c897d5c1e13e';
+
+$apiInstance->addEmail($accountEmail,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
+```
 **Request Body**
 
 The request body identifies a subset of the `account` attributes as a JSON string. The attributes required are `accountId` and `email` (the email to be added). `accountId` is required in the body even though it is given in the path. No other attributes should be included.
@@ -877,7 +996,19 @@ account_id = 'c8f51346-562d-429b-8c89-27a0f72009b3'
 
 accountApi.get_emails(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'f7fde238-850a-4a7b-b075-48b582ee3495';
+const response: AxiosResponse<killbill.AccountEmail[], any> = await api.getEmails(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = 'f7fde238-850a-4a7b-b075-48b582ee3495';
+
+$emails  = $apiInstance->getEmails($accountID);
+```
 > Example Response:
 
 ```json
@@ -951,7 +1082,25 @@ accountApi.remove_email(account_id,
                         api_key,
                         api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'be484bff-58dc-4ceb-906f-61dc9e317b0f';
+const email: string = 'email@laposte.com';
+api.removeEmail(accountID,email,'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$accountID = 'be484bff-58dc-4ceb-906f-61dc9e317b0f';
+$accountEmail = 'email@laposte.com';
+
+$apiInstance->removeEmail($accountID,$accountEmail,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
 **Query Parameters**
 
 None.
@@ -1008,7 +1157,18 @@ account_id = '8992e146-bfa1-4126-a045-98b844a4adcb'
 
 accountApi.get_account_bundles(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '8992e146-bfa1-4126-a045-98b844a4adcb';
+const response: AxiosResponse<killbill.Bundle[], any> = await api.getAccountBundles(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+
+$bundles  = $apiInstance-> getAccountBundles($accountID);
+```
 > Example Response:
 
 ```json
@@ -1216,7 +1376,18 @@ account_id = '8992e146-bfa1-4126-a045-98b844a4adcb'
 
 accountApi.get_account_bundles_paginated(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '8992e146-bfa1-4126-a045-98b844a4adcb';
+const response: AxiosResponse<killbill.Bundle[], any> = await api.getAccountBundlesPaginated(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+
+$bundles  = $apiInstance-> getAccountBundlesPaginated($accountID);
+```
 > Example Response:
 
 ```json
@@ -1441,7 +1612,18 @@ account_id = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266'
 
 accountApi.get_invoices_for_account(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+const response: AxiosResponse<killbill.Invoice[], any> = await api.getInvoicesForAccount(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+
+$invoices  = $apiInstance-> getInvoicesForAccount($accountID);
+```
 > Example Response:
 
 ```json
@@ -1536,7 +1718,18 @@ account_id = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266'
 
 accountApi.get_invoices_for_account_paginated(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+const response: AxiosResponse<killbill.Invoice[], any> = await api.getInvoicesForAccountPaginated(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+
+$invoices  = $apiInstance-> getInvoicesForAccountPaginated($accountID);
+```
 > Example Response:
 
 ```json
@@ -1666,7 +1859,19 @@ accountApi.pay_all_invoices(account_id,
                             payment_method_id=None,
                             target_date=None)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+api.payAllInvoices(accountID,'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266';
+$xKillbillCreatedBy = "user";
+
+$apiInstance-> payAllInvoices($accountID,$xKillbillCreatedBy);
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -1728,7 +1933,18 @@ account_id = '110952d7-1b7e-482c-b6bb-103e46794927'
 
 accountApi.get_invoice_payments(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '110952d7-1b7e-482c-b6bb-103e46794927';
+const response: AxiosResponse<killbill.InvoicePayment[], any> = await api.getInvoicePayments(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = '110952d7-1b7e-482c-b6bb-103e46794927';
+
+$invoicePayments  = $apiInstance-> getInvoicePayments($accountID);
+```
 > Example Response:
 
 ```json
@@ -1826,6 +2042,18 @@ accountApi = killbill.api.AccountApi()
 account_id = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61'
 
 accountApi.get_payments_for_account(account_id, api_key, api_secret)
+```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+const response: AxiosResponse<killbill.InvoicePayment[], any> = await api.getPaymentsForAccount(accountID);
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+$accountID = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+
+$accountPayments  = $apiInstance-> getPaymentsForAccount($accountID);
 ```
 > Example Response:
 
@@ -1981,7 +2209,28 @@ accountApi.process_payment(account_id,
                            api_secret, 
                            payment_method_id=payment_method_id)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.PaymentTransaction = {amount: 50, transactionType: 'AUTHORIZE'};
+api.processPayment(body,'b0da8392-49ba-43f2-8fac-3f9f85b8ff61','created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentTransaction = new PaymentTransaction();
+
+$paymentTransaction->setAmount('50');
+$paymentTransaction->setTransactionType('AUTHORIZE');
+
+$accountID = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+
+$apiInstance-> processPayment($paymentTransaction,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
+```
 **Request Body**
 
 The request body is a JSON string representing the payment transaction. See section [Payment Transaction](#payment-transaction) for details on payment transactions.
@@ -2097,7 +2346,28 @@ accountApi.process_payment_by_external_key(body,
                                            api_secret,
                                            payment_method_id=payment_method_id)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.PaymentTransaction = {amount: 50, transactionType: 'AUTHORIZE'};
+api.processPaymentByExternalKey(body,'sample_external_key','created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentTransaction = new PaymentTransaction();
+
+$paymentTransaction->setAmount('50');
+$paymentTransaction->setTransactionType('AUTHORIZE');
+
+$externalKey = 'sample_external_key';
+
+$apiInstance-> processPaymentByExternalKey($paymentTransaction,$xKillbillCreatedBy,$externalKey,$xKillbillReason,$xKillbillComment);
+```
 **Request Body**
 
 The request body is a JSON string representing the payment transaction. See section [Payment Transaction](#payment-transaction) for details on payment transactions.
@@ -2188,7 +2458,28 @@ accountApi.create_payment_method(account_id,
                                  api_key, 
                                  api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.PaymentMethod = {externalKey: 'ExternalKey', pluginName: '__EXTERNAL_PAYMENT__'}
+api.createPaymentMethod(body,'059ecfb8-6b4d-4a89-9537-63a687e6cf10','created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentMethod = new PaymentMethod();
+
+$paymentMethod->setExternalKey("ExternalKey");
+$paymentMethod-> setPluginName('__EXTERNAL_PAYMENT__');
+
+$accountID = "059ecfb8-6b4d-4a89-9537-63a687e6cf10";
+
+$apiInstance-> createPaymentMethod($paymentMethod,$xKillbillCreatedBy,$accountID,$xKillbillReason,$xKillbillComment);
+```
 **Request Body**
 
 A payment method object specifying `accountId` and `pluginName` at the minimum. Please refer to the [payment method resource](https://killbill.github.io/slate/#payment-method-payment-method-resource) section for more details about the fields.
@@ -2250,6 +2541,19 @@ accountApi = killbill.api.AccountApi()
 account_id = '88a5987a-1e1c-47c5-ba95-34ef14db3d46'
 
 accountApi.get_payment_methods_for_account(account_id, api_key, api_secret)
+```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+const response: AxiosResponse<killbill.PaymentMethod[], any> = await api.getPaymentMethodsForAccount(accountID);
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+
+$accountPaymentMethods = $apiInstance-> getPaymentMethodsForAccount($accountID);
 ```
 > Example Response:
 
@@ -2345,7 +2649,23 @@ accountApi.set_default_payment_method(account_id,
                                       api_key, 
                                       api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+const paymentMethodId: string = '4f124c0d-cee7-49b1-a181-3b0738c685d7';
+api.setDefaultPaymentMethod(accountID,paymentMethodId,'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+
+$paymentMethodID = "4f124c0d-cee7-49b1-a181-3b0738c685d7";
+$accountID = "88a5987a-1e1c-47c5-ba95-34ef14db3d46";
+
+$apiInstance-> setDefaultPaymentMethod($accountID,$paymentMethodID,$xKillbillCreatedBy);
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -2415,7 +2735,21 @@ accountApi.refresh_payment_methods(account_id,
                                    api_key,
                                    api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+api.refreshPaymentMethods(accountID,'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+
+$accountID = "88a5987a-1e1c-47c5-ba95-34ef14db3d46";
+
+$apiInstance-> refreshPaymentMethods($accountID,$xKillbillCreatedBy);
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -2470,7 +2804,19 @@ account_id = '82ecbf80-ddd2-4208-92be-2d3b2b7fc266'
 
 accountApi.get_overdue_account(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+const response: AxiosResponse<killbill.OverdueState, any> = await api.getOverdueAccount(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+
+$accountOverdue = $apiInstance-> getOverdueAccount($accountID);
+```
 > Example Response:
 
 ```json
@@ -2616,7 +2962,33 @@ accountApi.add_account_blocking_state(account_id,
                                       api_key, 
                                       api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.BlockingState = {  stateName: 'ACCT_PAUSED',
+                        service: 'billing',
+                        isBlockChange: false,
+                        isBlockEntitlement: false,
+                        isBlockBilling: false
+                      }
+api.addAccountBlockingState(body,'07c0cef4-41c5-4606-b2cd-661332cdd41c','created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$xKillbillCreatedBy = "user";
+
+$blockingState = new  BlockingState();
+$blockingState->setStateName('ACCT_PAUSED');
+$blockingState->setService('billing');
+$blockingState->setIsBlockChange('false');
+$blockingState->setIsBlockBilling('false');
+$blockingState->setIsBlockEntitlement('false');
+
+$accountID = "07c0cef4-41c5-4606-b2cd-661332cdd41c";
+
+$apiInstance-> addAccountBlockingState($blockingState,$xKillbillCreatedBy,$accountID);
+```
 **Request Body**
 
 A JSON string representing the blocking state object to be added. For details on this resource see [blocking state](#account-blocking-state-resource).
@@ -2684,6 +3056,19 @@ accountApi = killbill.api.AccountApi()
 account_id = '07c0cef4-41c5-4606-b2cd-661332cdd41c'
 
 accountApi.get_blocking_states(account_id, api_key, api_secret)
+```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+const response: AxiosResponse<killbill.BlockingState[], any> = await api.getBlockingStates(accountID);
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+
+$accountBlockingStates = $apiInstance-> getBlockingStates($accountID);
 ```
 > Example Response:
 
@@ -2772,7 +3157,19 @@ account_id = '8992e146-bfa1-4126-a045-98b844a4adcb'
 
 accountApi.get_children_accounts(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '8992e146-bfa1-4126-a045-98b844a4adcb';
+const response: AxiosResponse<killbill.Account[], any> = await api.getChildrenAccounts(accountID);
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+
+$childAccounts = $apiInstance-> getChildrenAccounts($accountID);
+```
 > Example Response:
 
 ```json
@@ -2861,7 +3258,19 @@ accountApi.transfer_child_credit_to_parent(child_account_id,
                                            api_key, 
                                            api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const childAccountID: string = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+api.transferChildCreditToParent(childAccountID, 'created_by');
+```
 
+```php
+$apiInstance = $client->getAccountApi();
+
+$childAccountID = '88a5987a-1e1c-47c5-ba95-34ef14db3d46';
+
+$apiInstance-> transferChildCreditToParent($childAccountID,$xKillbillCreatedBy);
+```
 **Query Parameters**
 
 None.
@@ -2942,7 +3351,15 @@ accountApi.create_account_custom_fields(account_id,
                                         api_key,
                                         api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.CustomField = { name: 'Test Custom Field', value: 'test_value' };
+api.createAccountCustomFields(body,'8992e146-bfa1-4126-a045-98b844a4adcb','created_by');
+```
 
+```php
+
+```
 **Request Body**
 
 A list of objects giving the name and value of the custom field, or fields, to be added. For example:
@@ -3007,7 +3424,15 @@ account.all_custom_fields(object_type,
                           audit, 
                           options)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+const response: AxiosResponse<killbill.CustomField[], any> = await api.getAllCustomFields(accountID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3079,6 +3504,15 @@ account_id = '8992e146-bfa1-4126-a045-98b844a4adcb'
 accountApi.get_account_custom_fields(account_id, api_key, api_secret)
 ```
 
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+const response: AxiosResponse<killbill.CustomField[], any> = await api.getAccountCustomFields(accountID);
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3173,7 +3607,15 @@ account.modify_account_custom_fields(account_id,
                                      api_key, 
                                      api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const body: killbill.CustomField = { name: 'Test Custom Field', value: 'test_value' };
+api.modifyAccountCustomFields(body,'59860a0d-c032-456d-a35e-3a48fe8579e5','created_by')
+```
 
+```php
+
+```
 **Request Body**
 
 A list of objects specifying the id and the new value for the custom fields to be modified. For example:
@@ -3246,7 +3688,15 @@ account.delete_account_custom_fields(account_id,
                                      api_secret,
                                      custom_field=custom_field)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '8992e146-bfa1-4126-a045-98b844a4adcb';
+api.deleteAccountCustomFields(accountID,'created_by')
+```
 
+```php
+
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -3330,7 +3780,15 @@ accountApi.create_account_tags(account_id,
                                api_key, 
                                api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const tags: [string] = ['00000000-0000-0000-0000-000000000002'];
+api.createAccountTags(tags,'b0da8392-49ba-43f2-8fac-3f9f85b8ff61','created_by')
+```
 
+```php
+
+```
 **Request Body**
 
 A JSON array containing one or more tag definition ids to be added as user tags.
@@ -3380,7 +3838,7 @@ Tags allAccountTags = accountApi.getAllTags(accountId,
 accountApi = killbill.api.AccountApi()
 account_id = '07c0cef4-41c5-4606-b2cd-661332cdd41c'
 
-accountApi.get_account_tags(account_id, api_key, api_secret)
+accountApi.get_all_tags(account_id, api_key, api_secret)
 ```
 
 ```ruby
@@ -3393,7 +3851,15 @@ account.all_tags(object_type,
                  audit, 
                  options)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '07c0cef4-41c5-4606-b2cd-661332cdd41c';
+const response: AxiosResponse<any> = await api.getAllTags(accountID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3470,7 +3936,15 @@ account_id = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61'
 
 accountApi.get_account_tags(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+const response: AxiosResponse<any> = await api.getAccountTags(accountID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3552,7 +4026,15 @@ accountApi.delete_account_tags(account_id,
                                api_secret, 
                                tag_def=tag)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+api.deleteAccountTags(accountID,'created_by');
+```
 
+```php
+
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -3606,7 +4088,15 @@ accountApi.get_account_audit_logs(account_id, api_key, api_secret)
 ```ruby
 account.audit(options)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+const response: AxiosResponse<killbill.AuditLog[], any> = await api.getAccountAuditLogs(accountID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3728,7 +4218,15 @@ accountApi.get_account_audit_logs_with_history(account_id, api_key, api_secret)
 ```ruby
 account.audit_logs_with_history(options)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'b0da8392-49ba-43f2-8fac-3f9f85b8ff61';
+const response: AxiosResponse<killbill.AuditLog[], any> = await api.getAccountAuditLogsWithHistory(accountID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3919,7 +4417,16 @@ account_email_id = 'a4627e89-a73b-4167-a7ba-92a2881eb3c4'
 
 account.email_audit_logs_with_history(account_email_id, options)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = 'c62d5f6d-0b57-444d-bf9b-dd23e781fbda';
+const accountEmailID : string = 'bb390282-6757-4f4f-8dd5-456abd9f30b2';
+const response: AxiosResponse<killbill.AuditLog[], any> = await api.getAccountEmailAuditLogsWithHistory(accountID,accountEmailID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -3990,7 +4497,15 @@ protected AccountApi accountApi;
 UUID blockingId = UUID.fromString("0997b953-2b3a-4dc5-ad01-c38911662923");
 AuditLogs result = accountApi.getBlockingStateAuditLogsWithHistory(blockingId, requestOptions);
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const blockingId: string = '0997b953-2b3a-4dc5-ad01-c38911662923';
+const response: AxiosResponse<killbill.AuditLog[], any> = await api.getBlockingStateAuditLogsWithHistory(blockingId);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -4085,7 +4600,15 @@ account_id = '43488882-1777-460c-bc32-e375e67d09cf'
 
 accountApi.get_account_timeline(account_id, api_key, api_secret)
 ```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+const accountID: string = '43488882-1777-460c-bc32-e375e67d09cf';
+const response: AxiosResponse<killbill.AccountTimeline, any> = await api.getAccountTimeline(accountID);
+```
 
+```php
+
+```
 > Example Response:
 
 ```json
