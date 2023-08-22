@@ -1924,7 +1924,7 @@ Known plugins for KB version 0.22.8
 
 <span class="kr">const</span> <span class="nx">tenant</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">Tenant</span> <span class="o">=</span> <span class="p">{</span><span class="na">apiKey</span><span class="p">:</span> <span class="s2">`api_key`</span><span class="p">,</span> <span class="na">apiSecret</span><span class="p">:</span> <span class="s2">`api_secret`</span><span class="p">};</span>
 
-<span class="kr">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Tenant</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="nx">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">createTenant</span><span class="p">(</span><span class="nx">tenant</span><span class="p">,</span> <span class="s1">'created-by'</span><span class="p">,</span> <span class="s1">'reason'</span><span class="p">,</span> <span class="s1">'comment'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">createTenant</span><span class="p">(</span><span class="nx">tenant</span><span class="p">,</span> <span class="s1">'created-by'</span><span class="p">,</span> <span class="s1">'reason'</span><span class="p">,</span> <span class="s1">'comment'</span><span class="p">);</span>
 </code></pre><pre class="highlight php tab-php"><code>$apiInstance = $client-&gt;getTenantApi();
 
 $xKillbillCreatedBy = "user";
@@ -1935,7 +1935,9 @@ $tenant = new Tenant();
 $tenant-&gt;setApiKey('demo_api_key');
 $tenant-&gt;setApiSecret('demo_api_secret');
 
-$tenant = $apiInstance-&gt;createTenant($tenant, $xKillbillCreatedBy, $keyName, $xKillbillReason, $xKillbillComment);
+$useGlobalDefault = false;
+
+$result = $apiInstance-&gt;createTenant($tenant, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment, $useGlobalDefault);
 </code></pre>
 <p><strong>Request Body</strong></p>
 
