@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kill Bill index API Documentation">
+    <meta name="description" content="Kill Bill tenant API Documentation">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
       <title>Kill Bill</title>
       <style media="screen">
@@ -287,7 +287,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
   </head>
 
-  <body data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;,&quot;php&quot;]">
+  <body data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;]">
     <div class="loader-wrapper">
       <div id="loading"></div>
     </div>
@@ -318,8 +318,6 @@
                   <option data-language-name="java" value="java">java</option>
                   <option data-language-name="ruby" value="ruby">ruby</option>
                   <option data-language-name="python" value="python">python</option>
-                  <option data-language-name="javascript" value="javascript">javascript</option>
-                  <option data-language-name="php" value="php">php</option>
               </select>
             </label>
             <div class="lang-selector__list">
@@ -327,8 +325,6 @@
                   <a href="#" class="lang-selector__link" data-language-name="java">java</a>
                   <a href="#" class="lang-selector__link" data-language-name="ruby">ruby</a>
                   <a href="#" class="lang-selector__link" data-language-name="python">python</a>
-                  <a href="#" class="lang-selector__link" data-language-name="javascript">javascript</a>
-                  <a href="#" class="lang-selector__link" data-language-name="php">php</a>
             </div>
           </div>
       </div>
@@ -338,7 +334,7 @@
         <nav class="site-navigator">
           <ul class="site-navigator__menu">
               <li>
-                <a href="#using-kill-bill-apis" class="site-navigator__item site-navigator__menu-item" data-title="Using Kill Bill APIs">
+                <a href="index.html" class="site-navigator__item site-navigator__menu-item" data-title="Using Kill Bill APIs">
                   <span>Using Kill Bill APIs</span>
                 </a>
                 
@@ -422,7 +418,7 @@
                   </ul>
               </li>
               <li>
-                <a href="tenant.html" class="site-navigator__item site-navigator__menu-item" data-title="Tenant">
+                <a href="#tenant" class="site-navigator__item site-navigator__menu-item" data-title="Tenant">
                   <span>Tenant</span>
                 </a>
                 
@@ -2430,334 +2426,1342 @@
       </div>
 
       <div class="page__content content">
-        <h1 id='using-kill-bill-apis'>Using Kill Bill APIs</h1><h2 id='introduction'>Introduction</h2>
-<p>Kill Bill offers a set of HTTP APIs, commonly called REST APIs, that use the HTTP verbs <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>DELETE</code> to invoke Create, Read, Update and Delete (CRUD) operations, and that use HTTP response codes to indicate errors. These APIs enable the management of Kill Bill resources -- e.g <code>Account</code> -- through the use of JSON input and output.</p>
+        <h1 id='tenant'>Tenant</h1><h2 id='tenant-resource'>Tenant Resource</h2>
+<p>Kill Bill has been designed from the ground up as a multi-tenant system, that is, one where multiple unrelated deployments can be hosted on the same physical system. Each deployment has its own separate configuration, catalog, and plugins, and of course its data set is kept entirely separate from the others. RBAC control allows different users/admin/apps to access zero, one or multiple tenants. This <a href="https://killbill.io/blog/subscription-service-using-kill-bill/">blog</a> illustrates some interesting use cases. The <code>Tenant</code> resource allows the management of such tenants.</p>
 
-<p>Kill Bill also offers a set of <a href="https://github.com/killbill/killbill-api/tree/master/src/main/java/org/killbill/billing">java APIs</a> that can be used by plugins to make requests, and a set of <a href="https://github.com/killbill/killbill-plugin-api">java plugin APIs</a> for Kill Bill core to interact with the plugins. These apis are beyond the scope of this documentation.</p>
+<p>The attributes of the <code>Tenant</code> resource object are the following:</p>
 
-<p>Official libraries for the Kill Bill API are available in several languages,
-including Java, Php, Python, Ruby, Node, and Go. Community-supported libraries
-such as .NET are also available. Note that code examples for Curl, Java, Ruby and Python are shown in the right-hand column of this document.</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tenantId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for this tenant</td>
+</tr>
+<tr>
+<td><strong>externalKey</strong></td>
+<td>string</td>
+<td>system or user</td>
+<td>Optional external key provided by the client</td>
+</tr>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>string</td>
+<td>user</td>
+<td>The API key associated with the tenant</td>
+</tr>
+<tr>
+<td><strong>apiSecret</strong></td>
+<td>string</td>
+<td>user</td>
+<td>The API secret associated with the tenant. This value is hashed and cannot be retrieved.</td>
+</tr>
+<tr>
+<td><strong>auditLogs</strong></td>
+<td>array</td>
+<td>system</td>
+<td>Array of audit log records for this tenant</td>
+</tr>
+</tbody></table>
 
-<p>In the following documentation, we assume
-you have a Kill Bill server instance running on <code>127.0.0.1</code> on port <code>8080</code>. It is straightforward to substitute a different IP address or port number if necessary.</p>
+<p>Note that the tenant itself has very few attributes, as most attributes belong to the individual accounts and related resources.</p>
+<h2 id='tenant-2'>Tenant</h2>
+<p>These endpoints manage information that is maintained at the tenant level. Unless otherwise stated, the tenant is identified by its API key in the header.</p>
+<h3 id='create-a-tenant'>Create a tenant</h3>
+<p>This API creates a new tenant.</p>
 
-<p>Kill Bill supports the <code>https</code> protocol, but here all examples are shown using <code>http</code>.</p>
+<p><strong>Note:</strong> If you create a tenant using this API, it will <em>not</em> be recognized immediately by KAUI because KAUI will be unable to retrieve the <code>apiSecret</code>. To fix this, you should &quot;create&quot; the same tenant separately after logging into KAUI. This will <em>not</em> create another tenant, but it will synchronize KAUI with the one already created.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/tenants</code></p>
 
 <blockquote>
-<p>API client libraries</p>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">//</span>
-<span class="c1">// You can find the java client on github: https://github.com/killbill/killbill-client-java</span>
-<span class="c1">//</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="c1">#</span>
-<span class="c1"># You can find the ruby client on github: https://github.com/killbill/killbill-client-ruby</span>
-<span class="c1">#</span>
-</code></pre></div>
-<p>The description of the API in this documentation is limited to the most common use cases and does not include advanced features that we have crafted over the years from all the use cases we have seen from our users.</p>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{ "apiKey": "bob", "apiSecret": "lazar"}'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
-<p>For questions about API use, or to report bugs, you can subscribe to the <a href="https://groups.google.com/forum/#!forum/killbilling-users">Kill Bill user mailing list</a>.</p>
-<h2 id='authentication-and-rbac'>Authentication and RBAC</h2>
-<p>In order to make API calls, one needs to authenticate each request by passing an HTTP <code>Authorization</code> header and by following the HTTP Basic authentication scheme.</p>
-
-<p>Depending on how the system has been configured, the authentication mechanism can happen using different options -- some or all at the same time:</p>
-
-<ul>
-<li>Flat file configuration</li>
-<li>Database configuration</li>
-<li>LDAP configuration</li>
-<li>OKTA configuration</li>
-</ul>
-
-<p>The system also supports configuring roles and permissions, to restrict user access to certain resources and operations. The permissions are quite granular and are defined <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/security/Permission.java#L19">here</a></p>
-<h2 id='multi-tenancy'>Multi-Tenancy</h2>
-<p>Kill Bill has been designed from the ground up to run multiple logical instances on the same set of servers and databases. This allows different customer data sets to be cleanly separated. Another common use case is to configure both a production tenant and a test tenant, the latter being used for test requests during deployment and for sanity after deployment.</p>
-
-<p>Each API call requires the tenant being used to be identified, through the use of 2 HTTP headers:</p>
-
-<ul>
-<li><strong><code>X-Killbill-ApiKey</code></strong>: The API key associated with the tenant. This value is stored in clear in the database.</li>
-<li><strong><code>X-Killbill-ApiSecret</code></strong>: The API secret associated with the tenant. This value is hashed and stored along with the <code>salt</code> in the database</li>
-</ul>
-
-<aside class="note">
-  <span class="note__title">Note:</span> 
-  <span class="note__content">
-    You can control the number of hash iterations through the system property `org.killbill.security.shiroNbHashIterations` whose default value is set to `200000`. If your security requirements are met through other means, you can set this value to `1` to avoid wasting CPU cycles and greatly improve latency. Changing the value on an existing system requires re-hashing the keys.
-  </span>
-</aside>
-
-<blockquote>
-<p>Specifying the basic authentication headers and multi-tenancy headers:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-<span class="nt">-u</span> admin:password <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-...
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">KillBillHttpClient</span> <span class="n">killBillHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">KillBillHttpClient</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"http://%s:%d"</span><span class="o">,</span> <span class="s">"127.0.0.1"</span><span class="o">,</span> <span class="mi">8080</span><span class="o">),</span>
-                                                               <span class="n">username</span><span class="o">,</span>
-                                                               <span class="n">password</span><span class="o">,</span>
-                                                               <span class="n">apiKey</span><span class="o">,</span>
-                                                               <span class="n">apiSecret</span><span class="o">,</span>
-                                                               <span class="kc">null</span><span class="o">,</span>
-                                                               <span class="kc">null</span><span class="o">,</span>
-                                                               <span class="mi">1000</span><span class="o">,</span>
-                                                               <span class="mi">5000</span><span class="o">,</span>
-                                                               <span class="mi">5000</span><span class="o">);</span>
-
-<span class="nc">AccountApi</span> <span class="n">accountApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AccountApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">AdminApi</span> <span class="n">adminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AdminApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">BundleApi</span> <span class="n">bundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BundleApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CatalogApi</span> <span class="n">catalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CatalogApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CreditApi</span> <span class="n">creditApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CreditApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomFieldApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">ExportApi</span> <span class="n">exportApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ExportApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoiceApi</span> <span class="n">invoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoiceApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoiceItemApi</span> <span class="n">invoiceItemApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoiceItemApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoicePaymentApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">NodesInfoApi</span> <span class="n">nodesInfoApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NodesInfoApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">OverdueApi</span> <span class="n">overdueApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">OverdueApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentApi</span> <span class="n">paymentApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentGatewayApi</span> <span class="n">paymentGatewayApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentGatewayApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentMethodApi</span> <span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentMethodApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentTransactionApi</span> <span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentTransactionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PluginInfoApi</span> <span class="n">pluginInfoApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PluginInfoApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">SubscriptionApi</span> <span class="n">subscriptionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SubscriptionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TagApi</span> <span class="n">tagApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TagApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TagDefinitionApi</span> <span class="n">tagDefinitionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TagDefinitionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TenantApi</span> <span class="n">tenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TenantApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">UsageApi</span> <span class="n">usageApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UsageApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="c1">// Request Options example</span>
-<span class="nc">String</span> <span class="n">createdBy</span> <span class="o">=</span> <span class="s">"me"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">reason</span> <span class="o">=</span> <span class="s">"Going through my first tutorial"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">comment</span> <span class="o">=</span> <span class="s">"I like it!"</span><span class="o">;</span>
-
+<span class="no">UUID</span> <span class="n">tenantId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">externalKey</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"bob"</span><span class="o">;</span>
 <span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"lazar"</span><span class="o">;</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">AuditLog</span><span class="o">&gt;</span> <span class="no">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
 
+<span class="nc">Tenant</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Tenant</span><span class="o">(</span><span class="n">tenantId</span><span class="o">,</span>
+                         <span class="n">externalKey</span><span class="o">,</span>
+                         <span class="n">apiKey</span><span class="o">,</span>
+                         <span class="n">apiSecret</span><span class="o">,</span>
+                         <span class="no">EMPTY_AUDIT_LOGS</span><span class="o">);</span>
 
-<span class="nc">RequestOptions</span> <span class="n">requestOptions</span> <span class="o">=</span> <span class="nc">RequestOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-                                              <span class="o">.</span><span class="na">withCreatedBy</span><span class="o">(</span><span class="n">createdBy</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withReason</span><span class="o">(</span><span class="n">reason</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withComment</span><span class="o">(</span><span class="n">comment</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withQueryParams</span><span class="o">(</span><span class="n">queryParams</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withTenantApiKey</span><span class="o">(</span><span class="n">apiKey</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withTenantApiSecret</span><span class="o">(</span><span class="n">apiSecret</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'killbill_client'</span>
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">createTenant</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">tenant</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">tenant</span><span class="p">.</span><span class="nf">external_key</span> <span class="o">=</span> <span class="s2">"demo_external_key"</span>
+<span class="n">tenant</span><span class="p">.</span><span class="nf">api_key</span> <span class="o">=</span> <span class="s2">"demo_api_key"</span>
+<span class="n">tenant</span><span class="p">.</span><span class="nf">api_secret</span> <span class="o">=</span> <span class="s2">"demo_api_secret"</span>
 
-<span class="no">KillBillClient</span><span class="p">.</span><span class="nf">url</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8080'</span>
+<span class="n">use_global_default</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="c1"># Multi-tenancy and RBAC credentials</span>
-<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s1">'admin'</span><span class="p">,</span>
-  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s1">'password'</span><span class="p">,</span>
-  <span class="ss">:api_key</span> <span class="o">=&gt;</span> <span class="s1">'bob'</span><span class="p">,</span>
-  <span class="ss">:api_secret</span> <span class="o">=&gt;</span> <span class="s1">'lazar'</span>
-<span class="p">}</span>
+<span class="n">tenant</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">use_global_default</span><span class="p">,</span>
+              <span class="n">user</span><span class="p">,</span>
+              <span class="n">reason</span><span class="p">,</span>
+              <span class="n">comment</span><span class="p">,</span>
+              <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
-<span class="c1"># Audit log data</span>
-<span class="n">user</span> <span class="o">=</span> <span class="s1">'me'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'Going through my first tutorial'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'I like it!'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">Tenant</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s">'demo_api_key'</span><span class="p">,</span> <span class="n">api_secret</span><span class="o">=</span><span class="s">'demo_api_secret'</span><span class="p">)</span>
 
-<span class="c1"># Start using....</span>
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">create_tenant</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="c1"># Edit file: configuration.py, lines:50-62
-</span>
-<span class="c1"># Default Base url
-</span><span class="bp">self</span><span class="p">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">"http://localhost:8080"</span>
-<span class="c1"># Temp file folder for downloading files
-</span><span class="bp">self</span><span class="p">.</span><span class="n">temp_folder_path</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="kd">const</span> <span class="nx">tenant</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">Tenant</span> <span class="o">=</span> <span class="p">{</span><span class="na">apiKey</span><span class="p">:</span> <span class="s2">`api_key`</span><span class="p">,</span> <span class="na">apiSecret</span><span class="p">:</span> <span class="s2">`api_secret`</span><span class="p">};</span>
 
-<span class="c1"># Authentication Settings
-# dict to store API key(s)
-</span><span class="bp">self</span><span class="p">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># dict to store API prefix (e.g. Bearer)
-</span><span class="bp">self</span><span class="p">.</span><span class="n">api_key_prefix</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># Username for HTTP basic authentication
-</span><span class="bp">self</span><span class="p">.</span><span class="n">username</span> <span class="o">=</span> <span class="s">"admin"</span>
-<span class="c1"># Password for HTTP basic authentication
-</span><span class="bp">self</span><span class="p">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">"password"</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">createTenant</span><span class="p">(</span><span class="nx">tenant</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
 
-<span class="c1">####################################################
-</span>
-<span class="c1"># Basic example using the client
-</span><span class="n">exampleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">ExampleApi</span><span class="p">()</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">Example</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'John'</span><span class="p">,</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s">'Doe'</span><span class="p">)</span>
-<span class="n">created_by</span> <span class="o">=</span> <span class="s">'me'</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s">'bob'</span>
-<span class="n">api_secret</span> <span class="o">=</span> <span class="s">'lazar'</span>
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
 
-<span class="n">exampleApi</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span><span class="p">,</span>
-                  <span class="n">created_by</span><span class="p">,</span>
-                  <span class="n">api_key</span><span class="p">,</span>
-                  <span class="n">api_secret</span><span class="p">)</span>
-</code></pre></div><h2 id='resource-ids-and-external-keys'>Resource IDs and External Keys</h2>
-<p>When a new resource is created, there are 2 IDS associated with it. Kill Bill will allocate a unique ID, and the user of the API will also be able to associate its own unique key, called the <code>external key</code>. The external key is used for 2 scenarios:</p>
+<span class="nv">$tenant</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Tenant</span><span class="p">();</span>
+<span class="nv">$tenant</span><span class="o">-&gt;</span><span class="nf">setApiKey</span><span class="p">(</span><span class="s1">'demo_api_key'</span><span class="p">);</span>
+<span class="nv">$tenant</span><span class="o">-&gt;</span><span class="nf">setApiSecret</span><span class="p">(</span><span class="s1">'demo_api_secret'</span><span class="p">);</span>
 
-<ul>
-<li><strong>ID Mapping</strong>: Typically an external key can be passed to create a mapping between the ID generated by Kill Bill and a known key for this resource</li>
-<li><strong>Idempotency</strong>: Kill Bill ensures that each external key is unique, so if an API call times out, it can be safely retried with the same external key. The second request would only succeed if the first one did not complete. This ensures idempotency of the call, since the external key is unique per tenant and across all resources.</li>
-</ul>
-<h2 id='pagination'>Pagination</h2>
-<p>Besides the traditional CRUD APIs associated with each resource, we also offer pagination APIs to allow the listing of per-tenant resources, such as all <code>Account</code>s for a given tenant. These APIs include an <code>offset</code> and a <code>limit</code>, provided as query parameters, to allow the listing of all resources of a given type, on a page by page basis. In addition to the json list, each response will also include the following http headers:</p>
+<span class="nv">$useGlobalDefault</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 
-<ul>
-<li><strong><code>X-Killbill-Pagination-CurrentOffset</code></strong> : The offest of the first record in the returned list</li>
-<li><strong><code>X-Killbill-Pagination-NextOffset</code></strong> : The header will only be present if there are additional entries to return and would include the next offset</li>
-<li><strong><code>X-Killbill-Pagination-TotalNbRecords</code></strong> : The total number of records</li>
-<li><strong><code>X-Killbill-Pagination-NextPageUri</code></strong> : The uri that can be used to retrieve the next page.</li>
-</ul>
-<h2 id='audit-and-history'>Audit and History</h2>
-<p>Every api in Kill Bill that creates, or modifies state will create an audit log record to track <em>who</em> made the change. In addition, we also allow the record to specify <em>why</em> this change was made. This information is passed for every <code>POST</code>, <code>PUT</code>, and <code>DELETE</code> request and relies on special HTTP headers:</p>
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">createTenant</span><span class="p">(</span><span class="nv">$tenant</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">,</span> <span class="nv">$useGlobalDefault</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
 
-<ul>
-<li><strong><code>X-Killbill-CreatedBy</code></strong> : Mandatory header to track who made the change.</li>
-<li><strong><code>X-Killbill-Reason</code></strong> : Optional header to track the reason; typically one would use a special reason code -- e.g <em>COURTESY_REFUND</em>.</li>
-<li><strong><code>X-Killbill-Comment</code></strong> : Optional header to track the metadata; typically one would add more information -- e.g &#39;Good old faithful customer&#39;.</li>
-</ul>
+<p>A JSON string representing a Tenant resource. The only parameters required are <code>apiKey</code> and <code>apiSecret</code>. The <code>externalKey</code> is optional and will be set to null if not supplied. The <code>tenantId</code> is generated by the system.</p>
 
-<p>In addition to the audit log, Kill Bill also records the history of the changes. For instance updating the billing addess of a customer would create an additonal row to track the change and link it to the audit log. The <code>audit</code> query parameter can take the following values:</p>
+<p><strong>Query Parameters</strong></p>
 
-<ul>
-<li><strong><code>NONE</code></strong> <em>[Default]</em>: No audit log is beeing returned. </li>
-<li><strong><code>MINIMAL</code></strong> : Only rows associated to <em>inserts</em> are being returned, but no <code>updates</code>.</li>
-<li><strong><code>FULL</code></strong> : Everything is being returned.<br></li>
-</ul>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>useGlobalDefault</strong></td>
+<td>boolean</td>
+<td>false</td>
+<td>false</td>
+<td>If true, configure the tenant with a default catalog</td>
+</tr>
+</tbody></table>
+
+<p>Setting the <code>useGlobalDefault</code> parameter to <code>true</code> can be used for test purposes. This will configure the tenant with a default catalog, and therefore make it easy to quickly start playing with the apis. Note that in order to then upload a new custom catalog, one would need to <a href="admin.html#admin-invalidate-caches-for-a-tenant">invalidate the caches for this tenant</a>.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body. In addition a <code>Location</code> parameter is returned in the header. This parameter gives the URL for the tenant, including the <code>tenantId</code>.</p>
+<h3 id='retrieve-a-tenant-by-id'>Retrieve a tenant by id</h3>
+<p>Retrieves a tenant resource, given its ID.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/{tenantId}</code></p>
 
 <blockquote>
-<p>Request: Fetching an account specifying <code>audit=MINIMAL</code></p>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-<span class="nt">-u</span> admin:password <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-<span class="s2">"http://127.0.0.1:8080/1.0/kb/accounts/e8877928-0226-488d-9272-07a5e66d897f?audit=MINIMAL"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">Account</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
-                                      <span class="kc">false</span><span class="o">,</span>
-                                      <span class="kc">false</span><span class="o">,</span>
-                                      <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">MINIMAL</span><span class="o">,</span>
-                                      <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>  <span class="no">Api</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span> <span class="p">;</span><span class="o">-</span><span class="p">(</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/6907712e-e940-4033-8695-36894db128d3"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
+<span class="no">UUID</span> <span class="n">tenantId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"6907712e-e940-4033-8695-36894db128d3"</span><span class="o">);</span>
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">getTenant</span><span class="o">(</span><span class="n">tenantId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">tenant_id</span> <span class="o">=</span> <span class="s2">"ab5981c2-de14-43d6-a35b-a2ed0b28c746"</span>
+
+<span class="n">tenant</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+<span class="n">tenant</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_tenant</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">=</span><span class="s">'1a723c1a-9287-459f-9e40-eca9f0fd213e'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">id</span><span class="o">=</span><span class="dl">'</span><span class="s1">9ab7db57-02a9-430c-bdfa-0a8c24d2e368</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Tenant</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getTenant</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$tenantid</span><span class="o">=</span><span class="s1">'9ab7db57-02a9-430c-bdfa-0a8c24d2e368'</span><span class="p">;</span>
+
+<span class="nv">$tenantdata</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getTenant</span><span class="p">(</span><span class="nv">$tenantid</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
-<p>Response:</p>
+<p>Example Response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  ...
-  "auditLogs": [
-    {
-      "changeType": "INSERT",
-      "changeDate": "2018-02-05T22:39:53.000Z",
-      "changedBy": "demo",
-      "reasonCode": null,
-      "comments": null,
-      "userToken": "4858a67e-03b0-4d94-8a8c-bcd6e8599452"
-    }
-  ]
-}  
-</code></pre></div>
-<p>Every API that retrieves information, whether associated with a specific resource, or with a list of resources,  may return audit logs.</p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"tenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6907712e-e940-4033-8695-36894db128d3"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1532546166-326384"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bob"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"apiSecret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
 
-<p>Audit and history information associated with a given resource is always stored atomically to ensure that if the state is changed, such audit and history information exists and is accurate.</p>
-<h2 id='versioning'>Versioning</h2><h3 id='kill-bill-server'>Kill Bill Server</h3>
-<p>Kill Bill software is composed of many different repositories, all of them hosted on our <a href="https://github.com/killbill">github account</a>.</p>
+<p>none</p>
 
-<p>The Kill Bill server version, or simply Kill Bill version, is the one from the <a href="https://github.com/killbill/killbill">killbill</a> repository, and more specifically since we are using <code>maven</code> to build, this is indicated in the corresponding <code>pom.xml</code>. This repository depends on a few others, each having their own versions:</p>
+<p><strong>Response</strong></p>
 
-<ul>
-<li><code>killbill-api</code>: APIs used by plugins to communicate with Kill Bill core</li>
-<li><code>killbill-plugin-api</code>: APIs used by Kill Bill core to communicate with plugins</li>
-<li><code>killbill-commons</code>: Common code across modules</li>
-<li><code>killbill-platform</code>: Platform related code such as OSGI framework, webapp pieces</li>
-<li><code>killbill-client</code>: Java client, only used for integration tests inside killbill repository.</li>
-</ul>
+<p>If successful, returns a status code of 200 and a tenant resource object.  The <code>apiSecret</code> attribute is returned as <code>null</code>, since it cannot be retrieved.</p>
+<h3 id='retrieve-a-tenant-by-its-api-key'>Retrieve a tenant by its API key</h3>
+<p>Retrieves a tenant resource, given its <code>apiKey</code>. The <code>apiKey</code> is passed as a query parameter.</p>
 
-<p>The version for all these dependencies is managed in the parent <a href="https://github.com/killbill/killbill-oss-parent/blob/master/pom.xml">pom.xml</a>. So in particular, for a given Kill Bill version, you can look up the version of the parent <code>pom.xml</code> and from there access all the dependencies.</p>
+<p><strong>HTTP Request</strong></p>
 
-<p>The current <strong>stable</strong> and <strong>production</strong> ready version of Kill Bill is <code>0.24.y</code>. You should use the latest released (<code>y</code>) version as it may contain critical bug fixes.</p>
-
-<ul>
-<li>Any bug fixes will result in a new version identified by incrementing the <code>patch</code> number (<code>y</code>). We guarantee compatibility of these versions with those immediately preceding them. Each version will be accompanied by release notes on github - e.g <a href="https://github.com/killbill/killbill/releases/tag/killbill-0.22.8">0.22.8 release notes</a>.</li>
-<li>New development may happen in parallel. This may lead to the release of development versions. Such versions are not yet deemed stable, and will not be supported on the public mailing list.</li>
-</ul>
-
-<p>The choice of releasing <code>0.x.y</code> and not <code>1.x.y</code> is motivated by our desire to add additional features in upcoming releases, and is in no way a statement about code instability.</p>
-<h3 id='client-libraries'>Client Libraries</h3>
-<p>Our client libraries contain a <code>README</code> section to describe their compatibility with the Kill Bill server. For instance, such compatibility mapping can be seen in our java client <a href="https://github.com/killbill/killbill-client-java/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
-<h3 id='plugins'>Plugins</h3>
-<p>Each plugin also has its own version, and we also keep a <code>README</code> with the mapping section. For example, such a section for the adyen payment plugin can be found <a href="https://github.com/killbill/killbill-adyen-plugin/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
-
-<p>We also keep a global repository for all plugins <a href="https://github.com/killbill/killbill-cloud/blob/master/kpm/lib/kpm/plugins_directory.yml">here</a>. The simple file-based approach is an internal implementation. This brings us to our next topic, <code>KPM</code>.</p>
-<h3 id='kpm'>KPM</h3>
-<p><code>KPM</code>, The Kill Bill Package Manager, provides among <a href="https://github.com/killbill/killbill-cloud/tree/master/kpm">other things</a> the ability to retrieve version mapping for dependencies and plugins -- see the example on the right side.</p>
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants</code></p>
 
 <blockquote>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>
-# Look up version dependencies matching Kill Bill release 0.22.8:
-&gt; kpm info  --version=0.22.8
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants?apiKey=bob"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
-Fetching info for version 0.22.8...
-Dependencies for version 0.22.8
-  killbill 0.22.8
-  killbill-oss-parent 0.143.60
-  killbill-api 0.53.17
-  killbill-plugin-api 0.26.4
-  killbill-commons 0.23.11
-  killbill-platform 0.39.15
+<span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"bob"</span><span class="o">;</span>
 
-Known plugins for KB version 0.22.8
-  analytics 7.0.8
-  avatax 0.7.0
-  email-notifications 0.6.1
-  payment-test 7.0.4
-  stripe 7.0.4
-  ...
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">getTenantByApiKey</span><span class="o">(</span><span class="n">apiKey</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">api_key</span> <span class="o">=</span> <span class="s2">"demo_api_key"</span>
 
-</code></pre></div><h2 id='errors'>Errors</h2>
-<p>Kill Bill relies on HTTP response codes to indicate the success or failure of an API request:</p>
+<span class="n">tenant</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">find_by_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+<span class="n">tenant</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_tenant_by_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s">'bob'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<ul>
-<li><strong><code>2xx</code></strong> status indicates success</li>
-<li><strong><code>4xx</code></strong> status often indicates a client side error -- e.g missing madatory API field</li>
-<li><strong><code>5xx</code></strong> status indicates an error with Kill Bill&#39;s servers or third party system -- e.g payment gateway returns 5xx.</li>
-</ul>
+<span class="kd">const</span> <span class="nx">apiKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">bob</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Tenant</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getTenantByApiKey</span><span class="p">(</span><span class="nx">apiKey</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$apikey</span><span class="o">=</span><span class="s1">'bob'</span><span class="p">;</span>
+
+<span class="nv">$tenantdata</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getTenantByApiKey</span><span class="p">(</span><span class="nv">$apikey</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"tenantId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6907712e-e940-4033-8695-36894db128d3"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1532546166-326384"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"apiKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bob"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"apiSecret"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>apiKey</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>api key</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a tenant resource object.  The <code>apiSecret</code> attribute is returned as <code>null</code>, since it cannot be retrieved.</p>
+<h2 id='tenant-key-value-pairs'>Tenant Key-Value Pairs</h2>
+<p>These endpoints provide a mechanism to register and manage <code>{key, value}</code> pairs for a given tenant. This functionality
+is used internally by the system to keep track of all the per-tenant configuration, including system properties, plugin configuration, and others discussed below. In addition, you can add <em>user</em> keys to keep track of additional information that may be desired. For example, some global setting that would be accessible for all plugins could be stored here.</p>
+<h3 id='add-a-per-tenant-user-key-value'>Add a per tenant user key/value</h3>
+<p>This API adds a key-value pair to the tenant database. If the key already exists, the new value is appended to the existing value. The key is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}</code></p>
 
 <blockquote>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>HTTP status code summary:
-200 - OK: A response body may be returned.
-201 - Created: Success in creating a new resource. A Location header is returned to indicate the uri that can be used to fetch the resource
-202 - Accepted: The request has been accepted and will be processed asynchronously.
-204 - No Content: The request was processed sucesfully but no response body is returned.
-400 - Bad Request: Invalid/missing parameter from client.
-401 - Unauthorized: Authorization failed.
-402 - Request Failed: Request parameter were valid but request failed -- insufficient fund on a payment request.
-404 - Not Found: The requested resource does not exist.
-409 - Conflict: The request conflicts with another request.
-422 - Unprocessable Entity: Payment control plugin aborted the call.
-500 - Unexpected system error.
-502 - Bad Gateway : Unknow failure from payment plugin (PLUGIN_FAILURE).
-503 - Service Unavailable: Kill Bill or a third party system -- e.g payment gateway -- is unavailable.
-504 - Gateway Timeout: Payment gateway timed out.
-</code></pre></div>
-<p>In addition to these error codes, the system will often return some json to provide more details about the error:</p>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: text/plain"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s2">"demo_value"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
-<ul>
-<li><strong><code>code</code></strong> : Each error in Kill Bill is associated with a an <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/ErrorCode.java#L21">ErrorCode</a>.</li>
-<li><strong><code>formattedMsg</code></strong> : A description of the error for the specific resource(s).</li>
-<li><strong><code>cause</code></strong> : An optional stack trace.</li>
-</ul>
-<h2 id='additional-resources'>Additional Resources</h2>
-<p>Our main documentation is found <a href="http://docs.killbill.io">here</a>.</p>
+<span class="nc">String</span> <span class="n">keyName</span> <span class="o">=</span> <span class="s">"demo_key"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"demo_value"</span><span class="o">;</span>
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">insertUserKeyValue</span><span class="o">(</span><span class="n">keyName</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">key_name</span> <span class="o">=</span> <span class="s2">"demo_key"</span>
+<span class="n">key_value</span> <span class="o">=</span> <span class="s2">"demo_value"</span>
+
+<span class="n">tenant_key_value</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">upload_tenant_user_key_value</span><span class="p">(</span><span class="n">key_name</span><span class="p">,</span>
+                                                           <span class="n">key_value</span><span class="p">,</span>
+                                                           <span class="n">user</span><span class="p">,</span>
+                                                           <span class="n">reason</span><span class="p">,</span>
+                                                           <span class="n">comment</span><span class="p">,</span>
+                                                           <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">key_name</span> <span class="o">=</span> <span class="s">'demo_key'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s">'demo_value'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">insert_user_key_value</span><span class="p">(</span><span class="n">key_name</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_key</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_value</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">insertUserKeyValue</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$keyName</span> <span class="o">=</span> <span class="s2">"demo_key"</span><span class="p">;</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="s2">"demo_value"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">insertUserKeyValue</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$keyName</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>The body contains a single string representing the value.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> item is returned in the header giving the URL for this key-value pair.</p>
+<h3 id='retrieve-a-per-tenant-user-key-value'>Retrieve a per tenant user key value</h3>
+<p>Retrieves the value for a specified key, if it exists, from the tenant database. The key name is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">keyName</span> <span class="o">=</span> <span class="s">"demo_key"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getUserKeyValue</span><span class="o">(</span><span class="n">keyName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">key_name</span> <span class="o">=</span> <span class="s2">"demo_key"</span>
+
+<span class="n">tenant_key_value</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">get_tenant_user_key_value</span><span class="p">(</span><span class="n">key_name</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">key_name</span> <span class="o">=</span> <span class="s">'demo_key'</span>
+
+<span class="n">tenantKeyValue</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_user_key_value</span><span class="p">(</span><span class="n">key_name</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_key</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantKeyValue</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getUserKeyValue</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$keyName</span> <span class="o">=</span> <span class="s2">"demo_key"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getUserKeyValue</span><span class="p">(</span><span class="nv">$keyName</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo_value"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"demo_value"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"demo_value"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a tenant key value object. The key value object includes the key name and a JSON array containing the value, if any, or a comma-separated list of values. For example:</p>
+
+<p>{
+&quot;key&quot;: &quot;MYKEY&quot;,
+&quot;values&quot;: [
+&quot;value1&quot;,
+&quot;value2&quot;
+]
+}</p>
+
+<p>If the key does not exist no error is signalled but the <code>values</code> list is empty.</p>
+<h3 id='delete-a-per-tenant-user-key-value'>Delete a per tenant user key/value</h3>
+<p>Deletes a key and its value, if it exists, from the tenant database. The key is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/{keyName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/userKeyValue/demo_key"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">keyName</span> <span class="o">=</span> <span class="s">"demo_key"</span><span class="o">;</span>
+
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">deleteUserKeyValue</span><span class="o">(</span><span class="n">keyName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">key_name</span> <span class="o">=</span> <span class="s2">"demo_key"</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">delete_tenant_user_key_value</span><span class="p">(</span><span class="n">key_name</span><span class="p">,</span>
+                                                           <span class="n">user</span><span class="p">,</span>
+                                                           <span class="n">reason</span><span class="p">,</span>
+                                                           <span class="n">comment</span><span class="p">,</span>
+                                                           <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">key_name</span> <span class="o">=</span> <span class="s">'demo_key'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_user_key_value</span><span class="p">(</span><span class="n">key_name</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_key</span><span class="dl">'</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deleteUserKeyValue</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$keyName</span> <span class="o">=</span> <span class="s2">"demo_key"</span><span class="p">;</span> 
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deleteUserKeyValue</span><span class="p">(</span><span class="nv">$keyName</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body. No error is signalled if the key does not exist.</p>
+<h3 id='retrieve-per-tenant-keys-and-values-based-on-a-key-prefix'>Retrieve per tenant keys and values based on a key prefix</h3>
+<p>This API enables searching for existing keys based on a prefix of the key name. For example, a search string of &quot;MYK&quot; would match keys such as <code>MYKEY1</code>, <code>MYKEY2</code>, etc. The search string is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig/{keyPrefix}/search</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig/PER_TENANT/search"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">keyPrefix</span> <span class="o">=</span> <span class="s">"PER_TENANT"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValues</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getAllPluginConfiguration</span><span class="o">(</span><span class="n">keyPrefix</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">key_prefix</span> <span class="o">=</span> <span class="s2">"PER_TENANT"</span>
+
+<span class="n">tenant_key_values</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">search_tenant_config</span><span class="p">(</span><span class="n">key_prefix</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">tenantKeyValues</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_all_plugin_configuration</span><span class="p">(</span><span class="n">key_prefix</span><span class="o">=</span><span class="s">'PER_TENANT'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">keyPrefix</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">PER_TENANT</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantKeyValue</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getAllPluginConfiguration</span><span class="p">(</span><span class="nx">keyPrefix</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$keyPrefix</span> <span class="o">=</span> <span class="s2">"PER_TENANT"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getAllPluginConfiguration</span><span class="p">(</span><span class="nv">$keyPrefix</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PER_TENANT_CONFIG"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"{org.killbill.invoice.sanitySafetyBoundEnabled:false}"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a tenant key value object containing the key and values for any keys that match the search string.</p>
+<h2 id='push-notifications'>Push Notifications</h2>
+<p>Push notifications are a convenient way to get notified about events from the system.
+One can register a callback, i.e, a valid URL that will be called whenever there is an event dispatched for this tenant.
+Note that this can result in a large number of calls; every time there is a state change for one of the <code>Accounts</code>
+in this tenant, the callback will be invoked.</p>
+
+<p>In case of error, the system will retry the callback as defined by the system property <code>org.killbill.billing.server.notifications.retries</code>.</p>
+
+<p>See push notification documentation <a href="https://docs.killbill.io/latest/push_notifications.html">here</a> for further information.</p>
+<h3 id='register-a-push-notification'>Register a push notification</h3>
+<p>Register a callback URL for this tenant for push notifications. Inserts a key-value pair corresponding to the tenant where key name is <code>PUSH_NOTIFICATION_CB</code> and value is the URL of the push notification handler. The API sets the value of this key, replacing any previous value. </p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/tenants/registerNotificationCallback</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/tenants/registerNotificationCallback?cb=http://demo/callmeback'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">cb</span> <span class="o">=</span> <span class="s">"http://demo/callmeback"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">registerPushNotificationCallback</span><span class="o">(</span><span class="n">cb</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">register_push_notification_callback</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span> <span class="n">cb</span><span class="o">=</span><span class="s">'http://demo/callmeback'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="nx">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$cb</span> <span class="o">=</span> <span class="s2">"http://demo/callmeback"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">registerPushNotificationCallback</span><span class="p">(</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$cb</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>cb</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>callback URL to register</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> item is returned in the header giving the URL for this callback.</p>
+<h3 id='retrieve-a-registered-push-notification'>Retrieve a registered push notification</h3>
+<p>Gets the push notification registered for this tenant, if any.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/registerNotificationCallback</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/tenants/registerNotificationCallback"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPushNotificationCallbacks</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">get_push_notification_callbacks</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantKeyValue</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getPushNotificationCallbacks</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPushNotificationCallbacks</span><span class="p">();</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PUSH_NOTIFICATION_CB"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"http://demo/callmeback"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a tenant key value object for the key PUSH_NOTIFICATION_CB.</p>
+<h3 id='delete-a-registered-push-notification'>Delete a registered push notification</h3>
+<p>Deletes the registered callback URL, if any.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/tenants/registerNotificationCallback</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/registerNotificationCallback"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePushNotificationCallbacks</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_push_notification_callbacks</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deletePushNotificationCallbacks</span><span class="p">(</span><span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deletePushNotificationCallbacks</span><span class="p">(</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='system-properties-configuration'>System Properties Configuration</h2>
+<p>These endpoints allow setting of some system properties on a per-tenant basis. Please refer to our <a href="https://docs.killbill.io/latest/userguide_configuration.html">configuartion guide</a> to see what can be configured in the system.
+Some of the configuration can be overriden at the tenant level to allow for different behaviors.</p>
+
+<p>Note that this is actually a special case of per-tenant key-value pairs; the key is &quot;PER_TENANT_CONFIG&quot; and the value is a comma-separated list of system properties with their values.</p>
+<h3 id='add-a-per-tenant-system-properties-configuration'>Add a per tenant system properties configuration</h3>
+<p>This API is used to set the value of specific system properties, overriding the system-wide values.</p>
+
+<p>For example, in order to disable the invoice safety bound mechanism on a per-tenant level, this API could be used to set the per-tenant system property <code>org.killbill.invoice.sanitySafetyBoundEnabled</code> to false.</p>
+
+<p>The API inserts a key-value pair corresponding to the tenant where key name is <code>PER_TENANT_CONFIG</code> and value is the system property to be set. It replaces any previous value.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: text/plain"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"{'org.killbill.invoice.sanitySafetyBoundEnabled':'false'}"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">uploadPerTenantConfiguration</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s">'{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">upload_per_tenant_configuration</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">uploadPerTenantConfiguration</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="s2">"</span><span class="si">{</span><span class="nv">'org.killbill.invoice.sanitySafetyBoundEnabled':'false'</span><span class="si">}</span><span class="s2">"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">uploadPerTenantConfiguration</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A JSON string representing the per-tenant system property and its value.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='retrieve-a-per-tenant-system-properties-configuration'>Retrieve a per tenant system properties configuration</h3>
+<p>Retrieves the per-tenant system property settings, which are given as the value of the key <code>PER_TENANT_CONFIG</code>.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPerTenantConfiguration</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">tenantKeyValue</span> <span class="o">=</span>  <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_per_tenant_configuration</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantKeyValue</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getPerTenantConfiguration</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPerTenantConfiguration</span><span class="p">();</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PER_TENANT_CONFIG"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"{org.killbill.invoice.sanitySafetyBoundEnabled:false}"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a tenant key value object for the key <code>PER_TENANT_CONFIG</code>.</p>
+<h3 id='delete-a-per-tenant-system-properties-configuration'>Delete a per tenant system properties configuration</h3>
+<p>Deletes any current per tenant system properties configuration parameters, which are given as the values of the <code>PER_TENANT_CONFIG</code> key.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPerTenantConfig"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePerTenantConfiguration</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_per_tenant_configuration</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deletePerTenantConfiguration</span><span class="p">(</span><span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deletePerTenantConfiguration</span><span class="p">(</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='plugin-configuration'>Plugin Configuration</h2>
+<p>Plugins also support configuration on a per-tenant level. Please refer to our <a href="https://docs.killbill.io/latest/plugin_installation.html#per-tenant-configuration">plugin configuration manual</a> for more details.</p>
+
+<p>An example of the use of such per-tenant properties is to configure a payment plugin with different API keys,
+one set of keys for each tenant. This allows for a true multi-tenant deployment where plugins have different configuration
+based on the tenant in which they operate.</p>
+
+<p>Upon adding or deleting a new per-tenant plugin configuration, the system will generate a <code>TENANT_CONFIG_CHANGE</code>/<code>TENANT_CONFIG_DELETION</code> event, which can be handled in the plugin to refresh its configuration. In multi-node scenarios, events will be dispatched on each node, that is, on each plugin instance so they end up with a consistent view. A lot of the logic to handle configuration update has been implemented in our  <a href="https://github.com/killbill/killbill-plugin-framework-java">plugin framework</a>).</p>
+
+<p>As with the system properties configuration, this is actually a special case of per-tenant key-value pairs. The following endpoints provide the ability to configure plugins on a per-tenant level.</p>
+<h3 id='add-a-per-tenant-configuration-for-a-plugin'>Add a per tenant configuration for a plugin</h3>
+<p>Adds a per tenant key-value pair for the specified plugin. The plugin name is given as a path parameter. The API internally inserts a key-value pair corresponding to the tenant with key name=<code>PLUGIN_CONFIG_*plugin*</code> where <em>plugin</em> is the plugin name. It replaces any previous value.</p>
+
+<p>The value string uploaded is plugin dependent but typically consists of key/value properties,
+or well formatted yml or a properties file.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/{pluginName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: text/plain"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> @./config.properties <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/demo_plugin"</span>
+
+OR 
+
+curl <span class="nt">-v</span> <span class="se">\</span>
+     <span class="nt">-X</span> POST <span class="se">\</span>
+     <span class="nt">-u</span> admin:password <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: admin'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: text/plain'</span> <span class="se">\</span>
+     <span class="nt">-d</span> <span class="s1">'org.killbill.billing.plugin.avatax.url=XXX
+org.killbill.billing.plugin.avatax.accountId=YYY
+org.killbill.billing.plugin.avatax.licenseKey=ZZZ'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/killbill-avatax
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"PLUGIN_FOO"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">pluginConfig</span> <span class="o">=</span> <span class="s">"plugin configuration string"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">uploadPluginConfiguration</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">pluginConfig</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">plugin_name</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span>
+<span class="n">plugin_config</span> <span class="o">=</span> <span class="s2">"tenant_config"</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">tenant_key_value</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">upload_tenant_plugin_config</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span>
+                                                          <span class="n">plugin_config</span><span class="p">,</span>
+                                                          <span class="n">user</span><span class="p">,</span>
+                                                          <span class="n">reason</span><span class="p">,</span>
+                                                          <span class="n">comment</span><span class="p">,</span>
+                                                          <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s">'tenant_config'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">upload_plugin_configuration</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">plugin_name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_plugin</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">tenant_config</span><span class="dl">'</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">uploadPluginConfiguration</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="nx">plugin_name</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$pluginName</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="s2">"tenant_config"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">uploadPluginConfiguration</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$pluginName</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>The request body can be specified as a JSON string consisting of the key-value pairs for the plugin configuration. Alternatively, the plugin configuration can be specified in a yml or properties file and its path can be specified.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body. A <code>Location</code> header is also returned giving the URL of the key-value pair.</p>
+<h3 id='retrieve-a-per-tenant-configuration-for-a-plugin'>Retrieve a per tenant configuration for a plugin</h3>
+<p>Gets the per tenant configuration value string for a specified plugin. The plugin name is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/{pluginName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/demo_plugin"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="kd">final</span> <span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"PLUGIN_FOO"</span><span class="o">;</span>
+
+<span class="kd">final</span> <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPluginConfiguration</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">plugin_name</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span>
+
+<span class="n">tenant_key_value</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">get_tenant_plugin_config</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
+
+<span class="n">tenantKeyValue</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_plugin_configuration</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">plugin_name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_plugin</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantKeyValue</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getPluginConfiguration</span><span class="p">(</span><span class="nx">plugin_name</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$pluginName</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPluginConfiguration</span><span class="p">(</span><span class="nv">$pluginName</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PLUGIN_CONFIG_demo_plugin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"tenant_config"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a tenant key value object for the key <code>PLUGIN_CONFIG_*plugin*</code>.</p>
+<h3 id='delete-a-per-tenant-configuration-for-a-plugin'>Delete a per tenant configuration for a plugin</h3>
+<p>Deletes the per tenant plugin configuration value for the appropriate key. The plugin name is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/{pluginName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginConfig/demo_plugin"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="kd">final</span> <span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"PLUGIN_FOO"</span><span class="o">;</span>
+
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePluginConfiguration</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">delete_tenant_plugin_config</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span>
+                                                          <span class="n">user</span><span class="p">,</span>
+                                                          <span class="n">reason</span><span class="p">,</span>
+                                                          <span class="n">comment</span><span class="p">,</span>
+                                                          <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_plugin_configuration</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">plugin_name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_plugin</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deletePluginConfiguration</span><span class="p">(</span><span class="nx">plugin_name</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$pluginName</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deletePluginConfiguration</span><span class="p">(</span><span class="nv">$pluginName</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='payment-state-machines'>Payment State Machines</h2>
+<p>This is a somewhat advanced use case to override the default internal payment state machine within Kill Bill. Please refer to our <a href="https://docs.killbill.io/latest/userguide_payment.html#_payment_states">payment manual</a> for more details about payment states.</p>
+
+<p>The endpoints below allow you to override such state machines on a per-tenant level.</p>
+<h3 id='add-a-per-tenant-payment-state-machine-for-a-plugin'>Add a per tenant payment state machine for a plugin</h3>
+<p>Adds a per tenant key-value pair for the specified plugin. The plugin name is given as a path parameter. The key name is <code>PLUGIN_PAYMENT_STATE_MACHINE_*plugin*</code> where <em>plugin</em> is the payment plugin name. The API sets the value of this key, replacing any previous value.</p>
+
+<p>The state machine is defined in an XML file. The complete XML file becomes the value of the key.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/{pluginName}</code></p>
+
+<p><strong>Request Body</strong></p>
+
+<p>The request body can be specified as an XML string. Alternatively, the path of the XML file can be specified.</p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: text/plain"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'@SimplePaymentStates.xml'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/demo_plugin"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"demo_plugin"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">stateMachineConfig</span> <span class="o">=</span> <span class="s">"&lt;xml&gt;..&lt;/xml&gt;"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">uploadPluginPaymentStateMachineConfig</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span>
+                                                                        <span class="n">stateMachineConfig</span><span class="o">,</span>
+                                                                        <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s">'&lt;xml&gt;..&lt;/xml&gt;'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">upload_plugin_payment_state_machine_config</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">plugin_name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_plugin</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">&lt;xml&gt;..&lt;/xml&gt;</span><span class="dl">'</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">uploadPluginPaymentStateMachineConfig</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="nx">plugin_name</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$pluginName</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="s2">"&lt;xml&gt;..&lt;/xml&gt;"</span><span class="p">;</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">uploadPluginPaymentStateMachineConfig</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$pluginName</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body. In addition, a <code>Location</code> item is returned in the header giving the URL for the payment state machine.</p>
+<h3 id='retrieve-a-per-tenant-payment-state-machine-for-a-plugin'>Retrieve a per tenant payment state machine for a plugin</h3>
+<p>Retrieves the complete XML file corresponding to the payment state machine for the specified plugin if it exists.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/{pluginName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/demo_plugin"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"demo_plugin"</span><span class="o">;</span>
+
+<span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPluginPaymentStateMachineConfig</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
+
+<span class="n">tenantKeyValue</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_plugin_payment_state_machine_config</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">plugin_name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_plugin</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantKeyValue</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getPluginPaymentStateMachineConfig</span><span class="p">(</span><span class="nx">plugin_name</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$pluginName</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPluginPaymentStateMachineConfig</span><span class="p">(</span><span class="nv">$pluginName</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PLUGIN_PAYMENT_STATE_MACHINE_demo_plugin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">&lt;?xml</span><span class="w"> </span><span class="err">version=</span><span class="s2">"1.0"</span><span class="w"> </span><span class="err">encoding=</span><span class="s2">"UTF-8"</span><span class="err">?&gt;</span><span class="w">
+
+    </span><span class="err">&lt;stateMachineConfig</span><span class="w"> </span><span class="err">xmlns:xsi=</span><span class="s2">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="w">
+                        </span><span class="err">xsi:noNamespaceSchemaLocation=</span><span class="s2">"StateMachineConfig.xsd"</span><span class="err">&gt;</span><span class="w">
+
+        </span><span class="err">&lt;stateMachines&gt;</span><span class="w">
+            </span><span class="err">&lt;stateMachine</span><span class="w"> </span><span class="err">name=</span><span class="s2">"BIG_BANG"</span><span class="err">&gt;</span><span class="w">
+                </span><span class="err">&lt;states&gt;</span><span class="w">
+                    </span><span class="err">&lt;state</span><span class="w"> </span><span class="err">name=</span><span class="s2">"BIG_BANG_INIT"</span><span class="err">/&gt;</span><span class="w">
+                </span><span class="err">&lt;/states&gt;</span><span class="w">
+                </span><span class="err">&lt;transitions&gt;</span><span class="w">
+                    </span><span class="err">&lt;transition&gt;</span><span class="w">
+                        </span><span class="err">&lt;initialState&gt;BIG_BANG_INIT&lt;/initialState&gt;</span><span class="w">
+                        </span><span class="err">&lt;operation&gt;OP_DUMMY&lt;/operation&gt;</span><span class="w">
+                        </span><span class="err">&lt;operationResult&gt;SUCCESS&lt;/operationResult&gt;</span><span class="w">
+                        </span><span class="err">&lt;finalState&gt;BIG_BANG_INIT&lt;/finalState&gt;</span><span class="w">
+                    </span><span class="err">&lt;/transition&gt;</span><span class="w">
+                </span><span class="err">&lt;/transitions&gt;</span><span class="w">
+                </span><span class="err">&lt;operations&gt;</span><span class="w">
+                    </span><span class="err">&lt;operation</span><span class="w"> </span><span class="err">name=</span><span class="s2">"OP_DUMMY"</span><span class="err">/&gt;</span><span class="w">
+                </span><span class="err">&lt;/operations&gt;</span><span class="w">
+            </span><span class="err">&lt;/stateMachine&gt;</span><span class="w">
+            </span><span class="err">&lt;stateMachine</span><span class="w"> </span><span class="err">name=</span><span class="s2">"AUTHORIZE"</span><span class="err">&gt;</span><span class="w">
+                </span><span class="err">&lt;states&gt;</span><span class="w">
+                    </span><span class="err">&lt;state</span><span class="w"> </span><span class="err">name=</span><span class="s2">"AUTH_INIT"</span><span class="err">/&gt;</span><span class="w">
+                    </span><span class="err">&lt;state</span><span class="w"> </span><span class="err">name=</span><span class="s2">"AUTH_SUCCESS"</span><span class="err">/&gt;</span><span class="w">
+                    </span><span class="err">&lt;state</span><span class="w"> </span><span class="err">name=</span><span class="s2">"AUTH_FAILED"</span><span class="err">/&gt;</span><span class="w">
+                    </span><span class="err">&lt;state</span><span class="w"> </span><span class="err">name=</span><span class="s2">"AUTH_ERRORED"</span><span class="err">/&gt;</span><span class="w">
+                </span><span class="err">&lt;/states&gt;</span><span class="w">
+                </span><span class="err">&lt;transitions&gt;</span><span class="w">
+                    </span><span class="err">&lt;transition&gt;</span><span class="w">
+                        </span><span class="err">&lt;initialState&gt;AUTH_INIT&lt;/initialState&gt;</span><span class="w">
+                        </span><span class="err">&lt;operation&gt;OP_AUTHORIZE&lt;/operation&gt;</span><span class="w">
+                        </span><span class="err">&lt;operationResult&gt;SUCCESS&lt;/operationResult&gt;</span><span class="w">
+                        </span><span class="err">&lt;finalState&gt;AUTH_SUCCESS&lt;/finalState&gt;</span><span class="w">
+                    </span><span class="err">&lt;/transition&gt;</span><span class="w">
+                    </span><span class="err">&lt;transition&gt;</span><span class="w">
+                        </span><span class="err">&lt;initialState&gt;AUTH_INIT&lt;/initialState&gt;</span><span class="w">
+                        </span><span class="err">&lt;operation&gt;OP_AUTHORIZE&lt;/operation&gt;</span><span class="w">
+                        </span><span class="err">&lt;operationResult&gt;FAILURE&lt;/operationResult&gt;</span><span class="w">
+                        </span><span class="err">&lt;finalState&gt;AUTH_FAILED&lt;/finalState&gt;</span><span class="w">
+                    </span><span class="err">&lt;/transition&gt;</span><span class="w">
+                    </span><span class="err">&lt;transition&gt;</span><span class="w">
+                        </span><span class="err">&lt;initialState&gt;AUTH_INIT&lt;/initialState&gt;</span><span class="w">
+                        </span><span class="err">&lt;operation&gt;OP_AUTHORIZE&lt;/operation&gt;</span><span class="w">
+                        </span><span class="err">&lt;operationResult&gt;EXCEPTION&lt;/operationResult&gt;</span><span class="w">
+                        </span><span class="err">&lt;finalState&gt;AUTH_ERRORED&lt;/finalState&gt;</span><span class="w">
+                    </span><span class="err">&lt;/transition&gt;</span><span class="w">
+                </span><span class="err">&lt;/transitions&gt;</span><span class="w">
+                </span><span class="err">&lt;operations&gt;</span><span class="w">
+                    </span><span class="err">&lt;operation</span><span class="w"> </span><span class="err">name=</span><span class="s2">"OP_AUTHORIZE"</span><span class="err">/&gt;</span><span class="w">
+                </span><span class="err">&lt;/operations&gt;</span><span class="w">
+            </span><span class="err">&lt;/stateMachine&gt;</span><span class="w">
+        </span><span class="err">&lt;/stateMachines&gt;</span><span class="w">
+
+        </span><span class="err">&lt;linkStateMachines&gt;</span><span class="w">
+            </span><span class="err">&lt;linkStateMachine&gt;</span><span class="w">
+                </span><span class="err">&lt;initialStateMachine&gt;BIG_BANG&lt;/initialStateMachine&gt;</span><span class="w">
+                </span><span class="err">&lt;initialState&gt;BIG_BANG_INIT&lt;/initialState&gt;</span><span class="w">
+                </span><span class="err">&lt;finalStateMachine&gt;AUTHORIZE&lt;/finalStateMachine&gt;</span><span class="w">
+                </span><span class="err">&lt;finalState&gt;AUTH_INIT&lt;/finalState&gt;</span><span class="w">
+            </span><span class="err">&lt;/linkStateMachine&gt;</span><span class="w">
+        </span><span class="err">&lt;/linkStateMachines&gt;</span><span class="w">
+    </span><span class="err">&lt;/stateMachineConfig&gt;</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a key value object for the key <code>PLUGIN_PAYMENT_STATE_MACHINE_*plugin*</code>. </p>
+<h3 id='delete-a-per-tenant-payment-state-machine-for-a-plugin'>Delete a per tenant payment state machine for a plugin</h3>
+<p>Deletes the payment state machine for the specified plugin for this tenant. The plugin reverts to the default payment state machine.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/{pluginName}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/tenants/uploadPluginPaymentStateMachineConfig/demo_plugin"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.TenantApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"demo_plugin"</span><span class="o">;</span>
+
+<span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePluginPaymentStateMachineConfig</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
+<span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
+
+<span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_plugin_payment_state_machine_config</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">plugin_name</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">demo_plugin</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deletePluginPaymentStateMachineConfig</span><span class="p">(</span><span class="nx">plugin_name</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created-by</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">reason</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">comment</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getTenantApi</span><span class="p">();</span>
+
+<span class="nv">$pluginName</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deletePluginPaymentStateMachineConfig</span><span class="p">(</span><span class="nv">$pluginName</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Returns</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
 
       </div>
     </main>

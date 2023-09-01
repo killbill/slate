@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kill Bill index API Documentation">
+    <meta name="description" content="Kill Bill catalog API Documentation">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
       <title>Kill Bill</title>
       <style media="screen">
@@ -287,7 +287,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
   </head>
 
-  <body data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;,&quot;php&quot;]">
+  <body data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;]">
     <div class="loader-wrapper">
       <div id="loading"></div>
     </div>
@@ -318,8 +318,6 @@
                   <option data-language-name="java" value="java">java</option>
                   <option data-language-name="ruby" value="ruby">ruby</option>
                   <option data-language-name="python" value="python">python</option>
-                  <option data-language-name="javascript" value="javascript">javascript</option>
-                  <option data-language-name="php" value="php">php</option>
               </select>
             </label>
             <div class="lang-selector__list">
@@ -327,8 +325,6 @@
                   <a href="#" class="lang-selector__link" data-language-name="java">java</a>
                   <a href="#" class="lang-selector__link" data-language-name="ruby">ruby</a>
                   <a href="#" class="lang-selector__link" data-language-name="python">python</a>
-                  <a href="#" class="lang-selector__link" data-language-name="javascript">javascript</a>
-                  <a href="#" class="lang-selector__link" data-language-name="php">php</a>
             </div>
           </div>
       </div>
@@ -338,7 +334,7 @@
         <nav class="site-navigator">
           <ul class="site-navigator__menu">
               <li>
-                <a href="#using-kill-bill-apis" class="site-navigator__item site-navigator__menu-item" data-title="Using Kill Bill APIs">
+                <a href="index.html" class="site-navigator__item site-navigator__menu-item" data-title="Using Kill Bill APIs">
                   <span>Using Kill Bill APIs</span>
                 </a>
                 
@@ -579,7 +575,7 @@
                   </ul>
               </li>
               <li>
-                <a href="catalog.html" class="site-navigator__item site-navigator__menu-item" data-title="Catalog">
+                <a href="#catalog" class="site-navigator__item site-navigator__menu-item" data-title="Catalog">
                   <span>Catalog</span>
                 </a>
                 
@@ -2430,334 +2426,1356 @@
       </div>
 
       <div class="page__content content">
-        <h1 id='using-kill-bill-apis'>Using Kill Bill APIs</h1><h2 id='introduction'>Introduction</h2>
-<p>Kill Bill offers a set of HTTP APIs, commonly called REST APIs, that use the HTTP verbs <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>DELETE</code> to invoke Create, Read, Update and Delete (CRUD) operations, and that use HTTP response codes to indicate errors. These APIs enable the management of Kill Bill resources -- e.g <code>Account</code> -- through the use of JSON input and output.</p>
+        <h1 id='catalog'>Catalog</h1>
+<p>The <code>Catalog</code> is at the heart of the Kill Bill subscription and billing systems. It provides complete current information on products available, subscription plans, billing options, and much more. Each tenant has a single catalog, but different tenants may have completely different catalogs.</p>
 
-<p>Kill Bill also offers a set of <a href="https://github.com/killbill/killbill-api/tree/master/src/main/java/org/killbill/billing">java APIs</a> that can be used by plugins to make requests, and a set of <a href="https://github.com/killbill/killbill-plugin-api">java plugin APIs</a> for Kill Bill core to interact with the plugins. These apis are beyond the scope of this documentation.</p>
+<p>The catalog for a given tenant may be updated to new versions from time to time. This provides the ability to deprecate old products, add new ones, or change prices for existing products. Older versions remain available in case they are needed. If a new version is uploaded, new subscriptions will use the new version, but existing subscriptions may either depend on their original versions (grandfathering use case) or use the latest version (price update use case). Please refer to the <a href="https://docs.killbill.io/latest/userguide_subscription.html#components-catalog">catalog section of our subscription billing documentation</a> for additional details.</p>
 
-<p>Official libraries for the Kill Bill API are available in several languages,
-including Java, Php, Python, Ruby, Node, and Go. Community-supported libraries
-such as .NET are also available. Note that code examples for Curl, Java, Ruby and Python are shown in the right-hand column of this document.</p>
+<p>KAUI, our admin UI, provides the ability to upload a <em>simple plan</em>. The <em>simple plan</em> provides a way to ease testing and to play with the system. See <a href="catalog.html#catalog-simple-plan">API section Simple Plan</a>.</p>
 
-<p>In the following documentation, we assume
-you have a Kill Bill server instance running on <code>127.0.0.1</code> on port <code>8080</code>. It is straightforward to substitute a different IP address or port number if necessary.</p>
+<p>A tenant has several options for setting up their catalog. You can choose the option that best meets your needs:</p>
 
-<p>Kill Bill supports the <code>https</code> protocol, but here all examples are shown using <code>http</code>.</p>
+<ol>
+<li>Use the default test catalog that ships with Kill Bill by <a href="tenant.html#tenant-create-a-tenant">creating a tenant</a> with <code>useGlobalDefault=true</code></li>
+<li>Use the Simple Plan API from KAUI to get started quickly (no need to create an XML catalog, simply use the UI and add the plans you need).</li>
+<li>Write your own complete catalog as an XML file and upload it. Some examples of catalog can be found in our <a href="https://github.com/killbill/killbill-docs/tree/v3/catalogs">test repo</a>. For validation, check our <a href="https://docs.killbill.io/latest/userguide_subscription.html#components-catalog-overview">manual</a> or use our <a href="https://cloud.killbill.io/">cloud validation tool</a> after creating an account.</li>
+<li>Write a custom Catalog plugin. This is only for advanced users with special needs.</li>
+</ol>
+
+<p>For a full discussion of the KillBill catalog, see the <a href="https://docs.killbill.io/latest/userguide_subscription.html#components-catalog">Catalog</a> section in the <a href="https://docs.killbill.io/latest/userguide_subscription.html">Subscription Guide</a>.</p>
+
+<p>The <code>Catalog</code> API offers basic CRUD operations, allowing you to upload, retrieve and delete catalog versions. </p>
+<h2 id='catalog-resource'>Catalog Resource</h2>
+<p>At a very high level, the Catalog consists of the following main components:</p>
+
+<ul>
+<li><strong><code>Products</code></strong> : List of products available - e.g <em>Gold</em> product.</li>
+<li><strong><code>Plans</code></strong> : List of subscription plans available for each product - e.g <em>gold-monthly</em>, monthly subscription for the <em>Gold</em> product.</li>
+<li><strong><code>Rules</code></strong> : Business rules for subscriptions - e.g. when certain changes should take effect.</li>
+<li><strong><code>Price Lists</code></strong> : Lists of applicable Plans.</li>
+</ul>
+
+<p>Full details about the elements of a Catalog are given in the links cited above. The Catalog is maintained as an XML file.</p>
+<h2 id='catalogvalidation-resource'>CatalogValidation Resource</h2>
+<p>Represents the result of validating a catalog.</p>
+
+<p>It includes the following attribute:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>catalogValidationErrors</strong></td>
+<td>list</td>
+<td>system</td>
+<td>List of <strong>CatalogValidationError</strong> (see next)</td>
+</tr>
+</tbody></table>
+
+<p><strong>CatalogValidationError</strong>:</p>
+
+<p>Represents a catalog validation error. </p>
+
+<p>It includes the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>errorDescription</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Description about the error</td>
+</tr>
+</tbody></table>
+<h2 id='catalog-2'>Catalog</h2><h3 id='upload-a-catalog-as-xml'>Upload a catalog as XML</h3>
+<p>This endpoint uploads a complete catalog in XML format. This becomes the current version of the Catalog for this Tenant.</p>
+
+<p>Note that the naming for the various entities is based on what the <a href="https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName">XML spec specifies</a>, and in particular the <code>name</code> elements need to be globally unique in the catalog and must conform to the XML <code>NCName</code> definition. This means that they cannot contain symbol characters like :, @, $, %, &amp;, /, +, ,, ;,, whitespace characters or parentheses, and they cannot begin with a number, dot or minus character.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/catalog/xml</code></p>
 
 <blockquote>
-<p>API client libraries</p>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">//</span>
-<span class="c1">// You can find the java client on github: https://github.com/killbill/killbill-client-java</span>
-<span class="c1">//</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="c1">#</span>
-<span class="c1"># You can find the ruby client on github: https://github.com/killbill/killbill-client-ruby</span>
-<span class="c1">#</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: text/xml"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;catalog&gt; ...'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/xml"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">getResourceBodyString</span><span class="o">(</span><span class="n">catalog</span><span class="o">);</span>
+
+<span class="n">catalogApi</span><span class="o">.</span><span class="na">uploadCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog_file_xml</span> <span class="o">=</span> <span class="n">resource_file</span><span class="p">.</span><span class="nf">read</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">upload_tenant_catalog</span><span class="p">(</span><span class="n">catalog_file_xml</span><span class="p">,</span> 
+                                                     <span class="n">user</span><span class="p">,</span>
+                                                     <span class="n">reason</span><span class="p">,</span>
+                                                     <span class="n">comment</span><span class="p">,</span>
+                                                     <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+<span class="n">xml_catalog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"../resources/SpyCarBasic.xml"</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">upload_catalog_xml</span><span class="p">(</span><span class="n">xml_catalog</span><span class="p">,</span> 
+                              <span class="n">created_by</span><span class="p">,</span> 
+                              <span class="n">api_key</span><span class="p">,</span> 
+                              <span class="n">api_secret</span><span class="p">)</span>
 </code></pre></div>
-<p>The description of the API in this documentation is limited to the most common use cases and does not include advanced features that we have crafted over the years from all the use cases we have seen from our users.</p>
+<p><strong>Request Body</strong></p>
 
-<p>For questions about API use, or to report bugs, you can subscribe to the <a href="https://groups.google.com/forum/#!forum/killbilling-users">Kill Bill user mailing list</a>.</p>
-<h2 id='authentication-and-rbac'>Authentication and RBAC</h2>
-<p>In order to make API calls, one needs to authenticate each request by passing an HTTP <code>Authorization</code> header and by following the HTTP Basic authentication scheme.</p>
+<p>Contains the complete catalog in XML format</p>
 
-<p>Depending on how the system has been configured, the authentication mechanism can happen using different options -- some or all at the same time:</p>
+<p><strong>Query Parameters</strong></p>
 
-<ul>
-<li>Flat file configuration</li>
-<li>Database configuration</li>
-<li>LDAP configuration</li>
-<li>OKTA configuration</li>
-</ul>
+<p>None.</p>
 
-<p>The system also supports configuring roles and permissions, to restrict user access to certain resources and operations. The permissions are quite granular and are defined <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/security/Permission.java#L19">here</a></p>
-<h2 id='multi-tenancy'>Multi-Tenancy</h2>
-<p>Kill Bill has been designed from the ground up to run multiple logical instances on the same set of servers and databases. This allows different customer data sets to be cleanly separated. Another common use case is to configure both a production tenant and a test tenant, the latter being used for test requests during deployment and for sanity after deployment.</p>
+<p><strong>Response</strong></p>
 
-<p>Each API call requires the tenant being used to be identified, through the use of 2 HTTP headers:</p>
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='retrieve-the-catalog-as-xml'>Retrieve the catalog as XML</h3>
+<p>This endpoint retrieves the Catalog for a specified date in XML format. If there are multiple versions, the latest version with an effective date not later than the requested date is returned. If the effective date for all versions is greater than the requested date, the earliest version is returned.</p>
+
+<p>For example, suppose there are two versions of the catalog, the current version dated 2020-01-01 (Jan. 1, 2020) and a previous version dated 2019-01-01. Then</p>
 
 <ul>
-<li><strong><code>X-Killbill-ApiKey</code></strong>: The API key associated with the tenant. This value is stored in clear in the database.</li>
-<li><strong><code>X-Killbill-ApiSecret</code></strong>: The API secret associated with the tenant. This value is hashed and stored along with the <code>salt</code> in the database</li>
+<li>A request with no effective date would retrieve the current version</li>
+<li>A request with an effective date of 2020-01-01 or later would retrieve the current version</li>
+<li>A request with an effective date of 2019-01-01 or later, but before 2020-01-01, would retrieve the previous version</li>
+<li>A request with an effective date earlier than 2019-01-01 would retrieve the previous version, as it is the earliest version available.</li>
 </ul>
 
-<aside class="note">
-  <span class="note__title">Note:</span> 
-  <span class="note__content">
-    You can control the number of hash iterations through the system property `org.killbill.security.shiroNbHashIterations` whose default value is set to `200000`. If your security requirements are met through other means, you can set this value to `1` to avoid wasting CPU cycles and greatly improve latency. Changing the value on an existing system requires re-hashing the keys.
-  </span>
-</aside>
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/xml</code></p>
 
 <blockquote>
-<p>Specifying the basic authentication headers and multi-tenancy headers:</p>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-<span class="nt">-u</span> admin:password <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-...
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">KillBillHttpClient</span> <span class="n">killBillHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">KillBillHttpClient</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"http://%s:%d"</span><span class="o">,</span> <span class="s">"127.0.0.1"</span><span class="o">,</span> <span class="mi">8080</span><span class="o">),</span>
-                                                               <span class="n">username</span><span class="o">,</span>
-                                                               <span class="n">password</span><span class="o">,</span>
-                                                               <span class="n">apiKey</span><span class="o">,</span>
-                                                               <span class="n">apiSecret</span><span class="o">,</span>
-                                                               <span class="kc">null</span><span class="o">,</span>
-                                                               <span class="kc">null</span><span class="o">,</span>
-                                                               <span class="mi">1000</span><span class="o">,</span>
-                                                               <span class="mi">5000</span><span class="o">,</span>
-                                                               <span class="mi">5000</span><span class="o">);</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: text/xml"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/catalog/xml"</span>  
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
-<span class="nc">AccountApi</span> <span class="n">accountApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AccountApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">AdminApi</span> <span class="n">adminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AdminApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">BundleApi</span> <span class="n">bundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BundleApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CatalogApi</span> <span class="n">catalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CatalogApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CreditApi</span> <span class="n">creditApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CreditApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomFieldApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">ExportApi</span> <span class="n">exportApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ExportApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoiceApi</span> <span class="n">invoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoiceApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoiceItemApi</span> <span class="n">invoiceItemApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoiceItemApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoicePaymentApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">NodesInfoApi</span> <span class="n">nodesInfoApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NodesInfoApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">OverdueApi</span> <span class="n">overdueApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">OverdueApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentApi</span> <span class="n">paymentApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentGatewayApi</span> <span class="n">paymentGatewayApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentGatewayApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentMethodApi</span> <span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentMethodApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentTransactionApi</span> <span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentTransactionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PluginInfoApi</span> <span class="n">pluginInfoApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PluginInfoApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">SubscriptionApi</span> <span class="n">subscriptionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SubscriptionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TagApi</span> <span class="n">tagApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TagApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TagDefinitionApi</span> <span class="n">tagDefinitionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TagDefinitionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TenantApi</span> <span class="n">tenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TenantApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">UsageApi</span> <span class="n">usageApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UsageApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+<span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-<span class="c1">// Request Options example</span>
-<span class="nc">String</span> <span class="n">createdBy</span> <span class="o">=</span> <span class="s">"me"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">reason</span> <span class="o">=</span> <span class="s">"Going through my first tutorial"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">comment</span> <span class="o">=</span> <span class="s">"I like it!"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogXml</span><span class="o">(</span><span class="n">requestedDate</span><span class="o">,</span> 
+                                          <span class="n">accountId</span><span class="o">,</span> 
+                                          <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"bob"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"lazar"</span><span class="o">;</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_xml</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span>
+                                                      <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-
-<span class="nc">RequestOptions</span> <span class="n">requestOptions</span> <span class="o">=</span> <span class="nc">RequestOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-                                              <span class="o">.</span><span class="na">withCreatedBy</span><span class="o">(</span><span class="n">createdBy</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withReason</span><span class="o">(</span><span class="n">reason</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withComment</span><span class="o">(</span><span class="n">comment</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withQueryParams</span><span class="o">(</span><span class="n">queryParams</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withTenantApiKey</span><span class="o">(</span><span class="n">apiKey</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withTenantApiSecret</span><span class="o">(</span><span class="n">apiSecret</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'killbill_client'</span>
-
-<span class="no">KillBillClient</span><span class="p">.</span><span class="nf">url</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8080'</span>
-
-<span class="c1"># Multi-tenancy and RBAC credentials</span>
-<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s1">'admin'</span><span class="p">,</span>
-  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s1">'password'</span><span class="p">,</span>
-  <span class="ss">:api_key</span> <span class="o">=&gt;</span> <span class="s1">'bob'</span><span class="p">,</span>
-  <span class="ss">:api_secret</span> <span class="o">=&gt;</span> <span class="s1">'lazar'</span>
-<span class="p">}</span>
-
-<span class="c1"># Audit log data</span>
-<span class="n">user</span> <span class="o">=</span> <span class="s1">'me'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'Going through my first tutorial'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'I like it!'</span>
-
-<span class="c1"># Start using....</span>
-
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="c1"># Edit file: configuration.py, lines:50-62
-</span>
-<span class="c1"># Default Base url
-</span><span class="bp">self</span><span class="p">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">"http://localhost:8080"</span>
-<span class="c1"># Temp file folder for downloading files
-</span><span class="bp">self</span><span class="p">.</span><span class="n">temp_folder_path</span> <span class="o">=</span> <span class="bp">None</span>
-
-<span class="c1"># Authentication Settings
-# dict to store API key(s)
-</span><span class="bp">self</span><span class="p">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># dict to store API prefix (e.g. Bearer)
-</span><span class="bp">self</span><span class="p">.</span><span class="n">api_key_prefix</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># Username for HTTP basic authentication
-</span><span class="bp">self</span><span class="p">.</span><span class="n">username</span> <span class="o">=</span> <span class="s">"admin"</span>
-<span class="c1"># Password for HTTP basic authentication
-</span><span class="bp">self</span><span class="p">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">"password"</span>
-
-<span class="c1">####################################################
-</span>
-<span class="c1"># Basic example using the client
-</span><span class="n">exampleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">ExampleApi</span><span class="p">()</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">Example</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'John'</span><span class="p">,</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s">'Doe'</span><span class="p">)</span>
-<span class="n">created_by</span> <span class="o">=</span> <span class="s">'me'</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s">'bob'</span>
-<span class="n">api_secret</span> <span class="o">=</span> <span class="s">'lazar'</span>
-
-<span class="n">exampleApi</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span><span class="p">,</span>
-                  <span class="n">created_by</span><span class="p">,</span>
-                  <span class="n">api_key</span><span class="p">,</span>
-                  <span class="n">api_secret</span><span class="p">)</span>
-</code></pre></div><h2 id='resource-ids-and-external-keys'>Resource IDs and External Keys</h2>
-<p>When a new resource is created, there are 2 IDS associated with it. Kill Bill will allocate a unique ID, and the user of the API will also be able to associate its own unique key, called the <code>external key</code>. The external key is used for 2 scenarios:</p>
-
-<ul>
-<li><strong>ID Mapping</strong>: Typically an external key can be passed to create a mapping between the ID generated by Kill Bill and a known key for this resource</li>
-<li><strong>Idempotency</strong>: Kill Bill ensures that each external key is unique, so if an API call times out, it can be safely retried with the same external key. The second request would only succeed if the first one did not complete. This ensures idempotency of the call, since the external key is unique per tenant and across all resources.</li>
-</ul>
-<h2 id='pagination'>Pagination</h2>
-<p>Besides the traditional CRUD APIs associated with each resource, we also offer pagination APIs to allow the listing of per-tenant resources, such as all <code>Account</code>s for a given tenant. These APIs include an <code>offset</code> and a <code>limit</code>, provided as query parameters, to allow the listing of all resources of a given type, on a page by page basis. In addition to the json list, each response will also include the following http headers:</p>
-
-<ul>
-<li><strong><code>X-Killbill-Pagination-CurrentOffset</code></strong> : The offest of the first record in the returned list</li>
-<li><strong><code>X-Killbill-Pagination-NextOffset</code></strong> : The header will only be present if there are additional entries to return and would include the next offset</li>
-<li><strong><code>X-Killbill-Pagination-TotalNbRecords</code></strong> : The total number of records</li>
-<li><strong><code>X-Killbill-Pagination-NextPageUri</code></strong> : The uri that can be used to retrieve the next page.</li>
-</ul>
-<h2 id='audit-and-history'>Audit and History</h2>
-<p>Every api in Kill Bill that creates, or modifies state will create an audit log record to track <em>who</em> made the change. In addition, we also allow the record to specify <em>why</em> this change was made. This information is passed for every <code>POST</code>, <code>PUT</code>, and <code>DELETE</code> request and relies on special HTTP headers:</p>
-
-<ul>
-<li><strong><code>X-Killbill-CreatedBy</code></strong> : Mandatory header to track who made the change.</li>
-<li><strong><code>X-Killbill-Reason</code></strong> : Optional header to track the reason; typically one would use a special reason code -- e.g <em>COURTESY_REFUND</em>.</li>
-<li><strong><code>X-Killbill-Comment</code></strong> : Optional header to track the metadata; typically one would add more information -- e.g &#39;Good old faithful customer&#39;.</li>
-</ul>
-
-<p>In addition to the audit log, Kill Bill also records the history of the changes. For instance updating the billing addess of a customer would create an additonal row to track the change and link it to the audit log. The <code>audit</code> query parameter can take the following values:</p>
-
-<ul>
-<li><strong><code>NONE</code></strong> <em>[Default]</em>: No audit log is beeing returned. </li>
-<li><strong><code>MINIMAL</code></strong> : Only rows associated to <em>inserts</em> are being returned, but no <code>updates</code>.</li>
-<li><strong><code>FULL</code></strong> : Everything is being returned.<br></li>
-</ul>
-
-<blockquote>
-<p>Request: Fetching an account specifying <code>audit=MINIMAL</code></p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-<span class="nt">-u</span> admin:password <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-<span class="s2">"http://127.0.0.1:8080/1.0/kb/accounts/e8877928-0226-488d-9272-07a5e66d897f?audit=MINIMAL"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">Account</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
-                                      <span class="kc">false</span><span class="o">,</span>
-                                      <span class="kc">false</span><span class="o">,</span>
-                                      <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">MINIMAL</span><span class="o">,</span>
-                                      <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>  <span class="no">Api</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span> <span class="p">;</span><span class="o">-</span><span class="p">(</span>
-
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_xml</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
-<p>Response:</p>
+<p>Example Response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  ...
-  "auditLogs": [
-    {
-      "changeType": "INSERT",
-      "changeDate": "2018-02-05T22:39:53.000Z",
-      "changedBy": "demo",
-      "reasonCode": null,
-      "comments": null,
-      "userToken": "4858a67e-03b0-4d94-8a8c-bcd6e8599452"
-    }
-  ]
-}  
+<div class="highlight"><pre class="highlight xml tab-xml"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span>
+  <span class="nt">&lt;catalogs&gt;</span>
+    <span class="nt">&lt;versions&gt;</span>
+      <span class="nt">&lt;version&gt;</span>
+        <span class="nt">&lt;effectiveDate&gt;</span>2013-02-08T00:00:00Z<span class="nt">&lt;/effectiveDate&gt;</span>
+        <span class="nt">&lt;catalogName&gt;</span>SpyCarBasic<span class="nt">&lt;/catalogName&gt;</span>
+        <span class="nt">&lt;currencies&gt;</span>
+          <span class="nt">&lt;currency&gt;</span>USD<span class="nt">&lt;/currency&gt;</span>
+          <span class="nt">&lt;currency&gt;</span>GBP<span class="nt">&lt;/currency&gt;</span>
+        <span class="nt">&lt;/currencies&gt;</span>
+        <span class="nt">&lt;units/&gt;</span>
+        <span class="nt">&lt;products&gt;</span>
+          <span class="nt">&lt;product</span> <span class="na">name=</span><span class="s">"Basic"</span> <span class="na">prettyName=</span><span class="s">"Basic"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;category&gt;</span>BASE<span class="nt">&lt;/category&gt;</span>
+            <span class="nt">&lt;included/&gt;</span>
+            <span class="nt">&lt;available/&gt;</span>
+            <span class="nt">&lt;limits/&gt;</span>
+          <span class="nt">&lt;/product&gt;</span>
+          <span class="nt">&lt;product</span> <span class="na">name=</span><span class="s">"Sports"</span> <span class="na">prettyName=</span><span class="s">"Sports"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;category&gt;</span>BASE<span class="nt">&lt;/category&gt;</span>
+            <span class="nt">&lt;included/&gt;</span>
+            <span class="nt">&lt;available/&gt;</span>
+            <span class="nt">&lt;limits/&gt;</span>
+          <span class="nt">&lt;/product&gt;</span>
+          <span class="nt">&lt;product</span> <span class="na">name=</span><span class="s">"Standard"</span> <span class="na">prettyName=</span><span class="s">"Standard"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;category&gt;</span>BASE<span class="nt">&lt;/category&gt;</span>
+            <span class="nt">&lt;included/&gt;</span>
+            <span class="nt">&lt;available/&gt;</span>
+            <span class="nt">&lt;limits/&gt;</span>
+          <span class="nt">&lt;/product&gt;</span>
+          <span class="nt">&lt;product</span> <span class="na">name=</span><span class="s">"Super"</span> <span class="na">prettyName=</span><span class="s">"Super"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;category&gt;</span>ADD_ON<span class="nt">&lt;/category&gt;</span>
+            <span class="nt">&lt;included/&gt;</span>
+            <span class="nt">&lt;available/&gt;</span>
+            <span class="nt">&lt;limits/&gt;</span>
+          <span class="nt">&lt;/product&gt;</span>
+        <span class="nt">&lt;/products&gt;</span>
+        <span class="nt">&lt;rules&gt;</span>
+          <span class="nt">&lt;changePolicy&gt;</span>
+            <span class="nt">&lt;changePolicyCase&gt;</span>
+              <span class="nt">&lt;policy&gt;</span>IMMEDIATE<span class="nt">&lt;/policy&gt;</span>
+            <span class="nt">&lt;/changePolicyCase&gt;</span>
+          <span class="nt">&lt;/changePolicy&gt;</span>
+          <span class="nt">&lt;changeAlignment&gt;</span>
+            <span class="nt">&lt;changeAlignmentCase&gt;</span>
+              <span class="nt">&lt;alignment&gt;</span>START_OF_BUNDLE<span class="nt">&lt;/alignment&gt;</span>
+            <span class="nt">&lt;/changeAlignmentCase&gt;</span>
+          <span class="nt">&lt;/changeAlignment&gt;</span>
+          <span class="nt">&lt;cancelPolicy&gt;</span>
+            <span class="nt">&lt;cancelPolicyCase&gt;</span>
+              <span class="nt">&lt;policy&gt;</span>IMMEDIATE<span class="nt">&lt;/policy&gt;</span>
+            <span class="nt">&lt;/cancelPolicyCase&gt;</span>
+          <span class="nt">&lt;/cancelPolicy&gt;</span>
+          <span class="nt">&lt;createAlignment&gt;</span>
+            <span class="nt">&lt;createAlignmentCase&gt;</span>
+              <span class="nt">&lt;alignment&gt;</span>START_OF_BUNDLE<span class="nt">&lt;/alignment&gt;</span>
+            <span class="nt">&lt;/createAlignmentCase&gt;</span>
+          <span class="nt">&lt;/createAlignment&gt;</span>
+          <span class="nt">&lt;billingAlignment&gt;</span>
+            <span class="nt">&lt;billingAlignmentCase&gt;</span>
+              <span class="nt">&lt;alignment&gt;</span>ACCOUNT<span class="nt">&lt;/alignment&gt;</span>
+            <span class="nt">&lt;/billingAlignmentCase&gt;</span>
+          <span class="nt">&lt;/billingAlignment&gt;</span>
+          <span class="nt">&lt;priceList&gt;</span>
+            <span class="nt">&lt;priceListCase&gt;</span>
+              <span class="nt">&lt;toPriceList&gt;</span>DEFAULT<span class="nt">&lt;/toPriceList&gt;</span>
+            <span class="nt">&lt;/priceListCase&gt;</span>
+          <span class="nt">&lt;/priceList&gt;</span>
+        <span class="nt">&lt;/rules&gt;</span>
+        <span class="nt">&lt;plans&gt;</span>
+          <span class="nt">&lt;plan</span> <span class="na">name=</span><span class="s">"basic-annual"</span> <span class="na">prettyName=</span><span class="s">"basic-annual"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;product&gt;</span>Basic<span class="nt">&lt;/product&gt;</span>
+            <span class="nt">&lt;recurringBillingMode&gt;</span>IN_ADVANCE<span class="nt">&lt;/recurringBillingMode&gt;</span>
+            <span class="nt">&lt;initialPhases/&gt;</span>
+            <span class="nt">&lt;finalPhase</span> <span class="na">type=</span><span class="s">"EVERGREEN"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;duration&gt;</span>
+                <span class="nt">&lt;unit&gt;</span>UNLIMITED<span class="nt">&lt;/unit&gt;</span>
+                <span class="nt">&lt;number&gt;</span>-1<span class="nt">&lt;/number&gt;</span>
+              <span class="nt">&lt;/duration&gt;</span>
+              <span class="nt">&lt;recurring&gt;</span>
+                <span class="nt">&lt;billingPeriod&gt;</span>ANNUAL<span class="nt">&lt;/billingPeriod&gt;</span>
+                <span class="nt">&lt;recurringPrice&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>USD<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>1000<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                <span class="nt">&lt;/recurringPrice&gt;</span>
+              <span class="nt">&lt;/recurring&gt;</span>
+              <span class="nt">&lt;usages/&gt;</span>
+            <span class="nt">&lt;/finalPhase&gt;</span>
+            <span class="nt">&lt;plansAllowedInBundle&gt;</span>-1<span class="nt">&lt;/plansAllowedInBundle&gt;</span>
+          <span class="nt">&lt;/plan&gt;</span>
+          <span class="nt">&lt;plan</span> <span class="na">name=</span><span class="s">"sports-monthly"</span> <span class="na">prettyName=</span><span class="s">"sports-monthly"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;product&gt;</span>Sports<span class="nt">&lt;/product&gt;</span>
+            <span class="nt">&lt;recurringBillingMode&gt;</span>IN_ADVANCE<span class="nt">&lt;/recurringBillingMode&gt;</span>
+            <span class="nt">&lt;initialPhases&gt;</span>
+              <span class="nt">&lt;phase</span> <span class="na">type=</span><span class="s">"TRIAL"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;duration&gt;</span>
+                  <span class="nt">&lt;unit&gt;</span>DAYS<span class="nt">&lt;/unit&gt;</span>
+                  <span class="nt">&lt;number&gt;</span>30<span class="nt">&lt;/number&gt;</span>
+                <span class="nt">&lt;/duration&gt;</span>
+                <span class="nt">&lt;fixed</span> <span class="na">type=</span><span class="s">"ONE_TIME"</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;fixedPrice/&gt;</span>
+                <span class="nt">&lt;/fixed&gt;</span>
+                <span class="nt">&lt;usages/&gt;</span>
+              <span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;/initialPhases&gt;</span>
+            <span class="nt">&lt;finalPhase</span> <span class="na">type=</span><span class="s">"EVERGREEN"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;duration&gt;</span>
+                <span class="nt">&lt;unit&gt;</span>UNLIMITED<span class="nt">&lt;/unit&gt;</span>
+                <span class="nt">&lt;number&gt;</span>-1<span class="nt">&lt;/number&gt;</span>
+              <span class="nt">&lt;/duration&gt;</span>
+              <span class="nt">&lt;recurring&gt;</span>
+                <span class="nt">&lt;billingPeriod&gt;</span>MONTHLY<span class="nt">&lt;/billingPeriod&gt;</span>
+                <span class="nt">&lt;recurringPrice&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>GBP<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>375.00<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>USD<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>500.00<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                <span class="nt">&lt;/recurringPrice&gt;</span>
+              <span class="nt">&lt;/recurring&gt;</span>
+              <span class="nt">&lt;usages/&gt;</span>
+            <span class="nt">&lt;/finalPhase&gt;</span>
+            <span class="nt">&lt;plansAllowedInBundle&gt;</span>-1<span class="nt">&lt;/plansAllowedInBundle&gt;</span>
+          <span class="nt">&lt;/plan&gt;</span>
+          <span class="nt">&lt;plan</span> <span class="na">name=</span><span class="s">"standard-monthly"</span> <span class="na">prettyName=</span><span class="s">"standard-monthly"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;product&gt;</span>Standard<span class="nt">&lt;/product&gt;</span>
+            <span class="nt">&lt;recurringBillingMode&gt;</span>IN_ADVANCE<span class="nt">&lt;/recurringBillingMode&gt;</span>
+            <span class="nt">&lt;initialPhases&gt;</span>
+              <span class="nt">&lt;phase</span> <span class="na">type=</span><span class="s">"TRIAL"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;duration&gt;</span>
+                  <span class="nt">&lt;unit&gt;</span>DAYS<span class="nt">&lt;/unit&gt;</span>
+                  <span class="nt">&lt;number&gt;</span>30<span class="nt">&lt;/number&gt;</span>
+                <span class="nt">&lt;/duration&gt;</span>
+                <span class="nt">&lt;fixed</span> <span class="na">type=</span><span class="s">"ONE_TIME"</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;fixedPrice/&gt;</span>
+                <span class="nt">&lt;/fixed&gt;</span>
+                <span class="nt">&lt;usages/&gt;</span>
+              <span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;/initialPhases&gt;</span>
+            <span class="nt">&lt;finalPhase</span> <span class="na">type=</span><span class="s">"EVERGREEN"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;duration&gt;</span>
+                <span class="nt">&lt;unit&gt;</span>UNLIMITED<span class="nt">&lt;/unit&gt;</span>
+                <span class="nt">&lt;number&gt;</span>-1<span class="nt">&lt;/number&gt;</span>
+              <span class="nt">&lt;/duration&gt;</span>
+              <span class="nt">&lt;recurring&gt;</span>
+                <span class="nt">&lt;billingPeriod&gt;</span>MONTHLY<span class="nt">&lt;/billingPeriod&gt;</span>
+                <span class="nt">&lt;recurringPrice&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>GBP<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>75.00<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>USD<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>100.00<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                <span class="nt">&lt;/recurringPrice&gt;</span>
+              <span class="nt">&lt;/recurring&gt;</span>
+              <span class="nt">&lt;usages/&gt;</span>
+            <span class="nt">&lt;/finalPhase&gt;</span>
+            <span class="nt">&lt;plansAllowedInBundle&gt;</span>-1<span class="nt">&lt;/plansAllowedInBundle&gt;</span>
+          <span class="nt">&lt;/plan&gt;</span>
+          <span class="nt">&lt;plan</span> <span class="na">name=</span><span class="s">"super-monthly"</span> <span class="na">prettyName=</span><span class="s">"super-monthly"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;product&gt;</span>Super<span class="nt">&lt;/product&gt;</span>
+            <span class="nt">&lt;recurringBillingMode&gt;</span>IN_ADVANCE<span class="nt">&lt;/recurringBillingMode&gt;</span>
+            <span class="nt">&lt;initialPhases&gt;</span>
+              <span class="nt">&lt;phase</span> <span class="na">type=</span><span class="s">"TRIAL"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;duration&gt;</span>
+                  <span class="nt">&lt;unit&gt;</span>DAYS<span class="nt">&lt;/unit&gt;</span>
+                  <span class="nt">&lt;number&gt;</span>30<span class="nt">&lt;/number&gt;</span>
+                <span class="nt">&lt;/duration&gt;</span>
+                <span class="nt">&lt;fixed</span> <span class="na">type=</span><span class="s">"ONE_TIME"</span><span class="nt">&gt;</span>
+                  <span class="nt">&lt;fixedPrice/&gt;</span>
+                <span class="nt">&lt;/fixed&gt;</span>
+                <span class="nt">&lt;usages/&gt;</span>
+              <span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;/initialPhases&gt;</span>
+            <span class="nt">&lt;finalPhase</span> <span class="na">type=</span><span class="s">"EVERGREEN"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;duration&gt;</span>
+                <span class="nt">&lt;unit&gt;</span>UNLIMITED<span class="nt">&lt;/unit&gt;</span>
+                <span class="nt">&lt;number&gt;</span>-1<span class="nt">&lt;/number&gt;</span>
+              <span class="nt">&lt;/duration&gt;</span>
+              <span class="nt">&lt;recurring&gt;</span>
+                <span class="nt">&lt;billingPeriod&gt;</span>MONTHLY<span class="nt">&lt;/billingPeriod&gt;</span>
+                <span class="nt">&lt;recurringPrice&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>GBP<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>750.00<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                  <span class="nt">&lt;price&gt;</span>
+                    <span class="nt">&lt;currency&gt;</span>USD<span class="nt">&lt;/currency&gt;</span>
+                    <span class="nt">&lt;value&gt;</span>1000.00<span class="nt">&lt;/value&gt;</span>
+                  <span class="nt">&lt;/price&gt;</span>
+                <span class="nt">&lt;/recurringPrice&gt;</span>
+              <span class="nt">&lt;/recurring&gt;</span>
+              <span class="nt">&lt;usages/&gt;</span>
+            <span class="nt">&lt;/finalPhase&gt;</span>
+            <span class="nt">&lt;plansAllowedInBundle&gt;</span>-1<span class="nt">&lt;/plansAllowedInBundle&gt;</span>
+          <span class="nt">&lt;/plan&gt;</span>
+        <span class="nt">&lt;/plans&gt;</span>
+        <span class="nt">&lt;priceLists&gt;</span>
+          <span class="nt">&lt;defaultPriceList</span> <span class="na">name=</span><span class="s">"DEFAULT"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;plans&gt;</span>
+              <span class="nt">&lt;plan&gt;</span>basic-annual<span class="nt">&lt;/plan&gt;</span>
+              <span class="nt">&lt;plan&gt;</span>sports-monthly<span class="nt">&lt;/plan&gt;</span>
+              <span class="nt">&lt;plan&gt;</span>standard-monthly<span class="nt">&lt;/plan&gt;</span>
+              <span class="nt">&lt;plan&gt;</span>super-monthly<span class="nt">&lt;/plan&gt;</span>
+            <span class="nt">&lt;/plans&gt;</span>
+          <span class="nt">&lt;/defaultPriceList&gt;</span>
+        <span class="nt">&lt;/priceLists&gt;</span>
+      <span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/versions&gt;</span>
+    <span class="nt">&lt;catalogName&gt;</span>SpyCarBasic<span class="nt">&lt;/catalogName&gt;</span>
+  <span class="nt">&lt;/catalogs&gt;</span>
 </code></pre></div>
-<p>Every API that retrieves information, whether associated with a specific resource, or with a list of resources,  may return audit logs.</p>
+<p><strong>Query Parameters</strong></p>
 
-<p>Audit and history information associated with a given resource is always stored atomically to ensure that if the state is changed, such audit and history information exists and is accurate.</p>
-<h2 id='versioning'>Versioning</h2><h3 id='kill-bill-server'>Kill Bill Server</h3>
-<p>Kill Bill software is composed of many different repositories, all of them hosted on our <a href="https://github.com/killbill">github account</a>.</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>requestedDate</strong></td>
+<td>string</td>
+<td>false</td>
+<td>current date</td>
+<td>requested date</td>
+</tr>
+</tbody></table>
 
-<p>The Kill Bill server version, or simply Kill Bill version, is the one from the <a href="https://github.com/killbill/killbill">killbill</a> repository, and more specifically since we are using <code>maven</code> to build, this is indicated in the corresponding <code>pom.xml</code>. This repository depends on a few others, each having their own versions:</p>
+<p><strong>Response</strong></p>
 
-<ul>
-<li><code>killbill-api</code>: APIs used by plugins to communicate with Kill Bill core</li>
-<li><code>killbill-plugin-api</code>: APIs used by Kill Bill core to communicate with plugins</li>
-<li><code>killbill-commons</code>: Common code across modules</li>
-<li><code>killbill-platform</code>: Platform related code such as OSGI framework, webapp pieces</li>
-<li><code>killbill-client</code>: Java client, only used for integration tests inside killbill repository.</li>
-</ul>
+<p>If successful, returns a status code of 200 and the catalog for the requested date in XML format.</p>
+<h3 id='retrieve-the-catalog-as-json'>Retrieve the catalog as JSON</h3>
+<p>This endpoint retrieves the Catalog for a requested date in JSON format. If there are multiple versions, the latest version with an effective date not later than the requested date is returned. If the effective date for all versions is greater than the requested date, the earliest version is returned. See the previous endpoint for examples.</p>
 
-<p>The version for all these dependencies is managed in the parent <a href="https://github.com/killbill/killbill-oss-parent/blob/master/pom.xml">pom.xml</a>. So in particular, for a given Kill Bill version, you can look up the version of the parent <code>pom.xml</code> and from there access all the dependencies.</p>
+<p><strong>HTTP Request</strong> </p>
 
-<p>The current <strong>stable</strong> and <strong>production</strong> ready version of Kill Bill is <code>0.24.y</code>. You should use the latest released (<code>y</code>) version as it may contain critical bug fixes.</p>
-
-<ul>
-<li>Any bug fixes will result in a new version identified by incrementing the <code>patch</code> number (<code>y</code>). We guarantee compatibility of these versions with those immediately preceding them. Each version will be accompanied by release notes on github - e.g <a href="https://github.com/killbill/killbill/releases/tag/killbill-0.22.8">0.22.8 release notes</a>.</li>
-<li>New development may happen in parallel. This may lead to the release of development versions. Such versions are not yet deemed stable, and will not be supported on the public mailing list.</li>
-</ul>
-
-<p>The choice of releasing <code>0.x.y</code> and not <code>1.x.y</code> is motivated by our desire to add additional features in upcoming releases, and is in no way a statement about code instability.</p>
-<h3 id='client-libraries'>Client Libraries</h3>
-<p>Our client libraries contain a <code>README</code> section to describe their compatibility with the Kill Bill server. For instance, such compatibility mapping can be seen in our java client <a href="https://github.com/killbill/killbill-client-java/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
-<h3 id='plugins'>Plugins</h3>
-<p>Each plugin also has its own version, and we also keep a <code>README</code> with the mapping section. For example, such a section for the adyen payment plugin can be found <a href="https://github.com/killbill/killbill-adyen-plugin/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
-
-<p>We also keep a global repository for all plugins <a href="https://github.com/killbill/killbill-cloud/blob/master/kpm/lib/kpm/plugins_directory.yml">here</a>. The simple file-based approach is an internal implementation. This brings us to our next topic, <code>KPM</code>.</p>
-<h3 id='kpm'>KPM</h3>
-<p><code>KPM</code>, The Kill Bill Package Manager, provides among <a href="https://github.com/killbill/killbill-cloud/tree/master/kpm">other things</a> the ability to retrieve version mapping for dependencies and plugins -- see the example on the right side.</p>
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog</code></p>
 
 <blockquote>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>
-# Look up version dependencies matching Kill Bill release 0.22.8:
-&gt; kpm info  --version=0.22.8
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog"</span>  
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
-Fetching info for version 0.22.8...
-Dependencies for version 0.22.8
-  killbill 0.22.8
-  killbill-oss-parent 0.143.60
-  killbill-api 0.53.17
-  killbill-plugin-api 0.26.4
-  killbill-commons 0.23.11
-  killbill-platform 0.39.15
+<span class="nc">DateTime</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-Known plugins for KB version 0.22.8
-  analytics 7.0.8
-  avatax 0.7.0
-  email-notifications 0.6.1
-  payment-test 7.0.4
-  stripe 7.0.4
-  ...
+<span class="nc">Catalogs</span> <span class="n">catalogsJson</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogJson</span><span class="o">(</span><span class="n">requestedDate</span><span class="o">,</span> 
+                                                  <span class="n">accountId</span><span class="o">,</span> 
+                                                  <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
 
-</code></pre></div><h2 id='errors'>Errors</h2>
-<p>Kill Bill relies on HTTP response codes to indicate the success or failure of an API request:</p>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_json</span><span class="o">.</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span> 
+                                                        <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<ul>
-<li><strong><code>2xx</code></strong> status indicates success</li>
-<li><strong><code>4xx</code></strong> status often indicates a client side error -- e.g missing madatory API field</li>
-<li><strong><code>5xx</code></strong> status indicates an error with Kill Bill&#39;s servers or third party system -- e.g payment gateway returns 5xx.</li>
-</ul>
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_json</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SpyCarBasic"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-02-08T00:00:00.000+0000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"currencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"GBP"</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"units"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ADD_ON"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Super"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Super"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super-monthly"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"super-monthly"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRIAL"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DAYS"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+                  </span><span class="p">},</span><span class="w">
+                  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+                      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">750</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+                      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                  </span><span class="p">],</span><span class="w">
+                  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+                  </span><span class="p">},</span><span class="w">
+                  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+              </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"included"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRIAL"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DAYS"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+                  </span><span class="p">},</span><span class="w">
+                  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+                      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">75</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+                      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                  </span><span class="p">],</span><span class="w">
+                  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+                  </span><span class="p">},</span><span class="w">
+                  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+              </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"included"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRIAL"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DAYS"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+                  </span><span class="p">},</span><span class="w">
+                  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">},</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+                  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+                      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">375</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+                      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                  </span><span class="p">],</span><span class="w">
+                  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+                    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+                  </span><span class="p">},</span><span class="w">
+                  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+              </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"included"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"priceLists"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"super-monthly"</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>requestedDate</strong></td>
+<td>string</td>
+<td>false</td>
+<td>current date</td>
+<td>requested date</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>if successful, returns a status code of 200 and the full catalog for the requested date in JSON format.</p>
+<h3 id='retrieve-a-list-of-catalog-versions'>Retrieve a list of catalog versions</h3>
+<p>Return a list of the effective dates for all available catalogs versions for this tenant.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/versions</code></p>
 
 <blockquote>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>HTTP status code summary:
-200 - OK: A response body may be returned.
-201 - Created: Success in creating a new resource. A Location header is returned to indicate the uri that can be used to fetch the resource
-202 - Accepted: The request has been accepted and will be processed asynchronously.
-204 - No Content: The request was processed sucesfully but no response body is returned.
-400 - Bad Request: Invalid/missing parameter from client.
-401 - Unauthorized: Authorization failed.
-402 - Request Failed: Request parameter were valid but request failed -- insufficient fund on a payment request.
-404 - Not Found: The requested resource does not exist.
-409 - Conflict: The request conflicts with another request.
-422 - Unprocessable Entity: Payment control plugin aborted the call.
-500 - Unexpected system error.
-502 - Bad Gateway : Unknow failure from payment plugin (PLUGIN_FAILURE).
-503 - Service Unavailable: Kill Bill or a third party system -- e.g payment gateway -- is unavailable.
-504 - Gateway Timeout: Payment gateway timed out.
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/versions"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">DateTime</span><span class="o">&gt;</span> <span class="n">versions</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogVersions</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_versions</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_versions</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre></div>
-<p>In addition to these error codes, the system will often return some json to provide more details about the error:</p>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="s2">"2013-02-08T00:00:00.000Z"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a comma-separated list of ISO date strings giving the effective date for each available catalog version.</p>
+<h3 id='retrieve-available-base-plans'>Retrieve available base plans</h3>
+<p>Returns a list of available base products and associated plans. Each object returned specifies a <code>product</code>, a <code>priceList</code>, a <code>plan</code>selected from the <code>pricelist</code>, and pricing information for the final phase of the plan.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/availableBasePlans</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/availableBasePlans"</span>   
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">PlanDetail</span><span class="o">&gt;</span> <span class="n">basePlans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getAvailableBasePlans</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">available_base_plans</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_base_plans</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sports"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"plan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"priceList"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finalPhaseBillingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finalPhaseRecurringPrice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">375</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"plan"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"priceList"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finalPhaseBillingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"finalPhaseRecurringPrice"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">75</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a list of objects representing the available base products and plans.</p>
+<h3 id='retrieve-available-add-ons-for-a-given-product'>Retrieve available add-ons for a given product</h3>
+<p>Returns a list of available add-on products, if any, for a specified base product, and for a specified price list or all price lists. Each object returned specifies a <code>product</code>, a <code>priceList</code>, a <code>plan</code> selected from the <code>pricelist</code>, and pricing information for the final phase of the plan.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/availableAddons</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/availableAddons"</span>  
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">baseProductName</span> <span class="o">=</span> <span class="s">"Bullets"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">priceListName</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">PlanDetail</span><span class="o">&gt;</span> <span class="n">availableAddons</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getAvailableAddons</span><span class="o">(</span><span class="n">baseProductName</span><span class="o">,</span> 
+                                                                 <span class="n">priceListName</span><span class="o">,</span> 
+                                                                 <span class="n">accountId</span><span class="o">,</span> 
+                                                                 <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">base_product_name</span> <span class="o">=</span> <span class="s1">'Basic'</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">available_addons</span><span class="p">(</span><span class="n">base_product_name</span><span class="p">,</span> 
+                                                <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_addons</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
+                                <span class="n">api_secret</span><span class="p">,</span> 
+                                <span class="n">base_product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+   </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"product"</span><span class="p">:</span><span class="s2">"Basic"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"plan"</span><span class="p">:</span><span class="s2">"basic-annual"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"finalPhaseBillingPeriod"</span><span class="p">:</span><span class="s2">"ANNUAL"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"priceList"</span><span class="p">:</span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"finalPhaseRecurringPrice"</span><span class="p">:[</span><span class="w">
+         </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"currency"</span><span class="p">:</span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"value"</span><span class="p">:</span><span class="mf">10000.0</span><span class="w">
+         </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>baseProductName</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>base product name</td>
+</tr>
+<tr>
+<td><strong>priceListName</strong></td>
+<td>string</td>
+<td>false</td>
+<td>all price lists</td>
+<td>price list name</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a list of objects representing available add-on products.</p>
+<h3 id='delete-all-versions-of-a-per-tenant-catalog'>Delete all versions of a per tenant catalog</h3>
+<p>Delete all per-tenant catalog versions. The tenant reverts to the system default catalog.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/catalog</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog"</span>  
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="n">catalogApi</span><span class="o">.</span><span class="na">deleteCatalog</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">delete_catalog</span><span class="p">(</span><span class="n">user</span><span class="p">,</span>
+                                              <span class="n">reason</span><span class="p">,</span>
+                                              <span class="n">comment</span><span class="p">,</span>
+                                              <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">delete_catalog</span><span class="p">(</span><span class="n">created_by</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a a status code of 204 and an empty body.</p>
+<h3 id='validate-a-catalog-xml'>Validate a catalog XML</h3>
+<p>This endpoint validates an XML catalog. </p>
+
+<p>Following are some of the errors that can be detected via this endpoint:</p>
 
 <ul>
-<li><strong><code>code</code></strong> : Each error in Kill Bill is associated with a an <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/ErrorCode.java#L21">ErrorCode</a>.</li>
-<li><strong><code>formattedMsg</code></strong> : A description of the error for the specific resource(s).</li>
-<li><strong><code>cause</code></strong> : An optional stack trace.</li>
+<li>Catalog name does not match the name of the existing catalog</li>
+<li>A catalog with the particular effectiveDate already exists</li>
+<li>An EVERGREEN phase does not have duration as UNLIMITED</li>
 </ul>
-<h2 id='additional-resources'>Additional Resources</h2>
-<p>Our main documentation is found <a href="http://docs.killbill.io">here</a>.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/catalog/xml/validate</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: text/xml"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> @&lt;path_to_catalog_xml&gt; <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/xml/validate"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">catalogPath</span> <span class="o">=</span> <span class="s">"in-advance-arrear.xml"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">getResourceBodyString</span><span class="o">(</span><span class="n">catalogPath</span><span class="o">);</span>
+<span class="nc">CatalogValidation</span> <span class="n">validation</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">validateCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">CatalogValidationError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="na">getCatalogValidationErrors</span><span class="o">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"catalogValidationErrors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"errorDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Catalog name 'ExampleCatalog' is different from existing catalog name 'Firearms'"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>The complete catalog in XML format. Alternative, the path to the catalog XML file can also be specified.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a <code>CatalogValidation</code> object. If validation is successful and there are no validation errors, the <code>CatalogValidation</code> object is empty, otherwise it contains a <code>CatalogValidationError</code> List.</p>
+<h2 id='subscription-info'>Subscription info</h2>
+<p>These endpoints return information concerning a particular subscription. They select from the catalog only the items (such as plan, phase, or products) that currently apply to the specified subscription.</p>
+<h3 id='retrieve-the-phase-for-a-given-subscription-and-date'>Retrieve the phase for a given subscription and date</h3>
+<p>This API returns information about the current <code>Phase</code> associated with a given subscription. The record returned includes the phase type and information about pricing, duration, and usage.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/phase</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/phase?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>    
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_phase</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                                 <span class="n">requested_date</span><span class="p">,</span> 
+                                                 <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_phase_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
+                                               <span class="n">api_secret</span><span class="p">,</span> 
+                                               <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRIAL"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DAYS"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w"> 
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>subscription id</td>
+</tr>
+<tr>
+<td><strong>requestedDate</strong></td>
+<td>string</td>
+<td>false</td>
+<td>current date</td>
+<td>requested date</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a record for the current phase.</p>
+<h3 id='retrieve-the-plan-for-a-given-subscription-and-date'>Retrieve the plan for a given subscription and date</h3>
+<p>This API returns information about the current <code>Plan</code> associated with a given subscription. The record returned includes the plan name and information for each phase of the plan.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/plan</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/plan?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_plan</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                                <span class="n">requested_date</span><span class="p">,</span> 
+                                                <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_plan_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
+                                              <span class="n">api_secret</span><span class="p">,</span> 
+                                              <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MONTHLY"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRIAL"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DAYS"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GBP"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">75</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"duration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"usages"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>subscription id</td>
+</tr>
+<tr>
+<td><strong>requestedDate</strong></td>
+<td>string</td>
+<td>false</td>
+<td>current date</td>
+<td>requested date</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a record for the plan for this subscription.</p>
+<h3 id='retrieve-the-pricelist-for-a-given-subscription-and-date'>Retrieve the priceList for a given subscription and date</h3>
+<p>This API returns information about the current <code>priceList</code> associated with a given subscription. The record returned includes the price list name and the list of plans on this list.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/priceList</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/priceList?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>    
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_price_list</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                                      <span class="n">requested_date</span><span class="p">,</span> 
+                                                      <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_price_list_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
+                                                    <span class="n">api_secret</span><span class="p">,</span> 
+                                                    <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"sports-monthly"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"standard-monthly"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"super-monthly"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>subscription id</td>
+</tr>
+<tr>
+<td><strong>requestedDate</strong></td>
+<td>string</td>
+<td>false</td>
+<td>current date</td>
+<td>requested date</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a record for the price list for this subscription.</p>
+<h3 id='retrieve-product-for-a-given-subscription-and-date'>Retrieve product for a given subscription and date</h3>
+<p>This API returns information about the <code>product</code> associated with a given subscription. The record returned includes the product names, available plans, items included, and available add-ons.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/catalog/product</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/product?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>  
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_product</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                                   <span class="n">requested_date</span><span class="p">,</span> 
+                                                   <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_product_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
+                                                 <span class="n">api_secret</span><span class="p">,</span> 
+                                                 <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"included"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"available"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>subscriptionId</strong></td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>subscription id</td>
+</tr>
+<tr>
+<td><strong>requestedDate</strong></td>
+<td>string</td>
+<td>false</td>
+<td>current date</td>
+<td>requested date</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a record for the product for this subscription.</p>
+<h2 id='simple-plan'>Simple Plan</h2>
+<p>We provide a more basic level of APIs as a quick way to add a <code>Plan</code> into an <strong>existing version</strong> of the catalog.
+The intent is mostly to help getting started with Kill Bill by abstracting away more complex topics such as alignements, rules, ...
+The functionality is exposed on our admin UI (KAUI) to provide a simple graphical way to configure a simple catalog and get started quickly.</p>
+
+<p>One can directly use our Simple Plan API to add new <code>Plans</code> without the need to create an initial catalog version: If there is no
+existing catalog version for the tenant, the system will create such an initial version when the first plan is added; otherwise, the
+system will use the existing active catalog version to add the new plan (but it will not create a new catalog version).</p>
+
+<p>Note that because the Simple Plan API is just an abstraction on top of the more complex XML based APIs, one can start with such Simple Plan API,
+and then download the resulting XML, and edit such catalog by hand (to add entries, modify default rules, ...).</p>
+
+<p>A simple plan has the following limitations:</p>
+
+<ul>
+<li>In-advance billing only</li>
+<li>Limited to one <code>RECURRING</code> phase  and an optional $0 <code>TRIAL</code> phase</li>
+<li>No suport for fixed price</li>
+</ul>
+
+<p>Once a simple plan has been uploaded, one can retrieve the associated XML, edit it to configure additional aspects, and then upload
+a new version of this catalog. So, this functionality can also be a stepping stone to a full catalog configuration.</p>
+<h3 id='add-a-simple-plan'>Add a simple plan</h3>
+<p>Add a (simple) Plan into the current version of the Catalog associated with the tenant.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/catalog/simplePlan</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{ "planId": "basic-annual", "productName": "Basic", "productCategory": "BASE", "currency": "USD", "amount": 1000, "billingPeriod": "ANNUAL", "trialLength": 0, "trialTimeUnit": "UNLIMITED"}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/catalog/simplePlan"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">planId</span> <span class="o">=</span> <span class="s">"foo-monthly"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">productName</span> <span class="o">=</span> <span class="s">"Foo"</span><span class="o">;</span>
+<span class="nc">Integer</span> <span class="n">trialLength</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+<span class="nc">SimplePlan</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimplePlan</span><span class="o">(</span><span class="n">planId</span><span class="o">,</span> 
+                                 <span class="n">productName</span><span class="o">,</span> 
+                                 <span class="nc">ProductCategory</span><span class="o">.</span><span class="na">BASE</span><span class="o">,</span> 
+                                 <span class="nc">Currency</span><span class="o">.</span><span class="na">USD</span><span class="o">,</span> 
+                                 <span class="nc">BigDecimal</span><span class="o">.</span><span class="na">TEN</span><span class="o">,</span> 
+                                 <span class="nc">BillingPeriod</span><span class="o">.</span><span class="na">MONTHLY</span><span class="o">,</span> 
+                                 <span class="n">trialLength</span><span class="o">,</span> 
+                                 <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">UNLIMITED</span><span class="o">,</span> 
+                                 <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">())</span>
+
+<span class="n">catalogApi</span><span class="o">.</span><span class="na">addSimplePlan</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">simple_plan</span>                  <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">SimplePlanAttributes</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">plan_id</span>          <span class="o">=</span> <span class="s1">'basic-annual'</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">product_name</span>     <span class="o">=</span> <span class="s1">'Basic'</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">product_category</span> <span class="o">=</span> <span class="s1">'BASE'</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">currency</span>         <span class="o">=</span> <span class="s1">'USD'</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">amount</span>           <span class="o">=</span> <span class="mf">10000.00</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">billing_period</span>   <span class="o">=</span> <span class="s1">'ANNUAL'</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">trial_length</span>     <span class="o">=</span> <span class="mi">0</span>
+<span class="n">simple_plan</span><span class="p">.</span><span class="nf">trial_time_unit</span>  <span class="o">=</span> <span class="s1">'UNLIMITED'</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">add_tenant_catalog_simple_plan</span><span class="p">(</span><span class="n">simple_plan</span><span class="p">,</span>
+                                                              <span class="n">user</span><span class="p">,</span>
+                                                              <span class="n">reason</span><span class="p">,</span>
+                                                              <span class="n">comment</span><span class="p">,</span>
+                                                              <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">SimplePlan</span><span class="p">(</span><span class="n">plan_id</span><span class="o">=</span><span class="s">'basic-annual'</span><span class="p">,</span>
+                  <span class="n">product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">,</span>
+                  <span class="n">product_category</span><span class="o">=</span><span class="s">'BASE'</span><span class="p">,</span>
+                  <span class="n">currency</span><span class="o">=</span><span class="s">'USD'</span><span class="p">,</span>
+                  <span class="n">amount</span><span class="o">=</span><span class="mf">10000.00</span><span class="p">,</span>
+                  <span class="n">billing_period</span><span class="o">=</span><span class="s">'ANNUAL'</span><span class="p">,</span>
+                  <span class="n">trial_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                  <span class="n">trial_time_unit</span><span class="o">=</span><span class="s">'UNLIMITED'</span><span class="p">)</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">add_simple_plan</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>Provides the content for the plan in JSON form. This should be very simple. Note that the &quot;planId&quot; becomes the <code>planName</code> attribute. For example:</p>
+
+<p><code>{
+  &quot;planId&quot;: &quot;newplan&quot;,
+  &quot;productName&quot;: &quot;myitem&quot;,
+  &quot;productCategory&quot;: &quot;BASE&quot;,
+  &quot;currency&quot;: &quot;USD&quot;,
+  &quot;amount&quot;: 0,
+  &quot;billingPeriod&quot;: &quot;DAILY&quot;,
+  &quot;trialLength&quot;: 0,
+  &quot;trialTimeUnit&quot;: &quot;DAYS&quot;,
+  &quot;availableBaseProducts&quot;: []
+}</code></p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
 
       </div>
     </main>

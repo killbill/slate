@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kill Bill index API Documentation">
+    <meta name="description" content="Kill Bill invoice-payment API Documentation">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
       <title>Kill Bill</title>
       <style media="screen">
@@ -287,7 +287,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
   </head>
 
-  <body data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;,&quot;php&quot;]">
+  <body data-languages="[&quot;shell&quot;,&quot;java&quot;,&quot;ruby&quot;,&quot;python&quot;]">
     <div class="loader-wrapper">
       <div id="loading"></div>
     </div>
@@ -318,8 +318,6 @@
                   <option data-language-name="java" value="java">java</option>
                   <option data-language-name="ruby" value="ruby">ruby</option>
                   <option data-language-name="python" value="python">python</option>
-                  <option data-language-name="javascript" value="javascript">javascript</option>
-                  <option data-language-name="php" value="php">php</option>
               </select>
             </label>
             <div class="lang-selector__list">
@@ -327,8 +325,6 @@
                   <a href="#" class="lang-selector__link" data-language-name="java">java</a>
                   <a href="#" class="lang-selector__link" data-language-name="ruby">ruby</a>
                   <a href="#" class="lang-selector__link" data-language-name="python">python</a>
-                  <a href="#" class="lang-selector__link" data-language-name="javascript">javascript</a>
-                  <a href="#" class="lang-selector__link" data-language-name="php">php</a>
             </div>
           </div>
       </div>
@@ -338,7 +334,7 @@
         <nav class="site-navigator">
           <ul class="site-navigator__menu">
               <li>
-                <a href="#using-kill-bill-apis" class="site-navigator__item site-navigator__menu-item" data-title="Using Kill Bill APIs">
+                <a href="index.html" class="site-navigator__item site-navigator__menu-item" data-title="Using Kill Bill APIs">
                   <span>Using Kill Bill APIs</span>
                 </a>
                 
@@ -2061,7 +2057,7 @@
                   </ul>
               </li>
               <li>
-                <a href="invoice-payment.html" class="site-navigator__item site-navigator__menu-item" data-title="Invoice Payment">
+                <a href="#invoice-payment" class="site-navigator__item site-navigator__menu-item" data-title="Invoice Payment">
                   <span>Invoice Payment</span>
                 </a>
                 
@@ -2430,335 +2426,1189 @@
       </div>
 
       <div class="page__content content">
-        <h1 id='using-kill-bill-apis'>Using Kill Bill APIs</h1><h2 id='introduction'>Introduction</h2>
-<p>Kill Bill offers a set of HTTP APIs, commonly called REST APIs, that use the HTTP verbs <code>POST</code>, <code>GET</code>, <code>PUT</code>, <code>DELETE</code> to invoke Create, Read, Update and Delete (CRUD) operations, and that use HTTP response codes to indicate errors. These APIs enable the management of Kill Bill resources -- e.g <code>Account</code> -- through the use of JSON input and output.</p>
+        <h1 id='invoice-payment'>Invoice Payment</h1>
+<p>An <code>InvoicePayment</code> is a <code>Payment</code> that is made against a specific invoice.</p>
 
-<p>Kill Bill also offers a set of <a href="https://github.com/killbill/killbill-api/tree/master/src/main/java/org/killbill/billing">java APIs</a> that can be used by plugins to make requests, and a set of <a href="https://github.com/killbill/killbill-plugin-api">java plugin APIs</a> for Kill Bill core to interact with the plugins. These apis are beyond the scope of this documentation.</p>
+<p>By default the system will always attempt to make a full payment against an invoice, but Kill Bill also allows multiple partial payments.  Partial payments can be made against unpaid - or partially paid - invoices by triggerring a payment against the <code>Invoice</code> resource. The reverse is not true; a single payment across multiple invoices is not (yet) supported.</p>
 
-<p>Official libraries for the Kill Bill API are available in several languages,
-including Java, Php, Python, Ruby, Node, and Go. Community-supported libraries
-such as .NET are also available. Note that code examples for Curl, Java, Ruby and Python are shown in the right-hand column of this document.</p>
+<p>See <a href="payment.html">Payment</a> for further information.</p>
+<h2 id='invoice-payment-resource'>Invoice Payment Resource</h2>
+<p>The <code>InvoicePayment</code> resource represents a payment associated with a given invoice. It is identical to the <code>Payment</code> resource except for the inclusion of the <strong>targetInvoiceId</strong> attribute. </p>
 
-<p>In the following documentation, we assume
-you have a Kill Bill server instance running on <code>127.0.0.1</code> on port <code>8080</code>. It is straightforward to substitute a different IP address or port number if necessary.</p>
-
-<p>Kill Bill supports the <code>https</code> protocol, but here all examples are shown using <code>http</code>.</p>
-
-<blockquote>
-<p>API client libraries</p>
-</blockquote>
-<div class="highlight"><pre class="highlight java tab-java"><code><span class="c1">//</span>
-<span class="c1">// You can find the java client on github: https://github.com/killbill/killbill-client-java</span>
-<span class="c1">//</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="c1">#</span>
-<span class="c1"># You can find the ruby client on github: https://github.com/killbill/killbill-client-ruby</span>
-<span class="c1">#</span>
-</code></pre></div>
-<p>The description of the API in this documentation is limited to the most common use cases and does not include advanced features that we have crafted over the years from all the use cases we have seen from our users.</p>
-
-<p>For questions about API use, or to report bugs, you can subscribe to the <a href="https://groups.google.com/forum/#!forum/killbilling-users">Kill Bill user mailing list</a>.</p>
-<h2 id='authentication-and-rbac'>Authentication and RBAC</h2>
-<p>In order to make API calls, one needs to authenticate each request by passing an HTTP <code>Authorization</code> header and by following the HTTP Basic authentication scheme.</p>
-
-<p>Depending on how the system has been configured, the authentication mechanism can happen using different options -- some or all at the same time:</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>targetInvoiceId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for the invoice to be paid</td>
+</tr>
+<tr>
+<td><strong>accountId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for the account to be paid</td>
+</tr>
+<tr>
+<td><strong>paymentId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for the payment</td>
+</tr>
+<tr>
+<td><strong>paymentNumber</strong></td>
+<td>number</td>
+<td>user</td>
+<td>User&#39;s ID number for the payment</td>
+</tr>
+<tr>
+<td><strong>paymentExternalKey</strong></td>
+<td>string</td>
+<td>user</td>
+<td>optional external key</td>
+</tr>
+<tr>
+<td><strong>authAmonunt</strong></td>
+<td>number</td>
+<td>user or system</td>
+<td>Total authorized amount (see below)</td>
+</tr>
+<tr>
+<td><strong>capturedAmonunt</strong></td>
+<td>number</td>
+<td>user or system</td>
+<td>Total captured amount (see below)</td>
+</tr>
+<tr>
+<td><strong>purchasedAmonunt</strong></td>
+<td>number</td>
+<td>user or system</td>
+<td>Total purchased amount (see below)</td>
+</tr>
+<tr>
+<td><strong>refundedAmount</strong></td>
+<td>number</td>
+<td>user or system</td>
+<td>Total refunded amount (see below)</td>
+</tr>
+<tr>
+<td><strong>creditedAmount</strong></td>
+<td>number</td>
+<td>user or system</td>
+<td>Total credited amount (see below)</td>
+</tr>
+<tr>
+<td><strong>currency</strong></td>
+<td>string</td>
+<td>user</td>
+<td>currency to be used</td>
+</tr>
+<tr>
+<td><strong>paymentMethod</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for the payment method used</td>
+</tr>
+<tr>
+<td><strong>transactions</strong></td>
+<td>list</td>
+<td>system</td>
+<td>list of paymentTransactions, if any (see below)</td>
+</tr>
+<tr>
+<td><strong>paymentAttempts</strong></td>
+<td>list</td>
+<td>system</td>
+<td>list of paymentAttempts, if any (see below)</td>
+</tr>
+</tbody></table>
 
 <ul>
-<li>Flat file configuration</li>
-<li>Database configuration</li>
-<li>LDAP configuration</li>
-<li>OKTA configuration</li>
+<li><p><strong>authAmount</strong>, <strong>capturedAmount</strong>, <strong>purchasedAmount</strong>, <strong>refundedAmount</strong>, <strong>creditedAmount</strong>: These are total amounts across all transactions associated with this Payment.</p></li>
+<li><p><strong>creditedAmount</strong>: this credit represents the actual money sent back by the merchant to the user, which is extremely rare. It is unrelated to the associated invoice or account credits.</p></li>
+<li><p><strong>paymentTransactions</strong>: List of transactions for this Payment. The attributes for a <code>PaymentTransaction</code> are described <a href="payment-transaction.html#payment-transaction-payment-transaction-resource">here</a>.</p></li>
+<li><p><strong>paymentAttempts</strong>: Only applicable when the system is configured to retry failed attempts.</p></li>
 </ul>
+<h2 id='invoice-payment-transaction-resource'>Invoice Payment Transaction Resource</h2>
+<p>The <code>InvoicePaymentTransaction</code> resource represents a payment transaction associated with a given <code>InvoicePayment</code>. It is identical to the <code>PaymentTransaction</code> resource except for the inclusion of the <strong>isAdjusted</strong> and <strong>adjustments</strong> attributes. The attributes for this resource object are:</p>
 
-<p>The system also supports configuring roles and permissions, to restrict user access to certain resources and operations. The permissions are quite granular and are defined <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/security/Permission.java#L19">here</a></p>
-<h2 id='multi-tenancy'>Multi-Tenancy</h2>
-<p>Kill Bill has been designed from the ground up to run multiple logical instances on the same set of servers and databases. This allows different customer data sets to be cleanly separated. Another common use case is to configure both a production tenant and a test tenant, the latter being used for test requests during deployment and for sanity after deployment.</p>
-
-<p>Each API call requires the tenant being used to be identified, through the use of 2 HTTP headers:</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>transactionId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for the transaction</td>
+</tr>
+<tr>
+<td><strong>transactionExternalKey</strong></td>
+<td>string</td>
+<td>user or system</td>
+<td>Optional external key</td>
+</tr>
+<tr>
+<td><strong>paymentId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for the transaction</td>
+</tr>
+<tr>
+<td><strong>paymentExternalKey</strong></td>
+<td>string</td>
+<td>user or system</td>
+<td>Optional external key</td>
+</tr>
+<tr>
+<td><strong>transactionType</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Transaction type (see below)</td>
+</tr>
+<tr>
+<td><strong>amount</strong></td>
+<td>number</td>
+<td>system</td>
+<td>Total amount of the transaction</td>
+</tr>
+<tr>
+<td><strong>currency</strong></td>
+<td>string</td>
+<td>user or system</td>
+<td>Currency associated with the account</td>
+</tr>
+<tr>
+<td><strong>effectiveDate</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Effective date of the transaction</td>
+</tr>
+<tr>
+<td><strong>processedAmount</strong></td>
+<td>number</td>
+<td>system</td>
+<td>The amount processed by the gateway (see below)</td>
+</tr>
+<tr>
+<td><strong>processedCurrency</strong></td>
+<td>string</td>
+<td>system</td>
+<td>The currency processed by the gateay (see below)</td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Transaction status (see below)</td>
+</tr>
+<tr>
+<td><strong>gatewayErrorCode</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Error code returned by the payment gateway</td>
+</tr>
+<tr>
+<td><strong>gatewayErrorMsg</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Error message returned by the payment gateway</td>
+</tr>
+<tr>
+<td><strong>firstPaymentReferenceId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Payment gateway reference</td>
+</tr>
+<tr>
+<td><strong>secondPaymentReferenceId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>see below</td>
+</tr>
+<tr>
+<td><strong>properties</strong></td>
+<td>string</td>
+<td>user</td>
+<td>see below</td>
+</tr>
+<tr>
+<td><strong>isAdjusted</strong></td>
+<td>boolean</td>
+<td>system</td>
+<td>true if this object includes one or more InvoiceItem adjustments</td>
+</tr>
+<tr>
+<td><strong>adjustments</strong></td>
+<td>list</td>
+<td>system</td>
+<td>List of adjusted <code>InvoiceItem</code> resources showing adjusted amounts</td>
+</tr>
+</tbody></table>
 
 <ul>
-<li><strong><code>X-Killbill-ApiKey</code></strong>: The API key associated with the tenant. This value is stored in clear in the database.</li>
-<li><strong><code>X-Killbill-ApiSecret</code></strong>: The API secret associated with the tenant. This value is hashed and stored along with the <code>salt</code> in the database</li>
+<li><p><strong>transactionType</strong>: Possible values are: AUTHORIZE, CAPTURE, CHARGEBACK, CREDIT, PURCHASE, REFUND, VOID </p></li>
+<li><p><strong>processedAmount</strong>: This will often match <strong>amount</strong>, but could be different, perhaps due to currency conversion</p></li>
+<li><p><strong>processedCurrency</strong>: This will often match <strong>currency</strong>, but could be different, perhaps due to currency conversion</p></li>
+<li><p><strong>status</strong>: Possible values are: SUCCESS, UNKNOWN, PENDING, PAYMENT_FAILURE, PLUGIN_FAILURE, or PAYMENT_SYSTEM_OFF</p></li>
+<li><p><strong>secondPaymentReferenceId</strong>: Typically the ID from the actual payment processor, when the gateway is a PSP</p></li>
+<li><p><strong>properties</strong>: Plugin-specific properties to be interpreted by the plugin</p></li>
 </ul>
+<h2 id='invoice-payment-2'>Invoice Payment</h2>
+<p>These endpoints initiate transactions on an existing InvoicePayment. Many other applicable transactions are given in the <a href="payment.html">Payment</a> section. To begin a new Payment, see <a href="account.html#account-trigger-a-payment-authorization-purchase-or-credit">Trigger a Payment</a> in the Account API. </p>
+<h3 id='retrieve-a-payment-by-id'>Retrieve a payment by id</h3>
+<p>Retrieves an invoice payment by its payment Id, which is given as a path parameter</p>
 
-<aside class="note">
-  <span class="note__title">Note:</span> 
-  <span class="note__content">
-    You can control the number of hash iterations through the system property `org.killbill.security.shiroNbHashIterations` whose default value is set to `200000`. If your security requirements are met through other means, you can set this value to `1` to avoid wasting CPU cycles and greatly improve latency. Changing the value on an existing system requires re-hashing the keys.
-  </span>
-</aside>
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}</code></p>
 
 <blockquote>
-<p>Specifying the basic authentication headers and multi-tenancy headers:</p>
+<p>Example Request:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-<span class="nt">-u</span> admin:password <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-...
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">KillBillHttpClient</span> <span class="n">killBillHttpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">KillBillHttpClient</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"http://%s:%d"</span><span class="o">,</span> <span class="s">"127.0.0.1"</span><span class="o">,</span> <span class="mi">8080</span><span class="o">),</span>
-                                                               <span class="n">username</span><span class="o">,</span>
-                                                               <span class="n">password</span><span class="o">,</span>
-                                                               <span class="n">apiKey</span><span class="o">,</span>
-                                                               <span class="n">apiSecret</span><span class="o">,</span>
-                                                               <span class="kc">null</span><span class="o">,</span>
-                                                               <span class="kc">null</span><span class="o">,</span>
-                                                               <span class="mi">1000</span><span class="o">,</span>
-                                                               <span class="mi">5000</span><span class="o">,</span>
-                                                               <span class="mi">5000</span><span class="o">);</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
 
-<span class="nc">AccountApi</span> <span class="n">accountApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AccountApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">AdminApi</span> <span class="n">adminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AdminApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">BundleApi</span> <span class="n">bundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BundleApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CatalogApi</span> <span class="n">catalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CatalogApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CreditApi</span> <span class="n">creditApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CreditApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomFieldApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">ExportApi</span> <span class="n">exportApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ExportApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoiceApi</span> <span class="n">invoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoiceApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoiceItemApi</span> <span class="n">invoiceItemApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoiceItemApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoicePaymentApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">NodesInfoApi</span> <span class="n">nodesInfoApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NodesInfoApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">OverdueApi</span> <span class="n">overdueApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">OverdueApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentApi</span> <span class="n">paymentApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentGatewayApi</span> <span class="n">paymentGatewayApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentGatewayApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentMethodApi</span> <span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentMethodApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PaymentTransactionApi</span> <span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentTransactionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">PluginInfoApi</span> <span class="n">pluginInfoApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PluginInfoApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">SubscriptionApi</span> <span class="n">subscriptionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SubscriptionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TagApi</span> <span class="n">tagApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TagApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TagDefinitionApi</span> <span class="n">tagDefinitionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TagDefinitionApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">TenantApi</span> <span class="n">tenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TenantApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-<span class="nc">UsageApi</span> <span class="n">usageApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UsageApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"80f5bfca-e142-4320-b8f2-ae4530ca7172"</span><span class="o">);</span>
+<span class="nc">Boolean</span> <span class="n">withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect plugin info</span>
+<span class="nc">Boolean</span> <span class="n">withAttempts</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not reflect payment attempts</span>
+<span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-<span class="c1">// Request Options example</span>
-<span class="nc">String</span> <span class="n">createdBy</span> <span class="o">=</span> <span class="s">"me"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">reason</span> <span class="o">=</span> <span class="s">"Going through my first tutorial"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">comment</span> <span class="o">=</span> <span class="s">"I like it!"</span><span class="o">;</span>
+<span class="nc">InvoicePayment</span> <span class="n">invoicePayment</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">getInvoicePayment</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                                    <span class="n">withPluginInfo</span><span class="o">,</span>
+                                                                    <span class="n">withAttempts</span><span class="o">,</span>
+                                                                    <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span>
+                                                                    <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span>
+                                                                    <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s1">'28aef37a-7655-4351-985a-02b961ae4ac7'</span>
+<span class="n">with_plugin_info</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">with_attempts</span> <span class="o">=</span> <span class="kp">false</span>
 
-<span class="nc">String</span> <span class="n">apiKey</span> <span class="o">=</span> <span class="s">"bob"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">apiSecret</span> <span class="o">=</span> <span class="s">"lazar"</span><span class="o">;</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoicePayment</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                                 <span class="n">with_plugin_info</span><span class="p">,</span> 
+                                                 <span class="n">with_attempts</span><span class="p">,</span> 
+                                                 <span class="vi">@options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'5e9d8b82-2664-4a36-85a1-37471a0b618a'</span>
 
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">get_invoice_payment</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"targetInvoiceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4be34fe4-5845-4a35-afd8-632ad04cccf9"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8b66b9f9-bfb4-463a-86c7-e267128a294a"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc7fcd4d-e701-4679-9741-41289103db83"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"paymentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"19"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"paymentExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc7fcd4d-e701-4679-9741-41289103db83"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"authAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"capturedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"purchasedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"refundedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"creditedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"39f3461c-5357-42f7-a8a9-ec79502fdb6b"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"transactionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6787dc2d-4f5e-49b5-9764-0070fd1238c2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"transactionExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6787dc2d-4f5e-49b5-9764-0070fd1238c2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paymentId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc7fcd4d-e701-4679-9741-41289103db83"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paymentExternalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc7fcd4d-e701-4679-9741-41289103db83"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"transactionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PURCHASE"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T20:48:34.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processedAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processedCurrency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUCCESS"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gatewayErrorCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"gatewayErrorMsg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"firstPaymentReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"secondPaymentReferenceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"paymentAttempts"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
 
-<span class="nc">RequestOptions</span> <span class="n">requestOptions</span> <span class="o">=</span> <span class="nc">RequestOptions</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-                                              <span class="o">.</span><span class="na">withCreatedBy</span><span class="o">(</span><span class="n">createdBy</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withReason</span><span class="o">(</span><span class="n">reason</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withComment</span><span class="o">(</span><span class="n">comment</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withQueryParams</span><span class="o">(</span><span class="n">queryParams</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withTenantApiKey</span><span class="o">(</span><span class="n">apiKey</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">withTenantApiSecret</span><span class="o">(</span><span class="n">apiSecret</span><span class="o">)</span>
-                                              <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'killbill_client'</span>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>withPluginInfo</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>if true, include plugin info</td>
+</tr>
+<tr>
+<td><strong>withAttempts</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>if true, include payment attempts</td>
+</tr>
+</tbody></table>
 
-<span class="no">KillBillClient</span><span class="p">.</span><span class="nf">url</span> <span class="o">=</span> <span class="s1">'http://127.0.0.1:8080'</span>
+<p><strong>Returns</strong></p>
 
-<span class="c1"># Multi-tenancy and RBAC credentials</span>
-<span class="n">options</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="ss">:username</span> <span class="o">=&gt;</span> <span class="s1">'admin'</span><span class="p">,</span>
-  <span class="ss">:password</span> <span class="o">=&gt;</span> <span class="s1">'password'</span><span class="p">,</span>
-  <span class="ss">:api_key</span> <span class="o">=&gt;</span> <span class="s1">'bob'</span><span class="p">,</span>
-  <span class="ss">:api_secret</span> <span class="o">=&gt;</span> <span class="s1">'lazar'</span>
-<span class="p">}</span>
+<p>If successful, returns a status code of 200 and an <code>InvoicePayment</code> object.</p>
+<h3 id='refund-a-payment-and-adjust-the-invoice-if-needed'>Refund a payment, and adjust the invoice if needed</h3>
+<p>Refunds a payment, and optionally adds the amount to one or more invoice items</p>
 
-<span class="c1"># Audit log data</span>
-<span class="n">user</span> <span class="o">=</span> <span class="s1">'me'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'Going through my first tutorial'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'I like it!'</span>
+<p><strong>HTTP Request</strong> </p>
 
-<span class="c1"># Start using....</span>
-
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="c1"># Edit file: configuration.py, lines:50-62
-</span>
-<span class="c1"># Default Base url
-</span><span class="bp">self</span><span class="p">.</span><span class="n">host</span> <span class="o">=</span> <span class="s">"http://localhost:8080"</span>
-<span class="c1"># Temp file folder for downloading files
-</span><span class="bp">self</span><span class="p">.</span><span class="n">temp_folder_path</span> <span class="o">=</span> <span class="bp">None</span>
-
-<span class="c1"># Authentication Settings
-# dict to store API key(s)
-</span><span class="bp">self</span><span class="p">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># dict to store API prefix (e.g. Bearer)
-</span><span class="bp">self</span><span class="p">.</span><span class="n">api_key_prefix</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="c1"># Username for HTTP basic authentication
-</span><span class="bp">self</span><span class="p">.</span><span class="n">username</span> <span class="o">=</span> <span class="s">"admin"</span>
-<span class="c1"># Password for HTTP basic authentication
-</span><span class="bp">self</span><span class="p">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">"password"</span>
-
-<span class="c1">####################################################
-</span>
-<span class="c1"># Basic example using the client
-</span><span class="n">exampleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">ExampleApi</span><span class="p">()</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">Example</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'John'</span><span class="p">,</span> <span class="n">last_name</span> <span class="o">=</span> <span class="s">'Doe'</span><span class="p">)</span>
-<span class="n">created_by</span> <span class="o">=</span> <span class="s">'me'</span>
-<span class="n">api_key</span> <span class="o">=</span> <span class="s">'bob'</span>
-<span class="n">api_secret</span> <span class="o">=</span> <span class="s">'lazar'</span>
-
-<span class="n">exampleApi</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">body</span><span class="p">,</span>
-                  <span class="n">created_by</span><span class="p">,</span>
-                  <span class="n">api_key</span><span class="p">,</span>
-                  <span class="n">api_secret</span><span class="p">)</span>
-</code></pre></div><h2 id='resource-ids-and-external-keys'>Resource IDs and External Keys</h2>
-<p>When a new resource is created, there are 2 IDS associated with it. Kill Bill will allocate a unique ID, and the user of the API will also be able to associate its own unique key, called the <code>external key</code>. The external key is used for 2 scenarios:</p>
-
-<ul>
-<li><strong>ID Mapping</strong>: Typically an external key can be passed to create a mapping between the ID generated by Kill Bill and a known key for this resource</li>
-<li><strong>Idempotency</strong>: Kill Bill ensures that each external key is unique, so if an API call times out, it can be safely retried with the same external key. The second request would only succeed if the first one did not complete. This ensures idempotency of the call, since the external key is unique per tenant and across all resources.</li>
-</ul>
-<h2 id='pagination'>Pagination</h2>
-<p>Besides the traditional CRUD APIs associated with each resource, we also offer pagination APIs to allow the listing of per-tenant resources, such as all <code>Account</code>s for a given tenant. These APIs include an <code>offset</code> and a <code>limit</code>, provided as query parameters, to allow the listing of all resources of a given type, on a page by page basis. In addition to the json list, each response will also include the following http headers:</p>
-
-<ul>
-<li><strong><code>X-Killbill-Pagination-CurrentOffset</code></strong> : The offest of the first record in the returned list</li>
-<li><strong><code>X-Killbill-Pagination-NextOffset</code></strong> : The header will only be present if there are additional entries to return and would include the next offset</li>
-<li><strong><code>X-Killbill-Pagination-TotalNbRecords</code></strong> : The total number of records</li>
-<li><strong><code>X-Killbill-Pagination-NextPageUri</code></strong> : The uri that can be used to retrieve the next page.</li>
-</ul>
-<h2 id='audit-and-history'>Audit and History</h2>
-<p>Every api in Kill Bill that creates, or modifies state will create an audit log record to track <em>who</em> made the change. In addition, we also allow the record to specify <em>why</em> this change was made. This information is passed for every <code>POST</code>, <code>PUT</code>, and <code>DELETE</code> request and relies on special HTTP headers:</p>
-
-<ul>
-<li><strong><code>X-Killbill-CreatedBy</code></strong> : Mandatory header to track who made the change.</li>
-<li><strong><code>X-Killbill-Reason</code></strong> : Optional header to track the reason; typically one would use a special reason code -- e.g <em>COURTESY_REFUND</em>.</li>
-<li><strong><code>X-Killbill-Comment</code></strong> : Optional header to track the metadata; typically one would add more information -- e.g &#39;Good old faithful customer&#39;.</li>
-</ul>
-
-<p>In addition to the audit log, Kill Bill also records the history of the changes. For instance updating the billing addess of a customer would create an additonal row to track the change and link it to the audit log. The <code>audit</code> query parameter can take the following values:</p>
-
-<ul>
-<li><strong><code>NONE</code></strong> <em>[Default]</em>: No audit log is beeing returned. </li>
-<li><strong><code>MINIMAL</code></strong> : Only rows associated to <em>inserts</em> are being returned, but no <code>updates</code>.</li>
-<li><strong><code>FULL</code></strong> : Everything is being returned.<br></li>
-</ul>
+<p><code>POST http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/refunds</code></p>
 
 <blockquote>
-<p>Request: Fetching an account specifying <code>audit=MINIMAL</code></p>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{
+          "amount": 50,
+          "isAdjusted": false
+        }'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83/refunds'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"45d6f4c5-21be-49b1-99c5-7b0c3c985bf0"</span><span class="o">);</span>
+
+<span class="nc">InvoicePaymentTransaction</span> <span class="n">refund</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoicePaymentTransaction</span><span class="o">();</span>
+<span class="n">refund</span><span class="o">.</span><span class="na">setPaymentId</span><span class="o">(</span><span class="n">paymentId</span><span class="o">);</span>
+<span class="n">refund</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="nc">BigDecimal</span><span class="o">.</span><span class="na">ONE</span><span class="o">);</span>
+
+<span class="no">UUID</span> <span class="n">paymentMethodId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"28a3ed1a-7a58-4ac2-b864-2ca723abb864"</span><span class="o">);</span>
+
+<span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">createRefundWithAdjustments</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                              <span class="n">refund</span><span class="o">,</span> 
+                                              <span class="n">paymentMethodId</span><span class="o">,</span> 
+                                              <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
+                                              <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s1">'8d85a8e8-c94b-438f-aac1-e8cb436b2c05'</span>
+<span class="n">amount</span> <span class="o">=</span><span class="s1">'50.0'</span>
+<span class="n">adjustments</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoicePayment</span><span class="p">.</span><span class="nf">refund</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                             <span class="n">amount</span><span class="p">,</span> 
+                                             <span class="n">adjustments</span><span class="p">,</span> 
+                                             <span class="n">user</span><span class="p">,</span> 
+                                             <span class="n">reason</span><span class="p">,</span> 
+                                             <span class="n">comment</span><span class="p">,</span> 
+                                             <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'8d85a8e8-c94b-438f-aac1-e8cb436b2c05'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentTransaction</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mf">50.0</span><span class="p">)</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">create_refund_with_adjustments</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                 <span class="n">body</span><span class="p">,</span>
+                                                 <span class="n">created_by</span><span class="p">,</span>
+                                                 <span class="n">api_key</span><span class="p">,</span>
+                                                 <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>An <code>InvoicePaymentTransaction</code> object, including at least the <strong>amount</strong> attribute and the <strong>isAdjusted</strong> attribute. If <strong>isAdjusted</strong> is true, then the object must also include the attribute <strong>adjustments</strong> which is a list of <code>InvoiceItem</code> objects giving the <strong>invoiceItemId</strong>, the <strong>invoiceId</strong>, and the adjusted <strong>amount</strong> for each of the adjustments to be made.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>externalPayment</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>choose true if the payment method is external</td>
+</tr>
+<tr>
+<td><strong>paymentMethodId</strong></td>
+<td>string</td>
+<td>yes</td>
+<td>none</td>
+<td>paymentMethod id</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='record-a-chargeback'>Record a chargeback</h3>
+<p>Creates a CHARGEBACK InvoicePaymentTransaction for a specified InvoicePayment. The InvoicePayment is identified by its <code>paymentId</code> given as a path parameter. The captured amount is reduced by the chargeback amount. If appropriate this amount will be added back to one or more invoice items.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/chargebacks</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{
+          "amount": 5,
+          "isAdjusted": false
+        }'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83/chargebacks'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"96930ff3-82e1-4556-888a-0cb07ec120d6"</span><span class="o">);</span>
+
+<span class="nc">InvoicePaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InvoicePaymentTransaction</span><span class="o">();</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setPaymentId</span><span class="o">(</span><span class="n">paymentId</span><span class="o">);</span>
+<span class="n">body</span><span class="o">.</span><span class="na">setAmount</span><span class="o">(</span><span class="k">new</span> <span class="nc">BigDecimal</span><span class="o">(</span><span class="s">"50.00"</span><span class="o">));</span>
+
+<span class="nc">InvoicePayment</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">createChargeback</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                           <span class="n">body</span><span class="o">,</span> 
+                                                           <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s1">'2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'</span>
+<span class="n">amount</span> <span class="o">=</span> <span class="s1">'50.0'</span>
+<span class="n">currency</span> <span class="o">=</span> <span class="s1">'USD'</span>
+<span class="n">effective_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoicePayment</span><span class="p">.</span><span class="nf">chargeback</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                                 <span class="n">amount</span><span class="p">,</span>
+                                                 <span class="n">currency</span><span class="p">,</span>
+                                                 <span class="n">effective_date</span><span class="p">,</span>
+                                                 <span class="n">user</span><span class="p">,</span> 
+                                                 <span class="n">reason</span><span class="p">,</span>
+                                                 <span class="n">comment</span><span class="p">,</span> 
+                                                 <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentTransaction</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">currency</span><span class="o">=</span><span class="s">'USD'</span><span class="p">)</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">create_chargeback</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                    <span class="n">body</span><span class="p">,</span> 
+                                    <span class="n">created_by</span><span class="p">,</span> 
+                                    <span class="n">api_key</span><span class="p">,</span> 
+                                    <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>An <code>InvoicePaymentTransaction</code> object, including at least the <strong>amount</strong> attribute and the <strong>isAdjusted</strong> attribute. If <strong>isAdjusted</strong> is true, then the object must also include the attribute <strong>adjustments</strong> which is a list of <code>InvoiceItem</code> objects giving the <strong>invoiceItemId</strong>, the <strong>invoiceId</strong>, and the adjusted <strong>amount</strong> for each of the adjustments to be made.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='record-a-chargeback-reversal'>Record a chargeback reversal</h3>
+<p>Reverses a CHARGEBACK InvoicePaymentTransaction, if permitted by the Payment plugin. The chargeback amount is added back to the captured amount. The payment is identified by its <code>paymentId</code> which is given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/chargebackReversals</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{
+          "transactionExternalKey": "a335f7d2-e115-436f-8c63-2b0114d974de",
+          "paymentId": "cc7fcd4d-e701-4679-9741-41289103db83",
+          "effectiveDate": "2018-07-20T15:05:36.853Z"        
+        }'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83/chargebackReversals'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s1">'7a5d4997-5d44-4a82-8371-a410ea5615f4'</span>
+<span class="n">chargeback_transaction_external_key</span> <span class="o">=</span> <span class="s1">'99c45d07-abe4-4bc7-a207-0524548c1b08'</span>
+<span class="n">effective_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoicePayment</span><span class="p">.</span><span class="nf">chargeback_reversal</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                          <span class="n">chargeback_transaction_external_key</span><span class="p">,</span> 
+                                                          <span class="n">effective_date</span><span class="p">,</span> 
+                                                          <span class="n">user</span><span class="p">,</span> 
+                                                          <span class="n">reason</span><span class="p">,</span> 
+                                                          <span class="n">comment</span><span class="p">,</span> 
+                                                          <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'7a5d4997-5d44-4a82-8371-a410ea5615f4'</span>
+<span class="n">transaction_external_key</span> <span class="o">=</span> <span class="s">'99c45d07-abe4-4bc7-a207-0524548c1b08'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentTransaction</span><span class="p">(</span><span class="n">amount</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> 
+                          <span class="n">currency</span><span class="o">=</span><span class="s">'USD'</span><span class="p">,</span> 
+                          <span class="n">transaction_external_key</span><span class="o">=</span><span class="n">transaction_external_key</span><span class="p">)</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">create_chargeback_reversal</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                             <span class="n">body</span><span class="p">,</span> 
+                                             <span class="n">created_by</span><span class="p">,</span> 
+                                             <span class="n">api_key</span><span class="p">,</span> 
+                                             <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>An <code>InvoicePaymentTransaction</code> object, including at least the <strong>amount</strong> attribute and the <strong>isAdjusted</strong> attribute. If <strong>isAdjusted</strong> is true, then the object must also include the attribute <strong>adjustments</strong> which is a list of <code>InvoiceItem</code> objects giving the <strong>invoiceItemId</strong>, the <strong>invoiceId</strong>, and the adjusted <strong>amount</strong> for each of the adjustments to be made.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='complete-an-existing-transaction'>Complete an existing transaction</h3>
+<p>Completes any existing InvoicePaymentTransaction that is in a PENDING state, based on its <code>paymentId</code> given as a path parameter.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>PUT http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> PUT <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{
+            "paymentId": "cc7fcd4d-e701-4679-9741-41289103db83"
+        }'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"80f5bfca-e142-4320-b8f2-ae4530ca7172"</span><span class="o">);</span>
+<span class="nc">PaymentTransaction</span> <span class="n">body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">PaymentTransaction</span><span class="o">();</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_NAMES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">completeInvoicePaymentTransaction</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                    <span class="n">body</span><span class="o">,</span> 
+                                                    <span class="no">NULL_PLUGIN_NAMES</span><span class="o">,</span> 
+                                                    <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
+                                                    <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s1">'2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoicePayment</span><span class="p">.</span><span class="nf">complete_invoice_payment_transaction</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                                                           <span class="n">user</span><span class="p">,</span> 
+                                                                           <span class="n">reason</span><span class="p">,</span> 
+                                                                           <span class="n">comment</span><span class="p">,</span> 
+                                                                           <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentTransaction</span><span class="p">(</span><span class="n">payment_id</span><span class="o">=</span><span class="n">payment_id</span><span class="p">)</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">complete_invoice_payment_transaction</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                                       <span class="n">body</span><span class="p">,</span> 
+                                                       <span class="n">created_by</span><span class="p">,</span> 
+                                                       <span class="n">api_key</span><span class="p">,</span> 
+                                                       <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='custom-fields'>Custom Fields</h2>
+<p>Custom fields are <code>{key, value}</code> attributes that can be attached to any customer resource. In particular they can be added to InvoicePayment objects. For details on Custom Fields see <a href="custom-field.html#custom-field">Custom Field</a>.</p>
+<h3 id='add-custom-fields-to-invoice-payment'>Add custom fields to invoice payment</h3>
+<p>Adds one or more custom fields to an InvoicePayment object. Existing custom fields are not modified.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/customFields</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'[{ 
+            "name": "Test Custom Fields",
+            "value": "test_value"
+    }]'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/2495e35e-2b96-434c-8877-62dbbf20f7e9/customFields'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
+<span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">AuditLog</span><span class="o">&gt;</span> <span class="no">EMPTY_AUDIT_LOGS</span> <span class="o">=</span> <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+
+<span class="nc">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomFields</span><span class="o">();</span>
+<span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">CustomField</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> 
+                                 <span class="n">paymentId</span><span class="o">,</span> 
+                                 <span class="nc">ObjectType</span><span class="o">.</span><span class="na">INVOICE_PAYMENT</span><span class="o">,</span> 
+                                 <span class="s">"Test Custom Field"</span><span class="o">,</span> 
+                                 <span class="s">"test_value"</span><span class="o">,</span> 
+                                 <span class="no">EMPTY_AUDIT_LOGS</span><span class="o">));</span>
+
+<span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">createInvoicePaymentCustomFields</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                   <span class="n">customFields</span><span class="o">,</span> 
+                                                   <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">object_type</span> <span class="o">=</span> <span class="s1">'INVOICE_PAYMENT'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
+
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span> 
+                                 <span class="n">user</span><span class="p">,</span>
+                                 <span class="n">reason</span><span class="p">,</span>
+                                 <span class="n">comment</span><span class="p">,</span>
+                                 <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Test Custom Field'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_value'</span><span class="p">)</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">create_invoice_payment_custom_fields</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                       <span class="p">[</span><span class="n">body</span><span class="p">],</span>
+                                                       <span class="n">created_by</span><span class="p">,</span>
+                                                       <span class="n">api_key</span><span class="p">,</span>
+                                                       <span class="n">api_secret</span><span class="p">)</span>
+
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A JSON string representing the custom field object or objects to be added.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='retrieve-invoice-payment-custom-fields'>Retrieve invoice payment custom fields</h3>
+<p>Retrieves the custom fields associated with an InvoicePayment object</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/customFields</code></p>
+
+<blockquote>
+<p>Example Request:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-<span class="nt">-u</span> admin:password <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-<span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-<span class="s2">"http://127.0.0.1:8080/1.0/kb/accounts/e8877928-0226-488d-9272-07a5e66d897f?audit=MINIMAL"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">Account</span> <span class="n">result</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getAccount</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span>
-                                      <span class="kc">false</span><span class="o">,</span>
-                                      <span class="kc">false</span><span class="o">,</span>
-                                      <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">MINIMAL</span><span class="o">,</span>
-                                      <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>  <span class="no">Api</span> <span class="n">does</span> <span class="n">not</span> <span class="n">exist</span> <span class="p">;</span><span class="o">-</span><span class="p">(</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/2495e35e-2b96-434c-8877-62dbbf20f7e9/customFields'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
 
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">CustomField</span><span class="o">&gt;</span> <span class="n">customFields</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">getInvoicePaymentCustomFields</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span>
+                                                                                 <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span>
+                                                                                 <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
+
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'f33e0adc-78df-438a-b920-aaacd7f8597a'</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">get_invoice_payment_custom_fields</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
-<p>Response:</p>
+<p>Example Response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>{
-  ...
-  "auditLogs": [
-    {
-      "changeType": "INSERT",
-      "changeDate": "2018-02-05T22:39:53.000Z",
-      "changedBy": "demo",
-      "reasonCode": null,
-      "comments": null,
-      "userToken": "4858a67e-03b0-4d94-8a8c-bcd6e8599452"
-    }
-  ]
-}  
-</code></pre></div>
-<p>Every API that retrieves information, whether associated with a specific resource, or with a list of resources,  may return audit logs.</p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"customFieldId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3fbf75aa-6f22-4a02-974b-55eeded2cf6b"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2495e35e-2b96-434c-8877-62dbbf20f7e9"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Custom Field"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_value"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
 
-<p>Audit and history information associated with a given resource is always stored atomically to ensure that if the state is changed, such audit and history information exists and is accurate.</p>
-<h2 id='versioning'>Versioning</h2><h3 id='kill-bill-server'>Kill Bill Server</h3>
-<p>Kill Bill software is composed of many different repositories, all of them hosted on our <a href="https://github.com/killbill">github account</a>.</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>audit</strong></td>
+<td>string</td>
+<td>no</td>
+<td>&quot;NONE&quot;</td>
+<td>Level of audit information to return</td>
+</tr>
+</tbody></table>
 
-<p>The Kill Bill server version, or simply Kill Bill version, is the one from the <a href="https://github.com/killbill/killbill">killbill</a> repository, and more specifically since we are using <code>maven</code> to build, this is indicated in the corresponding <code>pom.xml</code>. This repository depends on a few others, each having their own versions:</p>
+<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
-<ul>
-<li><code>killbill-api</code>: APIs used by plugins to communicate with Kill Bill core</li>
-<li><code>killbill-plugin-api</code>: APIs used by Kill Bill core to communicate with plugins</li>
-<li><code>killbill-commons</code>: Common code across modules</li>
-<li><code>killbill-platform</code>: Platform related code such as OSGI framework, webapp pieces</li>
-<li><code>killbill-client</code>: Java client, only used for integration tests inside killbill repository.</li>
-</ul>
+<p><strong>Response</strong></p>
 
-<p>The version for all these dependencies is managed in the parent <a href="https://github.com/killbill/killbill-oss-parent/blob/master/pom.xml">pom.xml</a>. So in particular, for a given Kill Bill version, you can look up the version of the parent <code>pom.xml</code> and from there access all the dependencies.</p>
+<p>If successful, returns a status code of 200 and a list of custom field objects</p>
+<h3 id='modify-custom-fields-for-an-invoice-payment'>Modify custom fields for an invoice payment</h3>
+<p>Modifies the custom fields associated with an InvoicePayment object</p>
 
-<p>The current <strong>stable</strong> and <strong>production</strong> ready version of Kill Bill is <code>0.24.y</code>. You should use the latest released (<code>y</code>) version as it may contain critical bug fixes.</p>
+<p><strong>HTTP Request</strong> </p>
 
-<ul>
-<li>Any bug fixes will result in a new version identified by incrementing the <code>patch</code> number (<code>y</code>). We guarantee compatibility of these versions with those immediately preceding them. Each version will be accompanied by release notes on github - e.g <a href="https://github.com/killbill/killbill/releases/tag/killbill-0.22.8">0.22.8 release notes</a>.</li>
-<li>New development may happen in parallel. This may lead to the release of development versions. Such versions are not yet deemed stable, and will not be supported on the public mailing list.</li>
-</ul>
-
-<p>The choice of releasing <code>0.x.y</code> and not <code>1.x.y</code> is motivated by our desire to add additional features in upcoming releases, and is in no way a statement about code instability.</p>
-<h3 id='client-libraries'>Client Libraries</h3>
-<p>Our client libraries contain a <code>README</code> section to describe their compatibility with the Kill Bill server. For instance, such compatibility mapping can be seen in our java client <a href="https://github.com/killbill/killbill-client-java/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
-<h3 id='plugins'>Plugins</h3>
-<p>Each plugin also has its own version, and we also keep a <code>README</code> with the mapping section. For example, such a section for the adyen payment plugin can be found <a href="https://github.com/killbill/killbill-adyen-plugin/blob/master/README.md#kill-bill-compatibility">here</a>.</p>
-
-<p>We also keep a global repository for all plugins <a href="https://github.com/killbill/killbill-cloud/blob/master/kpm/lib/kpm/plugins_directory.yml">here</a>. The simple file-based approach is an internal implementation. This brings us to our next topic, <code>KPM</code>.</p>
-<h3 id='kpm'>KPM</h3>
-<p><code>KPM</code>, The Kill Bill Package Manager, provides among <a href="https://github.com/killbill/killbill-cloud/tree/master/kpm">other things</a> the ability to retrieve version mapping for dependencies and plugins -- see the example on the right side.</p>
+<p><code>PUT http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/customFields</code></p>
 
 <blockquote>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>
-# Look up version dependencies matching Kill Bill release 0.22.8:
-&gt; kpm info  --version=0.22.8
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> PUT <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'[{ 
+            "customFieldId": "e2408cac-931b-43eb-855b-9f2902615c39",
+            "value": "NewValue"
+    }]'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/2495e35e-2b96-434c-8877-62dbbf20f7e9/customFields'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
 
-Fetching info for version 0.22.8...
-Dependencies for version 0.22.8
-  killbill 0.22.8
-  killbill-oss-parent 0.143.60
-  killbill-api 0.53.17
-  killbill-plugin-api 0.26.4
-  killbill-commons 0.23.11
-  killbill-platform 0.39.15
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
+<span class="no">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
 
-Known plugins for KB version 0.22.8
-  analytics 7.0.8
-  avatax 0.7.0
-  email-notifications 0.6.1
-  payment-test 7.0.4
-  stripe 7.0.4
-  ...
+<span class="nc">CustomField</span> <span class="n">customFieldModified</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomField</span><span class="o">();</span>
+<span class="n">customFieldModified</span><span class="o">.</span><span class="na">setCustomFieldId</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">customFieldModified</span><span class="o">.</span><span class="na">setValue</span><span class="o">(</span><span class="s">"NewValue"</span><span class="o">);</span>
 
-</code></pre></div><h2 id='errors'>Errors</h2>
-<p>Kill Bill relies on HTTP response codes to indicate the success or failure of an API request:</p>
+<span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">modifyInvoicePaymentCustomFields</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                   <span class="n">customFieldModified</span><span class="o">,</span> 
+                                                   <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_modify_value'</span>
 
-<ul>
-<li><strong><code>2xx</code></strong> status indicates success</li>
-<li><strong><code>4xx</code></strong> status often indicates a client side error -- e.g missing madatory API field</li>
-<li><strong><code>5xx</code></strong> status indicates an error with Kill Bill&#39;s servers or third party system -- e.g payment gateway returns 5xx.</li>
-</ul>
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>                                                                                            
+                                    <span class="n">user</span><span class="p">,</span> 
+                                    <span class="n">reason</span><span class="p">,</span>
+                                    <span class="n">comment</span><span class="p">,</span> 
+                                    <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'f33e0adc-78df-438a-b920-aaacd7f8597a'</span>
+<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'9913e0f6-b5ef-498b-ac47-60e1626eba8f'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'Test Modify'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_modify_value'</span><span class="p">)</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">modify_invoice_payment_custom_fields</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                       <span class="p">[</span><span class="n">body</span><span class="p">],</span>
+                                                       <span class="n">created_by</span><span class="p">,</span>
+                                                       <span class="n">api_key</span><span class="p">,</span>
+                                                       <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Requst Body</strong></p>
+
+<p>A JSON string representing a list of custom fields to substitute for the existing ones.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h3 id='remove-custom-fields-from-an-invoice-payment'>Remove custom fields from an invoice payment</h3>
+<p>Removes a specified set of custom fields from an <code>InvoicePayment</code> object</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/customFields</code></p>
 
 <blockquote>
+<p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>HTTP status code summary:
-200 - OK: A response body may be returned.
-201 - Created: Success in creating a new resource. A Location header is returned to indicate the uri that can be used to fetch the resource
-202 - Accepted: The request has been accepted and will be processed asynchronously.
-204 - No Content: The request was processed sucesfully but no response body is returned.
-400 - Bad Request: Invalid/missing parameter from client.
-401 - Unauthorized: Authorization failed.
-402 - Request Failed: Request parameter were valid but request failed -- insufficient fund on a payment request.
-404 - Not Found: The requested resource does not exist.
-409 - Conflict: The request conflicts with another request.
-422 - Unprocessable Entity: Payment control plugin aborted the call.
-500 - Unexpected system error.
-502 - Bad Gateway : Unknow failure from payment plugin (PLUGIN_FAILURE).
-503 - Service Unavailable: Kill Bill or a third party system -- e.g payment gateway -- is unavailable.
-504 - Gateway Timeout: Payment gateway timed out.
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/2495e35e-2b96-434c-8877-62dbbf20f7e9/customFields?customField=e2408cac-931b-43eb-855b-9f2902615c39'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"59860a0d-c032-456d-a35e-3a48fe8579e5"</span><span class="o">);</span>
+<span class="no">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
+
+<span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">deleteInvoicePaymentCustomFields</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                   <span class="n">customFieldsId</span><span class="o">,</span> 
+                                                   <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field_id</span> <span class="o">=</span> <span class="n">custom_field</span><span class="p">.</span><span class="nf">id</span>
+
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span>                                                                                            
+                                    <span class="n">user</span><span class="p">,</span> 
+                                    <span class="n">reason</span><span class="p">,</span>
+                                    <span class="n">comment</span><span class="p">,</span> 
+                                    <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'f33e0adc-78df-438a-b920-aaacd7f8597a'</span>
+<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'9913e0f6-b5ef-498b-ac47-60e1626eba8f'</span>
+<span class="n">custom_field</span> <span class="o">=</span> <span class="p">[</span><span class="n">custom_field_id</span><span class="p">]</span>
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">delete_invoice_payment_custom_fields</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                       <span class="n">created_by</span><span class="p">,</span>
+                                                       <span class="n">api_key</span><span class="p">,</span>
+                                                       <span class="n">api_secret</span><span class="p">,</span>
+                                                       <span class="n">custom_field</span><span class="o">=</span><span class="n">custom_field</span><span class="p">)</span>
 </code></pre></div>
-<p>In addition to these error codes, the system will often return some json to provide more details about the error:</p>
+<p><strong>Query Parameters</strong></p>
 
-<ul>
-<li><strong><code>code</code></strong> : Each error in Kill Bill is associated with a an <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/ErrorCode.java#L21">ErrorCode</a>.</li>
-<li><strong><code>formattedMsg</code></strong> : A description of the error for the specific resource(s).</li>
-<li><strong><code>cause</code></strong> : An optional stack trace.</li>
-</ul>
-<h2 id='additional-resources'>Additional Resources</h2>
-<p>Our main documentation is found <a href="http://docs.killbill.io">here</a>.</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>customField</strong></td>
+<td>string</td>
+<td>yes</td>
+<td>none</td>
+<td>Comma separated list of custom field object IDs that should be deleted.</td>
+</tr>
+</tbody></table>
 
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='tags'>Tags</h2>
+<p>See <a href="account.html#account-tags">Account Tags</a> for an introduction.</p>
+
+<p>The are no <code>system</code> tags applicable to an InvoicePayment.</p>
+<h3 id='add-tags-to-an-invoice-payment'>Add tags to an invoice payment</h3>
+<p>Adds one or more tags to an invoice payment object. The tag definitions must already exist.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/tags</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'[
+            "353752dd-9041-4450-b782-a8bb03a923c8"
+        ]'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83/tags'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"45d6f4c5-21be-49b1-99c5-7b0c3c985bf0"</span><span class="o">);</span>
+
+<span class="no">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
+
+<span class="nc">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">createInvoicePaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                         <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
+                                                         <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
+
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">add_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+                        <span class="n">user</span><span class="p">,</span>
+                        <span class="n">reason</span><span class="p">,</span>
+                        <span class="n">comment</span><span class="p">,</span>
+                        <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'8d85a8e8-c94b-438f-aac1-e8cb436b2c05'</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">create_invoice_payment_tags</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                              <span class="n">tag</span><span class="p">,</span>
+                                              <span class="n">created_by</span><span class="p">,</span>
+                                              <span class="n">api_key</span><span class="p">,</span>
+                                              <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>Provides a list of tag definition Ids in JSON format</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and an empty body.</p>
+<h3 id='retrieve-invoice-payment-tags'>Retrieve invoice payment tags</h3>
+<p>Retrieves all tags attached to this InvoicePayment.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/tags</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83/tags'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"e659f0f3-745c-46d5-953c-28fe9282fc7d"</span><span class="o">);</span>
+
+<span class="nc">Boolean</span> <span class="n">includedDeleted</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// Will not include deleted tags</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">Tag</span><span class="o">&gt;</span> <span class="n">tags</span> <span class="o">=</span> <span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">getInvoicePaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                                         <span class="n">includedDeleted</span><span class="o">,</span> 
+                                                         <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">FULL</span><span class="o">,</span> 
+                                                         <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">included_deleted</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
+
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">tags</span><span class="p">(</span><span class="n">included_deleted</span><span class="p">,</span>
+                     <span class="n">audit</span><span class="p">,</span>
+                     <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'2a1ffd2c-0de1-4f5c-b2a9-27d8deebe596'</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">get_invoice_payment_tags</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"tagId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e7f68cab-3b9a-4150-909a-5f1c17f1fb2b"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc7fcd4d-e701-4679-9741-41289103db83"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tagDefinitionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tagDefinitionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>includedDeleted</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>If true, include deleted tags</td>
+</tr>
+<tr>
+<td><strong>audit</strong></td>
+<td>string</td>
+<td>no</td>
+<td>&quot;NONE&quot;</td>
+<td>Level of audit information to return</td>
+</tr>
+</tbody></table>
+
+<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a list of tag objects.</p>
+<h3 id='remove-tags-from-an-invoice-payment'>Remove tags from an invoice payment</h3>
+<p>Removes a list of tags attached to an InvoicePayment.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/tags</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-CreatedBy: demo'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/cc7fcd4d-e701-4679-9741-41289103db83/tags?tagDef=00000000-0000-0000-0000-000000000001'</span>    
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoicePaymentApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">InvoicePaymentApi</span> <span class="n">invoicePaymentApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">paymentId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"e659f0f3-745c-46d5-953c-28fe9282fc7d"</span><span class="o">);</span>
+
+<span class="no">UUID</span> <span class="n">autoPayOffId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"00000000-0000-0000-0000-000000000001"</span><span class="o">);</span>
+
+<span class="n">invoicePaymentApi</span><span class="o">.</span><span class="na">deleteInvoicePaymentTags</span><span class="o">(</span><span class="n">paymentId</span><span class="o">,</span> 
+                                           <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">autoPayOffId</span><span class="o">),</span> 
+                                           <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'TEST'</span>
+
+<span class="n">invoice_payment</span><span class="p">.</span><span class="nf">remove_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+                           <span class="n">user</span><span class="p">,</span>
+                           <span class="n">reason</span><span class="p">,</span>
+                           <span class="n">comment</span><span class="p">,</span>
+                           <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoicePaymentApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoicePaymentApi</span><span class="p">()</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'8d85a8e8-c94b-438f-aac1-e8cb436b2c05'</span>
+<span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s">"00000000-0000-0000-0000-000000000002"</span><span class="p">]</span>
+
+<span class="n">invoicePaymentApi</span><span class="p">.</span><span class="n">delete_invoice_payment_tags</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span> 
+                                              <span class="n">created_by</span><span class="p">,</span> 
+                                              <span class="n">api_key</span><span class="p">,</span> 
+                                              <span class="n">api_secret</span><span class="p">,</span> 
+                                              <span class="n">tag_def</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tagDef</strong></td>
+<td>array of string</td>
+<td>yes</td>
+<td>none</td>
+<td>List of tag definition IDs identifying the tags that should be removed.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='audit-logs'>Audit Logs</h2>
+<p>Audit logs provide a record of events that occur involving various specific resources. For details on audit logs see <a href="https://killbill.github.io/slate/#using-kill-bill-apis-audit-and-history">Audit and History</a>.</p>
+<h3 id='retrieve-invoice-payment-audit-logs-with-history-by-id'>Retrieve invoice payment audit logs with history by id</h3>
+<p>Retrieves a list of audit log records showing events that occurred involving changes to a specified invoice payment. History information is included with each record.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/auditLogsWithHistory</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiKey: bob'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'X-Killbill-ApiSecret: lazar'</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/invoicePayments/8fe697d4-2c25-482c-aa45-f6cd5a48186d/auditLogsWithHistory'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code>                                                                                      <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INSERT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T16:39:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8fe697d4-2c25-482c-aa45-f6cd5a48186d"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"comments"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5d32d0ab-3c08-47b2-8c6d-bb9d2a7fd62c"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"history"</span><span class="p">:</span><span class="w"> 
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T16:39:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-07-19T16:39:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"84c7e0d4-a5ed-405f-a655-3ed16ae19997"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paymentNumber"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"paymentMethodId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"916619a4-02bb-4d3d-b3da-2584ac897b19"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"externalKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"paymentExternalKey"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"stateName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lastSuccessStateName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENTS"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PAYMENT_HISTORY"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span><span class="err">**Query</span><span class="w"> </span><span class="err">Parameters**</span><span class="w">
+
+</span><span class="err">None.</span><span class="w">
+
+</span><span class="err">**Response**</span><span class="w">
+
+</span><span class="err">If</span><span class="w"> </span><span class="err">successful,</span><span class="w"> </span><span class="err">returns</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">status</span><span class="w"> </span><span class="err">code</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="err">and</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">list</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">account</span><span class="w"> </span><span class="err">audit</span><span class="w"> </span><span class="err">logs</span><span class="w"> </span><span class="err">with</span><span class="w"> </span><span class="err">history.</span><span class="w">
+
+</span></code></pre></div>
       </div>
     </main>
   </body>
