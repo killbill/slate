@@ -6,5 +6,5 @@ then
   bundle exec middleman build
 else
   mkdir build
-  mv * build
+  mv fonts images javascripts stylesheets *.html build/
 fi
