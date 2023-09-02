@@ -5485,3 +5485,93 @@ $accountTimeline = $apiInstance->getAccountTimeline($accountID);
 **Response**
 
 If successful, returns a status code of 200 and a complete account record including: the account object; bundles with subscriptions and timelines giving all events; invoices; and payments including payment attempts.
+
+## CBA Rebalancing
+
+This API endpoint allows to relabance the existing credit balance adjustments against the unpaid invoices in the Account.
+
+### Rebalance account CBA
+
+**HTTP Request** 
+
+`PUT http://127.0.0.1:8080/1.0/kb/accounts/{accountId}/cbaRebalancing`
+
+> Example Request:
+
+```shell
+curl -v \
+    -X PUT \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \    
+    "http://localhost:8080/1.0/kb/accounts/9caff00a-e0b8-4b10-b086-287ba108b0e6/cbaRebalancing"
+```
+
+```java
+import org.killbill.billing.client.api.gen.AccountApi;
+protected AccountApi accountApi;
+
+UUID accountId = UUID.fromString("ee6835f0-8347-42d3-958c-9a939383ba28");
+
+accountApi.rebalanceExistingCBAOnAccount(accountId,
+                                         requestOptions);
+```
+
+```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+account = KillBillClient::Model::Account.new
+
+account.account_id = "ee6835f0-8347-42d3-958c-9a939383ba28"
+
+account.cba_rebalancing(user,
+                        reason,
+                        comment,
+                        options)
+```
+
+```python
+accountApi = killbill.AccountApi()
+
+account_id = '8992e146-bfa1-4126-a045-98b844a4adcb'
+
+accountApi.rebalance_existing_cba_on_account(account_id,
+                                             created_by='demo',
+                                             reason='reason', 
+                                             comment='comment')
+```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+
+const accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+
+api.rebalanceExistingCBAOnAccount(accountID,'created_by');
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$apiInstance-> rebalanceExistingCBAOnAccount($accountID,
+                                             $xKillbillCreatedBy,
+                                             $xKillbillReason,
+                                             $xKillbillComment);
+```
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 204 and an empty body.
