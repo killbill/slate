@@ -5488,7 +5488,7 @@ If successful, returns a status code of 200 and a complete account record includ
 
 ## CBA Rebalancing
 
-This API endpoint allows to relabance the existing credit balance adjustments against the unpaid invoices in the Account.
+This API endpoint allows to rebalance the existing credit balance adjustments against the unpaid invoices in the Account.
 
 ### Rebalance account CBA
 
