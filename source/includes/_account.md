@@ -5488,9 +5488,11 @@ If successful, returns a status code of 200 and a complete account record includ
 
 ## CBA Rebalancing
 
-This API endpoint allows to rebalance the existing credit balance adjustments against the unpaid invoices in the Account.
+CBA refers to Credit Balance Adjustment and primarily aims at bringing the invoice balance to zero in case it becomes negative due to any adjustments (for example : item adjustment, credit adjustment etc.). This generates an equivalent account credit that can be used later in subsequent invoices. The [subscription billing documentation](https://docs.killbill.io/latest/userguide_subscription) provides some scenarios in which CBA adjustment is generated.
 
 ### Rebalance account CBA
+
+This endpoint is used to apply existing account credit to unpaid invoices (if any). Normally the system does this automatically, so there is rarely a need to use this endpoint.
 
 **HTTP Request** 
 
