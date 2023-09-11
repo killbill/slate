@@ -2558,9 +2558,9 @@ that work directly at the transaction level.</p>
 <li><p><strong>properties</strong>: Plugin-specific properties to be interpreted by the plugin</p></li>
 </ul>
 <h2 id='payment-transactions'>Payment Transactions</h2>
-<p>Endpoints to retrieve a <code>PaymentTransaction</code> object or to set the status of a pending transaction. Note that endpoints to generate payment transactions are provided with the <code>Payment</code> APIs. </p>
+<p>Endpoints to retrieve a <code>PaymentTransaction</code> object or to set the status of a pending transaction. Note that endpoints to generate payment transactions are provided with the <a href="payment.html#payments">Payment</a> APIs. </p>
 <h3 id='retrieve-a-payment-by-transaction-id'>Retrieve a payment by transaction id</h3>
-<p>Retrieves a Payment object based on a PaymentTransaction id, which is given as a path parameter</p>
+<p>Retrieves a Payment resource object based on a PaymentTransaction id.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -2581,8 +2581,29 @@ that work directly at the transaction level.</p>
 <span class="no">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"41f4d299-4371-4876-96b4-0b3cc81b246b"</span><span class="o">);</span>
 <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="nc">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getPaymentByTransactionId</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+<span class="n">with_plugin_info</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">with_attempts</span> <span class="o">=</span> <span class="kp">false</span>
+
+<span class="n">payment</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Payment</span><span class="p">.</span><span class="nf">find_by_transaction_id</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span> <span class="n">with_plugin_info</span><span class="p">,</span> <span class="n">with_attempts</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'edb52a56-f5d2-4285-9a23-ccafb6f1ae1f'</span>
+
+<span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_payment_by_transaction_id</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">37b95fef-f5be-4771-80e4-d41af8e528cb</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Payment</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getPaymentByTransactionId</span><span class="p">(</span><span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">NONE</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"37b95fef-f5be-4771-80e4-d41af8e528cb"</span><span class="p">;</span>
+<span class="nv">$withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nv">$withAttempts</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nv">$pluginProperty</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"pluginProperty_example"</span><span class="p">);</span>
+<span class="nv">$audit</span> <span class="o">=</span> <span class="s2">"NONE"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPaymentByTransactionId</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$withPluginInfo</span><span class="p">,</span> <span class="nv">$withAttempts</span><span class="p">,</span> <span class="nv">$pluginProperty</span><span class="p">,</span> <span class="nv">$audit</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2640,7 +2661,7 @@ that work directly at the transaction level.</p>
 <td>boolean</td>
 <td>no</td>
 <td>false</td>
-<td>If true, include plugin info</td>
+<td>If true, include plugin info. This results in the <a href="https://github.com/killbill/killbill-plugin-api/blob/cd3fb251c4b61931eb0f7954037145148d62f983/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java#L144">PaymentPluginApi.getPaymentInfo</a> method being invoked for the underlying payment plugin. See <a href="https://docs.killbill.io/latest/payment_plugin#paymentpluginapi_methods">Payment Plugin Tutorial</a>.</td>
 </tr>
 <tr>
 <td><strong>withAttempts</strong></td>
@@ -2649,13 +2670,27 @@ that work directly at the transaction level.</p>
 <td>false</td>
 <td>if true, include payment attempts</td>
 </tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>omit</td>
+<td>list of plugin properties, if any</td>
+</tr>
+<tr>
+<td><strong>audit</strong></td>
+<td>string</td>
+<td>no</td>
+<td>&quot;NONE&quot;</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
+</tr>
 </tbody></table>
 
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a payment object including the specified transaction.</p>
 <h3 id='retrieve-a-payment-transaction-by-external-key'>Retrieve a payment transaction by external key</h3>
-<p>Retrieve a Payment object based on a PaymentTransaction external key, which is given as a query parameter</p>
+<p>Retrieves a Payment resource object based on a PaymentTransaction external key.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -2677,8 +2712,30 @@ that work directly at the transaction level.</p>
 <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="nc">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getPaymentByTransactionExternalKey</span><span class="o">(</span><span class="n">transactionExternalKey</span><span class="o">,</span> <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">external_key</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+<span class="n">with_plugin_info</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">with_attempts</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
+
+<span class="n">payment</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Payment</span><span class="p">.</span><span class="nf">find_by_transaction_external_key</span><span class="p">(</span><span class="n">external_key</span><span class="p">,</span> <span class="n">with_plugin_info</span><span class="p">,</span> <span class="n">with_attempts</span><span class="p">,</span> <span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_key</span> <span class="o">=</span> <span class="s">'edb52a56-f5d2-4285-9a23-ccafb6f1ae1f'</span>
+
+<span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_payment_by_transaction_external_key</span><span class="p">(</span><span class="n">payment_transaction_key</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">37b95fef-f5be-4771-80e4-d41af8e528cb</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Payment</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getPaymentByTransactionExternalKey</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span><span class="dl">'</span><span class="s1">NONE</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$transactionExternalKey</span> <span class="o">=</span> <span class="s2">"37b95fef-f5be-4771-80e4-d41af8e528cb"</span><span class="p">;</span>
+<span class="nv">$withPluginInfo</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nv">$withAttempts</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nv">$pluginProperty</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"pluginProperty_example"</span><span class="p">);</span>
+<span class="nv">$audit</span> <span class="o">=</span> <span class="s2">"NONE"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPaymentByTransactionExternalKey</span><span class="p">(</span><span class="nv">$transactionExternalKey</span><span class="p">,</span> <span class="nv">$withPluginInfo</span><span class="p">,</span> <span class="nv">$withAttempts</span><span class="p">,</span> <span class="nv">$pluginProperty</span><span class="p">,</span> <span class="nv">$audit</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2743,7 +2800,7 @@ that work directly at the transaction level.</p>
 <td>boolean</td>
 <td>no</td>
 <td>false</td>
-<td>If true, include plugin info</td>
+<td>If true, include plugin info. This results in the <a href="https://github.com/killbill/killbill-plugin-api/blob/cd3fb251c4b61931eb0f7954037145148d62f983/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java#L144">PaymentPluginApi.getPaymentInfo</a> method being invoked for the underlying payment plugin. See <a href="https://docs.killbill.io/latest/payment_plugin#paymentpluginapi_methods">Payment Plugin Tutorial</a>.</td>
 </tr>
 <tr>
 <td><strong>withAttempts</strong></td>
@@ -2751,6 +2808,20 @@ that work directly at the transaction level.</p>
 <td>no</td>
 <td>false</td>
 <td>If true, include payment attempts</td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>omit</td>
+<td>list of plugin properties, if any</td>
+</tr>
+<tr>
+<td><strong>audit</strong></td>
+<td>string</td>
+<td>no</td>
+<td>&quot;NONE&quot;</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -2787,13 +2858,40 @@ that work directly at the transaction level.</p>
 <span class="n">paymentTransaction</span><span class="o">.</span><span class="na">setStatus</span><span class="o">(</span><span class="nc">TransactionStatus</span><span class="o">.</span><span class="na">SUCCESS</span><span class="o">);</span>
 <span class="n">paymentTransaction</span><span class="o">.</span><span class="na">setPaymentId</span><span class="o">(</span><span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"27d15e39-b25c-4dc1-92cf-5487397a48a6"</span><span class="o">);</span>
 
-<span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">notifyStateChanged</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
+<span class="nc">Payment</span> <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">notifyStateChanged</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                          <span class="n">paymentTransaction</span><span class="o">,</span> 
                                          <span class="kc">null</span><span class="o">,</span> 
-                                         <span class="n">requestOptions</span><span class="o">);</span>
+                                         <span class="n">requestOptions</span><span class="o">));</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">PaymentTransaction</span><span class="p">(</span><span class="n">payment_id</span><span class="o">=</span><span class="s">'8cc963a6-786a-4dd1-bcfb-5edc266c01b9'</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s">'SUCCESS'</span><span class="p">)</span>
+
+<span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">notify_state_changed</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span>
+                                           <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                           <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                           <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">payment_transaction</span><span class="p">:</span> <span class="nx">PaymentTransaction</span> <span class="o">=</span> <span class="p">{</span><span class="na">paymentId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">e129a8fc-c244-425f-b1eb-68d3aac7054e</span><span class="dl">"</span><span class="p">,</span> <span class="na">status</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SUCCESS</span><span class="dl">"</span><span class="p">};</span>
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">notifyStateChanged</span><span class="p">(</span><span class="nx">payment_transaction</span><span class="p">,</span> <span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+<span class="nv">$controlPluginName</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"controlPluginName_example"</span><span class="p">);</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="err">\</span><span class="nf">Killbill\Client\Swagger\Model\PaymentTransaction</span><span class="p">();</span>
+<span class="nv">$body</span> <span class="o">-&gt;</span> <span class="nf">setPaymentId</span><span class="p">(</span><span class="s2">"2ad112db-cf4b-497d-9a0d-c0e41fa6070b"</span><span class="p">);</span>
+<span class="nv">$body</span> <span class="o">-&gt;</span> <span class="nf">setStatus</span><span class="p">(</span><span class="s2">"SUCCESS"</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">notifyStateChanged</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">,</span> <span class="nv">$controlPluginName</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -2805,11 +2903,22 @@ that work directly at the transaction level.</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 201 and the payment object.</p>
+<p>If successful, returns a status code of 201 and an empty body. In addition, a Location header is returned which contains the payment id.</p>
 <h2 id='audit-logs'>Audit Logs</h2>
-<p>Audit logs provide a record of events that occur involving various specific resources. For details on audit logs see <a href="https://killbill.github.io/slate/#using-kill-bill-apis-audit-and-history">Audit and History</a>.</p>
+<p>Audit logs provide a record of events that occur involving various specific resources. For details on audit logs see <a href="#using-kill-bill-apis-audit-and-history">Audit and History</a>.</p>
 <h3 id='retrieve-payment-transaction-audit-logs-with-history-by-id'>Retrieve payment transaction audit logs with history by id</h3>
-<p>Retrieves a list of audit log records showing events that occurred involving changes to a specified payment. History information is included with each record.</p>
+<p>Retrieves a list of audit log records showing changes to the specified payment transaction. History information (a copy of the full payment transaction object) is included with each record.</p>
+
+<p>Some examples:</p>
+
+<ul>
+<li>Assuming the API is invoked for a payment transaction belonging to a successful payment, it would return two records:
+
+<ul>
+<li>An <code>INSERT</code> record corresponding to the payment transaction record creation.</li>
+<li>An <code>UPDATE</code> record corresponding to the payment transaction status update.</li>
+</ul></li>
+</ul>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -2829,10 +2938,25 @@ that work directly at the transaction level.</p>
 
 <span class="no">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"41f4d299-4371-4876-96b4-0b3cc81b246b"</span><span class="o">);</span>
 
-<span class="nc">List</span><span class="o">&lt;</span><span class="nc">AuditLog</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getTransactionAuditLogsWithHistory</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">AuditLog</span><span class="o">&gt;</span> <span class="n">auditLogs</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getTransactionAuditLogsWithHistory</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                                                                  <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">audit_logs</span> <span class="o">=</span> <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+<span class="n">audit_logs</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_audit_logs_with_history</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">AuditLog</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getTransactionAuditLogsWithHistory</span><span class="p">(</span><span class="nx">paymentTransactionId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getTransactionAuditLogsWithHistory</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2910,9 +3034,9 @@ that work directly at the transaction level.</p>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of account audit logs with history.</p>
+<p>If successful, returns a status code of 200 and a list of payment transaction audit logs with history.</p>
 <h2 id='custom-fields'>Custom Fields</h2>
-<p>Custom fields are <code>{key, value}</code> attributes that can be attached to any customer resource. In particular they can be added to <code>PaymentTransaction</code> objects. For details on Custom Fields see <a href="custom-field.html">Custom Field</a>.</p>
+<p>Custom fields are <code>{key, value}</code> attributes that can be attached to any customer resource. For details on Custom Fields see <a href="custom-field.html">Custom Fields</a>. These endpoints manage custom fields associated with Payment Transaction objects.</p>
 <h3 id='add-custom-fields-to-payment-transaction'>Add custom fields to payment transaction</h3>
 <p>Adds one or more custom fields to a <code>PaymentTransaction</code> object. Existing custom fields are not modified.</p>
 
@@ -2953,19 +3077,57 @@ that work directly at the transaction level.</p>
 <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">createTransactionCustomFields</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                                     <span class="n">customFields</span><span class="o">,</span> 
                                                     <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
+
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+                                <span class="n">user</span><span class="p">,</span>
+                                <span class="n">reason</span><span class="p">,</span>
+                                <span class="n">comment</span><span class="p">,</span>
+                                <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Test Custom Field'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_value'</span><span class="p">)</span>
 
 <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">create_transaction_custom_fields</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span>
                                                        <span class="p">[</span><span class="n">body</span><span class="p">],</span>
-                                                       <span class="n">created_by</span><span class="p">,</span>
-                                                       <span class="n">api_key</span><span class="p">,</span>
-                                                       <span class="n">api_secret</span><span class="p">)</span>
+                                                       <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                                       <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                                       <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Test Custom Field</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test_value</span><span class="dl">"</span><span class="p">};</span>
+<span class="kd">const</span> <span class="nx">customFields</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">createTransactionCustomFields</span><span class="p">(</span><span class="nx">customFields</span><span class="p">,</span> <span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$customField</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomField</span><span class="p">();</span>
+<span class="nv">$customField</span> <span class="o">-&gt;</span> <span class="nf">setName</span><span class="p">(</span><span class="s1">'Test Custom Field'</span><span class="p">);</span>
+<span class="nv">$customField</span> <span class="o">-&gt;</span> <span class="nf">setValue</span><span class="p">(</span><span class="s1">'test_value'</span><span class="p">);</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="nv">$customField</span><span class="p">);</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">createTransactionCustomFields</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
-<p>A JSON string representing the custom field object or objects to be added. For example:</p>
+<p>A list of objects giving the name and value of the custom field, or fields, to be added. For example:</p>
 
 <p>[ { &quot;name&quot;: &quot;CF1&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
@@ -2977,7 +3139,7 @@ that work directly at the transaction level.</p>
 
 <p>If successful, returns a 201 status code. In addition, a <code>Location</code> header is returned giving the URL to retrieve the custom fields associated with the payment transaction.</p>
 <h3 id='retrieve-payment-transaction-custom-fields'>Retrieve payment transaction custom fields</h3>
-<p>Retrieves the custom fields associated with a payment transaction</p>
+<p>Retrieves the custom fields associated with the specified payment transaction.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3000,10 +3162,28 @@ that work directly at the transaction level.</p>
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">CustomField</span><span class="o">&gt;</span> <span class="n">customFields</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">getTransactionCustomFields</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span>
                                                                                   <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span>
                                                                                   <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
 
-<span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_custom_fields</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
+
+<span class="n">fields</span> <span class="o">=</span> <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+
+<span class="n">fields</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_custom_fields</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">audit</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">NONE</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getTransactionCustomFields</span><span class="p">(</span><span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="nx">audit</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+<span class="nv">$audit</span> <span class="o">=</span> <span class="s2">"NONE"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getTransactionCustomFields</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$audit</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3035,17 +3215,15 @@ that work directly at the transaction level.</p>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
-
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a list of custom field objects</p>
+<p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
 <h3 id='modify-custom-fields-for-a-payment-transaction'>Modify custom fields for a payment transaction</h3>
-<p>Modifies the custom fields associated with a <code>PaymentTransaction</code> object</p>
+<p>Modifies the value of one or more existing custom fields associated with a payment transaction object. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3070,36 +3248,72 @@ that work directly at the transaction level.</p>
 <span class="kd">protected</span> <span class="nc">PaymentTransactionApi</span> <span class="n">paymentTransactionApi</span><span class="o">;</span>
 
 <span class="no">UUID</span> <span class="n">paymentTransactionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"cca08349-8b26-41c7-bfcc-2e3cf70a0f28"</span><span class="o">);</span>
-<span class="no">UUID</span> <span class="n">customFieldsId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
+<span class="no">UUID</span> <span class="n">customFieldId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"9913e0f6-b5ef-498b-ac47-60e1626eba8f"</span><span class="o">);</span>
 
 <span class="nc">CustomField</span> <span class="n">customFieldModified</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomField</span><span class="o">();</span>
-<span class="n">customFieldModified</span><span class="o">.</span><span class="na">setCustomFieldId</span><span class="o">(</span><span class="n">customFieldsId</span><span class="o">);</span>
+<span class="n">customFieldModified</span><span class="o">.</span><span class="na">setCustomFieldId</span><span class="o">(</span><span class="n">customFieldId</span><span class="o">);</span>
 <span class="n">customFieldModified</span><span class="o">.</span><span class="na">setValue</span><span class="o">(</span><span class="s">"NewValue"</span><span class="o">);</span>
 <span class="nc">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomFields</span><span class="o">();</span>
 <span class="n">customFields</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">customFieldModified</span><span class="o">);</span>
 <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">modifyTransactionCustomFields</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                                     <span class="n">customFields</span><span class="o">,</span> 
                                                     <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'9913e0f6-b5ef-498b-ac47-60e1626eba8f'</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">'Test Modify'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_modify_value'</span><span class="p">)</span>
+<span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_modify_value'</span>
+
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+                                   <span class="n">user</span><span class="p">,</span>
+                                   <span class="n">reason</span><span class="p">,</span>
+                                   <span class="n">comment</span><span class="p">,</span>
+                                   <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'eddc016c-0336-44d3-9383-a29962e276b7'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'new value'</span><span class="p">)</span>
 
 <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">modify_transaction_custom_fields</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span>
                                                        <span class="p">[</span><span class="n">body</span><span class="p">],</span>
-                                                       <span class="n">created_by</span><span class="p">,</span>
-                                                       <span class="n">api_key</span><span class="p">,</span>
-                                                       <span class="n">api_secret</span><span class="p">)</span>
+                                                       <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                                       <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                                       <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span><span class="na">customFieldId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">690b4723-5d54-4b89-afe0-dae0d146183c</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">new_value</span><span class="dl">"</span><span class="p">};</span>
+<span class="kd">const</span> <span class="nx">customFields</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">modifyTransactionCustomFields</span><span class="p">(</span><span class="nx">customFields</span><span class="p">,</span> <span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$customField</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomField</span><span class="p">();</span>
+<span class="nv">$customField</span> <span class="o">-&gt;</span> <span class="nf">setCustomFieldId</span><span class="p">(</span><span class="s1">'cea1e5e0-87b9-40bf-8d46-b00e6f870c8f'</span><span class="p">);</span>
+<span class="nv">$customField</span> <span class="o">-&gt;</span> <span class="nf">setValue</span><span class="p">(</span><span class="s1">'new_value'</span><span class="p">);</span>
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="nv">$customField</span><span class="p">);</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">modifyTransactionCustomFields</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Requst Body</strong></p>
 
-<p>A JSON string representing a list of custom fields to substitute for the existing ones.
-For example:</p>
+<p>A list of objects specifying the id and the new value for the custom fields to be modified. For example:</p>
 
 <p>[ { &quot;customFieldId&quot;: &quot;6d4c073b-fd89-4e39-9802-eba65f42492f&quot;, &quot;value&quot;: &quot;123&quot; } ]</p>
 
-<p>Although the field name and object type can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
+<p>Although the <code>fieldName</code> and <code>objectType</code> can be specified in the request body, these cannot be modified, only the field value can be modified.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -3109,7 +3323,7 @@ For example:</p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h3 id='remove-custom-fields-from-a-payment-transaction'>Remove custom fields from a payment transaction</h3>
-<p>Removes a specified set of custom fields from a payment transaction object</p>
+<p>Delete one or more custom fields from a payment transaction. It accepts query parameters corresponding to the custom field ids to be deleted. If no query parameters are specified, it deletes all the custom fields corresponding to the payment transaction.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3134,15 +3348,47 @@ For example:</p>
 <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">deleteTransactionCustomFields</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                                     <span class="n">customFieldsList</span><span class="o">,</span> 
                                                     <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'f33e0adc-78df-438a-b920-aaacd7f8597a'</span>
+<span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s1">'cda969c3-1092-4702-b155-05d0ef899fa2'</span>
+
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span>
+                                   <span class="n">user</span><span class="p">,</span>
+                                   <span class="n">reason</span><span class="p">,</span>
+                                   <span class="n">comment</span><span class="p">,</span>
+                                   <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">'494c8e9b-0840-4955-9e23-e84d4c353c25'</span><span class="p">]</span>
 
 <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">delete_transaction_custom_fields</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span>
-                                                       <span class="n">created_by</span><span class="p">,</span>
-                                                       <span class="n">api_key</span><span class="p">,</span>
-                                                       <span class="n">api_secret</span><span class="p">)</span>
+                                                       <span class="n">custom_field</span><span class="o">=</span><span class="n">custom_fields</span><span class="p">,</span>
+                                                       <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                                       <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                                       <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">customField</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">690b4723-5d54-4b89-afe0-dae0d146183c</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">customFields</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deleteTransactionCustomFields</span><span class="p">(</span><span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">customFields</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+<span class="nv">$customFields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"cea1e5e0-87b9-40bf-8d46-b00e6f870c8f"</span><span class="p">);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deleteTransactionCustomFields</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$customFields</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3160,7 +3406,7 @@ For example:</p>
 <td>string</td>
 <td>yes</td>
 <td>none</td>
-<td>Comma separated list of custom field object IDs that should be deleted.</td>
+<td>Custom field ID that should be deleted. Multiple custom fields can be deleted by specifying a separate customField parameter corresponding to each field.</td>
 </tr>
 </tbody></table>
 
@@ -3168,11 +3414,12 @@ For example:</p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h2 id='tags'>Tags</h2>
-<p>See <a href="account.html#account-tags">Account Tags</a> for an introduction.</p>
+<p>See <a href="account.html#account-tags">Account Tags</a> for an introduction. </p>
 
-<p>The are no <code>system</code> tags applicable to a Payment Transaction.</p>
+<p><strong>Note:</strong>
+None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable for Payment Transactions, only a <a href="tag.html#tag">user tag</a> can be associated with a payment transaction.</p>
 <h3 id='add-tags-to-a-payment-transaction'>Add tags to a payment transaction</h3>
-<p>Adds one or more tags to a <code>PaymentTransaction</code> object. The tag definitions must already exist.</p>
+<p>This API adds one or more tags to a <code>PaymentTransaction</code>. The <a href="tag-definition.html#tag-definitions">tag definition</a> corresponding to the tag to be added must already exist.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3199,23 +3446,53 @@ For example:</p>
 
 <span class="no">UUID</span> <span class="n">tagDefinitionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="o">);</span>
 
-<span class="nc">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">createTransactionTags</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
+<span class="nc">Tags</span> <span class="n">tags</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">createTransactionTags</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                                           <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                                           <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span>
+<span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'sample_tag'</span>
+
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">add_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+                     <span class="n">user</span><span class="p">,</span>
+                     <span class="n">reason</span><span class="p">,</span>
+                     <span class="n">comment</span><span class="p">,</span>
+                     <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+<span class="n">tagDefIds</span>  <span class="o">=</span> <span class="p">[</span><span class="s">"3d70a355-8342-4042-8694-a2447f0f2b1e"</span><span class="p">]</span>
 
 <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">create_transaction_tags</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span>
-                                              <span class="n">tag</span><span class="p">,</span>
-                                              <span class="n">created_by</span><span class="p">,</span>
-                                              <span class="n">api_key</span><span class="p">,</span>
-                                              <span class="n">api_secret</span><span class="p">)</span>
+                                              <span class="n">tagDefIds</span><span class="p">,</span>
+                                              <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                              <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                              <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">3d70a355-8342-4042-8694-a2447f0f2b1e</span><span class="dl">'</span><span class="p">];</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">createTransactionTags</span><span class="p">(</span><span class="nx">tagDefIds</span><span class="p">,</span> <span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+<span class="nv">$tagDefIds</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"3d70a355-8342-4042-8694-a2447f0f2b1e"</span><span class="p">);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">createTransactionTags</span><span class="p">(</span><span class="nv">$tagDefIds</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
-<p>Provides a list of tag definition Ids in JSON format</p>
+<p>A JSON array corresponding to the tag definition IDs to be added.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -3251,12 +3528,33 @@ For example:</p>
                                                           <span class="n">includedDeleted</span><span class="o">,</span> 
                                                           <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">FULL</span><span class="o">,</span> 
                                                           <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">included_deleted</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
+
+<span class="n">tags</span> <span class="o">=</span> <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">tags</span><span class="p">(</span><span class="n">included_deleted</span><span class="p">,</span>
+                  <span class="n">audit</span><span class="p">,</span>
+                  <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 
-<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'28af3cb9-275b-4ac4-a55d-a0536e479069'</span>
+<span class="n">tags</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_tags</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_tags</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">includeDeleted</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">audit</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">NONE</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Tag</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getTransactionTags</span><span class="p">(</span><span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="nx">includeDeleted</span><span class="p">,</span> <span class="nx">audit</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+<span class="nv">$includedDeleted</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="nv">$audit</span> <span class="o">=</span> <span class="s2">"NONE"</span><span class="p">;</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getTransactionTags</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$includedDeleted</span><span class="p">,</span> <span class="nv">$audit</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3295,17 +3593,22 @@ For example:</p>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody></table>
-
-<p>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</p>
 
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a list of tag objects.</p>
 <h3 id='remove-tags-from-a-payment-transaction'>Remove tags from a payment transaction</h3>
-<p>Removes a list of tags attached to a payment transaction.</p>
+<p>This API deletes one or more tags attached to a payment transaction.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3331,17 +3634,46 @@ For example:</p>
 <span class="n">paymentTransactionApi</span><span class="o">.</span><span class="na">deleteTransactionTags</span><span class="o">(</span><span class="n">paymentTransactionId</span><span class="o">,</span> 
                                             <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                             <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'dce5b2a0-0f0f-430b-9427-545ba4be5c7f'</span>
-<span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span> 
+<span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
+
+<span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'sample_tag'</span>
+
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">remove_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+                        <span class="n">user</span><span class="p">,</span>
+                        <span class="n">reason</span><span class="p">,</span>
+                        <span class="n">comment</span><span class="p">,</span>
+                        <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
+<span class="n">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="s">"3d70a355-8342-4042-8694-a2447f0f2b1e"</span><span class="p">]</span>
 
 <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">delete_transaction_tags</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span>
-                                              <span class="n">created_by</span><span class="p">,</span>
-                                              <span class="n">api_key</span><span class="p">,</span>
-                                              <span class="n">api_secret</span><span class="p">,</span>
-                                              <span class="n">tag_def</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+                                              <span class="n">tag_def</span><span class="o">=</span><span class="n">tagDefIds</span><span class="p">,</span>
+                                              <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                              <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                              <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">8dabaa02-c926-4ec3-b0bb-47fe2271b62f</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">3d70a355-8342-4042-8694-a2447f0f2b1e</span><span class="dl">'</span><span class="p">];</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">deleteTransactionTags</span><span class="p">(</span><span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">tagDefIds</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getPaymentTransactionApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$transactionId</span> <span class="o">=</span> <span class="s2">"1f7002b3-d1a5-458d-97d4-46b6b86499ac"</span><span class="p">;</span>
+<span class="nv">$tagDefIds</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"3d70a355-8342-4042-8694-a2447f0f2b1e"</span><span class="p">);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deleteTransactionTags</span><span class="p">(</span><span class="nv">$transactionId</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$tagDefIds</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3359,7 +3691,7 @@ For example:</p>
 <td>array of string</td>
 <td>yes</td>
 <td>none</td>
-<td>List of tag definition IDs identifying the tags that should be removed.</td>
+<td>A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag.</td>
 </tr>
 </tbody></table>
 
