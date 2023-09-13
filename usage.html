@@ -2586,7 +2586,7 @@
 <h2 id='usage-2'>Usage</h2>
 <p>The APIs in this group support recording and retrieving usage data points.</p>
 <h3 id='record-usage-for-a-subscription'>Record usage for a subscription</h3>
-<p>Records the daily mount of usage of a specified set of unit types for a given subscription</p>
+<p>Records the daily amount of usage of a specified set of unit types for a given subscription</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -2642,7 +2642,11 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 
 <span class="n">usageApi</span><span class="o">.</span><span class="na">recordUsage</span><span class="o">(</span><span class="n">usage</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">usage_record</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UsageRecordAttributes</span><span class="p">.</span><span class="nf">new</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">usage_record</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UsageRecordAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">usage_record</span><span class="p">.</span><span class="nf">amount</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">usage_record</span><span class="p">.</span><span class="nf">record_date</span> <span class="o">=</span> <span class="s2">"2013-03-14"</span>
 
@@ -2657,7 +2661,43 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="n">result</span><span class="p">.</span><span class="nf">unit_usage_records</span> <span class="o">&lt;&lt;</span> <span class="n">unit_usage_record</span>
 
 <span class="n">result</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">usageApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">UsageApi</span><span class="p">()</span>
+
+<span class="n">usageRecord</span> <span class="o">=</span> <span class="n">UsageRecord</span><span class="p">(</span><span class="n">record_date</span><span class="o">=</span><span class="s">'2023-09-05'</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">unitUsageRecord</span> <span class="o">=</span> <span class="n">UnitUsageRecord</span><span class="p">(</span><span class="n">unit_type</span><span class="o">=</span><span class="s">'hours'</span><span class="p">,</span><span class="n">usage_records</span><span class="o">=</span><span class="p">[</span><span class="n">usageRecord</span><span class="p">])</span>
+
+<span class="n">subscriptionUsageRecord</span> <span class="o">=</span> <span class="n">SubscriptionUsageRecord</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="s">'dc89f346-bc55-46ee-8963-1b666d8fea50'</span><span class="p">,</span> <span class="n">tracking_id</span><span class="o">=</span><span class="s">"t4"</span><span class="p">,</span> <span class="n">unit_usage_records</span><span class="o">=</span><span class="p">[</span><span class="n">unitUsageRecord</span><span class="p">])</span>
+
+<span class="n">usageApi</span><span class="p">.</span><span class="n">record_usage</span><span class="p">(</span><span class="n">subscriptionUsageRecord</span><span class="p">,</span>
+                      <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                      <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                      <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UsageApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UsageApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">usageRecord</span><span class="p">:</span> <span class="nx">UsageRecord</span> <span class="o">=</span> <span class="p">{</span><span class="na">amount</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="na">recordDate</span><span class="p">:</span> <span class="dl">"</span><span class="s2">2023-09-17</span><span class="dl">"</span><span class="p">};</span>
+<span class="kd">const</span> <span class="nx">unitUsageRecord</span><span class="p">:</span> <span class="nx">UnitUsageRecord</span> <span class="o">=</span> <span class="p">{</span><span class="na">unitType</span><span class="p">:</span> <span class="dl">"</span><span class="s2">hours</span><span class="dl">"</span><span class="p">,</span> <span class="na">usageRecords</span><span class="p">:[</span><span class="nx">usageRecord</span><span class="p">]};</span>
+<span class="kd">const</span> <span class="nx">subscriptionUsageRecord</span><span class="p">:</span> <span class="nx">SubscriptionUsageRecord</span> <span class="o">=</span> <span class="p">{</span><span class="na">subscriptionId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">dc89f346-bc55-46ee-8963-1b666d8fea50</span><span class="dl">"</span><span class="p">,</span> <span class="na">unitUsageRecords</span><span class="p">:</span> <span class="p">[</span><span class="nx">unitUsageRecord</span><span class="p">]};</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">recordUsage</span><span class="p">(</span><span class="nx">subscriptionUsageRecord</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getUsageApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$usageRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UsageRecord</span><span class="p">();</span>
+<span class="nv">$usageRecord</span> <span class="o">-&gt;</span> <span class="nf">setAmount</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nv">$usageRecord</span> <span class="o">-&gt;</span> <span class="nf">setRecordDate</span><span class="p">(</span><span class="s1">'2023-09-15'</span><span class="p">);</span>
+
+<span class="nv">$unitUsageRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UnitUsageRecord</span><span class="p">();</span>
+<span class="nv">$unitUsageRecord</span> <span class="o">-&gt;</span> <span class="nf">setUnitType</span><span class="p">(</span><span class="s1">'hours'</span><span class="p">);</span>
+<span class="nv">$unitUsageRecord</span> <span class="o">-&gt;</span> <span class="nf">setUsageRecords</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nv">$usageRecord</span><span class="p">));</span>
+
+<span class="nv">$subscriptionUsageRecord</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SubscriptionUsageRecord</span><span class="p">();</span>
+<span class="nv">$subscriptionUsageRecord</span> <span class="o">-&gt;</span> <span class="nf">setSubscriptionId</span><span class="p">(</span><span class="s1">'dc89f346-bc55-46ee-8963-1b666d8fea50'</span><span class="p">);</span>
+<span class="nv">$subscriptionUsageRecord</span> <span class="o">-&gt;</span> <span class="nf">setUnitUsageRecords</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nv">$unitUsageRecord</span><span class="p">));</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">recordUsage</span><span class="p">(</span><span class="nv">$subscriptionUsageRecord</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -2694,23 +2734,42 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="nc">String</span> <span class="n">unitType</span> <span class="o">=</span> <span class="s">"chocolate-videos"</span><span class="o">;</span>
 <span class="nc">LocalDate</span> <span class="n">startDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LocalDate</span><span class="o">(</span><span class="s">"2012-08-25"</span><span class="o">);</span>
 <span class="nc">LocalDate</span> <span class="n">endDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LocalDate</span><span class="o">(</span><span class="s">"2013-08-26"</span><span class="o">);</span>
+<span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
-<span class="nc">RolledUpUsage</span> <span class="n">retrievedUsage</span> <span class="o">=</span> <span class="n">usageApi</span><span class="o">.</span><span class="na">getUsage</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span>
-                                                 <span class="n">unitType</span><span class="o">,</span>
-                                                 <span class="n">startDate</span><span class="o">,</span>
-                                                 <span class="n">endDate</span><span class="o">,</span>
-                                                 <span class="n">requestOptions</span><span class="o">);</span>
+<span class="nc">RolledUpUsage</span> <span class="n">retrievedUsage</span> <span class="o">=</span> <span class="n">usageApi</span><span class="o">.</span><span class="na">getUsage</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
+        <span class="n">unitType</span><span class="o">,</span> 
+        <span class="n">startDate</span><span class="o">,</span> 
+        <span class="n">endDate</span><span class="o">,</span> 
+        <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span>
+        <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">subscription_id</span> <span class="o">=</span> <span class="s2">"365987b2-5443-47e4-a467-c8962fc6995c"</span>
 <span class="n">start_date</span> <span class="o">=</span> <span class="s2">"2012-08-25"</span>
-<span class="n">end_date_</span> <span class="o">=</span> <span class="s2">"2013-08-26"</span>
+<span class="n">end_date</span> <span class="o">=</span> <span class="s2">"2013-08-26"</span>
 <span class="n">unit_type</span> <span class="o">=</span> <span class="s2">"chocolate-videos"</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RolledUpUsage</span><span class="p">.</span><span class="nf">find_by_subscription_id_and_type</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span>
+<span class="n">usages</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RolledUpUsage</span><span class="p">.</span><span class="nf">find_by_subscription_id_and_type</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span>
                                                                       <span class="n">start_date</span><span class="p">,</span>
                                                                       <span class="n">end_date</span><span class="p">,</span>
                                                                       <span class="n">unit_type</span><span class="p">,</span>
                                                                       <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UsageApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UsageApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">dc89f346-bc55-46ee-8963-1b666d8fea50</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">unitType</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">hours</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">startDate</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">2023-09-01</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">endDate</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">2023-09-30</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">RolledUpUsage</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getUsage</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">,</span> <span class="nx">unitType</span><span class="p">,</span> <span class="nx">startDate</span><span class="p">,</span> <span class="nx">endDate</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getUsageApi</span><span class="p">();</span>
+
+<span class="nv">$subscriptionId</span> <span class="o">=</span> <span class="s2">"dc89f346-bc55-46ee-8963-1b666d8fea50"</span><span class="p">;</span>
+<span class="nv">$unitType</span> <span class="o">=</span> <span class="s2">"hours"</span><span class="p">;</span>
+<span class="nv">$startDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DateTime</span><span class="p">(</span><span class="s2">"2023-09-01"</span><span class="p">);</span>
+<span class="nv">$endDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DateTime</span><span class="p">(</span><span class="s2">"2023-09-30"</span><span class="p">);</span>
+<span class="nv">$pluginProperty</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"pluginProperty_example"</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getUsage</span><span class="p">(</span><span class="nv">$subscriptionId</span><span class="p">,</span> <span class="nv">$unitType</span><span class="p">,</span> <span class="nv">$startDate</span><span class="p">,</span> <span class="nv">$endDate</span><span class="p">,</span> <span class="nv">$pluginProperty</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2752,6 +2811,13 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <td>none</td>
 <td>Date/DateTime of newest data point to retrieve (see below) in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code> format</td>
 </tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>omit</td>
+<td>list of plugin properties, if any</td>
+</tr>
 </tbody></table>
 
 <ul>
@@ -2784,20 +2850,36 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 
 <span class="nc">LocalDate</span> <span class="n">startDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LocalDate</span><span class="o">(</span><span class="s">"2012-08-25"</span><span class="o">);</span>
 <span class="nc">LocalDate</span> <span class="n">endDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LocalDate</span><span class="o">(</span><span class="s">"2013-08-26"</span><span class="o">);</span>
-
-<span class="nc">RolledUpUsage</span> <span class="n">retrievedUsage</span> <span class="o">=</span> <span class="n">usageApi</span><span class="o">.</span><span class="na">getAllUsage</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span>
-                                                    <span class="n">startDate</span><span class="o">,</span>
-                                                    <span class="n">endDate</span><span class="o">,</span>
-                                                    <span class="n">requestOptions</span><span class="o">);</span>
+<span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="nc">RolledUpUsage</span> <span class="n">retrievedUsage</span> <span class="o">=</span> <span class="n">usageApi</span><span class="o">.</span><span class="na">getAllUsage</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> 
+        <span class="n">startDate</span><span class="o">,</span> 
+        <span class="n">endDate</span><span class="o">,</span> 
+        <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span>
+        <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">subscription_id</span> <span class="o">=</span> <span class="s2">"365987b2-5443-47e4-a467-c8962fc6995c"</span>
 <span class="n">start_date</span> <span class="o">=</span> <span class="s2">"2012-08-25"</span>
 <span class="n">end_date</span> <span class="o">=</span> <span class="o">=</span> <span class="s2">"2013-08-26"</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RolledUpUsage</span><span class="p">.</span><span class="nf">find_by_subscription_id</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span>
+<span class="n">usages</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RolledUpUsage</span><span class="p">.</span><span class="nf">find_by_subscription_id</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span>
                                                              <span class="n">start_date</span><span class="p">,</span>
                                                              <span class="n">end_date</span><span class="p">,</span>
                                                              <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UsageApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UsageApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">dc89f346-bc55-46ee-8963-1b666d8fea50</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">startDate</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">2023-09-01</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">endDate</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">2023-09-30</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">RolledUpUsage</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getAllUsage</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">,</span> <span class="nx">startDate</span><span class="p">,</span> <span class="nx">endDate</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getUsageApi</span><span class="p">();</span>
+
+<span class="nv">$subscriptionId</span> <span class="o">=</span> <span class="s2">"dc89f346-bc55-46ee-8963-1b666d8fea50"</span><span class="p">;</span>
+<span class="nv">$startDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DateTime</span><span class="p">(</span><span class="s2">"2023-09-01"</span><span class="p">);</span>
+<span class="nv">$endDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DateTime</span><span class="p">(</span><span class="s2">"2023-09-30"</span><span class="p">);</span>
+<span class="nv">$pluginProperty</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"pluginProperty_example"</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getAllUsage</span><span class="p">(</span><span class="nv">$subscriptionId</span><span class="p">,</span> <span class="nv">$startDate</span><span class="p">,</span> <span class="nv">$endDate</span><span class="p">,</span> <span class="nv">$pluginProperty</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2839,6 +2921,13 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <td>none</td>
 <td>Date/DateTime of newest data point to retrieve (see below) in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code> format</td>
 </tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>omit</td>
+<td>list of plugin properties, if any</td>
+</tr>
 </tbody></table>
 
 <ul>
@@ -2847,7 +2936,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 
 <p><strong>Response</strong></p>
 
-<p>IF successful, returns a status code of 200 and a RolledUpUsage object.</p>
+<p>If successful, returns a status code of 200 and a RolledUpUsage object.</p>
 
       </div>
     </main>
