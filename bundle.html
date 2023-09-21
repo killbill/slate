@@ -4723,11 +4723,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
               $(element).show();
             }
             
-            $(element).has('.json, .textplain, .xml').show();
+            $(element).has('.json, .textplain, .plaintext, .xml').show();
             
             $(element).children('.highlight').each(function (index, ch) {
               $(ch).hide()
-              $(ch).has(`.${activeLang}, .json, .textplain, .xml`).show()
+              $(ch).has(`.${activeLang}, .json, .textplain, .plaintext, .xml`).show()
             })
           });
         }

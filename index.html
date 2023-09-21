@@ -2850,11 +2850,11 @@ Known plugins for KB version 0.22.8
               $(element).show();
             }
             
-            $(element).has('.json, .textplain, .xml').show();
+            $(element).has('.json, .textplain, .plaintext, .xml').show();
             
             $(element).children('.highlight').each(function (index, ch) {
               $(ch).hide()
-              $(ch).has(`.${activeLang}, .json, .textplain, .xml`).show()
+              $(ch).has(`.${activeLang}, .json, .textplain, .plaintext, .xml`).show()
             })
           });
         }
