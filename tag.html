@@ -2436,7 +2436,13 @@
 
       <div class="page__content content">
         <h1 id='tag'>Tag</h1>
-<p>A tag is a label that may be attached to almost any resource. There are two categories of tags: <code>System Tags</code> and <code>User Tags</code>.</p>
+<p>A tag is a label that may be attached to almost any resource. While custom fields allow you to attach <code>{key, value}</code> pairs to various objects in the system, single values can also be
+attached to various objects in the system by using tags. There are two categories of tags: <code>System Tags</code> and <code>User Tags</code>. </p>
+
+<ul>
+<li><code>System Tags</code>: These are interpreted by the system to change its behavior. Certain tags can only be attached to specific resource types -- e.g <code>Account</code>. In order to distinguish them from the user tags, the system tags are uppercase symbols.</li>
+<li><code>User Tags</code>: These are defined by the user for any desired purpose and are <strong>not</strong> interpreted by the system and can be anything as long as it a lowercase symbol. For example, <code>good_customer</code> could be a tag that can be attached to a customer <code>Account</code>. <code>User Tags</code> must be defined using the <a href="tag-definition.html">Tag Definition</a> APIs. These tags may be attached to almost any resource type.</li>
+</ul>
 
 <p>Kill Bill provides a small set of predefined <code>System Tags</code> that affect the behavior of the system. For example, <code>AUTO_PAY_OFF</code> prevents the system from initiating automatic payment of an invoice. <code>System Tags</code> may be attached only to specific resource types, and most (including <code>AUTO_PAY_OFF</code>) apply only to <code>Accounts</code>.</p>
 
@@ -2506,9 +2512,7 @@
 </tr>
 </tbody></table>
 
-<p><code>User Tags</code> are defined by the user for any desired purpose and are not interpreted by the system. <code>User Tags</code> must be defined using the <a href="tag-definition.html">Tag Definition</a> APIs below. These tags may be attached to almost any resource type.</p>
-
-<p>This section provides APIs to list all tags, search for a specific tag, and retrieve tag audit logs. In addition, each resource provides APIs for the applicable CRUD operations: creation, retrieval, and deletion. </p>
+<p>This section provides APIs to list all tags, search for a specific tag, and retrieve tag audit logs. In addition, each resource provides APIs for the applicable CRUD operations: create, read, update and delete. </p>
 <h2 id='tag-resource'>Tag  Resource</h2>
 <p>A tag resource represents a tag. It has the following attributes:</p>
 

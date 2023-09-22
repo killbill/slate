@@ -6756,17 +6756,7 @@ This endpoint allows you to retrieve all custom fields, or to filter them by typ
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h2 id='tags'>Tags</h2>
-<p>While custom fields allow you to attach <code>{key, value}</code> pairs to various objects in the system, single values can also be
-attached to various objects in the system by using tags. Tags come in 2 different categories:</p>
-
-<ul>
-<li><code>System Tags</code>: These are interpreted by the system to change its behavior. Certain tags can only be attached to specific resource types -- e.g <code>Account</code>. In order to distinguish them from the user tags, the system tags are uppercase symbols.</li>
-<li><code>User Tags</code>: These are <strong>not</strong> interpreted by the system and can be anything as long as it a lowercase symbol. Foe example, <code>good_customer</code> could be a tag that can be attached to a customer <code>Account</code>. </li>
-</ul>
-
-<p>The APIs to manage tags rely on having an existing tag definition and supplying the <code>tagDefinitionId</code> in the calls. Therefore, for user tags, one should first create a <code>TagDefinition</code>.</p>
-
-<p>To create user tags, one must first create the tag definitions. For instructions see section <a href="tag-definition.html">Tag definition</a>.</p>
+<p>This section provides APIs to add tags, to retrieve all tags, to retrieve account tags and to remove tags associated with the account. For more details on tags, see section <a href="tag.html">Tag</a>.</p>
 <h3 id='add-tags-to-account'>Add tags to account</h3>
 <p>This API adds one or more tags to an account. The tag definitions must already exist.</p>
 

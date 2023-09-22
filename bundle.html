@@ -2515,12 +2515,23 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                     <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">bundle_id</span> <span class="o">=</span> <span class="s2">"5b7a5f2d-4054-412f-b354-b722c2cff4ec"</span>
 
-<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span>
+
 <span class="n">bundle</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">bundle</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundle</span><span class="p">(</span><span class="nx">bundleId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'7f5b6b8e-0936-4d6b-ab05-820632f385b0'</span><span class="p">;</span>
+
+<span class="nv">$bundleResult</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getBundle</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2728,7 +2739,8 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">external_key</span> <span class="o">=</span> <span class="s1">'4b67f7d8-d7db-4e4f-b282-eb1cdf43a995-43135'</span>
 <span class="n">included_deleted</span> <span class="o">=</span> <span class="kp">false</span>
 
-<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span>
+
 <span class="n">bundle</span><span class="p">.</span><span class="nf">find_by_external_key</span><span class="p">(</span><span class="n">external_key</span><span class="p">,</span> 
                             <span class="n">included_deleted</span><span class="p">,</span> 
                             <span class="n">options</span><span class="p">)</span>
@@ -2736,6 +2748,16 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundle_external_key</span> <span class="o">=</span> <span class="s">'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_by_key</span><span class="p">(</span><span class="n">bundle_external_key</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">bundle</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundleByKey</span><span class="p">(</span><span class="nx">bundleKey</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$bundleKey</span> <span class="o">=</span> <span class="s1">'bundleKey'</span><span class="p">;</span>
+
+<span class="nv">$bundleResult</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getBundleByKey</span><span class="p">(</span><span class="nv">$bundleKey</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2945,8 +2967,13 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="nc">Bundle</span> <span class="n">bundle</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Bundle</span><span class="o">();</span>
 <span class="n">bundle</span><span class="o">.</span><span class="na">setExternalKey</span><span class="o">(</span><span class="n">externalKey</span><span class="o">);</span>
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">renameExternalKey</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> <span class="n">bundle</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'ffde26ed-cd17-478e-95f8-ddfb908941ee'</span>
 <span class="n">bundle</span><span class="p">.</span><span class="nf">external_key</span> <span class="o">=</span> <span class="s2">"new_external_key"</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">rename_external_key</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> 
@@ -2962,6 +2989,34 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                               <span class="n">created_by</span><span class="p">,</span>
                               <span class="n">api_key</span><span class="p">,</span>
                               <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleBody</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">accountId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">d869f861-0c60-4086-a3fc-49ad855d48c0</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">externalKey</span><span class="p">:</span> <span class="dl">'</span><span class="s1">newExternalKey2</span><span class="dl">'</span>
+    <span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">renameExternalKey</span><span class="p">(</span><span class="nx">bundleBody</span><span class="p">,</span> <span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$bundleBody</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Bundle</span><span class="p">();</span>
+
+<span class="nv">$bundleBody</span><span class="o">-&gt;</span><span class="nf">setAccountId</span><span class="p">(</span><span class="s1">'5371f0c8-b39c-4e30-84ec-cc8029ba0670'</span><span class="p">);</span>
+<span class="nv">$bundleBody</span><span class="o">-&gt;</span><span class="nf">setExternalKey</span><span class="p">(</span><span class="s1">'externalKeyModified'</span><span class="p">);</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'c3a1547d-afe4-4bbf-9fe2-8943eaa176d9'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">renameExternalKey</span><span class="p">(</span><span class="nv">$bundleBody</span><span class="p">,</span>
+                                <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span>
+                                <span class="nv">$bundleId</span><span class="p">,</span>
+                                <span class="nv">$xKillbillReason</span><span class="p">,</span>
+                                <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -3025,12 +3080,17 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                          <span class="n">billingPolicy</span><span class="o">,</span>
                                          <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> 
                                          <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2023-08-01"</span>
 <span class="n">billing_policy</span> <span class="o">=</span> <span class="s2">"END_OF_TERM"</span>
 
 <span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">bundle</span><span class="p">.</span><span class="nf">account_id</span> <span class="o">=</span> <span class="n">new_account_id</span>
-<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">account_id</span> <span class="o">=</span> <span class="s1">'e2d81f64-2268-4e71-843b-1d14f0fc5259'</span>
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'ffde26ed-cd17-478e-95f8-ddfb908941ee'</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">transfer</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span> 
                 <span class="n">billing_policy</span><span class="p">,</span> 
@@ -3048,6 +3108,30 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                           <span class="n">created_by</span><span class="p">,</span> 
                           <span class="n">api_key</span><span class="p">,</span> 
                           <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleBody</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span> <span class="o">=</span> <span class="p">{</span><span class="na">accountId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">3e5e2f75-728f-4fc4-a8fc-066e7420bd69</span><span class="dl">'</span><span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">transferBundle</span><span class="p">(</span><span class="nx">bundleBody</span><span class="p">,</span> <span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$bundleBody</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Bundle</span><span class="p">();</span>
+
+<span class="nv">$bundleBody</span><span class="o">-&gt;</span><span class="nf">setAccountId</span><span class="p">(</span><span class="s1">'3d7449fa-0ac8-4081-84a1-87d4371802e1'</span><span class="p">);</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'f339d676-9afa-42f3-acc6-c155677d80a6'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">transferBundle</span><span class="p">(</span><span class="nv">$bundleBody</span><span class="p">,</span>
+                             <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span>
+                             <span class="nv">$bundleId</span><span class="p">,</span>
+                             <span class="nv">$xKillbillReason</span><span class="p">,</span>
+                             <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -3128,9 +3212,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="nc">LoalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">pauseBundle</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span> <span class="n">pluginProperty</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
-<span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'ea82c581-4bbc-4f2b-8d5a-31a91e9df78b'</span>
+<span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2023-08-01"</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">pause</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span> 
              <span class="n">user</span><span class="p">,</span> 
@@ -3144,6 +3233,18 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                        <span class="n">created_by</span><span class="p">,</span> 
                        <span class="n">api_key</span><span class="p">,</span> 
                        <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">pauseBundle</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">pauseBundle</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3193,9 +3294,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">pluginProperty</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">resumeBundle</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span> <span class="n">pluginProperty</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>    
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="n">bundle_id</span>
-<span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'ea82c581-4bbc-4f2b-8d5a-31a91e9df78b'</span>
+<span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2023-08-01"</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">resume</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span> 
               <span class="n">user</span><span class="p">,</span> 
@@ -3209,6 +3315,18 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                         <span class="n">created_by</span><span class="p">,</span> 
                         <span class="n">api_key</span><span class="p">,</span> 
                         <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span> 
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">resumeBundle</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">resumeBundle</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3286,12 +3404,21 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                  <span class="n">requestedDate</span><span class="o">,</span> 
                                  <span class="n">pluginProperty</span><span class="o">,</span> 
                                  <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">state_name</span> <span class="o">=</span> <span class="s2">"STATE1"</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">state_name</span> <span class="o">=</span> <span class="s2">"STATE1"</span>
 <span class="n">service</span> <span class="o">=</span> <span class="s2">"ServiceStateService"</span>
 <span class="n">block_change</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="n">block_entitlement</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="n">block_billing</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="n">requested_date</span> <span class="o">=</span> <span class="s2">"2013-08-01"</span>
+
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">account_id</span> <span class="o">=</span> <span class="s1">'68b0fe70-8b14-42e0-b204-a56e9945d8e5'</span>
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">set_blocking_state</span><span class="p">(</span><span class="n">state_name</span><span class="p">,</span>
                           <span class="n">service</span><span class="p">,</span>
@@ -3316,6 +3443,36 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                     <span class="n">created_by</span><span class="p">,</span>
                                     <span class="n">api_key</span><span class="p">,</span>
                                     <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">blockingState</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BlockingState</span> <span class="o">=</span> <span class="p">{</span>
+                                                <span class="na">blockedId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">5371f0c8-b39c-4e30-84ec-cc8029ba0670</span><span class="dl">'</span><span class="p">,</span>
+                                                <span class="na">service</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Billing</span><span class="dl">'</span><span class="p">,</span>
+                                                <span class="na">stateName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Acct_resumed</span><span class="dl">'</span><span class="p">,</span>
+                                                <span class="na">isBlockChange</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                                <span class="na">isBlockEntitlement</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+                                                <span class="na">isBlockBilling</span><span class="p">:</span> <span class="kc">false</span>
+                                              <span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">addBundleBlockingState</span><span class="p">(</span><span class="nx">blockingState</span><span class="p">,</span> <span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+
+<span class="nv">$blockingState</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BlockingState</span><span class="p">();</span>
+
+<span class="nv">$blockingState</span><span class="o">-&gt;</span><span class="nf">setBlockedId</span><span class="p">(</span><span class="s1">'3d7449fa-0ac8-4081-84a1-87d4371802e1'</span><span class="p">);</span>
+<span class="nv">$blockingState</span><span class="o">-&gt;</span><span class="nf">setService</span><span class="p">(</span><span class="s1">'Billing'</span><span class="p">);</span>
+<span class="nv">$blockingState</span><span class="o">-&gt;</span><span class="nf">setStateName</span><span class="p">(</span><span class="s1">'Acct_Paused'</span><span class="p">);</span>
+<span class="nv">$blockingState</span><span class="o">-&gt;</span><span class="nf">setIsBlockBilling</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="nv">$blockingState</span><span class="o">-&gt;</span><span class="nf">setIsBlockEntitlement</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="nv">$blockingState</span><span class="o">-&gt;</span><span class="nf">setIsBlockChange</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">addBundleBlockingState</span><span class="p">(</span><span class="nv">$blockingState</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$bundleId</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -3396,7 +3553,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">createBundleCustomFields</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                                    <span class="n">customFields</span><span class="o">,</span> 
                                    <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
+
+<span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">object_type</span> <span class="o">=</span> <span class="s1">'BUNDLE'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
@@ -3414,6 +3578,33 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                       <span class="n">created_by</span><span class="p">,</span>
                                       <span class="n">api_key</span><span class="p">,</span>
                                       <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">customFields</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Test Custom Field</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test_value</span><span class="dl">'</span><span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">customFieldsBody</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customFields</span><span class="p">];</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">createBundleCustomFields</span><span class="p">(</span><span class="nx">customFieldsBody</span><span class="p">,</span> <span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$customField</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomField</span><span class="p">();</span>
+
+<span class="nv">$customField</span><span class="o">-&gt;</span><span class="nf">setName</span><span class="p">(</span><span class="s1">'CustomFieldName'</span><span class="p">);</span>
+<span class="nv">$customField</span><span class="o">-&gt;</span><span class="nf">setValue</span><span class="p">(</span><span class="s1">'CustomFieldValue'</span><span class="p">);</span>
+
+<span class="nv">$customFieldBody</span> <span class="o">=</span> <span class="p">[</span><span class="nv">$customField</span><span class="p">];</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">createBundleCustomFields</span><span class="p">(</span><span class="nv">$customFieldBody</span><span class="p">,</span>
+                                       <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span>
+                                       <span class="nv">$bundleId</span><span class="p">,</span>
+                                       <span class="nv">$xKillbillReason</span><span class="p">,</span>
+                                       <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -3459,11 +3650,26 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                                                        <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
 
-<span class="n">bundle</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
+
+<span class="n">bundleCustomFields</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'ce967207-851c-4040-bfbd-74a8924f9b8a'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_custom_fields</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">bundleCustomFields</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span>
+      <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundleCustomFields</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$bundleCustomFields</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getBundleCustomFields</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3536,11 +3742,17 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">modifyBundleCustomFields</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                                    <span class="n">customFields</span><span class="o">,</span> 
                                    <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
-<span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_modify_value'</span>
 
-<span class="n">bundle</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>                                                                                            
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
                            <span class="n">user</span><span class="p">,</span> 
                            <span class="n">reason</span><span class="p">,</span>
                            <span class="n">comment</span><span class="p">,</span> 
@@ -3555,6 +3767,36 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                       <span class="n">created_by</span><span class="p">,</span> 
                                       <span class="n">api_key</span><span class="p">,</span> 
                                       <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span> <span class="na">customFieldId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">859a4053-4946-4be0-b94b-fe7a9409d785</span><span class="dl">'</span><span class="p">,</span>
+                                            <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">custom-field-value-change</span><span class="dl">'</span>
+                                          <span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">customFieldBody</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">modifyBundleCustomFields</span><span class="p">(</span><span class="nx">customFieldBody</span><span class="p">,</span> <span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$customField</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CustomField</span><span class="p">();</span>
+
+<span class="nv">$customField</span><span class="o">-&gt;</span><span class="nf">setCustomFieldId</span><span class="p">(</span><span class="s1">'ea5cf813-b420-4409-acd5-0b4ae83ea907'</span><span class="p">);</span>
+<span class="nv">$customField</span><span class="o">-&gt;</span><span class="nf">setValue</span><span class="p">(</span><span class="s1">'CustomFieldValueChange'</span><span class="p">);</span>
+
+<span class="nv">$customFieldBody</span> <span class="o">=</span> <span class="p">[</span><span class="nv">$customField</span><span class="p">];</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">modifyBundleCustomFields</span><span class="p">(</span><span class="nv">$customFieldBody</span><span class="p">,</span>
+                                       <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span>
+                                       <span class="nv">$bundleId</span><span class="p">,</span>
+                                       <span class="nv">$xKillbillReason</span><span class="p">,</span>
+                                       <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -3599,7 +3841,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">deleteBundleCustomFields</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                                    <span class="n">customFieldsList</span><span class="o">,</span> 
                                    <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">custom_field_id</span> <span class="o">=</span> <span class="n">custom_field</span><span class="p">.</span><span class="nf">id</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s1">'a0535196-6f4f-46ca-8d63-e393460b1b42'</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span> 
                            <span class="n">user</span><span class="p">,</span> 
@@ -3613,6 +3859,19 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                       <span class="n">created_by</span><span class="p">,</span> 
                                       <span class="n">api_key</span><span class="p">,</span> 
                                       <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">customFieldIDs</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">859a4053-4946-4be0-b94b-fe7a9409d785</span><span class="dl">'</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">deleteBundleCustomFields</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">customFieldIDs</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deleteBundleCustomFields</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3675,7 +3934,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="nc">Tags</span> <span class="n">result</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="o">.</span><span class="na">createBundleTags</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                                          <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                                          <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'bundletesttag'</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">add_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
                <span class="n">user</span><span class="p">,</span>
@@ -3691,6 +3954,27 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                              <span class="n">created_by</span><span class="p">,</span> 
                              <span class="n">api_key</span><span class="p">,</span> 
                              <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleTags</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">acc26862-875e-4b24-990e-985d3f837862</span><span class="dl">'</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">createBundleTags</span><span class="p">(</span><span class="nx">bundleTags</span><span class="p">,</span> <span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$bundleTags</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'acc26862-875e-4b24-990e-985d3f837862'</span><span class="p">];</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">createBundleTags</span><span class="p">(</span><span class="nv">$bundleTags</span><span class="p">,</span>
+                               <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span>
+                               <span class="nv">$bundleId</span><span class="p">,</span>
+                               <span class="nv">$xKillbillReason</span><span class="p">,</span>
+                               <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -3732,13 +4016,27 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">included_deleted</span> <span class="o">=</span> <span class="kp">false</span>
 <span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
 
-<span class="n">bundle</span><span class="p">.</span><span class="nf">tags</span><span class="p">(</span><span class="n">included_deleted</span><span class="p">,</span>
-            <span class="n">audit</span><span class="p">,</span>
-            <span class="n">options</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
+
+<span class="n">bundleTags</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">tags</span><span class="p">(</span><span class="n">included_deleted</span><span class="p">,</span>
+                         <span class="n">audit</span><span class="p">,</span>
+                         <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'28af3cb9-275b-4ac4-a55d-a0536e479069'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_tags</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">bundletags</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundleTags</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$bundleTags</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getBundleTags</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3811,7 +4109,15 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundleApi</span><span class="o">.</span><span class="na">deleteBundleTags</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span> 
                            <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">tagDefinitionId</span><span class="o">),</span> 
                            <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'foo'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'bundletesttag'</span>
+
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">remove_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
                   <span class="n">user</span><span class="p">,</span>
@@ -3827,6 +4133,28 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                              <span class="n">api_key</span><span class="p">,</span> 
                              <span class="n">api_secret</span><span class="p">,</span>
                              <span class="n">tag_def</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleTag</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">acc26862-875e-4b24-990e-985d3f837862</span><span class="dl">'</span><span class="p">];</span>
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">bundleApi</span><span class="p">.</span><span class="nx">deleteBundleTags</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">bundleTag</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+<span class="nv">$tagDefId</span> <span class="o">=</span> <span class="s1">'acc26862-875e-4b24-990e-985d3f837862'</span><span class="p">;</span>
+
+<span class="nv">$tag</span> <span class="o">=</span> <span class="p">[</span><span class="nv">$tagid</span><span class="p">];</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deleteBundleTags</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">,</span>
+                               <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span>
+                               <span class="nv">$tag</span><span class="p">,</span>
+                               <span class="nv">$xKillbillReason</span><span class="p">,</span>
+                               <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3869,6 +4197,24 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/d1b329c7-7dcf-466c-aaca-47bff304dab0/auditLogsWithHistory"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
+
+<span class="n">bundleAuditLogs</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">bundletags</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">AuditLog</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span>
+      <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundleAuditLogsWithHistory</span><span class="p">(</span><span class="nx">bundleID</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$bundleId</span> <span class="o">=</span> <span class="s1">'fb1ac07b-c132-4eeb-84d8-95228e3fbd9e'</span><span class="p">;</span>
+
+<span class="nv">$bundleAuditLogs</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getBundleAuditLogsWithHistory</span><span class="p">(</span><span class="nv">$bundleId</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3956,12 +4302,20 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
 
-<span class="n">bundle</span><span class="p">.</span><span class="nf">find_in_batches</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span>
-                       <span class="n">limit</span><span class="p">,</span>
-                       <span class="n">options</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span>
+
+<span class="n">paginatedBundles</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">find_in_batches</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span>
+                                          <span class="n">limit</span><span class="p">,</span>
+                                          <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundles</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">,)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">bundles</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundles</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="nv">$bundles</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getBundles</span><span class="p">();</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -4388,14 +4742,26 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
 
-<span class="n">bundle</span><span class="p">.</span><span class="nf">find_in_batches_by_search_key</span><span class="p">(</span><span class="n">search_key</span><span class="p">,</span>
-                                     <span class="n">offset</span><span class="p">,</span>
-                                     <span class="n">limit</span><span class="p">,</span>
-                                     <span class="n">options</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span>
+
+<span class="n">bundles</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">find_in_batches_by_search_key</span><span class="p">(</span><span class="n">search_key</span><span class="p">,</span>
+                                               <span class="n">offset</span><span class="p">,</span>
+                                               <span class="n">limit</span><span class="p">,</span>
+                                               <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 <span class="n">search_key</span> <span class="o">=</span> <span class="s">'7b26b0ce-a495-4c0c-9dd5-11a556f03e8c'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">search_bundles</span><span class="p">(</span><span class="n">search_key</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">searchKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">bundles</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">searchBundles</span><span class="p">(</span><span class="nx">searchKey</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getBundleApi</span><span class="p">();</span>
+
+<span class="k">const</span> <span class="no">searchKey</span> <span class="o">=</span> <span class="s1">'BundleSearchKey'</span><span class="p">;</span>
+
+<span class="nv">$bundles</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">searchBundles</span><span class="p">(</span><span class="n">searchKey</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
