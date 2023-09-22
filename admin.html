@@ -2501,9 +2501,11 @@
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.AdminApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="nc">AdminApi</span> <span class="n">adminApi</span><span class="o">;</span>
 
-<span class="n">adminApi</span><span class="o">.</span><span class="na">triggerInvoiceGenerationForParkedAccounts</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span>
-                                                   <span class="n">limit</span><span class="o">,</span>
-                                                   <span class="n">requestOptions</span><span class="o">);</span>
+<span class="nc">Long</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">;</span>
+<span class="nc">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10L</span><span class="o">;</span>
+<span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="n">adminApi</span><span class="o">.</span><span class="na">triggerInvoiceGenerationForParkedAccounts</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span> <span class="n">limit</span><span class="o">,</span> <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">ofset</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
@@ -2514,7 +2516,23 @@
                                                                             <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">trigger_invoice_generation_for_parked_accounts</span><span class="p">(</span><span class="s">'test'</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">trigger_invoice_generation_for_parked_accounts</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                                        <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                                        <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">triggerInvoiceGenerationForParkedAccounts</span><span class="p">(</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$offset</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nv">$limit</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="nv">$pluginProperty</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"pluginProperty_example"</span><span class="p">);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">triggerInvoiceGenerationForParkedAccounts</span><span class="p">(</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$offset</span><span class="p">,</span> <span class="nv">$limit</span><span class="p">,</span> <span class="nv">$pluginProperty</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2566,6 +2584,13 @@
 <td>100</td>
 <td>max results on this page</td>
 </tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>omit</td>
+<td>list of plugin properties, if any</td>
+</tr>
 </tbody></table>
 
 <p><strong>Returns</strong></p>
@@ -2613,33 +2638,51 @@ This could happen, for example, if a call to a third party payment gateway times
                                        <span class="n">paymentTransactionId</span><span class="o">,</span>
                                        <span class="n">body</span><span class="o">,</span>
                                        <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_id</span> <span class="o">=</span> <span class="s2">"6cb944a-b308-4488-b046-4b4d61d375a6"</span>
-<span class="n">transaction_id</span> <span class="o">=</span> <span class="s2">"8gb944a-b308-4488-b046-4b4d61d375r3"</span>
-<span class="n">transaction_status</span> <span class="o">=</span> <span class="s2">"AUTH_FAILED"</span>
-<span class="n">user</span> <span class="o">=</span>  <span class="s2">"demo"</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
 <span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">fix_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
-                                                   <span class="n">transaction_id</span><span class="p">,</span>
-                                                   <span class="n">transaction_status</span><span class="p">,</span>
-                                                   <span class="n">user</span><span class="p">,</span>
-                                                   <span class="n">reason</span><span class="p">,</span>
-                                                   <span class="n">comment</span><span class="p">,</span>
-                                                   <span class="n">options</span><span class="p">)</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s2">"6cb944a-b308-4488-b046-4b4d61d375a6"</span>
+<span class="n">transaction_id</span> <span class="o">=</span> <span class="s2">"8gb944a-b308-4488-b046-4b4d61d375r3"</span>
+<span class="n">body</span> <span class="o">=</span> <span class="no">AdminPayment</span><span class="p">(</span><span class="n">transaction_status</span><span class="o">=</span><span class="s1">'PAYMENT_FAILURE'</span><span class="p">)</span>
+
+<span class="n">adminApi</span><span class="p">.</span><span class="nf">update_payment_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                          <span class="n">payment_transaction_id</span><span class="p">,</span>
+                                          <span class="n">body</span><span class="p">,</span>
+                                          <span class="n">created_by</span><span class="o">=</span><span class="s1">'demo'</span><span class="p">,</span>
+                                          <span class="n">reason</span><span class="o">=</span><span class="s1">'reason'</span><span class="p">,</span>
+                                          <span class="n">comment</span><span class="o">=</span><span class="s1">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'8gb944a-b308-4488-b046-4b4d61d375r3'</span>
-<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'6cb944a-b308-4488-b046-4b4d61d375a6'</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">AdminPayment</span><span class="p">(</span><span class="n">transaction_status</span><span class="o">=</span><span class="s">'AUTH_FAILED'</span><span class="p">)</span>
-<span class="n">created_by</span> <span class="o">=</span> <span class="s">'demo'</span>
+<span class="n">payment_id</span> <span class="o">=</span> <span class="s">'770d7802-9e03-45dc-a16a-dc58ddcb44d1'</span>
+<span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'f20e1bca-8c3e-4a8f-b411-27f4362f858b'</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">AdminPayment</span><span class="p">(</span><span class="n">transaction_status</span><span class="o">=</span><span class="s">'PAYMENT_FAILURE'</span><span class="p">)</span>
 
 <span class="n">adminApi</span><span class="p">.</span><span class="n">update_payment_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
                                           <span class="n">payment_transaction_id</span><span class="p">,</span>
                                           <span class="n">body</span><span class="p">,</span>
-                                          <span class="n">created_by</span><span class="p">,</span>
-                                          <span class="n">api_key</span><span class="p">,</span>
-                                          <span class="n">api_secret</span><span class="p">)</span>
+                                          <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                          <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span>
+                                          <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">paymentId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">770d7802-9e03-45dc-a16a-dc58ddcb44d1</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">paymentTransactionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">f20e1bca-8c3e-4a8f-b411-27f4362f858b</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">adminPayment</span><span class="p">:</span> <span class="nx">AdminPayment</span> <span class="o">=</span> <span class="p">{</span><span class="na">transactionStatus</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PAYMENT_FAILURE</span><span class="dl">"</span><span class="p">};</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">updatePaymentTransactionState</span><span class="p">(</span><span class="nx">adminPayment</span><span class="p">,</span> <span class="nx">paymentId</span><span class="p">,</span> <span class="nx">paymentTransactionId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AdminPayment</span><span class="p">();</span>
+<span class="nv">$body</span> <span class="o">-&gt;</span> <span class="nf">setTransactionStatus</span><span class="p">(</span><span class="s1">'PAYMENT_FAILURE'</span><span class="p">);</span>
+<span class="nv">$paymentId</span> <span class="o">=</span> <span class="s2">"770d7802-9e03-45dc-a16a-dc58ddcb44d1"</span><span class="p">;</span>
+<span class="nv">$paymentTransactionId</span> <span class="o">=</span> <span class="s2">"f20e1bca-8c3e-4a8f-b411-27f4362f858b"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updatePaymentTransactionState</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span> <span class="nv">$xKillbillCreatedBy</span><span class="p">,</span> <span class="nv">$paymentId</span><span class="p">,</span> <span class="nv">$paymentTransactionId</span><span class="p">,</span> <span class="nv">$xKillbillReason</span><span class="p">,</span> <span class="nv">$xKillbillComment</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -2680,7 +2723,15 @@ This could happen, for example, if a call to a third party payment gateway times
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">invalidates_cache</span><span class="p">(</span><span class="n">cache_name</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">invalidates_cache</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">invalidates_cache</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">invalidatesCache</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$cacheName</span> <span class="o">=</span> <span class="s2">"tenant"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">invalidatesCache</span><span class="p">(</span><span class="nv">$cacheName</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -2698,7 +2749,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <td>string</td>
 <td>no</td>
 <td>all caches</td>
-<td>cache name</td>
+<td>Cache name. Possible values are defined in the <a href="https://github.com/killbill/killbill/blob/master/util/src/main/java/org/killbill/billing/util/cache/Cachable.java">Cacheable</a> interface</td>
 </tr>
 </tbody></table>
 
@@ -2732,7 +2783,17 @@ This could happen, for example, if a call to a third party payment gateway times
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'2ad52f53-85ae-408a-9879-32a7e59dd03d'</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">invalidates_cache_by_account</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">invalidates_cache_by_account</span><span class="p">(</span><span class="n">account_id</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">accountId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7958908b-040a-4e2c-9606-4f1f62ac1c33</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">invalidatesCacheByAccount</span><span class="p">(</span><span class="nx">accountId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$accountId</span> <span class="o">=</span> <span class="s2">"7958908b-040a-4e2c-9606-4f1f62ac1c33"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">invalidatesCacheByAccount</span><span class="p">(</span><span class="nv">$accountId</span><span class="p">);</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -2764,7 +2825,13 @@ This could happen, for example, if a call to a third party payment gateway times
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">invalidates_cache_by_tenant</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">invalidates_cache_by_tenant</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">invalidates_cache_by_tenant</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">invalidatesCacheByTenant</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">invalidatesCacheByTenant</span><span class="p">();</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -2797,7 +2864,13 @@ This could happen, for example, if a call to a third party payment gateway times
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">put_in_rotation</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">put_in_rotation</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">put_in_rotation</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">putInRotation</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">putInRotation</span><span class="p">();</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -2829,7 +2902,13 @@ This could happen, for example, if a call to a third party payment gateway times
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">put_out_of_rotation</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">put_out_of_rotation</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">put_out_of_rotation</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">putOutOfRotation</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">putOutOfRotation</span><span class="p">();</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -2841,7 +2920,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h2 id='low-level-view-apis'>Low Level View Apis</h2>
 <p>This API group currently includes a single API to view entries in the system queues</p>
 <h3 id='get-queue-entries'>Get queue entries</h3>
-<p>Returns low level details about queue entries. Results can be requested for a specific account or all accounts; for a specific queue or all queues, and for a specific service or all services. In addition optional types of events may be specified, including history, for a specified date range; in processing; bus events; and notifications.</p>
+<p>Returns low level details about queue entries. Results can be requested for a specific account or all accounts; for a specific queue or all queues, and for a specific service or all services. In addition, optional parameters may be specified, including history, for a specified date range; in processing; bus events; and notifications.</p>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -2882,7 +2961,23 @@ This could happen, for example, if a call to a third party payment gateway times
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">get_queues_entries</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
-<span class="n">adminApi</span><span class="p">.</span><span class="n">get_queue_entries</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">adminApi</span><span class="p">.</span><span class="n">get_queue_entries</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">AdminApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">api</span><span class="p">.</span><span class="nx">getQueueEntries</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getAdminApi</span><span class="p">();</span>
+
+<span class="nv">$accountId</span> <span class="o">=</span> <span class="s2">"38400000-8cf0-11bd-b23e-10b96e4ef00d"</span><span class="p">;</span>
+<span class="nv">$queueName</span> <span class="o">=</span> <span class="s2">"queueName_example"</span><span class="p">;</span>
+<span class="nv">$serviceName</span> <span class="o">=</span> <span class="s2">"serviceName_example"</span><span class="p">;</span>
+<span class="nv">$withHistory</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nv">$minDate</span> <span class="o">=</span> <span class="s2">"2023-01-01"</span><span class="p">;</span>
+<span class="nv">$maxDate</span> <span class="o">=</span> <span class="s2">"2023-12-31"</span><span class="p">;</span>
+<span class="nv">$withInProcessing</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nv">$withBusEvents</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="nv">$withNotifications</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getQueueEntries</span><span class="p">(</span><span class="nv">$accountId</span><span class="p">,</span> <span class="nv">$queueName</span><span class="p">,</span> <span class="nv">$serviceName</span><span class="p">,</span> <span class="nv">$withHistory</span><span class="p">,</span> <span class="nv">$minDate</span><span class="p">,</span> <span class="nv">$maxDate</span><span class="p">,</span> <span class="nv">$withInProcessing</span><span class="p">,</span> <span class="nv">$withBusEvents</span><span class="p">,</span> <span class="nv">$withNotifications</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2967,6 +3062,11 @@ This could happen, for example, if a call to a third party payment gateway times
 <td>if true include notifications</td>
 </tr>
 </tbody></table>
+
+<p><strong>Notes:</strong>
+* If <code>accountId</code> is specified, <code>minDate</code> and <code>maxDate</code> have no effect and all the queue entries for the specified account are returned.
+* If <code>withHistory</code> is false, the <code>minDate</code> parameter has no effect and all queue entries up to the specified <code>maxDate</code> are returned.
+* If <code>withHistory</code> is true, the <code>maxDate</code> parameter has no effect and all queue entries starting from <code>minDate</code> are returned.</p>
 
 <p><strong>Returns</strong></p>
 
