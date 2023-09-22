@@ -8,11 +8,11 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: 3.2.2
           bundler-cache: true
       - name: Build Slate
         run: |
-          ./deploy.sh --source-only
+          ./deploy.sh -v --source-only

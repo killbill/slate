@@ -16,7 +16,7 @@ The Admin resource offers a set of endpoints such as the following:
 
 Please refer [Payment States](https://github.com/killbill/killbill/blob/ff81c701e236310561e31624df18bab5788b0339/payment/src/main/java/org/killbill/billing/payment/core/sm/PaymentStateMachineHelper.java) information to understand the possible values of Payment State.
 
-Please refer [Payment Transaction Resource](https://killbill.github.io/slate/?shell#payment-transaction-payment-transaction-resource) to understand the possible values of `transactionStatus`.
+Please refer [Payment Transaction Resource](payment-transaction.html#payment-transaction-resource) to understand the possible values of `transactionStatus`.
 
 
 ## Administrative Apis

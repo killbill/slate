@@ -93,7 +93,7 @@ These endpoints support the basic CRUD operations on Subscriptions.
 
 ### Create a subscription
 
-This API creates a base product subscription. It also creates a bundle to contain the subscription. See [Bundle](https://killbill.github.io/slate/#bundle) for further information.
+This API creates a base product subscription. It also creates a bundle to contain the subscription. See [Bundle](bundle.html) for further information.
 
 **HTTP Request** 
 
@@ -218,9 +218,13 @@ Subscription subscription = subscriptionApi.createSubscription(input,
 ```
 
 ```ruby
-subscription              = KillBillClient::Model::Subscription.new
-subscription.account_id   = "e1826665-4524-4d57-81b5-a5eb11146f3f"
-subscription.plan_name    = "basic-monthly-in-advance"
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.account_id = "e1826665-4524-4d57-81b5-a5eb11146f3f"
+subscription.plan_name = "basic-monthly-in-advance"
 
 requested_date  = nil
 call_completion = nil 
@@ -235,14 +239,45 @@ subscription.create(user,
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-account_id = 'e1826665-4524-4d57-81b5-a5eb11146f3f'
-body = Subscription(account_id=account_id, plan_name='standard-monthly')
+account_id = '32660591-b8a0-4a0e-b6a8-9b52611217c2'
+body = Subscription(account_id=account_id, plan_name='pistol-monthly')
 
-subscriptionApi.create_subscription(body,
-                                    created_by,
-                                    api_key,
-                                    api_secret)
+subscriptionApi.create_subscription(body, 
+                                    created_by='demo',
+                                    reason='reason', 
+                                    comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscription: Subscription = {planName: "blowdart-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+
+api.createSubscription(subscription, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new Subscription();
+$body -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$body -> setPlanName('pistol-monthly');
+
+$entitlementDate = null;
+$billingDate = null;
+$renameKeyIfExistsAndUnused = false;
+$migrated = false;
+$skipResponse = false;
+$callCompletion = false;
+$callTimeoutSec = 3;
+$pluginProperty = array("pluginProperty_example");
+
+$result = $apiInstance->createSubscription($body, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment, $entitlementDate, $billingDate, $renameKeyIfExistsAndUnused, $migrated, $skipResponse, $callCompletion, $callTimeoutSec, $pluginProperty);
+````
 
 **Request Body**
 
@@ -258,14 +293,15 @@ It can also include the following optional fields:
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | ---- | -------- | ------- | ----------- |
-| **entitlementDate** | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format.|
-| **billingDate** | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format.|
-| **renameKeyIfExistsAndUnused** | boolean | no | true | If true, rename external key if it exists and is unused |
-| **migrated** | boolean | no | false | If true, subscription is migrated |
-| **callCompletion** | boolean | no | false | see below |
-| **callTimeoutSec** | long | no | unlimited? | Timeout in seconds (see below) |
+| Name                           | Type | Required | Default | Description                                                                                        |
+|--------------------------------| ---- | -------- | ------- |----------------------------------------------------------------------------------------------------|
+| **entitlementDate**            | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format. |
+| **billingDate**                | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format. |
+| **renameKeyIfExistsAndUnused** | boolean | no | true | If true, rename external key if it exists and is unused                                            |
+| **migrated**                   | boolean | no | false | If true, subscription is migrated                                                                  |
+| **skipResponse**               | boolean | no | false | TODO                                                                                               |
+| **callCompletion**             | boolean | no | false | see below                                                                                          |
+| **callTimeoutSec**             | long | no | unlimited? | Timeout in seconds (see below)                                                                     |
 
 Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If **callCompletion** is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by **callTimeoutSec**.
 
@@ -277,11 +313,11 @@ Creating a subscription often triggers the creation of an invoice, and associate
 
 **Response**
 
-If successful, returns a status code of 201 and an empty body. In addition, a `Location` parameter is returned in the header which contains the new subscription id.
+If successful, returns a status code of 201 and an empty body. In addition, a `Location` header is returned which contains the new subscription id.
 
 ### Create a subscription with addon products
 
-This API creates an addon product subscription. The bundle for the base subscription must be specified.
+This API creates a subscription bundle with base and addon product subscriptions. It can also be used to add an addon subscription to a base subscription in which case the bundle id of the base subscription must be specified.
 
 
 **HTTP Request**
@@ -291,6 +327,7 @@ This API creates an addon product subscription. The bundle for the base subscrip
 > Example Request:
 
 ```shell
+# create a subscription with addon
 curl -v \
     -X POST \
     -u admin:password \
@@ -320,6 +357,7 @@ curl -v \
     
 OR
 
+# create an addon on an existing base subscription
 curl -v \
     -X POST \
     -u admin:password \
@@ -394,18 +432,27 @@ final Bundle bundle = subscriptionApi.createSubscriptionWithAddOns(subscriptions
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 entitlement = [
-                 {
-                    "baseEntitlementAndAddOns":[
-                       {
-                          "accountId":"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836",
-                          "externalKey":"1-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-827963",
-                          "productCategory":"BASE",
-                          "planName":"sports-monthly"
-                       }
-                    ]
-                 }
-              ]
+                {
+                    "accountId":"e3a23520-2ce2-493a-a3c0-7fc08e554353",
+                    "productCategory":"BASE",
+                    "productName":"Shotgun",
+                    "billingPeriod":"MONTHLY",
+                    "priceList":"DEFAULT"
+                },
+                {
+                    "accountId":"e3a23520-2ce2-493a-a3c0-7fc08e554353",
+                    "productCategory":"ADD_ON",
+                    "productName":"Telescopic-Scope",
+                    "billingPeriod":"MONTHLY",
+                    "priceList":"DEFAULT"
+                }
+             ]
+
 requested_date = nil
 entitlement_date = nil
 billing_date = nil
@@ -415,34 +462,71 @@ call_completion_sec = 3
 subscription = KillBillClient::Model::Subscription.new
 subscription.create_entitlement_with_add_on(entitlement,
                                             requested_date,
-                                            entitlement_date, 
+                                            entitlement_date,
                                             billing_date,
-                                            migrated, 
-                                            call_completion_sec,                                            
-                                            user, 
-                                            reason, 
-                                            comment, 
-                                            options)                                         
+                                            migrated,
+                                            call_completion_sec,
+                                            user,
+                                            reason,
+                                            comment,
+                                            options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-account_id = '16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836'
+account_id = '32660591-b8a0-4a0e-b6a8-9b52611217c2'
 subscription_a = Subscription(account_id=account_id,
-                              product_category='BASE',
-                              plan_name='sports-monthly')
+                              plan_name='pistol-monthly')
 
 subscription_b = Subscription(account_id=account_id,
-                              product_category='ADD_ON',
-                              plan_name='super-monthly')
+                              plan_name='cleaning-monthly')
 
 body = [subscription_a, subscription_b]
 
-subscriptionApi.create_subscription_with_add_ons(body,
-                                                 created_by,
-                                                 api_key,
-                                                 api_secret)
+subscriptionApi.create_subscription_with_add_ons(body, 
+                                                 created_by='demo', 
+                                                 reason='reason', 
+                                                 comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const base: Subscription = {planName: "pistol-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+const addon: Subscription = {planName: "cleaning-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+const subscriptions =[base, addon];
+
+api.createSubscriptionWithAddOns(subscriptions, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$base = new Subscription();
+$base -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$base -> setPlanName('pistol-monthly');
+
+$addon = new Subscription();
+$addon -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$addon -> setPlanName('cleaning-monthly');
+
+$body = array($base, $addon);
+
+$entitlementDate = null;
+$billingDate = null;
+$migrated = false;
+$skipResponse = false;
+$renameKeyIfExistsAndUnused = true;
+$callCompletion = false;
+$callTimeoutSec = 3;
+$pluginProperty = array("pluginProperty_example");
+
+$result = $apiInstance->createSubscriptionWithAddOns($body, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment, $entitlementDate, $billingDate, $migrated, $skipResponse, $renameKeyIfExistsAndUnused, $callCompletion, $callTimeoutSec, $pluginProperty);
+````
 
 **Request Body**
 
@@ -463,21 +547,21 @@ In addition, each subscription resource can also include the following optional 
 | **billingDate** | string | no | immediately | Date at which the billing starts in `yyyy-mm-dd` format. If specified, applies both to base and add-on products. |
 | **renameKeyIfExistsAndUnused** | boolean | no | true | If true, rename external key if it exists and is unused |
 | **migrated** | boolean | no | false | If true, subscription is migrated |
+| **skipResponse**               | boolean | no | false | TODO    
 | **callCompletion** | boolean | no | false | see below |
 | **callTimeoutSec** | long | no | unlimited? | Timeout in seconds (see below) |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If **callCompletion** is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by **callTimeoutSec**.
 
 **Response**
 
-If successful, returns a status code of 201 and an empty body. In addition, a `Location` parameter is returned in the header which contains the new subscription id.
-
+If successful, returns a status code of 201 and an empty body. In addition, a `Location` header is returned which contains the new bundle id.
 
 
 ### Create multiple subscriptions with addon products
 
-This API creates multiple subscriptions with addon products. The bundle for the base subscription must be specified.
-
+This API creates multiple subscriptions with base and addon product subscriptions. It can also be used to add an addon subscription to a base subscription in which case the bundle id of the base subscription must be specified.
 
 **HTTP Request** 
 
@@ -597,7 +681,6 @@ base2.setPlanName("product1-monthly");
 Subscription base2addOn1 = new Subscription();
 base2addOn1.setAccountId(accountId);
 base2addOn1.setPlanName("product1-ao-monthly");
-base2addOn1.setBillCycleDayLocal(18);
 		
 Subscriptions subscriptions2 = new Subscriptions();
 subscriptions2.add(base2);
@@ -630,60 +713,152 @@ Bundles bundles = subscriptionApi.createSubscriptionsWithAddOns(bulkSubscription
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 bulk_subscription_list = [
                             {
                                "baseEntitlementAndAddOns":[
                                   {
-                                     "accountId":"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836",
-                                     "externalKey":"1-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-827963",
+                                     "accountId":"e3a23520-2ce2-493a-a3c0-7fc08e554353",
                                      "productCategory":"BASE",
-                                     "planName":"sports-monthly"
+                                     "productName":"Pistol",
+                                     "billingPeriod":"MONTHLY",
+                                     "priceList":"DEFAULT"
+                                  },
+                                  {
+                                     "accountId":"e3a23520-2ce2-493a-a3c0-7fc08e554353",
+                                     "productCategory":"ADD_ON",
+                                     "productName":"Cleaning",
+                                     "billingPeriod":"MONTHLY",
+                                     "priceList":"DEFAULT"
                                   }
                                ]
                             },
                             {
                                "baseEntitlementAndAddOns":[
                                   {
-                                     "accountId":"16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836",
-                                     "externalKey":"2-16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836-717751",
+                                     "accountId":"e3a23520-2ce2-493a-a3c0-7fc08e554353",
+                                     "productCategory":"BASE",
+                                     "productName":"Shotgun",
+                                     "billingPeriod":"MONTHLY",
+                                     "priceList":"DEFAULT"
+                                  },
+                                  {
+                                     "accountId":"e3a23520-2ce2-493a-a3c0-7fc08e554353",
                                      "productCategory":"ADD_ON",
-                                     "planName":"super-monthly"
+                                     "productName":"Telescopic-Scope",
+                                     "billingPeriod":"MONTHLY",
+                                     "priceList":"DEFAULT"
                                   }
                                ]
-                            }
+                            },
+
                          ]
 entitlement_date = nil
 billing_date = nil
 call_completion_sec = nil
 
-KillBillClient::Model::BulkSubscription.create_bulk_subscriptions(bulk_subscription_list, 
-                                                                  user, 
-                                                                  reason, 
-                                                                  comment, 
-                                                                  entitlement_date, 
-                                                                  billing_date, 
-                                                                  call_completion_sec, 
+KillBillClient::Model::BulkSubscription.create_bulk_subscriptions(bulk_subscription_list,
+                                                                  user,
+                                                                  reason,
+                                                                  comment,
+                                                                  entitlement_date,
+                                                                  billing_date,
+                                                                  call_completion_sec,
                                                                   options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-account_id = '16cd9eb8-bb5d-4183-b8e0-c1d6f78dc836'
+account_id = '32660591-b8a0-4a0e-b6a8-9b52611217c2'
 subscription_a = Subscription(account_id=account_id,
-                              product_category='BASE',
-                              plan_name='sports-monthly')
+                              plan_name='pistol-thirty-days')
 
 subscription_b = Subscription(account_id=account_id,
-                              product_category='ADD_ON',
-                              plan_name='super-monthly')
+                              plan_name='cleaning-monthly')
 
-body = BulkSubscriptionsBundle([subscription_a, subscription_b])
+bundle1 = BulkSubscriptionsBundle([subscription_a, subscription_b])
 
-subscriptionApi.create_subscriptions_with_add_ons([body],
-                                                  created_by,
-                                                  api_key,
-                                                  api_secret)
+subscription_c = Subscription(account_id=account_id,
+                              plan_name='shotgun-monthly')
+
+subscription_d = Subscription(account_id=account_id,
+                              plan_name='holster-monthly-regular')
+
+bundle2 = BulkSubscriptionsBundle([subscription_c, subscription_d])
+
+subscriptionApi.create_subscriptions_with_add_ons([bundle1, bundle2],
+                                                  created_by='demo',
+                                                  reason='reason',
+                                                  comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const base1: Subscription = {planName: "pistol-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+const addon1: Subscription = {planName: "cleaning-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+const subscriptions1 = [base1, addon1];
+const bulkSubBundle1: BulkSubscriptionsBundle = {baseEntitlementAndAddOns: subscriptions1};
+
+const base2: Subscription = {planName: "shotgun-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+const addon2: Subscription = {planName: "telescopic-scope-monthly", accountId: "04779ade-11f9-48d1-88a1-a63be84d1cb7"};
+const subscriptions2 = [base2, addon2];
+const bulkSubBundle2: BulkSubscriptionsBundle = {baseEntitlementAndAddOns: subscriptions2};
+
+const bulkSubscriptionBundles = [bulkSubBundle1, bulkSubBundle2];
+
+api.createSubscriptionsWithAddOns(bulkSubscriptionBundles, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$base1 = new Subscription();
+$base1 -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$base1 -> setPlanName('pistol-monthly');
+
+$addon1 = new Subscription();
+$addon1 -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$addon1 -> setPlanName('cleaning-monthly');
+
+$subs1 = array($base1, $addon1);
+
+$bulkSubscriptionsBundle1 = new BulkSubscriptionsBundle();
+$bulkSubscriptionsBundle1 -> setBaseEntitlementAndAddOns($subs1);
+
+$base2 = new Subscription();
+$base2 -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$base2 -> setPlanName('shotgun-monthly');
+
+$addon2 = new Subscription();
+$addon2 -> setAccountId('13102713-9672-4e3b-8b4f-e10869fc5a59');
+$addon2 -> setPlanName('laser-scope-monthly');
+
+$subs2 = array($base2, $addon2);
+
+$bulkSubscriptionsBundle2 = new BulkSubscriptionsBundle();
+$bulkSubscriptionsBundle2 -> setBaseEntitlementAndAddOns($subs2);
+
+$body = array($bulkSubscriptionsBundle1, $bulkSubscriptionsBundle2);
+
+$entitlementDate = null;
+$billingDate = null;
+$renameKeyIfExistsAndUnused = true;
+$migrated = false;
+$skipResponse = false;
+$callCompletion = false;
+$callTimeoutSec = 3;
+$pluginProperty = array("pluginProperty_example");
+
+$result = $apiInstance->createSubscriptionsWithAddOns($body, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment, $entitlementDate, $billingDate, $renameKeyIfExistsAndUnused, $migrated, $skipResponse, $callCompletion, $callTimeoutSec, $pluginProperty);
+````
 
 **Request Body**
 
@@ -706,14 +881,16 @@ In addition, each subscription resource can also include the following optional 
 | **billingDate** | string | no | immediately | Date at which the billing starts in `yyyy-mm-dd` format. If specified, applies both to base and add-on products. |
 | **renameKeyIfExistsAndUnused** | boolean | no | true | If true, rename external key if it exists and is unused |
 | **migrated** | boolean | no | false | If true, subscription is migrated |
+| **skipResponse**               | boolean | no | false | TODO    
 | **callCompletion** | boolean | no | false | see below |
 | **callTimeoutSec** | long | no | unlimited? | Timeout in seconds (see below) |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 Creating a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If **callCompletion** is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by **callTimeoutSec**.
 
 **Response**
 
-If successful, returns a status code of 201 and an empty body. In addition, a `Location` parameter is returned in the header which contains the new subscription id.
+If successful, returns a status code of 201 and an empty body. In addition, a `Location` header is returned which contains URL to fetch the newly created bundles.
 
 
 
@@ -742,7 +919,7 @@ protected SubscriptionApi subscriptionApi;
 
 UUID subscriptionId = UUID.fromString("905a0636-ab63-40c0-acd4-b461b6808b5d");
 
-Subscription objFromJson = subscriptionApi.getSubscription(subscriptionId, 
+Subscription subscription = subscriptionApi.getSubscription(subscriptionId, 
                                                            AuditLevel.NONE, 
                                                            requestOptions);
 ```
@@ -750,15 +927,33 @@ Subscription objFromJson = subscriptionApi.getSubscription(subscriptionId,
 ```ruby
 subscription_id = "161692a4-c293-410c-a92f-939c5e3dcba7"
 
-KillBillClient::Model::Subscription.find_by_id(subscription_id, options)
+subscription = KillBillClient::Model::Subscription.find_by_id(subscription_id, options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
 subscription_id = '4aab9b96-c2e7-4641-a6d9-db984969201e'
 
-subscriptionApi.get_subscription(subscription_id, api_key, api_secret)
+subscription = subscriptionApi.get_subscription(subscription_id)
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId= 'a07be253-f7ce-4719-9959-037e05ff0777';
+const audit = 'NONE';
+
+const response: AxiosResponse<killbill.Subscription, any> = await api.getSubscription(subscriptionId, audit);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$subscriptionId = "88d1878e-fb60-4497-95c2-ec71b4aa2a21";
+$audit = "NONE";
+
+$result = $apiInstance -> getSubscription($subscriptionId, $audit);
+````
 
 > Example Response:
 
@@ -891,19 +1086,37 @@ import org.killbill.billing.client.api.gen.SubscriptionApi;
 protected SubscriptionApi subscriptionApi;
 
 String externalKey = "somethingSpecial";
-Subscription objFromJson = subscriptionApi.getSubscriptionByKey(externalKey, requestOptions);
+Subscription subscription = subscriptionApi.getSubscriptionByKey(externalKey, requestOptions);
 ```
 
 ```ruby
 external_key = "somethingSpecial"
-KillBillClient::Model::Subscription.find_by_external_key(external_key, options)
+subscription = KillBillClient::Model::Subscription.find_by_external_key(external_key, options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
 external_key = 'somethingSpecial'
-subscriptionApi.get_subscription_by_key(external_key, api_key, api_secret)
+subscription = subscriptionApi.get_subscription_by_key(external_key)
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const key= 'somethingSpecial';
+const audit = 'NONE';
+
+const response: AxiosResponse<killbill.Subscription, any> = await api.getSubscriptionByKey(key, audit);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$externalKey = "somethingSpecial";
+$audit = "NONE";
+
+$result = $apiInstance -> getSubscriptionByKey($externalKey, $audit);
+````
 
 > Example Response:
 
@@ -1034,11 +1247,15 @@ subscriptionApi.updateSubscriptionBCD(subscriptionId,
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 subscription                      = KillBillClient::Model::Subscription.new
 subscription.subscription_id      = "161692a4-c293-410c-a92f-939c5e3dcba7"
 subscription.bill_cycle_day_local = 16
 
-effective_from_date  = '2018-08-16'
+effective_from_date  = nil
 force_past_effective_date = nil
 
 subscription.update_bcd(user, 
@@ -1055,12 +1272,38 @@ subscription_id = '161692a4-c293-410c-a92f-939c5e3dcba7'
 body = Subscription(subscription_id=subscription_id,
                     bill_cycle_day_local=26)
 
-subscriptionApi.update_subscription_bcd(subscription_id,
-                                        body,
-                                        created_by,
-                                        api_key,
-                                        api_secret)
+subscriptionApi.update_subscription_bcd(subscription_id, 
+                                        body, 
+                                        created_by='demo',
+                                        reason='reason', 
+                                        comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscription: Subscription = {billCycleDayLocal: 10};
+const subscriptionId = 'e5254822-680f-4720-b5e1-a7146cefb904';
+
+api.updateSubscriptionBCD(subscription, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new Subscription();
+$body -> setBillCycleDayLocal(5);
+$subscriptionId = "52bee217-4ed9-40a3-8b89-baa1cb1e6f95";
+
+$effectiveFromDate = null;
+$forceNewBcdWithPastEffectiveDate = false;
+
+$apiInstance->updateSubscriptionBCD($body, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment,  $effectiveFromDate, $forceNewBcdWithPastEffectiveDate);
+````
 
 **Request Body**
 
@@ -1075,7 +1318,7 @@ The new BCD needs to be specified in the request body via the `billCycleDayLocal
 
 By default the effective date must be in the future so as to not modify existing invoices. Setting **forceNewBcdWithPastEffectiveDate** to true allows the date to be set in the past. 
 
-Secondly, even after this endpoint is executed, the [Retrieve a Subscription](https://killbill.github.io/slate/?shell#subscription-retrieve-a-subscription-by-id) endpoint will still return the old BCD until an invoice is generated on the new BCD.
+Secondly, even after this endpoint is executed, the [Retrieve a Subscription](subscription.html#subscription-retrieve-a-subscription-by-id) endpoint will still return the old BCD until an invoice is generated on the new BCD.
 
 
 **Response**
@@ -1125,8 +1368,43 @@ TODO
 ```
 
 ```python
-TODO
+subscriptionApi = killbill.api.SubscriptionApi()
+subscription_id = '7b3f0181-d9e8-4886-a90a-af35e671f5f0'
+body = Subscription(subscription_id=subscription_id,
+                    quantity=3)
+
+subscriptionApi.update_subscription_quantity(subscription_id,
+                                             body,
+                                             created_by='demo',
+                                             reason='reason',
+                                             comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscription: Subscription = {quantity: 3};
+    const subscriptionId = 'e5254822-680f-4720-b5e1-a7146cefb904';
+
+api.updateSubscriptionQuantity(subscription, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new Subscription();
+$body -> setQuantity(3);
+$subscriptionId = "88d1878e-fb60-4497-95c2-ec71b4aa2a21";
+
+$effectiveFromDate = null;
+$forceNewBcdWithPastEffectiveDate = false;
+
+$apiInstance -> updateSubscriptionQuantity($body, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment, $effectiveFromDate, $forceNewBcdWithPastEffectiveDate);
+````
 
 **Request Body**
 
@@ -1159,6 +1437,7 @@ This API allows you to upgrade or downgrade a given subscription to a new `Plan`
 > Example Request:
 
 ```shell
+# With productName, billingPeriod, priceList
 curl -v \
     -X PUT \
     -u admin:password \
@@ -1172,6 +1451,19 @@ curl -v \
             "priceList": "DEFAULT"
         }' \
     'http://127.0.0.1:8080/1.0/kb/subscriptions/77e23878-8b9d-403b-bf31-93003e125712'
+    
+# with planName
+curl -v \
+    -X PUT \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -d '{ 
+            "planName": "sports-monthly"
+        }' \
+    'http://127.0.0.1:8080/1.0/kb/subscriptions/e1868fa6-ea97-493e-870d-50787f4b5921'
 ```
 
 ```java
@@ -1183,12 +1475,6 @@ UUID subscriptionId = UUID.fromString("905a0636-ab63-40c0-acd4-b461b6808b5d");
 Subscription newInput = new Subscription();
 newInput.setSubscriptionId(subscriptionId);
 
-// Specify the product, billing period and price list
-newInput.setProductName("Shotgun");
-newInput.setBillingPeriod(BillingPeriod.MONTHLY);
-newInput.setPriceList("DEFAULT");
-
-// Alternatively, you can specify the plan name
 newInput.setPlanName("shotgun-monthly");
 
 LocalDate requestedDate = null;
@@ -1204,11 +1490,18 @@ subscriptionApi.changeSubscriptionPlan(subscriptionId,
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 input = {
            :productName => 'Super', 
            :billingPeriod => 'MONTHLY', 
            :priceList => 'DEFAULT'
          }
+         
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "21541d56-c34a-4012-990a-2250e2822019"         
          
 requested_date = nil
 billing_policy = nil
@@ -1229,16 +1522,44 @@ subscription.change_plan(input,
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
 subscription_id = '97278000-72fd-45d7-9b67-e44690bdb074'
-body = Subscription(product_name='Super',
-                    billing_period='MONTHLY',
-                    price_list='DEFAULT')
+body = Subscription(plan_name='pistol-monthly')
 
 subscriptionApi.change_subscription_plan(subscription_id,
                                          body,
-                                         created_by,
-                                         api_key,
-                                         api_secret)
+                                         created_by='demo',
+                                         reason='reason',
+                                         comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscription: Subscription = {planName: "pistol-monthly-notrial"};
+const subscriptionId = 'e5254822-680f-4720-b5e1-a7146cefb904';
+
+api.changeSubscriptionPlan(subscription, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new Subscription();
+$body -> setPlanName('pistol-monthly-notrial');
+
+$requestedDate = null;
+$callCompletion = false;
+$callTimeoutSec = 3;
+$billingPolicy = null;
+$pluginProperty = array("pluginProperty_example");
+
+$subscriptionId = "52bee217-4ed9-40a3-8b89-baa1cb1e6f95";
+
+$apiInstance->changeSubscriptionPlan($body, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment, $requestedDate, $callCompletion, $callTimeoutSec, $billingPolicy, $pluginProperty);
+````
 
 **Request Body**
 
@@ -1252,6 +1573,7 @@ A subscription resource object specifying either the `planName` or a combination
 | **requestedDate** | string | no | immediate | Date/DateTime at which this change should become effective in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm`  format.|
 | **callCompletion** | boolean | no | false | see below |
 | **callTimeoutSec** | long | no | unlimited? | Timeout in seconds (see below) |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 **billingPolicy**: Possible values are START_OF_TERM, END_OF_TERM, IMMEDIATE, or ILLEGAL
 
@@ -1297,6 +1619,13 @@ subscriptionApi.undoChangeSubscriptionPlan(subscriptionId,
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "fbe97f23-30da-4f7e-9987-3280034c5258"
+
 subscription.undo_change_plan(user, 
                               reason, 
                               comment, 
@@ -1308,14 +1637,39 @@ subscriptionApi = killbill.api.SubscriptionApi()
 subscription_id = 'f5bb14ed-c6e8-4895-8d4e-34422e12cdfa'
 
 subscriptionApi.undo_change_subscription_plan(subscription_id,
-                                              created_by,
-                                              api_key,
-                                              api_secret)
+                                              created_by='demo',
+                                              reason='reason',
+                                              comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId= '1664777f-f194-48fd-a274-e883063790b1';
+
+api.undoChangeSubscriptionPlan(subscriptionId, 'created-by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "88d1878e-fb60-4497-95c2-ec71b4aa2a21";
+$pluginProperty = array("pluginProperty_example");
+
+$apiInstance->undoChangeSubscriptionPlan($subscriptionId, $xKillbillCreatedBy, $pluginProperty, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
-None. 
+**Query Parameters**
+
+| Name | Type | Required | Default | Description |
+| ---- | ---- | -------- | ------- | ----------- |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 **Response**
 
@@ -1362,10 +1716,17 @@ subscriptionApi.cancelSubscriptionPlan(subscriptionId,
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 requested_date = nil
 entitlement_policy = nil
 billing_policy = nil
 use_requested_date_for_billing = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "21541d56-c34a-4012-990a-2250e2822019"
 
 subscription.cancel(user, 
                     reason, 
@@ -1381,11 +1742,38 @@ subscription.cancel(user,
 subscriptionApi = killbill.api.SubscriptionApi()
 subscription_id = 'ee508b5b-46b8-42a7-8988-16c0470de4ae'
 
-subscriptionApi.cancel_subscription_plan(subscription_id, 
-                                         created_by,
-                                         api_key,
-                                         api_secret)
+subscriptionApi.cancel_subscription_plan(subscription_id,
+                                         created_by='demo',
+                                         reason='reason',
+                                         comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId= '66d3d89f-e074-49cc-bf9a-96a2e57d15ab';
+
+api.cancelSubscriptionPlan(subscriptionId, 'created-by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "71ccbec4-af0e-4011-8f65-9acb89204e45";
+$requestedDate = null;
+$callCompletion = false;
+$callTimeoutSec = 5;
+$entitlementPolicy = null;
+$billingPolicy = null;
+$useRequestedDateForBilling = false;
+$pluginProperty = array("pluginProperty_example");
+
+$apiInstance -> cancelSubscriptionPlan($subscriptionId, $xKillbillCreatedBy, $requestedDate, $callCompletion, $callTimeoutSec, $entitlementPolicy, $billingPolicy, $useRequestedDateForBilling, $pluginProperty, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
@@ -1397,7 +1785,7 @@ subscriptionApi.cancel_subscription_plan(subscription_id,
 | **useRequestedDateForBilling** | boolean | no | false | use **requestedDate** for billing |
 | **callCompletion** | boolean | no | false | see below |
 | **callTimeoutSec** | long | no | unlimited? | Timeout in seconds (see below) |
-
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 **entitlementPolicy**: Possible values are IMMEDIATE, END_OF_TERM
 
@@ -1464,6 +1852,13 @@ subscriptionApi.uncancelSubscriptionPlan(subscriptionId,
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "fbe97f23-30da-4f7e-9987-3280034c5258"
+
 subscription.uncancel(user, 
                       reason, 
                       comment, 
@@ -1475,14 +1870,37 @@ subscriptionApi = killbill.api.SubscriptionApi()
 subscription_id = 'f5bb14ed-c6e8-4895-8d4e-34422e12cdfa'
 
 subscriptionApi.uncancel_subscription_plan(subscription_id,
-                                           created_by,
-                                           api_key,
-                                           api_secret)
+                                           created_by='demo',
+                                           reason='reason',
+                                           comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId= '1664777f-f194-48fd-a274-e883063790b1';
+
+api.uncancelSubscriptionPlan(subscriptionId, 'created-by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "5499095e-36c3-4eff-9feb-7bbbabdde9df";
+$pluginProperty = array("pluginProperty_example");
+
+$apiInstance -> uncancelSubscriptionPlan($subscriptionId, $xKillbillCreatedBy, $pluginProperty, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
-None. 
+| Name | Type | Required | Default | Description |
+| ---- | ---- | -------- | ------- | ----------- |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 **Returns**
 
@@ -1491,7 +1909,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Blocking State
 
-See section [Account Blocking State](#account-blocking-state) for an introduction to blocking states.
+See section [Account Blocking State](account.html#account-blocking-state) for an introduction to blocking states.
 
 ### Block a subscription
 
@@ -1545,6 +1963,10 @@ BlockingStates result = subscriptionApi.addSubscriptionBlockingState(subscriptio
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 subscription = KillBillClient::Model::Subscription.new
 subscription.subscription_id = "161692a4-c293-410c-a92f-939c5e3dcba7"
 
@@ -1574,17 +1996,48 @@ body = BlockingState(state_name='STATE1',
                      is_block_change=False,
                      is_block_entitlement=False,
                      is_block_billing=False)
+subscription_id = '33aa2952-cea2-4cad-900a-9731c1042e54'
 
 subscriptionApi.add_subscription_blocking_state(subscription_id,
                                                 body,
-                                                created_by,
-                                                api_key,
-                                                api_secret)
+                                                created_by='demo',
+                                                reason='reason',
+                                                comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const blockingState: BlockingState = {stateName: "STATE1", service: "ServiceStateService", isBlockChange: true, isBlockEntitlement: false, isBlockBilling: false};
+const subscriptionId = 'b6000207-42fd-40ea-9c8e-297d9adc1574';
+
+api.addSubscriptionBlockingState(blockingState, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$blockingState = new BlockingState();
+$blockingState -> setStateName('STATE1');
+$blockingState -> setService('ServiceStateService1');
+$blockingState -> setIsBlockChange(true);
+$blockingState -> setIsBlockBilling(true);
+$blockingState -> setIsBlockEntitlement(true);
+
+$subscriptionId = "3f4a2efd-a8c1-4f85-9266-32bd6f7113ba";
+$requestedDate = new DateTime("2023-10-20");
+$pluginProperty = array("pluginProperty_example");
+
+$result = $apiInstance->addSubscriptionBlockingState($blockingState, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment, $requestedDate, $pluginProperty);
+````
 
 **Request Body**
 
-A blocking state resource representing the intended new blocking state. For example,
+A [blocking state resource](account-blocking-state-resource) representing the intended new blocking state.
 
 ```
 {
@@ -1607,12 +2060,12 @@ A blocking state resource representing the intended new blocking state. For exam
 
 **Response**
 
-If successful, returns a status code of 201 and an empty body.
+If successful, returns a status code of 201 and an empty body. In addition, a `Location` header is returned which contains the URL to retrieve the subscription blocking states for the account.
 
 
 ## Custom Fields
 
-`Custom fields` are `{key, value}` attributes that can be attached to any customer resources. For more on custom fields see [Custom Fields](#custom-fields). These endpoints manage custom fields associated with `Subscription` objects.
+`Custom fields` are `{key, value}` attributes that can be attached to any customer resources. For more on custom fields see [Custom Fields](custom-field.html). These endpoints manage custom fields associated with `Subscription` objects.
 
 ### Add custom fields to subscription
 
@@ -1633,8 +2086,6 @@ curl -v \
     -H "Content-Type: application/json" \
     -H "X-Killbill-CreatedBy: demo" \
     -d '[{ 
-            "objectId": "77e23878-8b9d-403b-bf31-93003e125712",
-            "objectType": "SUBSCRIPTION",
             "name": "Test Custom Field",
             "value": "test_value"
     }]' \
@@ -1663,12 +2114,18 @@ subscriptionApi.createSubscriptionCustomFields(subscriptionId,
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "2207150d-0652-43eb-abbe-2cbd0092b744"
+
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
-custom_field.object_type = 'SUBSCRIPTION'
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
 
-subscription.add_custom_field(custom_field, 
+subscription.add_custom_field(custom_field,
                               user,
                               reason,
                               comment,
@@ -1677,15 +2134,43 @@ subscription.add_custom_field(custom_field,
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = '4927c1a2-3959-4f71-98e7-ce3ba19c92ac'
+subscription_id = '33aa2952-cea2-4cad-900a-9731c1042e54'
 body = CustomField(name='Test Custom Field', value='test_value')
 
 subscriptionApi.create_subscription_custom_fields(subscription_id,
                                                   [body],
-                                                  created_by,
-                                                  api_key,
-                                                  api_secret)
+                                                  created_by='demo',
+                                                  reason='reason',
+                                                  comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = 'b6000207-42fd-40ea-9c8e-297d9adc1574';
+
+const customField: CustomField = {name: "Test Custom Field", value: "test_value"};
+const customFields = [customField];
+
+api.createSubscriptionCustomFields(customFields, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "3f4a2efd-a8c1-4f85-9266-32bd6f7113ba";
+
+$customField = new CustomField();
+$customField -> setName('Test Custom Field');
+$customField -> setValue('test_value');
+$body = array($customField);
+
+$apiInstance->createSubscriptionCustomFields($body, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
@@ -1738,19 +2223,37 @@ List<CustomField> customFields = subscriptionApi.getSubscriptionCustomFields(sub
 ```
 
 ```ruby
-audit = 'NONE'
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "2207150d-0652-43eb-abbe-2cbd0092b744"
 
-subscription.custom_fields(audit, options)
+audit = 'NONE'
+fields = subscription.custom_fields(audit, options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = '642ee0ac-972b-4cdf-b9ae-ab8f9bb9bc05'
+subscription_id = '33aa2952-cea2-4cad-900a-9731c1042e54'
 
-subscriptionApi.get_subscription_custom_fields(subscription_id,
-                                               api_key,
-                                               api_secret)
+fields = subscriptionApi.get_subscription_custom_fields(subscription_id)
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = 'e5254822-680f-4720-b5e1-a7146cefb904';
+const audit = 'NONE';
+
+const response: AxiosResponse<killbill.CustomField[], any> = await api.getSubscriptionCustomFields(subscriptionId, audit, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$subscriptionId = "3f4a2efd-a8c1-4f85-9266-32bd6f7113ba";
+$audit = "NONE";
+
+$result = $apiInstance->getSubscriptionCustomFields($subscriptionId, $audit);
+````
 
 > Example Response:
 
@@ -1809,10 +2312,10 @@ import org.killbill.billing.client.api.gen.SubscriptionApi;
 protected SubscriptionApi subscriptionApi;
 
 UUID subscriptionId = UUID.fromString("cca08349-8b26-41c7-bfcc-2e3cf70a0f28");
-UUID customFieldsId = UUID.fromString("9913e0f6-b5ef-498b-ac47-60e1626eba8f");
+UUID customFieldId = UUID.fromString("9913e0f6-b5ef-498b-ac47-60e1626eba8f");
 
 CustomField customFieldModified = new CustomField();
-customFieldModified.setCustomFieldId(customFieldsId);
+customFieldModified.setCustomFieldId(customFieldId);
 customFieldModified.setValue("NewValue");
 CustomFields customFields = new CustomFields();
 customFields.add(customFieldModified);
@@ -1823,31 +2326,65 @@ subscriptionApi.modifySubscriptionCustomFields(subscriptionId,
 ```
 
 ```ruby
-custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
-custom_field.name = 'Test Modify'
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "2207150d-0652-43eb-abbe-2cbd0092b744"
+
+custom_field = KillBillClient::Model::CustomFieldAttributes.new
+custom_field.custom_field_id = 'a04adaca-78a4-41fe-b512-a8d620aad456'
 custom_field.value = 'test_modify_value'
 
-subscription.modify_custom_field(custom_field,                                                                                            
-                                 user, 
+subscription.modify_custom_field(custom_field,
+                                 user,
                                  reason,
-                                 comment, 
+                                 comment,
                                  options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = '4927c1a2-3959-4f71-98e7-ce3ba19c92ac'
-custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
-body = CustomField(custom_field_id=custom_field_id, 
-                   name='Test Custom Field', 
-                   value='test_value')
+subscription_id = '33aa2952-cea2-4cad-900a-9731c1042e54'
+custom_field_id = '3a26be42-a153-4894-ac3d-93ad2e38e05b'
+body = CustomField(custom_field_id=custom_field_id,
+                   value='modified_value')
 
 subscriptionApi.modify_subscription_custom_fields(subscription_id,
                                                   [body],
-                                                  created_by,
-                                                  api_key,
-                                                  api_secret)
+                                                  created_by='demo',
+                                                  reason='reason',
+                                                  comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = 'b6000207-42fd-40ea-9c8e-297d9adc1574';
+
+const customField: CustomField = {customFieldId: "d8f2e80d-9fd8-48e7-b564-a541a0a7621d", value: "new_value"};
+const customFields = [customField];
+
+api.modifySubscriptionCustomFields(customFields, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "3f4a2efd-a8c1-4f85-9266-32bd6f7113ba";
+
+$customField = new CustomField();
+$customField -> setCustomFieldId('73e399fe-efaa-4f05-a5fe-08f10608c345');
+$customField -> setValue('new_value');
+$body = array($customField);
+
+$apiInstance->modifySubscriptionCustomFields($body, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
@@ -1867,7 +2404,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ### Remove custom fields from subscription
 
-Delete one or more custom fields from a subscription
+Delete one or more custom fields from a subscription. It accepts query parameters corresponding to the custom field ids to be deleted. if no query parameters are specified, it deletes all the custom fields corresponding to the subscription.
 
 
 **HTTP Request** 
@@ -1900,30 +2437,64 @@ subscriptionApi.deleteSubscriptionCustomFields(subscriptionId,
 ```
 
 ```ruby
-custom_field_id = custom_field.id
+user = "demo"
+reason = nil
+comment = nil
 
-subscription.remove_custom_field(custom_field_id,                                                                                            
-                                 user, 
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "2207150d-0652-43eb-abbe-2cbd0092b744"
+
+custom_field_id = 'a04adaca-78a4-41fe-b512-a8d620aad456'
+
+subscription.remove_custom_field(custom_field_id,
+                                 user,
                                  reason,
-                                 comment, 
+                                 comment,
                                  options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = '4927c1a2-3959-4f71-98e7-ce3ba19c92ac'
+subscription_id = 'e5254822-680f-4720-b5e1-a7146cefb904'
 
-subscriptionApi.delete_subscription_custom_fields(subscription_id,
-                                                  created_by,
-                                                  api_key,
-                                                  api_secret)
+custom_fields = ['194bcfc8-340f-4592-acd2-ffc1fc461e96']
+
+subscriptionApi.delete_subscription_custom_fields(subscription_id=subscription_id,
+                                                  custom_field=custom_fields,
+                                                  created_by='demo',
+                                                  reason='reason',
+                                                  comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = 'b6000207-42fd-40ea-9c8e-297d9adc1574';
+
+const customField = 'd8f2e80d-9fd8-48e7-b564-a541a0a7621d';
+const customFields = [customField];
+
+api.deleteSubscriptionCustomFields(subscriptionId, 'created_by', customFields);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "3f4a2efd-a8c1-4f85-9266-32bd6f7113ba";
+$customFields = array("73e399fe-efaa-4f05-a5fe-08f10608c345");
+
+$apiInstance->deleteSubscriptionCustomFields($subscriptionId, $xKillbillCreatedBy, $customFields, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ----------- | 
-| **customField** | string | yes | none | Custom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate **customField** parameter corresponding to each field |
+| ---- | -----|----------| ------- | ----------- | 
+| **customField** | string | no       | none | Custom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate **customField** parameter corresponding to each field |
 
 **Response**
 
@@ -1932,13 +2503,13 @@ If successful, returns a status code of 204 and an empty body.
 ## Tags
 
 
-See section [Account Tags](#account-tags) for an introduction.
+See section [Account Tags](account.html#account-tags) for an introduction.
 
 The are no `system` tags applicable for a `Subscription`.
 
 ### Add tags to subscription
 
-This API adds one or more tags to a subscription. The tag definitions must already exist.
+This API adds one or more tags to a subscription. Note that none of the [system tags](#tag) are applicable for subscriptions, thus only a [user tag](#tag) can be added to a subscription. The [tag definition](#tag-definition) for the user tag must exist.
 
 **HTTP Request** 
 
@@ -1973,7 +2544,14 @@ subscriptionApi.createSubscriptionTags(subscriptionId,
 ```
 
 ```ruby
-tag_name = 'foo'
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "92820d1c-1d4c-46eb-9010-26b0626a1927"
+
+tag_name = 'good_sub'
 
 subscription.add_tag(tag_name,
                      user,
@@ -1984,15 +2562,38 @@ subscription.add_tag(tag_name,
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
+subscription_id = '92820d1c-1d4c-46eb-9010-26b0626a1927'
+tagDefIds = ['30363fe5-310d-4446-b000-d7bb6e6662e2']
 
 subscriptionApi.create_subscription_tags(subscription_id,
-                                         tag,
-                                         created_by,
-                                         api_key,
-                                         api_secret)
+                                         tagDefIds,
+                                         created_by='demo',
+                                         reason='reason',
+                                         comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = '92820d1c-1d4c-46eb-9010-26b0626a1927';
+
+const tagDefIds = ['06d991f7-f06a-4e45-80d2-c3b44a97f8bc'];
+
+api.createSubscriptionTags(tagDefIds, subscriptionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "92820d1c-1d4c-46eb-9010-26b0626a1927";
+$tagDefIds = array("30363fe5-310d-4446-b000-d7bb6e6662e2");
+
+$apiInstance->createSubscriptionTags($tagDefIds, $xKillbillCreatedBy, $subscriptionId, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
@@ -2032,7 +2633,6 @@ import org.killbill.billing.client.api.gen.SubscriptionApi;
 protected SubscriptionApi subscriptionApi;
 
 UUID subscriptionId = UUID.fromString("1bb4b638-3886-4f73-90a5-89eb6d1bcf7f");
-
 Boolean includedDeleted = false; // Will not include deleted tags
 
 List<Tag> tags = subscriptionApi.getSubscriptionTags(subscriptionId, 
@@ -2042,22 +2642,43 @@ List<Tag> tags = subscriptionApi.getSubscriptionTags(subscriptionId,
 ```
 
 ```ruby
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "92820d1c-1d4c-46eb-9010-26b0626a1927"
+
 included_deleted = false
 audit = 'NONE'
 
-subscription.tags(included_deleted,
+tags = subscription.tags(included_deleted,
                   audit,
                   options)
 ```
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = 'f5bb14ed-c6e8-4895-8d4e-34422e12cdfa'
+subscription_id = '92820d1c-1d4c-46eb-9010-26b0626a1927'
 
-subscriptionApi.get_subscription_tags(subscription_id,
-                                      api_key,
-                                      api_secret)
+tags = subscriptionApi.get_subscription_tags(subscription_id)
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = '92820d1c-1d4c-46eb-9010-26b0626a1927';
+const includeDeleted = false;
+const audit = 'NONE';
+
+const response: AxiosResponse<killbill.Tag[], any> = await api.getSubscriptionTags(subscriptionId, includeDeleted, audit);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$subscriptionId = "92820d1c-1d4c-46eb-9010-26b0626a1927";
+$includedDeleted = false;
+$audit = "NONE";
+
+$result = $apiInstance->getSubscriptionTags($subscriptionId, $includedDeleted, $audit);
+````
 
 > Example Response:
 
@@ -2090,7 +2711,7 @@ If successful, returns a status code of 200 and a list of tag objects.
 
 ### Remove tags from subscription
 
-This API removes a list of tags attached to a subscription.
+This API deletes one or more tags attached to a subscription.
 
 **HTTP Request** 
 
@@ -2113,16 +2734,20 @@ import org.killbill.billing.client.api.gen.SubscriptionApi;
 protected SubscriptionApi subscriptionApi;
 
 UUID subscriptionId = UUID.fromString("1bb4b638-3886-4f73-90a5-89eb6d1bcf7f");
-
 UUID tagDefinitionId = UUID.fromString("353752dd-9041-4450-b782-a8bb03a923c8");
 
-subscriptionApi.deleteSubscriptionTags(subscriptionId, 
-                                       List.of(tagDefinitionId), 
-                                       requestOptions);
+subscriptionApi.deleteSubscriptionTags(subscriptionId, List.of(tagDefinitionId), requestOptions);
 ```
 
 ```ruby
-tag_name = 'foo'
+user = "demo"
+reason = nil
+comment = nil
+
+subscription = KillBillClient::Model::Subscription.new
+subscription.subscription_id = "92820d1c-1d4c-46eb-9010-26b0626a1927"
+
+tag_name = 'good_sub'
 
 subscription.remove_tag(tag_name,
                         user,
@@ -2133,21 +2758,44 @@ subscription.remove_tag(tag_name,
 
 ```python
 subscriptionApi = killbill.api.SubscriptionApi()
-subscription_id = 'f5bb14ed-c6e8-4895-8d4e-34422e12cdfa'
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
+subscription_id = '92820d1c-1d4c-46eb-9010-26b0626a1927'
+tagDefIds = ['30363fe5-310d-4446-b000-d7bb6e6662e2']
 
 subscriptionApi.delete_subscription_tags(subscription_id,
-                                         created_by,
-                                         api_key,
-                                         api_secret,
-                                         tag_def=tag)
+                                         tag_def=tagDefIds,
+                                         created_by='demo',
+                                         reason='reason',
+                                         comment='comment')
 ```
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = '92820d1c-1d4c-46eb-9010-26b0626a1927';
+
+const tagDefIds = ['06d991f7-f06a-4e45-80d2-c3b44a97f8bc'];
+
+api.deleteSubscriptionTags(subscriptionId, 'created_by', tagDefIds);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$subscriptionId = "92820d1c-1d4c-46eb-9010-26b0626a1927";
+$tagDefIds = array("30363fe5-310d-4446-b000-d7bb6e6662e2");
+
+$apiInstance->deleteSubscriptionTags($subscriptionId, $xKillbillCreatedBy, $tagDefIds, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ------------ |
-| **tagDef** | array of strings | true | none | A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag. |
+| Name | Type   | Required | Default | Description |
+| ---- |--------| -------- | ------- | ------------ |
+| **tagDef** | string | true | none | A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag. |
 
 **Response**
 
@@ -2161,7 +2809,16 @@ Audit logs provide a record of events that occur involving various specific reso
 
 ### Retrieve subscription audit logs with history by subscription id
 
-Retrieve a list of audit log records showing events that occurred involving changes to the subscription. History information is included with each record.
+Retrieve a list of audit log records showing changes to the subscription. History information (a copy of the full subscription object) is included with each record.
+
+Some examples:
+* Assuming the API is invoked after an `IN_ADVANCE` subscription is created, it would return two records:
+  * An `INSERT` record corresponding to the subscription creation
+  * An `UPDATE` record corresponding to the `chargedThroughDate` update
+* Assuming the API is invoked after a plan change, it would return three records:
+  * An `INSERT` record corresponding to the subscription creation
+  * An `UPDATE` record corresponding to the `chargedThroughDate` update
+  * An `UPDATE` record corresponding to plan change
 
 
 **HTTP Request** 
@@ -2184,8 +2841,35 @@ protected SubscriptionApi subscriptionApi;
 
 UUID subscriptionId = UUID.fromString("bc9b98e8-7497-4330-aa42-1fbc71a3d19c");
 		
-List<AuditLog> auditLog = subscriptionApi.getSubscriptionAuditLogsWithHistory(subscriptionId, 																				  																							requestOptions);
+List<AuditLog> auditLog = subscriptionApi.getSubscriptionAuditLogsWithHistory(subscriptionId, requestOptions);
 ```
+
+````ruby
+TODO
+````
+
+````python
+subscriptionApi = killbill.api.SubscriptionApi()
+subscription_id = '92820d1c-1d4c-46eb-9010-26b0626a1927'
+
+auditlogs = subscriptionApi.get_subscription_audit_logs_with_history(subscription_id)
+````
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const subscriptionId = '92820d1c-1d4c-46eb-9010-26b0626a1927';
+
+const response: AxiosResponse<killbill.Tag[], any> = await api.getSubscriptionAuditLogsWithHistory(subscriptionId);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$subscriptionId = "92820d1c-1d4c-46eb-9010-26b0626a1927";
+
+$result = $apiInstance->getSubscriptionAuditLogsWithHistory($subscriptionId);
+````
 
 > Example Response:
 
@@ -2260,7 +2944,14 @@ If successful, returns a status code of 200 and a list of audit logs.
 
 ### Retrieve subscription event audit logs with history by subscription event id
 
-Retrieve a list of audit log records showing events that occurred involving changes to the subscription, based on a subscription event id. History information (a copy of the full subscription object) is included with each record. The id of a subscription event comes from the [timeline api](#account-retrieve-account-timeline).
+Retrieve a list of audit log records showing changes to a subscription event. History information (a copy of the full subscription event object) is included with each record. The [subscription resource](##subscription-subscription-resource) contains the list of events associated with a subscription and the event id can be obtained from here.
+
+Some examples:
+* If a cancel request is issued for a subscription, this API can be invoked with the subscription event id of the `CANCEL` event. In this case, it will return:
+  * An `INSERT` record corresponding to the subscription cancel event creation
+* If a subscription is future cancelled and then uncancelled, and this API is invoked with the id of the `CANCEL`event, it will return two records:
+  * An `INSERT` record corresponding to the `CANCEL` event creation
+  * A `DELETE` record corresponding to the `CANCEL` event deletion.
 
 **HTTP Request** 
 
@@ -2286,6 +2977,33 @@ UUID subscriptionEventId = UUID.fromString("b4b6f990-4456-4009-9e6c-9825a99a1f25
 		
 List<AuditLog> eventAuditLog = subscriptionApi.getSubscriptionEventAuditLogsWithHistory(subscriptionEventId, requestOptions);
 ```
+
+````ruby
+TODO
+````
+
+````python
+subscriptionApi = killbill.api.SubscriptionApi()
+event_id = 'dc283026-5be0-4e47-8190-b62fb0c9e357'
+
+auditlogs = subscriptionApi.get_subscription_event_audit_logs_with_history(event_id)
+````
+
+````javascript
+const api: killbill.SubscriptionApi = new killbill.SubscriptionApi(config);
+
+const eventId = 'dc283026-5be0-4e47-8190-b62fb0c9e357';
+
+const response: AxiosResponse<killbill.Tag[], any> = await api.getSubscriptionEventAuditLogsWithHistory(eventId);
+````
+
+````php
+$apiInstance = $client->getSubscriptionApi();
+
+$eventId = "dc283026-5be0-4e47-8190-b62fb0c9e357";
+
+$result = $apiInstance->getSubscriptionEventAuditLogsWithHistory($eventId);
+````
 
 > Example Response:
 

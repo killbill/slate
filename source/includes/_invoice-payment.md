@@ -4,7 +4,7 @@ An `InvoicePayment` is a `Payment` that is made against a specific invoice.
 
 By default the system will always attempt to make a full payment against an invoice, but Kill Bill also allows multiple partial payments.  Partial payments can be made against unpaid - or partially paid - invoices by triggerring a payment against the `Invoice` resource. The reverse is not true; a single payment across multiple invoices is not (yet) supported.
 
-See [Payment](#payment) for further information.
+See [Payment](payment.html) for further information.
 
 ## Invoice Payment Resource
 
@@ -32,7 +32,7 @@ The `InvoicePayment` resource represents a payment associated with a given invoi
 
 * **creditedAmount**: this credit represents the actual money sent back by the merchant to the user, which is extremely rare. It is unrelated to the associated invoice or account credits.
 
-* **paymentTransactions**: List of transactions for this Payment. The attributes for a `PaymentTransaction` are described [here](https://killbill.github.io/slate/?shell#payment-transaction-payment-transaction-resource).
+* **paymentTransactions**: List of transactions for this Payment. The attributes for a `PaymentTransaction` are described [here](payment-transaction.html#payment-transaction-payment-transaction-resource).
 
 * **paymentAttempts**: Only applicable when the system is configured to retry failed attempts.
 
@@ -78,7 +78,7 @@ The `InvoicePaymentTransaction` resource represents a payment transaction associ
 
 ## Invoice Payment
 
-These endpoints initiate transactions on an existing InvoicePayment. Many other applicable transactions are given in the [Payment](#payment) section. To begin a new Payment, see [Trigger a Payment](https://killbill.github.io/slate/#account-trigger-a-payment-authorization-purchase-or-credit) in the Account API. 
+These endpoints initiate transactions on an existing InvoicePayment. Many other applicable transactions are given in the [Payment](payment.html) section. To begin a new Payment, see [Trigger a Payment](account.html#account-trigger-a-payment-authorization-purchase-or-credit) in the Account API. 
 
 
 ### Retrieve a payment by id
@@ -500,7 +500,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Custom Fields
 
-Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to InvoicePayment objects. For details on Custom Fields see [Custom Field](https://killbill.github.io/slate/#custom-field).
+Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to InvoicePayment objects. For details on Custom Fields see [Custom Field](custom-field.html#custom-field).
 
 ### Add custom fields to invoice payment
 
@@ -804,7 +804,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Tags
 
-See [Account Tags](https://killbill.github.io/slate/#account-tags) for an introduction.
+See [Account Tags](account.html#account-tags) for an introduction.
 
 The are no `system` tags applicable to an InvoicePayment.
 

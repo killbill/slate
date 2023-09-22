@@ -1,30 +1,38 @@
-# Overview
+# API docs
 
-Kill Bill slate api doc
+Kill Bill API documentation.
 
-## Setup
-
-The setup is described in the original [slate repo](https://github.com/lord/slate). in a nusthell:
-
-```
-> bundle install
-> bundle exec middleman server
-```
-
+The site is built using [Middleman](https://github.com/middleman/middleman). See also https://github.com/slatedocs/slate.
 
 ## Edit and Syntax
 
-The main file to edit is the [index.html.md](https://github.com/killbill/slate/blob/master/source/index.html.md), and the following is a summary of the [markdown syntax for slate](https://github.com/lord/slate/wiki/Markdown-Syntax).
+The documentation is in the `source/includes` directory.
 
+Markdown syntax: https://github.com/slatedocs/slate/wiki/Markdown-Syntax
 
-## Publishing
+## Development
 
-In order to publish the doc on github pages, simply run
+To run the site locally:
 
 ```
-> ./deploy.sh
+middleman server
 ```
 
+Prerequisites:
 
+* Install Ruby (use [RVM](https://rvm.io/) or [RubyInstaller](https://rubyinstaller.org/))
+* Run `bundle install`
 
+## Deployment
 
+To generate the files:
+
+```
+middleman build
+```
+
+Notes:
+
+* The generated static pages under `build` are deployed by Cloudflare (https://apidocs.killbill.io/)
+* The built pages are also pushed to the `gh-pages` branch for debugging (served by GitHub pages at https://killbill.github.io/slate/ for backward compatibility)
+* Minification of assets is handled by Cloudflare (check-in the unminified version)

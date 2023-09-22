@@ -8,6 +8,7 @@ set :markdown,
     smartypants: true,
     disable_indented_code_blocks: true,
     prettify: true,
+    strikethrough: true,
     tables: true,
     with_toc_data: true,
     no_intra_emphasis: true,
@@ -22,6 +23,7 @@ set :fonts_dir, 'fonts'
 # Activate the syntax highlighter
 activate :syntax
 ready do
+  require './lib/monokai_sublime_slate.rb'
   require './lib/multilang.rb'
 end
 
@@ -39,12 +41,13 @@ set :relative_links, true
 
 # Build Configuration
 configure :build do
-  # If you're having trouble with Middleman hanging, commenting
-  # out the following two lines has been known to help
-  activate :minify_css
-  activate :minify_javascript
-  # activate :relative_assets
-  # activate :asset_hash
+  # Could cause issues where cached HTML points to stale files not deployed anymore
+  # activate :asset_hash, :exts => app.config[:asset_extensions] - %w[.woff .woff2]
+
+  # Done by Cloudflare
+  # activate :minify_css
+  # activate :minify_javascript
+
   # activate :gzip
 end
 

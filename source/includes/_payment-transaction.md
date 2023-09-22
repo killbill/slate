@@ -1,6 +1,6 @@
 # Payment Transaction
 
-Payment transactions belong to a [Payment](https://killbill.github.io/slate/#payment-payment-resource) object.
+Payment transactions belong to a [Payment](payment.html#payment-payment-resource) object.
 
 They represent a particular payment operation, such as authorization, chargeback, refund, etc. Most operations happen at the `Payment` level, but there are a few endpoints
 that work directly at the transaction level.
@@ -43,13 +43,13 @@ A `PaymentTransaction` is represented by a PaymentTransaction resource object. T
 
 ## Payment Transactions
 
-Endpoints to retrieve a `PaymentTransaction` object or to set the status of a pending transaction. Note that endpoints to generate payment transactions are provided with the `Payment` APIs. 
+Endpoints to retrieve a `PaymentTransaction` object or to set the status of a pending transaction. Note that endpoints to generate payment transactions are provided with the [Payment](payment.html#payments) APIs. 
 
 
 
 ### Retrieve a payment by transaction id
 
-Retrieves a Payment object based on a PaymentTransaction id, which is given as a path parameter
+Retrieves a Payment resource object based on a PaymentTransaction id.
 
 
 **HTTP Request** 
@@ -77,12 +77,40 @@ Payment payment = paymentTransactionApi.getPaymentByTransactionId(paymentTransac
 ```
 
 ```ruby
-TODO
+payment_transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+with_plugin_info = false
+with_attempts = false
+
+payment = KillBillClient::Model::Payment.find_by_transaction_id(payment_transaction_id, with_plugin_info, with_attempts, options)
 ```
 
 ```python
-TODO
+paymentTransactionApi = killbill.PaymentTransactionApi()
+payment_transaction_id = 'edb52a56-f5d2-4285-9a23-ccafb6f1ae1f'
+
+payment = paymentTransactionApi.get_payment_by_transaction_id(payment_transaction_id)
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '37b95fef-f5be-4771-80e4-d41af8e528cb';
+
+const response: AxiosResponse<killbill.Payment, any> = await api.getPaymentByTransactionId(paymentTransactionId, 'NONE');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$transactionId = "37b95fef-f5be-4771-80e4-d41af8e528cb";
+$withPluginInfo = false;
+$withAttempts = false;
+$pluginProperty = array("pluginProperty_example");
+$audit = "NONE";
+
+$result = $apiInstance->getPaymentByTransactionId($transactionId, $withPluginInfo, $withAttempts, $pluginProperty, $audit);
+````
+
 > Example Response:
 
 ```json
@@ -126,10 +154,13 @@ TODO
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ----------- |
-| **withPluginInfo** | boolean | no | false | If true, include plugin info |
-| **withAttempts** | boolean | no | false | if true, include payment attempts |
+| Name | Type | Required | Default | Description|
+| ---- | -----| -------- | ------- |------------|
+| **withPluginInfo** | boolean | no | false | If true, include plugin info. This results in the [PaymentPluginApi.getPaymentInfo](https://github.com/killbill/killbill-plugin-api/blob/cd3fb251c4b61931eb0f7954037145148d62f983/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java#L144) method being invoked for the underlying payment plugin. See [Payment Plugin Tutorial](https://docs.killbill.io/latest/payment_plugin#paymentpluginapi_methods). |
+| **withAttempts** | boolean | no | false | if true, include payment attempts|
+| **pluginProperty** | array of strings | false | omit | list of plugin properties, if any|
+| **audit** | string | no | "NONE" | Level of audit information to return:"NONE", "MINIMAL" (only inserts), or "FULL"|
+
 
 **Response**
 
@@ -138,7 +169,7 @@ If successful, returns a status code of 200 and a payment object including the s
 
 ### Retrieve a payment transaction by external key
 
-Retrieve a Payment object based on a PaymentTransaction external key, which is given as a query parameter
+Retrieves a Payment resource object based on a PaymentTransaction external key.
 
 
 **HTTP Request** 
@@ -167,12 +198,41 @@ Payment payment = paymentTransactionApi.getPaymentByTransactionExternalKey(trans
 ```
 
 ```ruby
-TODO
+external_key = "e5f000f7-0733-4828-a887-3a4a58d27596"
+with_plugin_info = false
+with_attempts = false
+audit = 'NONE'
+
+payment = KillBillClient::Model::Payment.find_by_transaction_external_key(external_key, with_plugin_info, with_attempts, audit, options)
 ```
 
 ```python
-TODO
+paymentTransactionApi = killbill.PaymentTransactionApi()
+payment_transaction_key = 'edb52a56-f5d2-4285-9a23-ccafb6f1ae1f'
+
+payment = paymentTransactionApi.get_payment_by_transaction_external_key(payment_transaction_key)
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const key = '37b95fef-f5be-4771-80e4-d41af8e528cb';
+
+const response: AxiosResponse<killbill.Payment, any> = await api.getPaymentByTransactionExternalKey(key,'NONE');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$transactionExternalKey = "37b95fef-f5be-4771-80e4-d41af8e528cb";
+$withPluginInfo = false;
+$withAttempts = false;
+$pluginProperty = array("pluginProperty_example");
+$audit = "NONE";
+
+$result = $apiInstance->getPaymentByTransactionExternalKey($transactionExternalKey, $withPluginInfo, $withAttempts, $pluginProperty, $audit);
+````
+
 > Example Response:
 
 ```json
@@ -216,12 +276,13 @@ TODO
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ----------- |
+| Name | Type | Required | Default | Description|
+| ---- | -----| -------- | ------- |------------|
 | **transactionExternalKey** | string | yes | none | Transaction external key |
-| **withPluginInfo** | boolean | no | false | If true, include plugin info |
-| **withAttempts** | boolean | no | false | If true, include payment attempts |
-
+| **withPluginInfo** | boolean | no | false | If true, include plugin info. This results in the [PaymentPluginApi.getPaymentInfo](https://github.com/killbill/killbill-plugin-api/blob/cd3fb251c4b61931eb0f7954037145148d62f983/payment/src/main/java/org/killbill/billing/payment/plugin/api/PaymentPluginApi.java#L144) method being invoked for the underlying payment plugin. See [Payment Plugin Tutorial](https://docs.killbill.io/latest/payment_plugin#paymentpluginapi_methods). |
+| **withAttempts** | boolean | no | false | If true, include payment attempts|
+| **pluginProperty** | array of strings | false | omit | list of plugin properties, if any|
+| **audit** | string | no | "NONE" | Level of audit information to return:"NONE", "MINIMAL" (only inserts), or "FULL" |
 **Response**
 
 If successful, returns a status code of 200 and a payment object including the specified transaction.
@@ -260,10 +321,10 @@ PaymentTransaction paymentTransaction = new PaymentTransaction();
 paymentTransaction.setStatus(TransactionStatus.SUCCESS);
 paymentTransaction.setPaymentId(UUID.fromString("27d15e39-b25c-4dc1-92cf-5487397a48a6");
 				
-paymentTransactionApi.notifyStateChanged(paymentTransactionId, 
+Payment payment = paymentTransactionApi.notifyStateChanged(paymentTransactionId, 
                                          paymentTransaction, 
                                          null, 
-                                         requestOptions);
+                                         requestOptions));
 	
 ```
 
@@ -272,8 +333,41 @@ TODO
 ```
 
 ```python
-TODO
+paymentTransactionApi = killbill.PaymentTransactionApi()
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
+body = PaymentTransaction(payment_id='8cc963a6-786a-4dd1-bcfb-5edc266c01b9', status='SUCCESS')
+
+paymentTransactionApi.notify_state_changed(payment_transaction_id, body,
+                                           created_by='demo',
+                                           reason='reason',
+                                           comment='comment')
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const payment_transaction: PaymentTransaction = {paymentId: "e129a8fc-c244-425f-b1eb-68d3aac7054e", status: "SUCCESS"};
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+api.notifyStateChanged(payment_transaction, paymentTransactionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+$controlPluginName = array("controlPluginName_example");
+
+$body = new \Killbill\Client\Swagger\Model\PaymentTransaction();
+$body -> setPaymentId("2ad112db-cf4b-497d-9a0d-c0e41fa6070b");
+$body -> setStatus("SUCCESS");
+
+$result = $apiInstance->notifyStateChanged($body, $xKillbillCreatedBy, $transactionId, $xKillbillReason, $xKillbillComment, $controlPluginName);
+````
 
 **Request Body**
 
@@ -285,16 +379,22 @@ None.
 
 **Response**
 
-If successful, returns a status code of 201 and the payment object.
+If successful, returns a status code of 201 and an empty body. In addition, a Location header is returned which contains the payment id.
 
 ## Audit Logs
 
-Audit logs provide a record of events that occur involving various specific resources. For details on audit logs see [Audit and History](https://killbill.github.io/slate/#using-kill-bill-apis-audit-and-history).
+Audit logs provide a record of events that occur involving various specific resources. For details on audit logs see [Audit and History](#using-kill-bill-apis-audit-and-history).
 
 
 ### Retrieve payment transaction audit logs with history by id
 
-Retrieves a list of audit log records showing events that occurred involving changes to a specified payment. History information is included with each record.
+Retrieves a list of audit log records showing changes to the specified payment transaction. History information (a copy of the full payment transaction object) is included with each record.
+
+Some examples:
+
+* Assuming the API is invoked for a payment transaction belonging to a successful payment, it would return two records:
+  * An `INSERT` record corresponding to the payment transaction record creation.
+  * An `UPDATE` record corresponding to the payment transaction status update.
 
 
 **HTTP Request** 
@@ -318,17 +418,39 @@ protected PaymentTransactionApi paymentTransactionApi;
 
 UUID paymentTransactionId = UUID.fromString("41f4d299-4371-4876-96b4-0b3cc81b246b");
 
-List<AuditLog> result = paymentTransactionApi.getTransactionAuditLogsWithHistory(paymentTransactionId, 
+List<AuditLog> auditLogs = paymentTransactionApi.getTransactionAuditLogsWithHistory(paymentTransactionId, 
                                                                                  requestOptions);
 ```
 
 ```ruby
-TODO
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+audit_logs = payment_transaction.audit_logs_with_history(options)
 ```
 
 ```python
-TODO
+paymentTransactionApi = killbill.PaymentTransactionApi()
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
+audit_logs = paymentTransactionApi.get_transaction_audit_logs_with_history(payment_transaction_id)
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+const response: AxiosResponse<killbill.AuditLog[], any> = await api.getTransactionAuditLogsWithHistory(paymentTransactionId);
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+
+$result = $apiInstance->getTransactionAuditLogsWithHistory($transactionId);
+````
+
 > Example Response:
 
 ```json
@@ -406,11 +528,11 @@ None.
 
 **Response**
     
-If successful, returns a status code of 200 and a list of account audit logs with history.
+If successful, returns a status code of 200 and a list of payment transaction audit logs with history.
 
 ## Custom Fields
 
-Custom fields are `{key, value}` attributes that can be attached to any customer resource. In particular they can be added to `PaymentTransaction` objects. For details on Custom Fields see [Custom Field](https://killbill.github.io/slate/#custom-field).
+Custom fields are `{key, value}` attributes that can be attached to any customer resource. For details on Custom Fields see [Custom Fields](custom-field.html). These endpoints manage custom fields associated with Payment Transaction objects.
 
 ### Add custom fields to payment transaction
 
@@ -460,23 +582,67 @@ paymentTransactionApi.createTransactionCustomFields(paymentTransactionId,
 ```
 
 ```ruby
-TODO
+user = "demo"
+reason = nil
+comment = nil
+
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+custom_field = KillBillClient::Model::CustomFieldAttributes.new
+custom_field.name = 'Test Custom Field'
+custom_field.value = 'test_value'
+
+payment_transaction.add_custom_field(custom_field,
+                                user,
+                                reason,
+                                comment,
+                                options)
 ```
 
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
 body = CustomField(name='Test Custom Field', value='test_value')
 
 paymentTransactionApi.create_transaction_custom_fields(payment_transaction_id,
                                                        [body],
-                                                       created_by,
-                                                       api_key,
-                                                       api_secret)
+                                                       created_by='demo',
+                                                       reason='reason',
+                                                       comment='comment')
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const customField: CustomField = {name: "Test Custom Field", value: "test_value"};
+const customFields = [customField];
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+api.createTransactionCustomFields(customFields, paymentTransactionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$customField = new CustomField();
+$customField -> setName('Test Custom Field');
+$customField -> setValue('test_value');
+$body = array($customField);
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+
+$result = $apiInstance->createTransactionCustomFields($body, $xKillbillCreatedBy, $transactionId, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
-A JSON string representing the custom field object or objects to be added. For example:
+A list of objects giving the name and value of the custom field, or fields, to be added. For example:
 
 [ { "name": "CF1", "value": "123" } ]
 
@@ -490,7 +656,7 @@ If successful, returns a 201 status code. In addition, a `Location` header is re
 
 ### Retrieve payment transaction custom fields 
 
-Retrieves the custom fields associated with a payment transaction
+Retrieves the custom fields associated with the specified payment transaction.
 
 **HTTP Request** 
 
@@ -519,14 +685,38 @@ List<CustomField> customFields = paymentTransactionApi.getTransactionCustomField
 ```
 
 ```ruby
-TODO
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+audit = 'NONE'
+
+fields = payment_transaction.custom_fields(audit, options)
 ```
 
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
 
-paymentTransactionApi.get_transaction_custom_fields(payment_transaction_id, api_key, api_secret)
+fields = paymentTransactionApi.get_transaction_custom_fields(payment_transaction_id)
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+const audit = 'NONE';
+
+const response: AxiosResponse<killbill.CustomField[], any> = await api.getTransactionCustomFields(paymentTransactionId, audit, 'created_by');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+$audit = "NONE";
+
+$result = $apiInstance->getTransactionCustomFields($transactionId, $audit);
+````
 
 > Example Response:
 
@@ -545,19 +735,17 @@ paymentTransactionApi.get_transaction_custom_fields(payment_transaction_id, api_
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ----------- | 
-| **audit** | string | no | "NONE" | Level of audit information to return |
-
-Audit information options are "NONE", "MINIMAL" (only inserts), or "FULL".
+| Name | Type | Required | Default | Description                                                                      |
+| ---- | -----| -------- | ------- |----------------------------------------------------------------------------------| 
+| **audit** | string | no | "NONE" | Level of audit information to return:"NONE", "MINIMAL" (only inserts), or "FULL" |
 
 **Response**
     
-If successful, returns a status code of 200 and a list of custom field objects
+If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.
 
 ### Modify custom fields for a payment transaction
 
-Modifies the custom fields associated with a `PaymentTransaction` object
+Modifies the value of one or more existing custom fields associated with a payment transaction object. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.
 
 
 **HTTP Request** 
@@ -586,10 +774,10 @@ import org.killbill.billing.client.api.gen.PaymentTransactionApi;
 protected PaymentTransactionApi paymentTransactionApi;
 
 UUID paymentTransactionId = UUID.fromString("cca08349-8b26-41c7-bfcc-2e3cf70a0f28");
-UUID customFieldsId = UUID.fromString("9913e0f6-b5ef-498b-ac47-60e1626eba8f");
+UUID customFieldId = UUID.fromString("9913e0f6-b5ef-498b-ac47-60e1626eba8f");
 
 CustomField customFieldModified = new CustomField();
-customFieldModified.setCustomFieldId(customFieldsId);
+customFieldModified.setCustomFieldId(customFieldId);
 customFieldModified.setValue("NewValue");
 CustomFields customFields = new CustomFields();
 customFields.add(customFieldModified);
@@ -599,29 +787,71 @@ paymentTransactionApi.modifyTransactionCustomFields(paymentTransactionId,
 ```
 
 ```ruby
-TODO
+user = "demo"
+reason = nil
+comment = nil
+
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
+custom_field.name = 'Test Modify'
+custom_field.value = 'test_modify_value'
+
+payment_transaction.modify_custom_field(custom_field,
+                                   user,
+                                   reason,
+                                   comment,
+                                   options)
 ```
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
-
-custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
-body = CustomField(custom_field_id=custom_field_id, name='Test Modify', value='test_modify_value')
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
+custom_field_id = 'eddc016c-0336-44d3-9383-a29962e276b7'
+body = CustomField(custom_field_id=custom_field_id, value='new value')
 
 paymentTransactionApi.modify_transaction_custom_fields(payment_transaction_id,
                                                        [body],
-                                                       created_by,
-                                                       api_key,
-                                                       api_secret)
+                                                       created_by='demo',
+                                                       reason='reason',
+                                                       comment='comment')
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+const customField: CustomField = {customFieldId: "690b4723-5d54-4b89-afe0-dae0d146183c", value: "new_value"};
+const customFields = [customField];
+
+api.modifyTransactionCustomFields(customFields, paymentTransactionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$customField = new CustomField();
+$customField -> setCustomFieldId('cea1e5e0-87b9-40bf-8d46-b00e6f870c8f');
+$customField -> setValue('new_value');
+$body = array($customField);
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+
+$apiInstance->modifyTransactionCustomFields($body, $xKillbillCreatedBy, $transactionId, $xKillbillReason, $xKillbillComment);
+````
 
 **Requst Body**
 
-A JSON string representing a list of custom fields to substitute for the existing ones.
-For example:
+A list of objects specifying the id and the new value for the custom fields to be modified. For example:
 
 [ { "customFieldId": "6d4c073b-fd89-4e39-9802-eba65f42492f", "value": "123" } ]
 
-Although the field name and object type can be specified in the request body, these cannot be modified, only the field value can be modified.
+Although the `fieldName` and `objectType` can be specified in the request body, these cannot be modified, only the field value can be modified.
 
 
 **Query Parameters**
@@ -635,7 +865,7 @@ If successful, returns a status code of 204 and an empty body.
 
 ### Remove custom fields from a payment transaction
 
-Removes a specified set of custom fields from a payment transaction object
+Delete one or more custom fields from a payment transaction. It accepts query parameters corresponding to the custom field ids to be deleted. If no query parameters are specified, it deletes all the custom fields corresponding to the payment transaction.
 
 **HTTP Request** 
 
@@ -666,25 +896,63 @@ paymentTransactionApi.deleteTransactionCustomFields(paymentTransactionId,
 ```
 
 ```ruby
-TODO
+user = "demo"
+reason = nil
+comment = nil
+
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+custom_field_id = 'cda969c3-1092-4702-b155-05d0ef899fa2'
+
+payment_transaction.remove_custom_field(custom_field_id,
+                                   user,
+                                   reason,
+                                   comment,
+                                   options)
 ```
 
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
-
-payment_transaction_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
+custom_fields = ['494c8e9b-0840-4955-9e23-e84d4c353c25']
 
 paymentTransactionApi.delete_transaction_custom_fields(payment_transaction_id,
-                                                       created_by,
-                                                       api_key,
-                                                       api_secret)
+                                                       custom_field=custom_fields,
+                                                       created_by='demo',
+                                                       reason='reason',
+                                                       comment='comment')
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+const customField = '690b4723-5d54-4b89-afe0-dae0d146183c';
+const customFields = [customField];
+
+api.deleteTransactionCustomFields(paymentTransactionId, 'created_by', customFields);
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+$customFields = array("cea1e5e0-87b9-40bf-8d46-b00e6f870c8f");
+
+$apiInstance->deleteTransactionCustomFields($transactionId, $xKillbillCreatedBy, $customFields, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
 | ---- | -----| -------- | ------- | ----------- | 
-| **customField** | string | yes | none | Comma separated list of custom field object IDs that should be deleted. |
+| **customField** | string | yes | none | Custom field ID that should be deleted. Multiple custom fields can be deleted by specifying a separate customField parameter corresponding to each field. |
 
 **Response**
 
@@ -693,13 +961,14 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Tags
 
-See [Account Tags](https://killbill.github.io/slate/#account-tags) for an introduction.
+See [Account Tags](account.html#account-tags) for an introduction. 
 
-The are no `system` tags applicable to a Payment Transaction.
+**Note:**
+None of the [`system` tags](tag.html#tag) are applicable for Payment Transactions, only a [user tag](tag.html#tag) can be associated with a payment transaction.
 
 ### Add tags to a payment transaction
 
-Adds one or more tags to a `PaymentTransaction` object. The tag definitions must already exist.
+This API adds one or more tags to a `PaymentTransaction`. The [tag definition](tag-definition.html#tag-definitions) corresponding to the tag to be added must already exist.
 
 
 **HTTP Request** 
@@ -730,30 +999,66 @@ UUID paymentTransactionId = UUID.fromString("917992d3-5f1f-4828-9fff-799cc4211aa
 
 UUID tagDefinitionId = UUID.fromString("353752dd-9041-4450-b782-a8bb03a923c8");
 
-Tags result = paymentTransactionApi.createTransactionTags(paymentTransactionId, 
+Tags tags = paymentTransactionApi.createTransactionTags(paymentTransactionId, 
                                                           List.of(tagDefinitionId), 
                                                           requestOptions);
 ```
 
 ```ruby
-TODO
+user = "demo"
+reason = nil
+comment = nil
+
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+tag_name = 'sample_tag'
+
+payment_transaction.add_tag(tag_name,
+                     user,
+                     reason,
+                     comment,
+                     options)
 ```
 
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
-
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
+tagDefIds  = ["3d70a355-8342-4042-8694-a2447f0f2b1e"]
 
 paymentTransactionApi.create_transaction_tags(payment_transaction_id,
-                                              tag,
-                                              created_by,
-                                              api_key,
-                                              api_secret)
+                                              tagDefIds,
+                                              created_by='demo',
+                                              reason='reason',
+                                              comment='comment')
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+const tagDefIds = ['3d70a355-8342-4042-8694-a2447f0f2b1e'];
+
+api.createTransactionTags(tagDefIds, paymentTransactionId, 'created_by');
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+$tagDefIds = array("3d70a355-8342-4042-8694-a2447f0f2b1e");
+
+$apiInstance->createTransactionTags($tagDefIds, $xKillbillCreatedBy, $transactionId, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
-Provides a list of tag definition Ids in JSON format
+A JSON array corresponding to the tag definition IDs to be added.
 
 **Query Parameters**
 
@@ -798,16 +1103,43 @@ List<Tag> tags = paymentTransactionApi.getTransactionTags(paymentTransactionId,
 ```
 
 ```ruby
-TODO
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+included_deleted = false
+audit = 'NONE'
+
+tags = payment_transaction.tags(included_deleted,
+                  audit,
+                  options)
 ```
 
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
 
-payment_transaction_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
-
-paymentTransactionApi.get_transaction_tags(payment_transaction_id, api_key, api_secret)
+tags = paymentTransactionApi.get_transaction_tags(payment_transaction_id)
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+const includeDeleted = false;
+const audit = 'NONE';
+
+const response: AxiosResponse<killbill.Tag[], any> = await api.getTransactionTags(paymentTransactionId, includeDeleted, audit);
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+$includedDeleted = false;
+$audit = "NONE";
+
+$result = $apiInstance->getTransactionTags($transactionId, $includedDeleted, $audit);
+````
 
 > Example Response:
 
@@ -826,12 +1158,11 @@ paymentTransactionApi.get_transaction_tags(payment_transaction_id, api_key, api_
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ------------ |
-| **includedDeleted** | boolean | no | false | If true, include deleted tags |
-| **audit** | string | no | "NONE" | Level of audit information to return |
-
-Audit information options are "NONE", "MINIMAL" (only inserts), or "FULL".
+| Name | Type | Required | Default | Description                            |
+| ---- | -----| -------- | ------- |----------------------------------------|
+| **includedDeleted** | boolean | no | false | If true, include deleted tags          |
+| **audit** | string | no | "NONE" | Level of audit information to return: "NONE", "MINIMAL" (only inserts), or "FULL"
+|
 
 **Response**
     
@@ -839,7 +1170,7 @@ If successful, returns a status code of 200 and a list of tag objects.
 
 ### Remove tags from a payment transaction
 
-Removes a list of tags attached to a payment transaction.
+This API deletes one or more tags attached to a payment transaction.
 
 **HTTP Request** 
 
@@ -871,27 +1202,62 @@ paymentTransactionApi.deleteTransactionTags(paymentTransactionId,
 ```
 
 ```ruby
-TODO
+user = "demo"
+reason = nil
+comment = nil
+
+payment_transaction = KillBillClient::Model::Transaction.new
+payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
+
+tag_name = 'sample_tag'
+
+payment_transaction.remove_tag(tag_name,
+                        user,
+                        reason,
+                        comment,
+                        options)
 ```
 
 ```python
 paymentTransactionApi = killbill.api.PaymentTransactionApi()
-
-payment_transaction_id = 'dce5b2a0-0f0f-430b-9427-545ba4be5c7f'
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"] 
+payment_transaction_id = '02acb6b2-8139-40d3-816c-8b7ec858d350'
+tagDefIds = ["3d70a355-8342-4042-8694-a2447f0f2b1e"]
 
 paymentTransactionApi.delete_transaction_tags(payment_transaction_id,
-                                              created_by,
-                                              api_key,
-                                              api_secret,
-                                              tag_def=tag)
+                                              tag_def=tagDefIds,
+                                              created_by='demo',
+                                              reason='reason',
+                                              comment='comment')
 ```
+
+````javascript
+const api: killbill.PaymentTransactionApi = new killbill.PaymentTransactionApi(config);
+
+const paymentTransactionId = '8dabaa02-c926-4ec3-b0bb-47fe2271b62f';
+
+const tagDefIds = ['3d70a355-8342-4042-8694-a2447f0f2b1e'];
+
+api.deleteTransactionTags(paymentTransactionId, 'created_by', tagDefIds);
+````
+
+````php
+$apiInstance = $client->getPaymentTransactionApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$transactionId = "1f7002b3-d1a5-458d-97d4-46b6b86499ac";
+$tagDefIds = array("3d70a355-8342-4042-8694-a2447f0f2b1e");
+
+$apiInstance->deleteTransactionTags($transactionId, $xKillbillCreatedBy, $tagDefIds, $xKillbillReason, $xKillbillComment);
+````
 
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
 | ---- | -----| -------- | ------- | ------------ |
-| **tagDef** | array of string | yes | none | List of tag definition IDs identifying the tags that should be removed. |
+| **tagDef** | array of string | yes | none | A tag definition ID identifying the tag that should be removed. Multiple tags can be deleted by specifying a separate tagDef parameter corresponding to each tag. |
 
 **Response**
 

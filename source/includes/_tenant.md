@@ -95,7 +95,7 @@ const api: killbill.TenantApi = new killbill.TenantApi(config);
 
 const tenant: killbill.Tenant = {apiKey: `api_key`, apiSecret: `api_secret`};
 
-const response: AxiosResponse<killbill.Tenant, any> = await api.createTenant(tenant, 'created-by', 'reason', 'comment');
+api.createTenant(tenant, 'created-by', 'reason', 'comment');
 ```
 
 ```php
@@ -109,7 +109,9 @@ $tenant = new Tenant();
 $tenant->setApiKey('demo_api_key');
 $tenant->setApiSecret('demo_api_secret');
 
-$tenant = $apiInstance->createTenant($tenant, $xKillbillCreatedBy, $keyName, $xKillbillReason, $xKillbillComment);
+$useGlobalDefault = false;
+
+$result = $apiInstance->createTenant($tenant, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment, $useGlobalDefault);
 ```
 
 **Request Body**
@@ -122,7 +124,7 @@ A JSON string representing a Tenant resource. The only parameters required are `
 | ---- | -----| -------- | ------- | ----------- |
 | **useGlobalDefault** | boolean | false | false | If true, configure the tenant with a default catalog |
 
-Setting the `useGlobalDefault` parameter to `true` can be used for test purposes. This will configure the tenant with a default catalog, and therefore make it easy to quickly start playing with the apis. Note that in order to then upload a new custom catalog, one would need to [invalidate the caches for this tenant](#admin-invalidates-caches-per-tenant-level).
+Setting the `useGlobalDefault` parameter to `true` can be used for test purposes. This will configure the tenant with a default catalog, and therefore make it easy to quickly start playing with the apis. Note that in order to then upload a new custom catalog, one would need to [invalidate the caches for this tenant](admin.html#admin-invalidate-caches-for-a-tenant).
 
 **Response**
 

@@ -5,11 +5,11 @@ The `Catalog` is at the heart of the Kill Bill subscription and billing systems.
 The catalog for a given tenant may be updated to new versions from time to time. This provides the ability to deprecate old products, add new ones, or change prices for existing products. Older versions remain available in case they are needed. If a new version is uploaded, new subscriptions will use the new version, but existing subscriptions may either depend on their original versions (grandfathering use case) or use the latest version (price update use case). Please refer to the [catalog section of our subscription billing documentation](https://docs.killbill.io/latest/userguide_subscription.html#components-catalog) for additional details.
 
 
-KAUI, our admin UI, provides the ability to upload a *simple plan*. The *simple plan* provides a way to ease testing and to play with the system. See [API section Simple Plan](https://killbill.github.io/slate/#catalog-simple-plan).
+KAUI, our admin UI, provides the ability to upload a *simple plan*. The *simple plan* provides a way to ease testing and to play with the system. See [API section Simple Plan](catalog.html#catalog-simple-plan).
 
 A tenant has several options for setting up their catalog. You can choose the option that best meets your needs:
 
-1. Use the default test catalog that ships with Kill Bill by [creating a tenant](https://killbill.github.io/slate/#tenant-create-a-tenant) with `useGlobalDefault=true`
+1. Use the default test catalog that ships with Kill Bill by [creating a tenant](tenant.html#tenant-create-a-tenant) with `useGlobalDefault=true`
 2. Use the Simple Plan API from KAUI to get started quickly (no need to create an XML catalog, simply use the UI and add the plans you need).
 3. Write your own complete catalog as an XML file and upload it. Some examples of catalog can be found in our [test repo](https://github.com/killbill/killbill-docs/tree/v3/catalogs). For validation, check our [manual](https://docs.killbill.io/latest/userguide_subscription.html#components-catalog-overview) or use our [cloud validation tool](https://cloud.killbill.io/) after creating an account.
 4. Write a custom Catalog plugin. This is only for advanced users with special needs.

@@ -27,7 +27,7 @@ body {
   @extend %default-font;
 }
 
-.tocify, .toc-footer, .lang-selector, .search, #nav-button {
+.tocify, .toc-footer, .lang-selector, .search {
   display: none;
 }
 
@@ -63,9 +63,6 @@ body {
 
   table {
     border: 1px solid $print-color;
-    tr {
-      border-bottom: 1px solid $print-color;
-    }
     td,th {
       padding: 0.7em;
     }
@@ -143,5 +140,11 @@ body {
 
   aside.success:before {
     @extend %icon-ok-sign;
+  }
+}
+
+.copy-clipboard {
+  @media print {
+    display: none
   }
 }

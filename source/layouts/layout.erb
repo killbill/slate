@@ -22,153 +22,389 @@ under the License.
     end
   end
 %>
-
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title><%= current_page.data.title || "API Documentation" %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<%= current_page.data.title + ' ' + current_page.data.current_page + ' ' + "API Documentation" %>">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <style>
-      <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
-    </style>
-    <%= stylesheet_link_tag :screen, media: :screen %>
-    <%= stylesheet_link_tag :print, media: :print %>
-    <% if current_page.data.search %>
-      <%= javascript_include_tag  "all" %>
-    <% else %>
-      <%= javascript_include_tag  "all_nosearch" %>
-    <% end %>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-32705710-4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-32705710-4');
-    </script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+    <% if current_page.data.key?('meta') %>
+      <% current_page.data.meta.each do |meta| %>
+        <meta
+          <% meta.each do |key, value| %>
+            <%= "#{key}=\"#{value}\"" %>
+          <% end %>
+        >
+        <% end %>
+      <% end %>
+      <title><%= current_page.data.title || "API Documentation" %></title>
+      <style media="screen">
+        <%= Rouge::Themes::CustomColorsScheme.render(:scope => '.highlight') %>
+      </style>
+      <style media="print">
+        * {
+          transition:none!important;
+        }
+        <%= Rouge::Themes::Base16::Solarized.render(:scope => '.highlight') %>
+      </style>
+      <%= stylesheet_link_tag :screen, media: :screen %>
+      <%= stylesheet_link_tag :print, media: :print %>
+      <% if current_page.data.code_clipboard %>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3" />
+      <% end %>
   </head>
-  <body class="<%= page_classes %>" data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
+
+  <body data-languages="<%=h language_tabs.map{ |lang| lang.is_a?(Hash) ? lang.keys.first : lang }.to_json %>">
     <div class="loader-wrapper">
-      <div id="loading"></div>           
+      <div id="loading"></div>
     </div>
-    <script>
-      $(window).on('load',function(){
-        $('.loader-wrapper').hide();
-      });
-    </script>
-    <a href="#" id="nav-button">
-      <span>
-        NAV
-        <%= image_tag('navbar.png') %>
-      </span>
-    </a>
-    <div class="main-wrapper">
-        <div class="toc-wrapper">
-        <a href="https://killbill.github.io/slate" class="logo"><%= image_tag "logo.png" %></a>
-        
+    <header class="header sticky" id="header">
+      <div class="header__logo-wrapper">
+        <a href="/"  aria-label="Kill Bill logo" class="header__logo"></a>
+        <label class="header__theme-switch theme-switch"></label>
+      </div>
+      
+      <div class="header__sidebar-toggler">
+        <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7C3.25 6.58579 3.58579 6.25 4 6.25L20 6.25C20.4142 6.25 20.75 6.58579 20.75 7Z" fill=""/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M20.75 12C20.75 12.4142 20.4142 12.75 20 12.75L4 12.75C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25L20 11.25C20.4142 11.25 20.75 11.5858 20.75 12Z" fill=""/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M20.75 17C20.75 17.4142 20.4142 17.75 20 17.75L4 17.75C3.58579 17.75 3.25 17.4142 3.25 17C3.25 16.5858 3.58579 16.25 4 16.25L20 16.25C20.4142 16.25 20.75 16.5858 20.75 17Z" fill=""/>
+        </svg>
+      </div>
+
+      <div class="header__search-wrapper">
+        <div class="header__search">
+          <div id="docsearch" style="height: 43px; display: flex; align-items: center; width: 100%;">
+          </div>
+        </div>
+
         <% if language_tabs.any? %>
           <div class="lang-selector">
-            <% language_tabs.each do |lang| %>
-              <% if lang.is_a? Hash %>
-                <a href="#" data-language-name="<%= lang.keys.first %>"><%= lang.values.first %></a>
-              <% else %>
-                <a href="#" data-language-name="<%= lang %>"><%= lang %></a>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
-
-        <div id="docsearch"></div>
-        
-        <div id="toc" class="toc-list-h1">
-          <% toc_data(page_content).each do |h1| %>
-            <li>
-              <a href="#<%= h1[:id] %>" class="toc-h1 toc-link" data-title="<%= h1[:content] %>"><%= h1[:content] %></a>
-              <% if h1[:children].length > 0 %>
-                <ul class="toc-list-h2">
-                  <% h1[:children].each do |h2| %>
-                    <li>
-                      <a href="#<%= h2[:id] %>" class="toc-h2 toc-link" data-title="<%= h2[:content] %>"><%= h2[:content] %></a>
-                      <% if h2[:children].length > 0 %>
-                          <ul class="toc-list-h3">
-                            <% h2[:children].each do |h3| %>
-                                <li>
-                                  <a href="#<%= h3[:id] %>" class="toc-h3 toc-link" data-title="<%= h1[:content] %>"><%= h3[:content] %></a>
-                                </li>
-                            <% end %>
-                          </ul>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% end %>
-            </li>
-          <% end %>
-        </div>
-        <% if current_page.data.toc_footers %>
-          <ul class="toc-footer">
-            <% current_page.data.toc_footers.each do |footer| %>
-              <li><%= footer %></li>
-            <% end %>
-          </ul>
-        <% end %>
-        <a class="doclink" href="mailto:support@killbill.io">Report a doc problem </a>
-      </div>
-      <div class="page-wrapper">
-        <div class="dark-box"></div>
-        <div class="content">
-          <%= page_content %>
-        </div>
-        <div class="dark-box">
-          <% if language_tabs.any? %>
-            <div class="lang-selector">
+            <label>
+              <select class="lang-selector__select">
+                <% language_tabs.each do |lang|%>
+                  <option data-language-name="<%= lang %>" value="<%= lang %>"><%= lang %></option>
+                <% end %>
+              </select>
+            </label>
+            <div class="lang-selector__list">
               <% language_tabs.each do |lang| %>
                 <% if lang.is_a? Hash %>
-                  <a href="#" data-language-name="<%= lang.keys.first %>"><%= lang.values.first %></a>
+                  <a href="#" class="lang-selector__link" data-language-name="<%= lang.keys.first %>"><%= lang.values.first %></a>
                 <% else %>
-                  <a href="#" data-language-name="<%= lang %>"><%= lang %></a>
+                  <a href="#" class="lang-selector__link" data-language-name="<%= lang %>"><%= lang %></a>
                 <% end %>
               <% end %>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
-    </div>
+    </header>
+    <main class="page sidebar-show">
+      <div class="page__sidebar">
+        <div class="page__sidebar-toggle">
+          <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.33316 10.6665L1.6665 5.99992L6.33316 1.33325" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <nav class="site-navigator">
+          <ul class="site-navigator__menu">
+            <% toc_data(current_page.data.menu_items, current_page.data.current_page, page_content).each do |menu_item| %>
+              <li>
+                <a href="<%= menu_item[:href]%>" class="site-navigator__item site-navigator__menu-item" data-title="<%= menu_item[:title] %>">
+                  <span><%= menu_item[:content] %></span>
+                </a>
+                
+                <% if menu_item[:children].length > 0 %>
+                  <ul class="site-navigator__submenu">
+                    <% menu_item[:children].each do |submenu_item| %>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#<%= submenu_item[:id] %>" class="site-navigator__item site-navigator__submenu-item" data-title="<%= submenu_item[:title] %>">
+                          <span><%= submenu_item[:content] %></span>
+                        </a>
+
+                        <% if submenu_item[:children].length > 0 %>
+                          <ul class="site-navigator__submenu">
+                            <% submenu_item[:children].each do |nested_submenu_item| %>
+                              <li>
+                                <a href="#<%= nested_submenu_item[:id] %>" class="site-navigator__item site-navigator__submenu-item" data-title="<%= nested_submenu_item[:title] %>">
+                                  <span><%= nested_submenu_item[:content] %></span>
+                                </a>
+                              </li>
+                            <% end %>
+                          </ul>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+          <% if current_page.data.toc_footers %>
+            <ul class="site-navigator__footer">
+              <% current_page.data.toc_footers.each do |footer| %>
+                <li><%= footer %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </nav>
+      </div>
+
+      <div class="page__content content">
+        <%= page_content %>
+      </div>
+    </main>
   </body>
+
+  <% if current_page.data.search %>
+    <%= javascript_include_tag  "all" %>
+  <% else %>
+    <%= javascript_include_tag  "all_nosearch" %>
+  <% end %>
+
   <script>
-    setTimeout(function(){
-      $('.content h2, .content h3, .content h4').append('<a href=""><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>');
-      $('.content h2, .content h3, .content h4').each(function(){
-        let itemHref = '#' + $(this).attr('id');
-        $(this).find('a').attr("href", itemHref);
-      });
-      function copyToClipboard(text) {
-        let sampleTextarea = document.createElement("textarea");
-        document.body.appendChild(sampleTextarea);
-        sampleTextarea.value = text;
-        sampleTextarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(sampleTextarea);
+    function debounce(func, delay) {
+      let timeoutId;
+      return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(function() {
+          func.apply(context, args);
+        }, delay);
+      };
+    }
+    function copyToClipboard(textToCopy) {
+      const textarea = document.createElement('textarea');
+      textarea.value = textToCopy;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+
+    class ProgramingLanguages {
+      _defaultList = [];
+
+      constructor(langList) {
+        this.list = langList;
+        this.updateDOMWithNewActiveLanguage();
+
+        $(".lang-selector .lang-selector__link").on("click", (event) => {
+          event.preventDefault();
+          this.updateDOMWithNewActiveLanguage($(event.target).data("language-name"));
+        });
+
+        $(".lang-selector .lang-selector__select").on("change", (event) => {
+          event.preventDefault()
+          this.updateDOMWithNewActiveLanguage(event.target.value)
+        });
       }
-      $('.content h2 a, .content h3 a, .content h4 a').on('click', function(){
-        setTimeout(function(){
-          copyToClipboard($(location).attr("href"));
-        }, 500);  
-      });
-      $('.content pre').prepend('<div class="copy-icon"><svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.847 8.462a2.309 2.309 0 0 0-2.308-2.308h-9.23A2.307 2.307 0 0 0 0 8.462v9.23A2.307 2.307 0 0 0 2.308 20h9.23a2.309 2.309 0 0 0 2.309-2.308v-9.23Zm-1.539 0v9.23a.77.77 0 0 1-.77.77h-9.23a.769.769 0 0 1-.769-.77v-9.23c0-.425.344-.77.769-.77h9.23a.77.77 0 0 1 .77.77Z" fill="#99B7CE"/><path fill-rule="evenodd" clip-rule="evenodd" d="M6.924 4.615a.769.769 0 0 1-.77-.769V2.308A2.308 2.308 0 0 1 8.462 0h9.23A2.308 2.308 0 0 1 20 2.308v9.23a2.308 2.308 0 0 1-2.308 2.308h-1.538a.769.769 0 1 1 0-1.539h1.538c.425 0 .77-.344.77-.769v-9.23a.769.769 0 0 0-.77-.77h-9.23a.769.769 0 0 0-.77.77v1.538a.77.77 0 0 1-.768.77Z" fill="#99B7CE"/></svg></div>');
-      $('.content pre svg').on('click', function() {
-          copyToClipboard($(this).parent().parent().find('code').text());
+
+      get list() {
+        const list = localStorage.getItem('listOfProgramingLanguages');
+        return list ? JSON.parse(list) : this._defaultList;
+      }
+
+      set list(list) {
+        localStorage.setItem('listOfProgramingLanguages', JSON.stringify(list));
+      }
+
+      get activeLanguage() {
+        const activeLang = localStorage.getItem('activeProgramingLanguage');
+        return activeLang || this.list[0];
+      }
+      
+      set activeLanguage(activeLang) {
+        localStorage.setItem('activeProgramingLanguage', activeLang);
+      }
+
+      updateDOMWithNewActiveLanguage(lang) {
+        if(lang) {
+          this.activeLanguage = lang
+        }
+
+        $(".lang-selector .lang-selector__link").removeClass('active');
+        $(`.lang-selector .lang-selector__link[data-language-name='${lang || this.activeLanguage}']`).addClass('active');
+        this.showOnlyActiveLanguage();
+      }
+      
+      showOnlyActiveLanguage() {
+        const activeLang = this.activeLanguage;
+        
+        if (activeLang) {
+          $('.code-snippet').each((index, element) => {
+            const snippetHasActiveLang = $(element).find(`.${activeLang}`);
+
+            if (!snippetHasActiveLang.length > 0) {
+              $(element).hide();
+            } else {
+              $(element).show();
+            }
+            
+            $(element).has('.json, .textplain, .plaintext, .xml').show();
+            
+            $(element).children('.highlight').each(function (index, ch) {
+              $(ch).hide()
+              $(ch).has(`.${activeLang}, .json, .textplain, .plaintext, .xml`).show()
+            })
+          });
+        }
+      }
+    }
+
+    // DOM restructuring
+    $('.content h2, .content h3, .content h4').each(function(){
+      const itemHref = '#' + $(this).attr('id');
+      $(this).append(`<a href="${itemHref}" style="padding-left: 10px;"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>`);
+      
+      $(this).find('a').on('click', function(event) {
+        const currentURLWithoutHash = window?.location?.href?.split('#')[0];
+        const textToCopy = currentURLWithoutHash + itemHref;
+
+        copyToClipboard(textToCopy)
       });
     });
-  </script>
-  <script src='https://cdn.jsdelivr.net/npm/@docsearch/js@3'></script>	
-  
-  <script >docsearch({apiKey: '3ef227e7fd5e2e1a3fffd880484934bf', container: '#docsearch', appId: 'S2ISXITURI', indexName: 'killbill_slate'});</script>
-</html>
 
+    $('.content h3, .content h2, .content h1').each(
+      function(i,e) {
+        const sectionElements = $(this).nextUntil('h3, h2, h1')
+
+        const codeSnippets = sectionElements.filter('.highlight, blockquote')
+        const textBlock = sectionElements.not('.highlight, blockquote')
+
+        const section = $('<section class="content__section" />')
+          .append($('<div class="content__text" />').append(textBlock))
+          .append($('<div class="content__code-snippets" />').append(codeSnippets))
+
+        section.insertAfter($(this))
+    });
+
+    $('.content h2').each(
+      function() {
+        const sectionElements = $(this).nextUntil('h2, h1')
+        $(this).add(sectionElements).wrapAll('<div class="content__section-container"/>' )
+    });
+
+    $('blockquote').each(function() {
+      const $blockquote = $(this)
+      $blockquote.prepend('<div class="copy-clipboard"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.25 1.5H11.1667C13.0335 1.5 13.9669 1.5 14.68 1.86331C15.3072 2.18289 15.8171 2.69282 16.1367 3.32003C16.5 4.03307 16.5 4.96649 16.5 6.83333V12.75M4.16667 16.5H10.9167C11.8501 16.5 12.3168 16.5 12.6733 16.3183C12.9869 16.1586 13.2419 15.9036 13.4017 15.59C13.5833 15.2335 13.5833 14.7668 13.5833 13.8333V7.08333C13.5833 6.14991 13.5833 5.6832 13.4017 5.32668C13.2419 5.01308 12.9869 4.75811 12.6733 4.59832C12.3168 4.41667 11.8501 4.41667 10.9167 4.41667H4.16667C3.23325 4.41667 2.76654 4.41667 2.41002 4.59832C2.09641 4.75811 1.84144 5.01308 1.68166 5.32668C1.5 5.6832 1.5 6.14991 1.5 7.08333V13.8333C1.5 14.7668 1.5 15.2335 1.68166 15.59C1.84144 15.9036 2.09641 16.1586 2.41002 16.3183C2.76654 16.5 3.23325 16.5 4.16667 16.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>');
+
+      $($blockquote).add($($blockquote).nextUntil('blockquote', 'div')).wrapAll('<div class="code-snippet"></div>')
+    });
+
+    $('table').each(function () {
+      $(this).wrapAll('<div class="table-wrapper" />')
+    })
+
+    // Init active menu item if it has 
+    $('.site-navigator .site-navigator__menu-item[href*="#"]').addClass('active')
+
+    // Init theme
+    if(JSON.parse(localStorage.getItem('is-dark-theme'))) {
+      $('body').addClass('dark')
+    }
+
+    // Init programing language 
+    programingLanguages = new ProgramingLanguages($('body').data('languages'))
+
+    // Add event listeners on '.copy-clipboard' selector
+    $('.copy-clipboard').on('click', function () {
+      copyToClipboard($(this).parent().parent().find(`.${programingLanguages.activeLanguage} code`).text());
+
+      if (!$(this).find('.tooltip').length > 0) {
+        $(this).prepend('<span class="tooltip">Copied</span>');
+        
+        let that = this;
+        setTimeout(function () {
+          $(that).find('.tooltip').remove();
+        }, 2000);
+      }
+    });
+    
+    $('.theme-switch').on('click', function (e) {
+      $('body').toggleClass('dark');
+
+      localStorage.setItem('is-dark-theme', $('body').hasClass('dark'))
+    });
+
+    $('.header__sidebar-toggler').on('click', function() {
+      $(this).toggleClass('active')
+      $('.page').toggleClass('sidebar-full-width-show')
+    })
+
+    $('.page__sidebar-toggle').on('click', function () {
+      $(this).toggleClass('active');
+      $('.page').toggleClass('sidebar-show');
+    });
+
+    $('.site-navigator .site-navigator__menu-item').on('click', function () {
+      if($(this).hasClass('active')) {
+        $(this).removeClass('active')
+      }
+    })
+    
+    $('.site-navigator .site-navigator__submenu-item').on('click', function () {
+      if($(this).parent('.site-navigator__submenu').siblings('.site-navigator__menu-item.active')) {
+        $('.site-navigator .site-navigator__submenu-item').removeClass('active')
+        $(this).addClass('active')
+
+        return;
+      }
+
+      $('.site-navigator .site-navigator__submenu-item').removeClass('active')
+      $('.site-navigator .site-navigator__menu-item').removeClass('active')
+      $(this).parent('.site-navigator__menu-item').addClass('active')
+      $(this).addClass('active')
+    })
+
+    const navLinks = $('.site-navigator .site-navigator__menu-item.active + .site-navigator__submenu').find('.site-navigator__submenu-item')
+    const HEIGHT_OF_PAGE_HEADER = 70;
+    
+    function handleScroll() {
+      navLinks.each(function(index) {
+        const currentHref = $(this).attr('href')
+        const targetHeader = $(currentHref);
+        const targetSection = $(`${currentHref} + section`);
+
+        if (!targetSection.length) {
+          return;
+        }
+
+        const targetTop = Math.round(targetHeader.offset()?.top)
+        const heightOfHeader = Math.round(targetHeader.outerHeight())
+        // Calculate the end of an section
+        const targetBottom = Math.round(targetTop + heightOfHeader + targetSection.outerHeight());
+
+        if (HEIGHT_OF_PAGE_HEADER >= targetTop && 0 < targetBottom) {
+          const currentNavSubitem = $(`.site-navigator .site-navigator__submenu-item[href="${currentHref}"]`)
+          const currentSubmenuContainer = $(currentNavSubitem).parents('.site-navigator__submenu-container')
+          const parentMenuItem = $(currentSubmenuContainer).find('>.site-navigator__submenu-item');
+
+          if(parentMenuItem.hasClass('active')) {
+            currentNavSubitem.parent().parent().find('.site-navigator__submenu-item').removeClass('active')
+            currentNavSubitem.addClass('active')
+          } else {
+            $('.site-navigator .site-navigator__submenu-item').removeClass('active');
+            parentMenuItem.addClass('active')
+            $(currentNavSubitem).addClass('active')
+          }
+        }
+      });
+    }
+
+    // Attach the custom debounced scroll event handler
+    const debouncedScroll = debounce(handleScroll, 10);
+    $('.page .page__content').on('scroll', debouncedScroll);
+
+    // The page is ready  - hide loader
+    setTimeout(() => $('.loader-wrapper').hide(), 500)
+  </script>
+  <script src='https://cdn.jsdelivr.net/npm/@docsearch/js@3'></script>
+  <script>
+    docsearch({apiKey: '3ef227e7fd5e2e1a3fffd880484934bf', container: '#docsearch', appId: 'S2ISXITURI', indexName: 'killbill_slate'});
+  </script>
+</html>

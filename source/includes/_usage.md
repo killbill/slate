@@ -58,7 +58,7 @@ The APIs in this group support recording and retrieving usage data points.
 
 ### Record usage for a subscription
 
-Records the daily mount of usage of a specified set of unit types for a given subscription
+Records the daily amount of usage of a specified set of unit types for a given subscription
 
 **HTTP Request**
 
@@ -120,6 +120,10 @@ usageApi.recordUsage(usage, requestOptions);
 ```
 
 ```ruby
+user = "demo"
+reason = nil
+comment = nil
+
 usage_record = KillBillClient::Model::UsageRecordAttributes.new
 usage_record.amount = 1
 usage_record.record_date = "2013-03-14"
@@ -138,8 +142,50 @@ result.create(user, nil, nil, options)
 ```
 
 ```python
-TODO
+usageApi = killbill.api.UsageApi()
+
+usageRecord = UsageRecord(record_date='2023-09-05', amount=1)
+unitUsageRecord = UnitUsageRecord(unit_type='hours',usage_records=[usageRecord])
+
+subscriptionUsageRecord = SubscriptionUsageRecord(subscription_id='dc89f346-bc55-46ee-8963-1b666d8fea50', tracking_id="t4", unit_usage_records=[unitUsageRecord])
+
+usageApi.record_usage(subscriptionUsageRecord,
+                      created_by='demo',
+                      reason='reason',
+                      comment='comment')
 ```
+
+````javascript
+const api: killbill.UsageApi = new killbill.UsageApi(config);
+
+const usageRecord: UsageRecord = {amount: 4, recordDate: "2023-09-17"};
+const unitUsageRecord: UnitUsageRecord = {unitType: "hours", usageRecords:[usageRecord]};
+const subscriptionUsageRecord: SubscriptionUsageRecord = {subscriptionId: "dc89f346-bc55-46ee-8963-1b666d8fea50", unitUsageRecords: [unitUsageRecord]};
+
+api.recordUsage(subscriptionUsageRecord, 'created_by');
+````
+
+````php
+$apiInstance = $client->getUsageApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$usageRecord = new UsageRecord();
+$usageRecord -> setAmount(2);
+$usageRecord -> setRecordDate('2023-09-15');
+
+$unitUsageRecord = new UnitUsageRecord();
+$unitUsageRecord -> setUnitType('hours');
+$unitUsageRecord -> setUsageRecords(array($usageRecord));
+
+$subscriptionUsageRecord = new SubscriptionUsageRecord();
+$subscriptionUsageRecord -> setSubscriptionId('dc89f346-bc55-46ee-8963-1b666d8fea50');
+$subscriptionUsageRecord -> setUnitUsageRecords(array($unitUsageRecord));
+
+$apiInstance->recordUsage($subscriptionUsageRecord, $xKillbillCreatedBy, $xKillbillReason, $xKillbillComment);
+````
 
 **Request Body**
 
@@ -181,21 +227,23 @@ UUID subscriptionId = UUID.fromString("365987b2-5443-47e4-a467-c8962fc6995c");
 String unitType = "chocolate-videos";
 LocalDate startDate = new LocalDate("2012-08-25");
 LocalDate endDate = new LocalDate("2013-08-26");
+Map<String, String> NULL_PLUGIN_PROPERTIES = null;
 
-RolledUpUsage retrievedUsage = usageApi.getUsage(subscriptionId,
-                                                 unitType,
-                                                 startDate,
-                                                 endDate,
-                                                 requestOptions);
+RolledUpUsage retrievedUsage = usageApi.getUsage(subscriptionId, 
+        unitType, 
+        startDate, 
+        endDate, 
+        NULL_PLUGIN_PROPERTIES,
+        requestOptions);
 ```
 
 ```ruby
 subscription_id = "365987b2-5443-47e4-a467-c8962fc6995c"
 start_date = "2012-08-25"
-end_date_ = "2013-08-26"
+end_date = "2013-08-26"
 unit_type = "chocolate-videos"
 
-KillBillClient::Model::RolledUpUsage.find_by_subscription_id_and_type(subscription_id,
+usages = KillBillClient::Model::RolledUpUsage.find_by_subscription_id_and_type(subscription_id,
                                                                       start_date,
                                                                       end_date,
                                                                       unit_type,
@@ -205,6 +253,29 @@ KillBillClient::Model::RolledUpUsage.find_by_subscription_id_and_type(subscripti
 ```python
 TODO
 ```
+
+````javascript
+const api: killbill.UsageApi = new killbill.UsageApi(config);
+
+const subscriptionId = 'dc89f346-bc55-46ee-8963-1b666d8fea50';
+const unitType = 'hours'
+const startDate = '2023-09-01';
+const endDate = '2023-09-30';
+
+const response: AxiosResponse<killbill.RolledUpUsage, any> = await api.getUsage(subscriptionId, unitType, startDate, endDate);
+````
+
+````php
+$apiInstance = $client->getUsageApi();
+
+$subscriptionId = "dc89f346-bc55-46ee-8963-1b666d8fea50";
+$unitType = "hours";
+$startDate = new DateTime("2023-09-01");
+$endDate = new DateTime("2023-09-30");
+$pluginProperty = array("pluginProperty_example");
+
+$result = $apiInstance->getUsage($subscriptionId, $unitType, $startDate, $endDate, $pluginProperty);
+````
 
 > Example Response:
 
@@ -229,6 +300,7 @@ TODO
 | ---- | -----| -------- | ------- | ----------- |
 | **startDate** | date | yes | none | Date/DateTime of oldest data point to retrieve (see below) in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format |
 | **endDate** | date | yes | none | Date/DateTime of newest data point to retrieve (see below) in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 * **startDate**, **endDate**: Data is retrieved beginning on the specified start date up to but not including the specified end date.
 
@@ -265,11 +337,12 @@ UUID subscriptionId = UUID.fromString("365987b2-5443-47e4-a467-c8962fc6995c");
 
 LocalDate startDate = new LocalDate("2012-08-25");
 LocalDate endDate = new LocalDate("2013-08-26");
-
-RolledUpUsage retrievedUsage = usageApi.getAllUsage(subscriptionId,
-                                                    startDate,
-                                                    endDate,
-                                                    requestOptions);
+Map<String, String> NULL_PLUGIN_PROPERTIES = null;
+RolledUpUsage retrievedUsage = usageApi.getAllUsage(subscriptionId, 
+        startDate, 
+        endDate, 
+        NULL_PLUGIN_PROPERTIES,
+        requestOptions);
 ```
 
 ```ruby
@@ -277,7 +350,7 @@ subscription_id = "365987b2-5443-47e4-a467-c8962fc6995c"
 start_date = "2012-08-25"
 end_date = = "2013-08-26"
 
-KillBillClient::Model::RolledUpUsage.find_by_subscription_id(subscription_id,
+usages = KillBillClient::Model::RolledUpUsage.find_by_subscription_id(subscription_id,
                                                              start_date,
                                                              end_date,
                                                              options)
@@ -286,6 +359,27 @@ KillBillClient::Model::RolledUpUsage.find_by_subscription_id(subscription_id,
 ```python
 TODO
 ```
+
+````javascript
+const api: killbill.UsageApi = new killbill.UsageApi(config);
+
+const subscriptionId = 'dc89f346-bc55-46ee-8963-1b666d8fea50';
+const startDate = '2023-09-01';
+const endDate = '2023-09-30';
+
+const response: AxiosResponse<killbill.RolledUpUsage, any> = await api.getAllUsage(subscriptionId, startDate, endDate);
+````
+
+````php
+$apiInstance = $client->getUsageApi();
+
+$subscriptionId = "dc89f346-bc55-46ee-8963-1b666d8fea50";
+$startDate = new DateTime("2023-09-01");
+$endDate = new DateTime("2023-09-30");
+$pluginProperty = array("pluginProperty_example");
+
+$result = $apiInstance->getAllUsage($subscriptionId, $startDate, $endDate, $pluginProperty);
+````
 
 > Example Response:
 
@@ -310,10 +404,11 @@ TODO
 | ---- | -----| -------- | ------- | ----------- |
 | **startDate** | date | yes | none | Date/DateTime of oldest data point to retrieve (see below) in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format |
 | **endDate** | date | yes | none | Date/DateTime of newest data point to retrieve (see below) in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm` format |
+| **pluginProperty** | array of strings | false | omit |list of plugin properties, if any |
 
 * **startDate**, **endDate**: Data is retrieved beginning on the specified start date/datetime up to but not including the specified end date/datetime.
 
 **Response**
 
-IF successful, returns a status code of 200 and a RolledUpUsage object.
+If successful, returns a status code of 200 and a RolledUpUsage object.
 
