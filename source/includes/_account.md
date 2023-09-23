@@ -740,6 +740,7 @@ $accounts = $apiInstance->getAccounts();
 | **limit** | long | false | 100 | Maximum number of items to be listed |
 | **accountWithBalance** | boolean | false | false | If true, returns `accountBalance` info |
 | **accountWithBalanceAndCBA** | boolean | false | false | If true, returns `accountBalance` and `accountCBA` info |
+| **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
 
 **Response**
 
@@ -1988,6 +1989,7 @@ $apiInstance-> payAllInvoices($accountID,$xKillbillCreatedBy);
 | **externalPayment** | boolean | false | false | Choose true if you use a external payment method. |
 | **paymentAmount** | string | false | total balance |Total payment amount |
 | **targetDate** | string | false | current date | Date for which payment should be made |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -2105,6 +2107,7 @@ $invoicePayments  = $apiInstance-> getInvoicePayments($accountID);
 | ---- | -----| -------- | ------- | ----------- | 
 | **withPluginInfo** | boolean | false | false | Choose true to include plugin info |
 | **withAttempts** | boolean | false | false | Choose true to include payment attempts |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 | **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
 
 
@@ -2226,6 +2229,7 @@ $accountPayments  = $apiInstance-> getPaymentsForAccount($accountID);
 | **withPluginInfo** | boolean | false | false | Choose true to include plugin info |
 | **withAttempts** | boolean | false | false | Choose true to include payment attempts |
 | **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
