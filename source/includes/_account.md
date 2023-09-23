@@ -740,6 +740,7 @@ $accounts = $apiInstance->getAccounts();
 | **limit** | long | false | 100 | Maximum number of items to be listed |
 | **accountWithBalance** | boolean | false | false | If true, returns `accountBalance` info |
 | **accountWithBalanceAndCBA** | boolean | false | false | If true, returns `accountBalance` and `accountCBA` info |
+| **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
 
 **Response**
 
@@ -1988,6 +1989,7 @@ $apiInstance-> payAllInvoices($accountID,$xKillbillCreatedBy);
 | **externalPayment** | boolean | false | false | Choose true if you use a external payment method. |
 | **paymentAmount** | string | false | total balance |Total payment amount |
 | **targetDate** | string | false | current date | Date for which payment should be made |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -2105,6 +2107,7 @@ $invoicePayments  = $apiInstance-> getInvoicePayments($accountID);
 | ---- | -----| -------- | ------- | ----------- | 
 | **withPluginInfo** | boolean | false | false | Choose true to include plugin info |
 | **withAttempts** | boolean | false | false | Choose true to include payment attempts |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 | **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
 
 
@@ -2226,6 +2229,7 @@ $accountPayments  = $apiInstance-> getPaymentsForAccount($accountID);
 | **withPluginInfo** | boolean | false | false | Choose true to include plugin info |
 | **withAttempts** | boolean | false | false | Choose true to include payment attempts |
 | **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -5485,3 +5489,95 @@ $accountTimeline = $apiInstance->getAccountTimeline($accountID);
 **Response**
 
 If successful, returns a status code of 200 and a complete account record including: the account object; bundles with subscriptions and timelines giving all events; invoices; and payments including payment attempts.
+
+## CBA Rebalancing
+
+CBA refers to Credit Balance Adjustment and primarily aims at bringing the invoice balance to zero in case it becomes negative due to any adjustments (for example : item adjustment, credit adjustment etc.). This generates an equivalent account credit that can be used later in subsequent invoices. The [subscription billing documentation](https://docs.killbill.io/latest/userguide_subscription) provides some scenarios in which CBA adjustment is generated.
+
+### Rebalance account CBA
+
+This endpoint is used to apply existing account credit to unpaid invoices (if any). Normally the system does this automatically, so there is rarely a need to use this endpoint.
+
+**HTTP Request** 
+
+`PUT http://127.0.0.1:8080/1.0/kb/accounts/{accountId}/cbaRebalancing`
+
+> Example Request:
+
+```shell
+curl -v \
+    -X PUT \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \    
+    "http://localhost:8080/1.0/kb/accounts/9caff00a-e0b8-4b10-b086-287ba108b0e6/cbaRebalancing"
+```
+
+```java
+import org.killbill.billing.client.api.gen.AccountApi;
+protected AccountApi accountApi;
+
+UUID accountId = UUID.fromString("ee6835f0-8347-42d3-958c-9a939383ba28");
+
+accountApi.rebalanceExistingCBAOnAccount(accountId,
+                                         requestOptions);
+```
+
+```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+account = KillBillClient::Model::Account.new
+
+account.account_id = "ee6835f0-8347-42d3-958c-9a939383ba28"
+
+account.cba_rebalancing(user,
+                        reason,
+                        comment,
+                        options)
+```
+
+```python
+accountApi = killbill.AccountApi()
+
+account_id = '8992e146-bfa1-4126-a045-98b844a4adcb'
+
+accountApi.rebalance_existing_cba_on_account(account_id,
+                                             created_by='demo',
+                                             reason='reason', 
+                                             comment='comment')
+```
+```javascript
+const api: killbill.AccountApi = new killbill.AccountApi(config);
+
+const accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+
+api.rebalanceExistingCBAOnAccount(accountID,'created_by');
+```
+
+```php
+$apiInstance = $client->getAccountApi();
+
+$accountID = '8992e146-bfa1-4126-a045-98b844a4adcb';
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$apiInstance-> rebalanceExistingCBAOnAccount($accountID,
+                                             $xKillbillCreatedBy,
+                                             $xKillbillReason,
+                                             $xKillbillComment);
+```
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 204 and an empty body.
