@@ -136,6 +136,12 @@ payment_id = '5e9d8b82-2664-4a36-85a1-37471a0b618a'
 invoicePayment = invoicePaymentApi.get_invoice_payment(payment_id)
 ```
 
+```javascript
+```
+
+```php
+```
+
 > Example Response:
 
 ```json
@@ -184,7 +190,8 @@ invoicePayment = invoicePaymentApi.get_invoice_payment(payment_id)
 | ---- | -----| -------- | ------- | ----------- |
 | **withPluginInfo** | boolean | no | false | if true, include plugin info |
 | **withAttempts** | boolean | no | false | if true, include payment attempts |
-
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
+| **audit** | string | false | "NONE" | Level of audit information to return: "NONE", "MINIMAL", or "FULL" |
 **Returns**
 
 If successful, returns a status code of 200 and an `InvoicePayment` object.
@@ -261,6 +268,11 @@ invoicePaymentApi.create_refund_with_adjustments(payment_id,
                                                  transactionBody,
                                                  created_by)
 ```
+```javascript
+```
+
+```php
+```
 
 **Request Body**
 
@@ -272,6 +284,7 @@ An `InvoicePaymentTransaction` object, including at least the **amount** attribu
 | ---- | -----| -------- | ------- | ----------- | 
 | **externalPayment** | boolean | no | false | choose true if the payment method is external |
 | **paymentMethodId** | string | yes | none | paymentMethod id |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -346,6 +359,11 @@ invoicePaymentApi.create_chargeback(payment_id,
                                     transactionBody, 
                                     created_by)
 ```
+```javascript
+```
+
+```php
+```
 
 **Request Body**
 
@@ -354,7 +372,7 @@ An `InvoicePaymentTransaction` object, including at least the **amount** attribu
 
 **Query Parameters**
 
-None.
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -388,7 +406,21 @@ curl -v \
 ```
 
 ```java
-TODO
+import org.killbill.billing.client.api.gen.InvoicePaymentApi;
+import org.killbill.billing.client.model.gen.InvoicePaymentTransaction;
+
+protected InvoicePaymentApi invoicePaymentApi;
+
+
+UUID payment_id = UUID.fromString("b9976ff0-d326-42bd-8e91-ea083149a38f");
+String chargeback_transaction_external_key = "99c45d07-abe4-4bc7-a207-0524548c1b08";
+
+InvoicePaymentTransaction body = new InvoicePaymentTransaction();
+
+body.setPaymentId(payment_id);
+body.setTransactionExternalKey(chargeback_transaction_external_key) ;
+    
+invoicePaymentApi.createChargebackReversal(payment_id, body, NULL_PLUGIN_PROPERTIES, requestOptions);
 ```
 
 ```ruby
@@ -421,7 +453,11 @@ invoicePaymentApi.create_chargeback_reversal(payment_id,
                                              transactionBody, 
                                              created_by)
 ```
+```javascript
+```
 
+```php
+```
 **Request Body**
 
 An `InvoicePaymentTransaction` object, including at least the **amount** attribute and the **isAdjusted** attribute. If **isAdjusted** is true, then the object must also include the attribute **adjustments** which is a list of `InvoiceItem` objects giving the **invoiceItemId**, the **invoiceId**, and the adjusted **amount** for each of the adjustments to be made.
@@ -429,7 +465,7 @@ An `InvoicePaymentTransaction` object, including at least the **amount** attribu
 
 **Query Parameters**
 
-None.
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -499,9 +535,15 @@ invoicePaymentApi.complete_invoice_payment_transaction(payment_id,
                                                        created_by)
 ```
 
+```javascript
+```
+
+```php
+```
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -583,6 +625,11 @@ invoicePaymentApi.create_invoice_payment_custom_fields(payment_id,
 
 ```
 
+```javascript
+```
+
+```php
+```
 **Request Body**
 
 A JSON string representing the custom field object or objects to be added.
@@ -641,6 +688,11 @@ payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 invoicePaymentCustomFields = invoicePaymentApi.get_invoice_payment_custom_fields(payment_id)
 ```
 
+```javascript
+```
+
+```php
+```
 > Example Response:
 
 ```json
@@ -738,6 +790,11 @@ invoicePaymentApi.modify_invoice_payment_custom_fields(payment_id,
                                                        created_by)
 ```
 
+```javascript
+```
+
+```php
+```
 **Requst Body**
 
 A JSON string representing a list of custom fields to substitute for the existing ones.
@@ -808,6 +865,11 @@ invoicePaymentApi.delete_invoice_payment_custom_fields(payment_id,
                                                        custom_field=customFieldsBody)
 ```
 
+```javascript
+```
+
+```php
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -885,6 +947,11 @@ invoicePaymentApi.create_invoice_payment_tags(payment_id,
                                               created_by)
 ```
 
+```javascript
+```
+
+```php
+```
 **Request Body**
 
 Provides a list of tag definition Ids in JSON format
@@ -947,6 +1014,11 @@ payment_id = '2a1ffd2c-0de1-4f5c-b2a9-27d8deebe596'
 invoicePaymentTags = invoicePaymentApi.get_invoice_payment_tags(payment_id)
 ```
 
+```javascript
+```
+
+```php
+```
 > Example Response:
 
 ```json
@@ -968,6 +1040,7 @@ invoicePaymentTags = invoicePaymentApi.get_invoice_payment_tags(payment_id)
 | ---- | -----| -------- | ------- | ------------ |
 | **includedDeleted** | boolean | no | false | If true, include deleted tags |
 | **audit** | string | no | "NONE" | Level of audit information to return |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 Audit information options are "NONE", "MINIMAL" (only inserts), or "FULL".
 
@@ -1031,6 +1104,11 @@ invoicePaymentApi.delete_invoice_payment_tags(payment_id,
                                               tag_def=tag)
 ```
 
+```javascript
+```
+
+```php
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -1067,7 +1145,17 @@ curl \
 ```
 
 ```java
-                                                                                     
+import org.killbill.billing.client.api.gen.InvoicePaymentApi;
+
+protected InvoicePaymentApi invoicePaymentApi;
+
+UUID invoicePaymentId = UUID.fromString("b9976ff0-d326-42bd-8e91-ea083149a38f");
+
+AuditLogs invoicePaymentAuditLogs = invoicePaymentApi.getInvoicePaymentAuditLogsWithHistory(                                                                invoicePaymentId, 
+                                                                  requestOptions);
+```
+
+```ruby
 ```
 
 ```python
@@ -1078,7 +1166,10 @@ invoicePaymentId = 'b9976ff0-d326-42bd-8e91-ea083149a38f'
 invoicePaymentAuditLogs = invoicePaymentApi.get_invoice_payment_audit_logs_with_history(invoicePaymentId)
 ```
 
-```ruby
+```javascript
+```
+
+```php
 ```
 
 > Example Response:
