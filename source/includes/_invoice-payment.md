@@ -129,7 +129,7 @@ KillBillClient::Model::InvoicePayment.find_by_id(payment_id,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '5e9d8b82-2664-4a36-85a1-37471a0b618a'
 
 invoicePaymentApi.get_invoice_payment(payment_id, api_key, api_secret)
@@ -248,7 +248,7 @@ KillBillClient::Model::InvoicePayment.refund(payment_id,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 body = PaymentTransaction(amount=50.0)
 
@@ -331,7 +331,7 @@ KillBillClient::Model::InvoicePayment.chargeback(payment_id,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'
 body = PaymentTransaction(amount=50.0, currency='USD')
 
@@ -401,7 +401,7 @@ KillBillClient::Model::InvoicePayment.chargeback_reversal(payment_id,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 transaction_external_key = '99c45d07-abe4-4bc7-a207-0524548c1b08'
 body = PaymentTransaction(amount=50.0, 
@@ -479,7 +479,7 @@ KillBillClient::Model::InvoicePayment.complete_invoice_payment_transaction(payme
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 body = PaymentTransaction(payment_id=payment_id)
 
 invoicePaymentApi.complete_invoice_payment_transaction(payment_id, 
@@ -561,7 +561,7 @@ invoice_payment.add_custom_field(custom_field,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 body = CustomField(name='Test Custom Field', value='test_value')
 
 invoicePaymentApi.create_invoice_payment_custom_fields(payment_id,
@@ -623,7 +623,7 @@ invoice_payment.custom_fields(audit, options)
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 
 invoicePaymentApi.get_invoice_payment_custom_fields(payment_id, api_key, api_secret)
@@ -711,7 +711,7 @@ invoice_payment.modify_custom_field(custom_field,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 body = CustomField(custom_field_id=custom_field_id, name='Test Modify', value='test_modify_value')
@@ -780,7 +780,7 @@ invoice_payment.remove_custom_field(custom_field_id,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 custom_field = [custom_field_id]
@@ -856,7 +856,7 @@ invoice_payment.add_tag(tag_name,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
 
@@ -922,7 +922,7 @@ invoice_payment.tags(included_deleted,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '2a1ffd2c-0de1-4f5c-b2a9-27d8deebe596'
 
 invoicePaymentApi.get_invoice_payment_tags(payment_id, api_key, api_secret)
@@ -1000,7 +1000,7 @@ invoice_payment.remove_tag(tag_name,
 ```
 
 ```python
-invoicePaymentApi = killbill.api.InvoicePaymentApi()
+invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 tag = ["00000000-0000-0000-0000-000000000002"]
 
