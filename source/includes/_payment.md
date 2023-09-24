@@ -121,6 +121,13 @@ paymentApi.capture_authorization(payment_id,
                                  transactionBody,
                                  created_by)
 ```
+```javascript
+
+```
+
+```php
+
+```
 
 **Request Body**
 
@@ -128,7 +135,8 @@ A `PaymentTransaction` object containing, as a minimum, the `amount` to be captu
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -204,14 +212,21 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
 paymentApi.capture_authorization_by_external_key(transactionBody, 
                                                  created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A `PaymentTransaction` object containing, as a minimum, the `paymentExternalKey` and the`amount` to be captured.
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -271,7 +286,13 @@ payment_id = 'ce88ae5b-7ec0-4e14-9ea1-fffe4411278e'
 
 paymentDetails = paymentApi.get_payment(payment_id)
 ```
+```javascript
 
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -319,6 +340,7 @@ paymentDetails = paymentApi.get_payment(payment_id)
 | ---- | -----| -------- | ------- | ----------- |
 | **withPluginInfo** | boolean | no | false | If true, include plugin info |
 | **withAttempts** | boolean | no | false | If true, include payment attempts |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 | **audit** | string | no | "NONE" | Level of audit information to return |
 
 Audit information options are "NONE", "MINIMAL" (only inserts), or "FULL".
@@ -384,7 +406,13 @@ payment_external_key = 'sample_external_key'
 
 paymentDetails = paymentApi.get_payment_by_external_key(payment_external_key)
 ```
+```javascript
 
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -433,6 +461,7 @@ paymentDetails = paymentApi.get_payment_by_external_key(payment_external_key)
 | **externalKey** | string | yes | none | Payment external key |
 | **withPluginInfo** | boolean | no | false | If true, include plugin info |
 | **withAttempts** | boolean | no | false | If true, include payment attempts |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 | **audit** | string | no | "NONE" | Level of audit information to return |
 
 Audit information options are "NONE", "MINIMAL" (only inserts), or "FULL".
@@ -509,14 +538,21 @@ paymentApi.complete_transaction(payment_id,
                                 transactionBody,
                                 created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object containing, at least, the `paymentId`
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -588,14 +624,21 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
 paymentApi.complete_transaction_by_external_key(transactionBody,
                                                 created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object containing, at least, the `paymentExternalKey`
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -666,14 +709,21 @@ paymentApi.void_payment(payment_id,
                         transactionBody,
                         created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object containing, at least, the `paymentId`
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -742,14 +792,21 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
 paymentApi.void_payment_by_external_key(transactionBody,
                                         created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A Payment object containing, at least, the `paymentExternalKey`.
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -826,14 +883,21 @@ paymentApi.chargeback_payment(payment_id,
                               transactionBody,
                               created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A Payment Transaction object containing, at least, the `amount`.
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -911,14 +975,21 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
 paymentApi.chargeback_payment_by_external_key(transactionBody,
                                               created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object containing, at least, the `paymentExternalKey` and the `amount`.
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -952,6 +1023,8 @@ curl -v \
 import org.killbill.billing.client.api.gen.PaymentApi;
 protected PaymentApi paymentApi;
 
+UUID payment_id = UUID.fromString("b9976ff0-d326-42bd-8e91-ea083149a38f");
+
 PaymentTransaction body = new PaymentTransaction();
 body.setPaymentExternalKey("a975f7b8-1e59-4801-91c9-fcce1526b019");
 body.setAmount(new BigDecimal(5));
@@ -959,7 +1032,11 @@ body.setAmount(new BigDecimal(5));
 List<String> NULL_PLUGIN_NAMES = null;
 Map<String, String> NULL_PLUGIN_PROPERTIES = null;
 		
-Payment payment = paymentApi.chargebackPaymentByExternalKey(body, NULL_PLUGIN_NAMES, NULL_PLUGIN_PROPERTIES, requestOptions);
+Payment payment = paymentApi.chargebackReversalPayment(payment_id, 
+                                                       body, 
+                                                       NULL_PLUGIN_NAMES, 
+                                                       NULL_PLUGIN_PROPERTIES, 
+                                                       requestOptions);
 ```
 
 ```ruby
@@ -988,7 +1065,13 @@ paymentApi.chargeback_reversal_payment(payment_id,
                                        transactionBody,
                                        created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object containing, at least, the `transactionExternalKey`.
@@ -996,7 +1079,8 @@ A PaymentTransaction object containing, at least, the `transactionExternalKey`.
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -1040,7 +1124,10 @@ body.setAmount(new BigDecimal(10));
 List<String> NULL_PLUGIN_NAMES = null;
 Map<String, String> NULL_PLUGIN_PROPERTIES = null;
 		
-Payment payment = paymentApi.chargebackPaymentByExternalKey(body, NULL_PLUGIN_NAMES, NULL_PLUGIN_PROPERTIES, requestOptions);
+Payment payment = paymentApi.chargebackReversalPaymentByExternalKey(body, 
+                                                                    NULL_PLUGIN_NAMES, 
+                                                                    NULL_PLUGIN_PROPERTIES, 
+                                                                    requestOptions);
 ```
 
 ```ruby
@@ -1064,7 +1151,13 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
 paymentApi.chargeback_reversal_payment_by_external_key(transactionBody,
                                                        created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object containing, at least, the `paymentExternalKey` and the `TransactionExternalKey`.
@@ -1072,7 +1165,8 @@ A PaymentTransaction object containing, at least, the `paymentExternalKey` and t
 
 **Query Parameters**
 
-None.
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -1152,14 +1246,21 @@ paymentApi.refund_payment(payment_id,
                           transactionBody,
                           created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object including, as a minimum, the `amount` to be refunded.
 
 **Query Parameters**
 
-None. 
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -1234,14 +1335,21 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
 paymentApi.refund_payment_by_external_key(transactionBody,
                                           created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A PaymentTransaction object including, as a minimum, the `paymentExternalKey` and the `amount` to be refunded.
 
 **Query Parameters**
 
-None. 
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Returns**
 
@@ -1295,6 +1403,13 @@ payment_transaction_id = '231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c'
 
 paymentApi.cancel_scheduled_payment_transaction_by_id(payment_transaction_id,
                                                       created_by)
+```
+```javascript
+
+```
+
+```php
+
 ```
 
 **Query Parameters**
@@ -1355,7 +1470,13 @@ transaction_external_key = 'example_payment_external_key'
 paymentApi.cancel_scheduled_payment_transaction_by_external_key(transaction_external_key,
                                                                 created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Query Parameters**
 
 | Name | Type | Required | Default | Description |
@@ -1480,7 +1601,13 @@ comboPaymentTransactionBody = ComboPaymentTransaction(accountBody,
 paymentApi.create_combo_payment(comboPaymentTransactionBody,
                                 created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 The request body is a JSON string that represents three distinct objects: account, paymentMethod, and transaction. For example:
@@ -1509,7 +1636,7 @@ This example assumes that a new Account is to be created.
 
 **Query Parameters**
 
-None. 
+| **controlPluginName** | array of strings | false | empty list | list of control plugins, if any |
 
 **Returns**
 
@@ -1592,7 +1719,13 @@ paymentApi.create_payment_custom_fields(payment_id,
                                         [customFieldBody],
                                         created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A list of [Custom Field](custom-field.html#custom-field-custom-field-resource) objects. Each object should specify at least the the `name` and `value` attribute. For example:
@@ -1650,7 +1783,13 @@ payment_id = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 
 paymentCustomFields = paymentApi.get_payment_custom_fields(payment_id)
 ```
+```javascript
 
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -1743,7 +1882,13 @@ paymentApi.modify_payment_custom_fields(payment_id,
                                         [body],
                                         created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Requst Body**
 
 A list of [Custom Field](custom-field.html#custom-field-custom-field-resource) objects representing the fields to substitute for existing ones. Each object should specify at least the the `customFieldId` and `value` attribute. For example:
@@ -1812,6 +1957,13 @@ payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 
 paymentApi.delete_payment_custom_fields(payment_id,
                                         created_by)
+```
+```javascript
+
+```
+
+```php
+
 ```
 
 **Query Parameters**
@@ -1889,7 +2041,13 @@ paymentApi.create_payment_tags(payment_id,
                                tag,
                                created_by)
 ```
+```javascript
 
+```
+
+```php
+
+```
 **Request Body**
 
 A JSON array containing one or more tag definition ids to be added as tags.
@@ -1952,7 +2110,13 @@ payment_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
 
 paymentTags = paymentApi.get_payment_tags(payment_id)
 ```
+```javascript
 
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -2035,6 +2199,13 @@ paymentApi.delete_payment_tags(payment_id,
                                created_by,
                                tag_def=tagDefId)
 ```
+```javascript
+
+```
+
+```php
+
+```
 
 **Query Parameters**
 
@@ -2080,7 +2251,9 @@ UUID paymentId = UUID.fromString("cca08349-8b26-41c7-bfcc-2e3cf70a0f28");
 List<AuditLog> paymentAuditLogWithHistory = paymentApi.getPaymentAuditLogsWithHistory(paymentId, 
                                                                                       requestOptions);
 ```
-
+```ruby
+account.audit_logs_with_history(options)
+```
 ```python
 paymentApi = killbill.PaymentApi()
 
@@ -2089,10 +2262,13 @@ payment_id = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 paymentAuditLogs = paymentApi.get_payment_audit_logs_with_history(payment_id)
 ```
 
-```ruby
-account.audit_logs_with_history(options)
+```javascript
+
 ```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -2163,6 +2339,9 @@ AuditLogs logs = paymentApi.getPaymentAttemptAuditLogsWithHistory(paymentAttempt
 
 ```
 
+```ruby
+```
+
 ```python
 paymentApi = killbill.PaymentApi()
 
@@ -2170,10 +2349,13 @@ paymentAttemptId = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 
 auditLogs = paymentApi.get_payment_attempt_audit_logs_with_history(paymentAttemptId)
 ```
+```javascript
 
-```ruby
 ```
 
+```php
+
+```
 > Example Response:
 
 ```json
@@ -2312,7 +2494,13 @@ paymentApi = killbill.PaymentApi()
 
 payments = paymentApi.get_payments()
 ```
+```javascript
 
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -2362,8 +2550,10 @@ payments = paymentApi.get_payments()
 | ---- | -----| -------- | ------- | ----------- | 
 | **offset** | long | no | 0 | Starting index for items listed |
 | **limit** | long | no | 100 | Maximum number of items to be listed |
+| **pluginName** | string | user | Name of the associated payment plugin |
 | **withPluginInfo** | boolean | no | false | if true, include plugin info |
 | **withAttempts** | boolean | no | false | if true, include payment attempts |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 | **audit** | string | no | "NONE" | Level of audit information to return: "NONE", "MINIMAL" (only inserts), or "FULL" |
 
 **Response**
@@ -2432,7 +2622,13 @@ search_key = 'SUCCESS'
 
 payments = paymentApi.search_payments(search_key)
 ```
+```javascript
 
+```
+
+```php
+
+```
 > Example Response:
 
 ```json
@@ -2485,6 +2681,8 @@ payments = paymentApi.search_payments(search_key)
 | **limit** | long | no | 100 | Maximum number of items to be listed |
 | **withPluginInfo** | boolean | no | false | if true, include plugin info |
 | **withAttempts** | boolean | no | false | if true, include payment attempts |
+| **pluginName** | string | user | Name of the associated payment plugin |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 | **audit** | string | no | "NONE" | Level of audit information to return: "NONE", "MINIMAL" (only inserts), or "FULL" |
 
 **Response**
