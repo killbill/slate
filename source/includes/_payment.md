@@ -107,8 +107,6 @@ transaction.capture(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = 'b2a187b8-0028-4de8-b349-0ebe4e714a5a'
@@ -119,7 +117,9 @@ transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
 
 paymentApi.capture_authorization(payment_id,
                                  transactionBody,
-                                 created_by)
+                                 created_by='demo',
+                                 reason='reason', 
+                                 comment='comment')
 ```
 ```javascript
 
@@ -199,8 +199,6 @@ transaction.capture(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
@@ -210,7 +208,9 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
                                               currency='USD')
 
 paymentApi.capture_authorization_by_external_key(transactionBody, 
-                                                 created_by)
+                                                 created_by='demo',
+                                                 reason='reason', 
+                                                 comment='comment')
 ```
 ```javascript
 
@@ -284,7 +284,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = 'ce88ae5b-7ec0-4e14-9ea1-fffe4411278e'
 
-paymentDetails = paymentApi.get_payment(payment_id)
+payment = paymentApi.get_payment(payment_id)
 ```
 ```javascript
 
@@ -404,7 +404,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key' 
 
-paymentDetails = paymentApi.get_payment_by_external_key(payment_external_key)
+payment = paymentApi.get_payment_by_external_key(payment_external_key)
 ```
 ```javascript
 
@@ -526,8 +526,6 @@ transaction.complete_initial_transaction(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = '7dcda896-808b-414c-aad4-74ddc98e3dcb'
@@ -536,7 +534,9 @@ transactionBody = killbill.PaymentTransaction(payment_id=payment_id)
 
 paymentApi.complete_transaction(payment_id,
                                 transactionBody,
-                                created_by)
+                                created_by='demo',
+                                reason='reason', 
+                                comment='comment')
 ```
 ```javascript
 
@@ -613,8 +613,6 @@ transaction.complete_initial_transaction(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
@@ -622,7 +620,9 @@ payment_external_key = 'sample_external_key'
 transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key)
 
 paymentApi.complete_transaction_by_external_key(transactionBody,
-                                                created_by)
+                                                created_by='demo',
+                                                reason='reason', 
+                                                comment='comment')
 ```
 ```javascript
 
@@ -697,8 +697,6 @@ transaction.void(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = '29b34a3d-d301-4e57-8fc2-2c0a201c4fd0'
@@ -707,7 +705,9 @@ transactionBody = killbill.PaymentTransaction(payment_id=payment_id)
 
 paymentApi.void_payment(payment_id,
                         transactionBody,
-                        created_by)
+                        created_by='demo',
+                        reason='reason', 
+                        comment='comment')
 ```
 ```javascript
 
@@ -781,8 +781,6 @@ transaction.void(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
@@ -790,7 +788,9 @@ payment_external_key = 'sample_external_key'
 transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key)
 
 paymentApi.void_payment_by_external_key(transactionBody,
-                                        created_by)
+                                        created_by='demo',
+                                        reason='reason', 
+                                        comment='comment')
 ```
 ```javascript
 
@@ -868,8 +868,6 @@ transaction.chargeback(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = '42ab1653-051f-416c-8c70-bf5d4061d4fa'
@@ -881,7 +879,9 @@ transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
 
 paymentApi.chargeback_payment(payment_id,
                               transactionBody,
-                              created_by)
+                              created_by='demo',
+                              reason='reason', 
+                              comment='comment')
 ```
 ```javascript
 
@@ -961,8 +961,6 @@ transaction.chargeback(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
@@ -973,7 +971,9 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
                                               effective_date=None)
 
 paymentApi.chargeback_payment_by_external_key(transactionBody,
-                                              created_by)
+                                              created_by='demo',
+                                              reason='reason', 
+                                              comment='comment')
 ```
 ```javascript
 
@@ -1051,8 +1051,6 @@ transaction.chargeback_reversals(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = '74a82e25-120a-4a39-a7f7-7b5c2b4ac05d'
@@ -1063,7 +1061,9 @@ transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
 
 paymentApi.chargeback_reversal_payment(payment_id,
                                        transactionBody,
-                                       created_by)
+                                       created_by='demo',
+                                       reason='reason', 
+                                       comment='comment')
 ```
 ```javascript
 
@@ -1141,15 +1141,15 @@ transaction.chargeback_reversals(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key,
                                               transaction_external_key=transaction_external_key)
 
 paymentApi.chargeback_reversal_payment_by_external_key(transactionBody,
-                                                       created_by)
+                                                       created_by='demo',
+                                                       reason='reason', 
+                                                       comment='comment')
 ```
 ```javascript
 
@@ -1233,8 +1233,6 @@ transaction.refund(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = 'dce5b2a0-0f0f-430b-9427-545ba4be5c7f' 
@@ -1244,7 +1242,9 @@ transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
 
 paymentApi.refund_payment(payment_id,
                           transactionBody,
-                          created_by)
+                          created_by='demo',
+                          reason='reason', 
+                          comment='comment')
 ```
 ```javascript
 
@@ -1323,8 +1323,6 @@ transaction.refund_by_external_key(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'example_payment_external_key'
@@ -1333,7 +1331,9 @@ transactionBody = killbill.PaymentTransaction(payment_external_key=payment_exter
                                               amount=50.0)
 
 paymentApi.refund_payment_by_external_key(transactionBody,
-                                          created_by)
+                                          created_by='demo',
+                                          reason='reason', 
+                                          comment='comment')
 ```
 ```javascript
 
@@ -1395,14 +1395,14 @@ transaction.cancel_scheduled_payment(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_transaction_id = '231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c'
 
 paymentApi.cancel_scheduled_payment_transaction_by_id(payment_transaction_id,
-                                                      created_by)
+                                                      created_by='demo',
+                                                      reason='reason', 
+                                                      comment='comment')
 ```
 ```javascript
 
@@ -1461,14 +1461,14 @@ transaction.cancel_scheduled_payment(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 transaction_external_key = 'example_payment_external_key'
 
 paymentApi.cancel_scheduled_payment_transaction_by_external_key(transaction_external_key,
-                                                                created_by)
+                                                                created_by='demo',
+                                                                reason='reason', 
+                                                                comment='comment')
 ```
 ```javascript
 
@@ -1582,8 +1582,6 @@ combo_transaction.credit(user,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 accountBody = killbill.Account(name='John Doe',email='john@laposte.com',currency='USD')
@@ -1599,7 +1597,9 @@ comboPaymentTransactionBody = ComboPaymentTransaction(accountBody,
                                                       paymentTransactionBody)
 
 paymentApi.create_combo_payment(comboPaymentTransactionBody,
-                                created_by)
+                                created_by='demo',
+                                reason='reason', 
+                                comment='comment')
 ```
 ```javascript
 
@@ -1707,8 +1707,6 @@ payment.add_custom_field(custom_field,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
@@ -1717,7 +1715,9 @@ customFieldBody = killbill.CustomField(name='Test Custom Field', value='test_val
 
 paymentApi.create_payment_custom_fields(payment_id,
                                         [customFieldBody],
-                                        created_by)
+                                        created_by='demo',
+                                        reason='reason', 
+                                        comment='comment')
 ```
 ```javascript
 
@@ -1869,8 +1869,6 @@ payment.modify_custom_field(custom_field,
                             options)
 ```
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
@@ -1880,7 +1878,9 @@ body = killbill.CustomField(custom_field_id=custom_field_id, value='test_modify_
 
 paymentApi.modify_payment_custom_fields(payment_id,
                                         [body],
-                                        created_by)
+                                        created_by='demo',
+                                        reason='reason', 
+                                        comment='comment')
 ```
 ```javascript
 
@@ -1949,14 +1949,16 @@ payment.remove_custom_field(custom_field_id,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+customFieldIds = ['2395b898-e698-40d8-8d23-6a4065c5f870']
 
 paymentApi.delete_payment_custom_fields(payment_id,
-                                        created_by)
+                                        custom_field = customFieldIds,
+                                        created_by='demo',
+                                        reason='reason', 
+                                        comment='comment')
 ```
 ```javascript
 
@@ -2032,14 +2034,15 @@ payment.add_tag(tag_name,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
+
+tagDefIds = ["353752dd-9041-4450-b782-a8bb03a923c8"]
 
 paymentApi.create_payment_tags(payment_id,
-                               tag,
-                               created_by)
+                               tagDefIds,
+                               created_by='demo',
+                               reason='reason', 
+                               comment='comment')
 ```
 ```javascript
 
@@ -2188,16 +2191,16 @@ payment.remove_tag(tag_name,
 ```
 
 ```python
-created_by = 'user'
-
 paymentApi = killbill.PaymentApi()
 
 payment_id = 'dce5b2a0-0f0f-430b-9427-545ba4be5c7f'
-tagDefId = ["353752dd-9041-4450-b782-a8bb03a923c8"] 
+tagDefIds = ["353752dd-9041-4450-b782-a8bb03a923c8"] 
 
-paymentApi.delete_payment_tags(payment_id,
-                               created_by,
-                               tag_def=tagDefId)
+paymentApi.delete_payment_tags(payment_id,                               
+                               tag_def=tagDefIds,
+                               created_by='demo',
+                               reason='reason', 
+                               comment='comment')
 ```
 ```javascript
 
