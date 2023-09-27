@@ -2518,10 +2518,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span>
@@ -2744,10 +2745,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundle</span><span class="p">.</span><span class="nf">find_by_external_key</span><span class="p">(</span><span class="n">external_key</span><span class="p">,</span> 
                             <span class="n">included_deleted</span><span class="p">,</span> 
                             <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_external_key</span> <span class="o">=</span> <span class="s">'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_by_key</span><span class="p">(</span><span class="n">bundle_external_key</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">bundle</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_by_key</span><span class="p">(</span><span class="n">bundle_external_key</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span>
@@ -2930,6 +2932,13 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>The subscription external key</td>
 </tr>
 <tr>
+<td><strong>includedDeleted</strong></td>
+<td>boolean</td>
+<td>no</td>
+<td>false</td>
+<td>If true, include deleted bundles</td>
+</tr>
+<tr>
 <td><strong>audit</strong></td>
 <td>string</td>
 <td>no</td>
@@ -2980,15 +2989,18 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                            <span class="n">reason</span><span class="p">,</span> 
                            <span class="n">comment</span><span class="p">,</span> 
                            <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">Bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="o">=</span><span class="n">bundle_id</span><span class="p">,</span> 
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
+<span class="n">bundleID</span> <span class="o">=</span> <span class="s">'d65d22aa-483e-45fb-9335-cb6636514479'</span>
+
+<span class="n">body</span> <span class="o">=</span> <span class="n">Bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="o">=</span><span class="n">bundleID</span><span class="p">,</span>
               <span class="n">external_key</span><span class="o">=</span><span class="s">'new_external_key'</span><span class="p">)</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">rename_external_key</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span>
+<span class="n">bundleApi</span><span class="p">.</span><span class="n">rename_external_key</span><span class="p">(</span><span class="n">bundleID</span><span class="p">,</span>
                               <span class="n">body</span><span class="p">,</span>
-                              <span class="n">created_by</span><span class="p">,</span>
-                              <span class="n">api_key</span><span class="p">,</span>
-                              <span class="n">api_secret</span><span class="p">)</span>
+                              <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                              <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                              <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleBody</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span> <span class="o">=</span> <span class="p">{</span>
@@ -3098,16 +3110,18 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                 <span class="n">reason</span><span class="p">,</span> 
                 <span class="n">comment</span><span class="p">,</span> 
                 <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'</span>
 <span class="n">new_account_id</span> <span class="o">=</span> <span class="s">'71499886-296d-4b0f-8b76-0eed352d8801'</span>
+
 <span class="n">body</span> <span class="o">=</span> <span class="n">Bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="o">=</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">account_id</span><span class="o">=</span><span class="n">new_account_id</span><span class="p">)</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">transfer_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
                           <span class="n">body</span><span class="p">,</span> 
-                          <span class="n">created_by</span><span class="p">,</span> 
-                          <span class="n">api_key</span><span class="p">,</span> 
-                          <span class="n">api_secret</span><span class="p">)</span>
+                          <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                          <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                          <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleBody</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span> <span class="o">=</span> <span class="p">{</span><span class="na">accountId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">3e5e2f75-728f-4fc4-a8fc-066e7420bd69</span><span class="dl">'</span><span class="p">};</span>
@@ -3226,13 +3240,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
              <span class="n">reason</span><span class="p">,</span> 
              <span class="n">comment</span><span class="p">,</span> 
              <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'ce967207-851c-4040-bfbd-74a8924f9b8a'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">pause_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
-                       <span class="n">created_by</span><span class="p">,</span> 
-                       <span class="n">api_key</span><span class="p">,</span> 
-                       <span class="n">api_secret</span><span class="p">)</span>
+                       <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                       <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                       <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
@@ -3263,6 +3278,13 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>no</td>
 <td>current date</td>
 <td>requested date for pausing</td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>empty list</td>
+<td>List of plugin properties, if any</td>
 </tr>
 </tbody></table>
 
@@ -3308,13 +3330,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
               <span class="n">reason</span><span class="p">,</span> 
               <span class="n">comment</span><span class="p">,</span> 
               <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'ce967207-851c-4040-bfbd-74a8924f9b8a'</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">resume_bundle</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
-                        <span class="n">created_by</span><span class="p">,</span> 
-                        <span class="n">api_key</span><span class="p">,</span> 
-                        <span class="n">api_secret</span><span class="p">)</span>
+                        <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                        <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                        <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d1067966-c34f-4e93-abf7-7285582e0691</span><span class="dl">'</span><span class="p">;</span> 
@@ -3345,6 +3368,13 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>no</td>
 <td>current date</td>
 <td>requested date to resume</td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>empty list</td>
+<td>List of plugin properties, if any</td>
 </tr>
 </tbody></table>
 
@@ -3430,8 +3460,10 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                           <span class="n">reason</span><span class="p">,</span> 
                           <span class="n">comment</span><span class="p">,</span>
                           <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'</span>
+
 <span class="n">body</span> <span class="o">=</span> <span class="n">BlockingState</span><span class="p">(</span><span class="n">state_name</span><span class="o">=</span><span class="s">'STATE1'</span><span class="p">,</span> 
                      <span class="n">service</span><span class="o">=</span><span class="s">'ServiceStateService'</span><span class="p">,</span> 
                      <span class="n">is_block_change</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
@@ -3440,9 +3472,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">add_bundle_blocking_state</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span>
                                     <span class="n">body</span><span class="p">,</span>
-                                    <span class="n">created_by</span><span class="p">,</span>
-                                    <span class="n">api_key</span><span class="p">,</span>
-                                    <span class="n">api_secret</span><span class="p">)</span>
+                                    <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                    <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                    <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">blockingState</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BlockingState</span> <span class="o">=</span> <span class="p">{</span>
@@ -3507,6 +3539,13 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>immediate</td>
 <td>requested date for blocking</td>
 </tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>empty list</td>
+<td>List of plugin properties, if any</td>
+</tr>
 </tbody></table>
 
 <p><strong>Response</strong></p>
@@ -3570,14 +3609,15 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                         <span class="n">reason</span><span class="p">,</span>
                         <span class="n">comment</span><span class="p">,</span>
                         <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Test Custom Field'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_value'</span><span class="p">)</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">create_bundle_custom_fields</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span>
                                       <span class="p">[</span><span class="n">body</span><span class="p">],</span>
-                                      <span class="n">created_by</span><span class="p">,</span>
-                                      <span class="n">api_key</span><span class="p">,</span>
-                                      <span class="n">api_secret</span><span class="p">)</span>
+                                      <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                      <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                      <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">customFields</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Test Custom Field</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">test_value</span><span class="dl">'</span><span class="p">};</span>
 
 <span class="kd">const</span> <span class="nx">customFieldsBody</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customFields</span><span class="p">];</span>
@@ -3655,10 +3695,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
 
 <span class="n">bundleCustomFields</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'ce967207-851c-4040-bfbd-74a8924f9b8a'</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_custom_fields</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">bundleCustomFields</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_custom_fields</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
@@ -3757,16 +3798,19 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                            <span class="n">reason</span><span class="p">,</span>
                            <span class="n">comment</span><span class="p">,</span> 
                            <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span> 
-                   <span class="n">name</span><span class="o">=</span><span class="s">'Test Custom Field'</span><span class="p">,</span> 
-                   <span class="n">value</span><span class="o">=</span><span class="s">'test_value'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
+<span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'f3e2dc9d-1222-48ae-8658-35dd0acb53cd'</span>
+<span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'424475ed-3fda-4a8c-9dfd-dacc80a06242'</span>
+
+<span class="n">body</span> <span class="o">=</span> <span class="n">Killbill</span><span class="p">.</span><span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span>                   
+                            <span class="n">value</span><span class="o">=</span><span class="s">'test_value_modified'</span><span class="p">)</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">modify_bundle_custom_fields</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
                                       <span class="p">[</span><span class="n">body</span><span class="p">],</span> 
-                                      <span class="n">created_by</span><span class="p">,</span> 
-                                      <span class="n">api_key</span><span class="p">,</span> 
-                                      <span class="n">api_secret</span><span class="p">)</span>
+                                      <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                      <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                      <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span> <span class="na">customFieldId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">859a4053-4946-4be0-b94b-fe7a9409d785</span><span class="dl">'</span><span class="p">,</span>
@@ -3852,13 +3896,16 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                            <span class="n">reason</span><span class="p">,</span>
                            <span class="n">comment</span><span class="p">,</span> 
                            <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
-<span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'ce967207-851c-4040-bfbd-74a8924f9b8a'</span> 
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">delete_bundle_custom_fields</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
-                                      <span class="n">created_by</span><span class="p">,</span> 
-                                      <span class="n">api_key</span><span class="p">,</span> 
-                                      <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">bundleId</span> <span class="o">=</span> <span class="s">'ce967207-851c-4040-bfbd-74a8924f9b8a'</span> 
+<span class="n">customFieldIds</span> <span class="o">=</span> <span class="p">[</span><span class="s">'859a4053-4946-4be0-b94b-fe7a9409d785'</span><span class="p">]</span>
+
+<span class="n">bundleApi</span><span class="p">.</span><span class="n">delete_bundle_custom_fields</span><span class="p">(</span><span class="n">bundleId</span><span class="p">,</span> 
+                                      <span class="n">custom_field</span> <span class="o">=</span> <span class="n">customFieldIds</span><span class="p">,</span>
+                                      <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                      <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                      <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">customFieldIDs</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">859a4053-4946-4be0-b94b-fe7a9409d785</span><span class="dl">'</span><span class="p">];</span>
@@ -3945,15 +3992,16 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                <span class="n">reason</span><span class="p">,</span>
                <span class="n">comment</span><span class="p">,</span>
                <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'28af3cb9-275b-4ac4-a55d-a0536e479069'</span>
-<span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span>
+<span class="n">tags</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">create_bundle_tags</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
-                             <span class="n">tag</span><span class="p">,</span> 
-                             <span class="n">created_by</span><span class="p">,</span> 
-                             <span class="n">api_key</span><span class="p">,</span> 
-                             <span class="n">api_secret</span><span class="p">)</span>
+                             <span class="n">tags</span><span class="p">,</span> 
+                             <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                             <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                             <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleTags</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">acc26862-875e-4b24-990e-985d3f837862</span><span class="dl">'</span><span class="p">];</span>
@@ -4023,10 +4071,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">bundleTags</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">tags</span><span class="p">(</span><span class="n">included_deleted</span><span class="p">,</span>
                          <span class="n">audit</span><span class="p">,</span>
                          <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'28af3cb9-275b-4ac4-a55d-a0536e479069'</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_tags</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">bundleTags</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_tags</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
@@ -4124,15 +4173,16 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                   <span class="n">reason</span><span class="p">,</span>
                   <span class="n">comment</span><span class="p">,</span>
                   <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">bundle_id</span> <span class="o">=</span> <span class="s">'28af3cb9-275b-4ac4-a55d-a0536e479069'</span>
-<span class="n">tag</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span>
+<span class="n">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="s">"353752dd-9041-4450-b782-a8bb03a923c8"</span><span class="p">]</span>
 
 <span class="n">bundleApi</span><span class="p">.</span><span class="n">delete_bundle_tags</span><span class="p">(</span><span class="n">bundle_id</span><span class="p">,</span> 
-                             <span class="n">created_by</span><span class="p">,</span> 
-                             <span class="n">api_key</span><span class="p">,</span> 
-                             <span class="n">api_secret</span><span class="p">,</span>
-                             <span class="n">tag_def</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+                             <span class="n">tag_def</span><span class="o">=</span><span class="n">tagDefIds</span><span class="p">,</span>
+                             <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                             <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                             <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleTag</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">acc26862-875e-4b24-990e-985d3f837862</span><span class="dl">'</span><span class="p">];</span>
@@ -4197,13 +4247,23 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/d1b329c7-7dcf-466c-aaca-47bff304dab0/auditLogsWithHistory"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.BundleApi</span><span class="o">;</span>
+<span class="kd">protected</span> <span class="nc">BundleApi</span> <span class="n">bundleApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">bundleId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"917992d3-5f1f-4828-9fff-799cc4211aa9"</span><span class="o">);</span>
+
+<span class="nc">AuditLogs</span> <span class="n">bundleAuditLogs</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="o">.</span><span class="na">getBundleAuditLogsWithHistory</span><span class="o">(</span><span class="n">bundleId</span><span class="o">,</span>                            
+                                                                    <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">bundle</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Bundle</span><span class="p">.</span><span class="nf">new</span>
 
 <span class="n">bundle</span><span class="p">.</span><span class="nf">bundle_id</span> <span class="o">=</span> <span class="s1">'efaebe7a-8eaa-4550-96ea-a9235d3df46c'</span>
 
 <span class="n">bundleAuditLogs</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
+<span class="n">bundleId</span> <span class="o">=</span> <span class="s">'424475ed-3fda-4a8c-9dfd-dacc80a06242'</span>
+
+<span class="n">bundleAuditLogs</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundle_audit_logs_with_history</span><span class="p">(</span><span class="n">bundleId</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundleID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
@@ -4307,9 +4367,9 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <span class="n">paginatedBundles</span> <span class="o">=</span> <span class="n">bundle</span><span class="p">.</span><span class="nf">find_in_batches</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span>
                                           <span class="n">limit</span><span class="p">,</span>
                                           <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundles</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">,)</span>
+<span class="n">bundles</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">get_bundles</span><span class="p">()</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">bundles</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Bundle</span><span class="p">[]</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">bundleApi</span><span class="p">.</span><span class="nx">getBundles</span><span class="p">();</span>
@@ -4748,10 +4808,11 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
                                                <span class="n">offset</span><span class="p">,</span>
                                                <span class="n">limit</span><span class="p">,</span>
                                                <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">bundleApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">BundleApi</span><span class="p">()</span>
+
 <span class="n">search_key</span> <span class="o">=</span> <span class="s">'7b26b0ce-a495-4c0c-9dd5-11a556f03e8c'</span>
 
-<span class="n">bundleApi</span><span class="p">.</span><span class="n">search_bundles</span><span class="p">(</span><span class="n">search_key</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">bundles</span> <span class="o">=</span> <span class="n">bundleApi</span><span class="p">.</span><span class="n">search_bundles</span><span class="p">(</span><span class="n">search_key</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">bundleApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">BundleApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">searchKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">7f5b6b8e-0936-4d6b-ab05-820632f385b0</span><span class="dl">'</span><span class="p">;</span>
