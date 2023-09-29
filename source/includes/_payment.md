@@ -122,7 +122,15 @@ paymentApi.capture_authorization(payment_id,
                                  comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {amount: 50,
+                                                      paymentId : '536e3955-f69b-409f-8447-7cc24361f03f'
+                                                      };
+
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+paymentApi.captureAuthorization(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -213,7 +221,13 @@ paymentApi.capture_authorization_by_external_key(transactionBody,
                                                  comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {amount: 100,
+                                                      paymentExternalKey: 'paymentExternalKey28th1'
+                                                     };
+
+paymentApi.captureAuthorizationByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
@@ -287,7 +301,11 @@ payment_id = 'ce88ae5b-7ec0-4e14-9ea1-fffe4411278e'
 payment = paymentApi.get_payment(payment_id)
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+const payment: AxiosResponse<killbill.Payment> = await paymentApi.getPayment(paymentId);
 ```
 
 ```php
@@ -407,7 +425,11 @@ payment_external_key = 'sample_external_key'
 payment = paymentApi.get_payment_by_external_key(payment_external_key)
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentExternalKey = 'paymentExternalKey';
+
+const payment: AxiosResponse<killbill.Payment> = await paymentApi.getPaymentByExternalKey(paymentExternalKey);
 ```
 
 ```php
@@ -539,8 +561,14 @@ paymentApi.complete_transaction(payment_id,
                                 comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
-```
+const transactionBody: killbill.PaymentTransaction = {paymentId:'536e3955-f69b-409f-8447-7cc24361f03f'};
+
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+paymentApi.completeTransaction(transactionBody, paymentId, 'created_by');
+``` 
 
 ```php
 
@@ -625,7 +653,11 @@ paymentApi.complete_transaction_by_external_key(transactionBody,
                                                 comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {paymentExternalKey:'paymentExternalKey'};
+
+paymentApi.completeTransactionByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
@@ -710,7 +742,13 @@ paymentApi.void_payment(payment_id,
                         comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {paymentId:'536e3955-f69b-409f-8447-7cc24361f03f'};
+
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+paymentApi.voidTransaction(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -793,7 +831,11 @@ paymentApi.void_payment_by_external_key(transactionBody,
                                         comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {paymentExternalKey:'paymentExternalKey'};
+
+paymentApi.voidPaymentByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
@@ -884,7 +926,15 @@ paymentApi.chargeback_payment(payment_id,
                               comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {amount: 100,
+                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f'
+                                                     };
+
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+paymentApi.chargebackPayment(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -976,7 +1026,12 @@ paymentApi.chargeback_payment_by_external_key(transactionBody,
                                               comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {amount: 100,
+                                                      paymentExternalKey: 'paymentExternalKey'};
+
+paymentApi.chargebackPaymentByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
@@ -1066,7 +1121,16 @@ paymentApi.chargeback_reversal_payment(payment_id,
                                        comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {
+                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f',
+                                                      transactionExternalKey: 'transactionExternalKey'
+                                                      };
+
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+paymentApi.chargebackReversalPayment(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -1152,7 +1216,14 @@ paymentApi.chargeback_reversal_payment_by_external_key(transactionBody,
                                                        comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {
+                                                      paymentExternalKey: 'paymentExternalKey',
+                                                      transactionExternalKey: 'transactionExternalKey'
+                                                      };
+
+paymentApi.chargebackReversalPaymentByExternalKey(transactionBody,'created_by');
 ```
 
 ```php
@@ -1247,7 +1318,16 @@ paymentApi.refund_payment(payment_id,
                           comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = {
+                                                      amount: 100,
+                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f'
+                                                      };
+
+const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
+
+paymentApi.refundPayment(transactionBody,paymentId,'created_by');
 ```
 
 ```php
@@ -1336,7 +1416,15 @@ paymentApi.refund_payment_by_external_key(transactionBody,
                                           comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const transactionBody: killbill.PaymentTransaction = 
+                                              {
+                                                amount: 100,
+                                                paymentExternalKey:'536e3955-f69b-409f-8447-7cc24361f03f'
+                                               };
+
+paymentApi.refundPaymentByExternalKey(transactionBody,'created_by');
 ```
 
 ```php
@@ -1405,7 +1493,11 @@ paymentApi.cancel_scheduled_payment_transaction_by_id(payment_transaction_id,
                                                       comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentTransactionId = '231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c';
+
+paymentApi.cancelScheduledPaymentTransactionById(paymentTransactionId,'created_by');
 ```
 
 ```php
@@ -1471,7 +1563,11 @@ paymentApi.cancel_scheduled_payment_transaction_by_external_key(transaction_exte
                                                                 comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentTransactionExternalKey = '231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c';
+
+paymentApi.cancelScheduledPaymentTransactionByExternalKey(paymentTransactionExternalKey,'created_by');
 ```
 
 ```php
@@ -1602,7 +1698,29 @@ paymentApi.create_combo_payment(comboPaymentTransactionBody,
                                 comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const accountBody: killbill.Account = {
+                                        name: 'John Doe 28thSep',
+                                        email: 'john@laposte.com',
+                                        currency: 'USD'
+                                      };
+
+const paymentMethodBody: killbill.PaymentMethod = { pluginName: '__EXTERNAL_PAYMENT__' };
+
+const paymentTransactionBody: killbill.PaymentTransaction = {
+                                                              transactionType: 'AUTHORIZE',
+                                                              amount: 50,
+                                                              currency: 'USD'
+                                                            };
+
+const comboPaymentTransactionBody: killbill.ComboPaymentTransaction = {
+                                                                      account: accountBody,
+                                                                      paymentMethod: paymentMethodBody,
+                                                                      transaction: paymentTransactionBody
+                                                                      };
+
+paymentApi.createComboPayment(comboPaymentTransactionBody, 'created_by');
 ```
 
 ```php
@@ -1720,7 +1838,13 @@ paymentApi.create_payment_custom_fields(payment_id,
                                         comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const customFieldBody: killbill.CustomField[] = [{ name: 'Test Custom Field', value: 'test_value' }];
+
+paymentApi.createPaymentCustomFields(customFieldBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -1784,7 +1908,11 @@ payment_id = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 paymentCustomFields = paymentApi.get_payment_custom_fields(payment_id)
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const paymentCustomFields: AxiosResponse<killbill.CustomField[]> = await paymentApi.getPaymentCustomFields(paymentId);
 ```
 
 ```php
@@ -1883,7 +2011,14 @@ paymentApi.modify_payment_custom_fields(payment_id,
                                         comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+const customFieldId = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
+
+const customFieldBody:killbill.CustomField[] = [{customFieldId:customFieldId,value:'test_modify_value'}];
+
+paymentApi.modifyPaymentCustomFields(customFieldBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -1961,7 +2096,12 @@ paymentApi.delete_payment_custom_fields(payment_id,
                                         comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+const customFieldIds = ['2395b898-e698-40d8-8d23-6a4065c5f870']
+
+paymentApi.deletePaymentCustomFields(paymentId, 'created_by', customFieldIds);
 ```
 
 ```php
@@ -2045,7 +2185,13 @@ paymentApi.create_payment_tags(payment_id,
                                comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const tagDefIds = ['5071f544-c29f-47f5-a2ab-a6092c5bba74'];
+
+paymentApi.createPaymentTags(tagDefIds, paymentId, 'created_by');
 ```
 
 ```php
@@ -2114,7 +2260,11 @@ payment_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
 paymentTags = paymentApi.get_payment_tags(payment_id)
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const paymentTags: AxiosResponse<killbill.Tag[]> = await paymentApi.getPaymentTags(paymentId);
 ```
 
 ```php
@@ -2203,7 +2353,13 @@ paymentApi.delete_payment_tags(payment_id,
                                comment='comment')
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const tagDefIds = ['5071f544-c29f-47f5-a2ab-a6092c5bba74'];
+
+paymentApi.deletePaymentTags(paymentId,'created_by',tagDefIds);
 ```
 
 ```php
@@ -2266,7 +2422,12 @@ paymentAuditLogs = paymentApi.get_payment_audit_logs_with_history(payment_id)
 ```
 
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const paymentAuditLogs: AxiosResponse<killbill.AuditLog[]> =
+      await paymentApi.getPaymentAuditLogsWithHistory(paymentId);
 ```
 
 ```php
@@ -2353,7 +2514,12 @@ paymentAttemptId = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 auditLogs = paymentApi.get_payment_attempt_audit_logs_with_history(paymentAttemptId)
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const paymentAttemptId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
+
+const paymentAttemptAuditLogs: AxiosResponse<killbill.AuditLog[]> =
+      await paymentApi.getPaymentAttemptAuditLogsWithHistory(paymentId);
 ```
 
 ```php
@@ -2498,7 +2664,9 @@ paymentApi = killbill.PaymentApi()
 payments = paymentApi.get_payments()
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const payments: AxiosResponse<killbill.Payment[]> = await paymentApi.getPayments();
 ```
 
 ```php
@@ -2626,7 +2794,11 @@ search_key = 'SUCCESS'
 payments = paymentApi.search_payments(search_key)
 ```
 ```javascript
+const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
+const searchKey = 'SUCCESS'
+
+const payment: AxiosResponse<killbill.Payment[]> = await paymentApi.searchPayments(searchKey);
 ```
 
 ```php
