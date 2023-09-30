@@ -131,12 +131,18 @@ KillBillClient::Model::InvoicePayment.find_by_id(payment_id,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '5e9d8b82-2664-4a36-85a1-37471a0b618a'
+paymentId = '5e9d8b82-2664-4a36-85a1-37471a0b618a'
 
-invoicePayment = invoicePaymentApi.get_invoice_payment(payment_id)
+invoicePayment = invoicePaymentApi.get_invoice_payment(paymentId)
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePayment: AxiosResponse<killbill.InvoicePayment,any> =
+      await invoicePaymentApi.getInvoicePayment(paymentId);
 ```
 
 ```php
@@ -258,17 +264,26 @@ KillBillClient::Model::InvoicePayment.refund(payment_id,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
+paymentId = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 
-transactionBody = killbill.PaymentTransaction(amount=50.0)
+transactionBody = killbill.InvoicePaymentTransaction(amount=50.0)
 
-invoicePaymentApi.create_refund_with_adjustments(payment_id,
+invoicePaymentApi.create_refund_with_adjustments(paymentId,
                                                  transactionBody,
                                                  created_by='demo',
                                                  reason='reason', 
                                                  comment='comment')
 ```
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePaymentTransactionBody: killbill.InvoicePaymentTransaction = {amount: 50};
+
+invoicePaymentApi.createRefundWithAdjustments(invoicePaymentTransactionBody,
+                                              paymentId,
+                                              'created_by');
 ```
 
 ```php
@@ -349,17 +364,29 @@ KillBillClient::Model::InvoicePayment.chargeback(payment_id,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'
+paymentId = '2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'
 
-transactionBody = killbil.PaymentTransaction(amount=50.0, currency='USD')
+transactionBody = killbill.InvoicePaymentTransaction(amount=50.0, currency='USD')
 
-invoicePaymentApi.create_chargeback(payment_id, 
+invoicePaymentApi.create_chargeback(paymentId, 
                                     transactionBody, 
                                     created_by='demo',
                                     reason='reason', 
                                     comment='comment')
 ```
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePaymentTransactionBody: killbill.InvoicePaymentTransaction = 
+                                         { 
+                                          amount: 70,
+                                          currency: 'USD',
+                                          transactionExternalKey:'c6506c56-064a-4a6c-8567-88d9550ebea3'
+                                          };    
+
+invoicePaymentApi.createChargeback(invoicePaymentTransactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -443,9 +470,10 @@ invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 transaction_external_key = '99c45d07-abe4-4bc7-a207-0524548c1b08'
 
-transactionBody = killbill.PaymentTransaction(amount=50.0, 
-                                              currency='USD', 
-                                              transaction_external_key=transaction_external_key)
+transactionBody = killbill.InvoicePaymentTransaction(amount=50.0, 
+                                                     currency='USD', 
+                                                     transaction_external_key=transaction_external_key,
+                                                     isAdjusted= false)
 
 invoicePaymentApi.create_chargeback_reversal(payment_id, 
                                              transactionBody, 
@@ -454,6 +482,16 @@ invoicePaymentApi.create_chargeback_reversal(payment_id,
                                              comment='comment')
 ```
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePaymentTransactionBody: killbill.InvoicePaymentTransaction = {
+                                         amount: 20,
+                                         currency: 'USD',
+                                         transactionExternalKey: 'd19597ed-cf02-4270-af80-3f4a3016b81d'};    
+
+invoicePaymentApi.createChargebackReversal(invoicePaymentTransactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -524,11 +562,11 @@ KillBillClient::Model::InvoicePayment.complete_invoice_payment_transaction(payme
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
+paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id)
+transactionBody = killbill.InvoicePaymentTransaction(payment_id=paymentId)
 
-invoicePaymentApi.complete_invoice_payment_transaction(payment_id, 
+invoicePaymentApi.complete_invoice_payment_transaction(paymentId, 
                                                        transactionBody, 
                                                        created_by='demo',
                                                        reason='reason', 
@@ -536,6 +574,15 @@ invoicePaymentApi.complete_invoice_payment_transaction(payment_id,
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
+
+invoicePaymentTransactionBody = killbill.InvoicePaymentTransaction(paymentId:paymentId)
+
+invoicePaymentApi.completeInvoicePaymentTransaction(invoicePaymentTransactionBody, 
+                                                    paymentId, 
+                                                    'created_by')
 ```
 
 ```php
@@ -626,6 +673,16 @@ invoicePaymentApi.create_invoice_payment_custom_fields(payment_id,
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const paymentCustomField: killbill.CustomField = { name: 'customField', value: 'customValue' };
+
+invoicePaymentApi.createInvoicePaymentCustomFields([paymentCustomField],
+                                                   paymentId,
+                                                   'created_by'
+                                                   );
 ```
 
 ```php
@@ -689,6 +746,12 @@ invoicePaymentCustomFields = invoicePaymentApi.get_invoice_payment_custom_fields
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const paymentCustomFields: AxiosResponse<killbill.CustomField[]> =
+      await invoicePaymentApi.getInvoicePaymentCustomFields(paymentId);
 ```
 
 ```php
@@ -791,6 +854,18 @@ invoicePaymentApi.modify_invoice_payment_custom_fields(payment_id,
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const paymentCustomField: killbill.CustomField = {customFieldId: '84285945-eacd-4678-aca9-6f216ece8100',
+                                                  value: 'customValuemodified'
+                                                 };
+
+invoicePaymentApi.modifyInvoicePaymentCustomFields([paymentCustomField],
+                                                   paymentId,
+                                                   'created_by'
+                                                   );
 ```
 
 ```php
@@ -865,6 +940,15 @@ invoicePaymentApi.delete_invoice_payment_custom_fields(payment_id,
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const paymentCustomFields = ['676dc6b5-9e5c-4b5c-bdae-98bb5289f8b4'];
+
+invoicePaymentApi.deleteInvoicePaymentCustomFields(paymentId,
+                                                   'created_by',
+                                                   paymentCustomFields);
 ```
 
 ```php
@@ -947,6 +1031,13 @@ invoicePaymentApi.create_invoice_payment_tags(payment_id,
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePaymentTags = ['5071f544-c29f-47f5-a2ab-a6092c5bba74'];
+
+invoicePaymentApi.createInvoicePaymentTags(invoicePaymentTags, paymentId, 'created_by');
 ```
 
 ```php
@@ -1014,6 +1105,12 @@ invoicePaymentTags = invoicePaymentApi.get_invoice_payment_tags(payment_id)
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePaymentTags: AxiosResponse<killbill.Tag[]> =
+      await invoicePaymentApi.getInvoicePaymentTags(paymentId);
 ```
 
 ```php
@@ -1104,6 +1201,13 @@ invoicePaymentApi.delete_invoice_payment_tags(payment_id,
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
+
+const invoicePaymentTagDefIds = ['5071f544-c29f-47f5-a2ab-a6092c5bba74'];
+
+invoicePaymentApi.deleteInvoicePaymentTags(paymentId, 'created_by', invoicePaymentTagDefIds);
 ```
 
 ```php
@@ -1166,6 +1270,12 @@ invoicePaymentAuditLogs = invoicePaymentApi.get_invoice_payment_audit_logs_with_
 ```
 
 ```javascript
+const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymentApi(config);
+
+const invoicePaymentId = '0b4d51b0-3027-4cb7-8162-258a295f9cb8';
+
+const invoicePaymentAuditLogs: AxiosResponse<killbill.AuditLog[]> =
+      await invoicePaymentApi.getInvoicePaymentAuditLogsWithHistory(invoicePaymentId);
 ```
 
 ```php
