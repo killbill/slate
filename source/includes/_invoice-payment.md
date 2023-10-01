@@ -467,15 +467,14 @@ KillBillClient::Model::InvoicePayment.chargeback_reversal(payment_id,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
-transaction_external_key = '99c45d07-abe4-4bc7-a207-0524548c1b08'
+paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
+transactionExternalKey = '99c45d07-abe4-4bc7-a207-0524548c1b08'
 
 transactionBody = killbill.InvoicePaymentTransaction(amount=50.0, 
                                                      currency='USD', 
-                                                     transaction_external_key=transaction_external_key,
-                                                     isAdjusted= false)
+                                                     transaction_external_key=transactionExternalKey)
 
-invoicePaymentApi.create_chargeback_reversal(payment_id, 
+invoicePaymentApi.create_chargeback_reversal(paymentId, 
                                              transactionBody, 
                                              created_by='demo',
                                              reason='reason', 
