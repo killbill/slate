@@ -141,8 +141,7 @@ const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymen
 
 const paymentId = '79a9faee-29bc-43ac-ad7a-ad620d5f21cc';
 
-const invoicePayment: AxiosResponse<killbill.InvoicePayment,any> =
-      await invoicePaymentApi.getInvoicePayment(paymentId);
+const invoicePayment: AxiosResponse<killbill.InvoicePayment,any> = await invoicePaymentApi.getInvoicePayment(paymentId);
 ```
 
 ```php
@@ -266,7 +265,7 @@ invoicePaymentApi = killbill.InvoicePaymentApi()
 
 paymentId = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 
-transactionBody = killbill.InvoicePaymentTransaction(amount=50.0)
+transactionBody = InvoicePaymentTransaction(amount=50.0)
 
 invoicePaymentApi.create_refund_with_adjustments(paymentId,
                                                  transactionBody,
@@ -366,7 +365,7 @@ invoicePaymentApi = killbill.InvoicePaymentApi()
 
 paymentId = '2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'
 
-transactionBody = killbill.InvoicePaymentTransaction(amount=50.0, currency='USD')
+transactionBody = InvoicePaymentTransaction(amount=50.0, currency='USD')
 
 invoicePaymentApi.create_chargeback(paymentId, 
                                     transactionBody, 
@@ -470,9 +469,9 @@ invoicePaymentApi = killbill.InvoicePaymentApi()
 paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 transactionExternalKey = '99c45d07-abe4-4bc7-a207-0524548c1b08'
 
-transactionBody = killbill.InvoicePaymentTransaction(amount=50.0, 
-                                                     currency='USD', 
-                                                     transaction_external_key=transactionExternalKey)
+transactionBody = InvoicePaymentTransaction(amount=50.0, 
+                                            currency='USD', 
+                                            transaction_external_key=transactionExternalKey)
 
 invoicePaymentApi.create_chargeback_reversal(paymentId, 
                                              transactionBody, 
@@ -563,7 +562,7 @@ invoicePaymentApi = killbill.InvoicePaymentApi()
 
 paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 
-transactionBody = killbill.InvoicePaymentTransaction(payment_id=paymentId)
+transactionBody = InvoicePaymentTransaction(payment_id=paymentId)
 
 invoicePaymentApi.complete_invoice_payment_transaction(paymentId, 
                                                        transactionBody, 
@@ -661,7 +660,7 @@ invoice_payment.add_custom_field(custom_field,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-customField = killbill.CustomField(name='Test Custom Field', value='test_value')
+customField = CustomField(name='Test Custom Field', value='test_value')
 
 invoicePaymentApi.create_invoice_payment_custom_fields(payment_id,
                                                        [customField],
@@ -842,7 +841,7 @@ invoicePaymentApi = killbill.InvoicePaymentApi()
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 
-customFieldBody = killbill.CustomField(custom_field_id=custom_field_id,                             
+customFieldBody = CustomField(custom_field_id=custom_field_id,                             
                                        value='test_modify_value')
 
 invoicePaymentApi.modify_invoice_payment_custom_fields(payment_id,
