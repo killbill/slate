@@ -95,6 +95,10 @@ Payment capturedPayment = paymentApi.captureAuthorization(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction            = KillBillClient::Model::Transaction.new
 transaction.payment_id = "b2a187b8-0028-4de8-b349-0ebe4e714a5a"
 transaction.amount     = "483.22"
@@ -111,7 +115,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = 'b2a187b8-0028-4de8-b349-0ebe4e714a5a'
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id, 
+transactionBody = PaymentTransaction(payment_id=payment_id, 
                                               amount=50.0, 
                                               currency='USD')
 
@@ -125,8 +129,7 @@ paymentApi.capture_authorization(payment_id,
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const transactionBody: killbill.PaymentTransaction = {amount: 50,
-                                                      paymentId : '536e3955-f69b-409f-8447-7cc24361f03f'
-                                                      };
+                                                      paymentId : '536e3955-f69b-409f-8447-7cc24361f03f'};
 
 const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
 
@@ -195,6 +198,10 @@ Payment capturedPayment2 = paymentApi.captureAuthorizationByExternalKey(captureT
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                          = KillBillClient::Model::Transaction.new
 transaction.amount                   = "483.22"
 transaction.currency                 = "BTC"
@@ -211,9 +218,9 @@ paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
 
-transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key,
-                                              amount=50.0,
-                                              currency='USD')
+transactionBody = PaymentTransaction(payment_external_key=payment_external_key,
+                                     amount=50.0,
+                                     currency='USD')
 
 paymentApi.capture_authorization_by_external_key(transactionBody, 
                                                  created_by='demo',
@@ -224,8 +231,7 @@ paymentApi.capture_authorization_by_external_key(transactionBody,
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const transactionBody: killbill.PaymentTransaction = {amount: 100,
-                                                      paymentExternalKey: 'paymentExternalKey28th1'
-                                                     };
+                                                      paymentExternalKey: 'paymentExternalKey28th1'};
 
 paymentApi.captureAuthorizationByExternalKey(transactionBody, 'created_by');
 ```
@@ -536,6 +542,10 @@ paymentApi.completeTransaction(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction            = KillBillClient::Model::Transaction.new
 transaction.payment_id = "7dcda896-808b-414c-aad4-74ddc98e3dcb"
 refresh_options        = nil
@@ -552,7 +562,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = '7dcda896-808b-414c-aad4-74ddc98e3dcb'
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id)
+transactionBody = PaymentTransaction(payment_id=payment_id)
 
 paymentApi.complete_transaction(payment_id,
                                 transactionBody,
@@ -629,6 +639,10 @@ paymentApi.completeTransactionByExternalKey(body,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                      = KillBillClient::Model::Transaction.new
 transaction.payment_external_key = "example_payment_external_key"
 refresh_options                  = nil
@@ -645,7 +659,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
 
-transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key)
+transactionBody = PaymentTransaction(payment_external_key=payment_external_key)
 
 paymentApi.complete_transaction_by_external_key(transactionBody,
                                                 created_by='demo',
@@ -719,6 +733,10 @@ paymentApi.voidPayment(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction             = KillBillClient::Model::Transaction.new
 transaction.payment_id  = "29b34a3d-d301-4e57-8fc2-2c0a201c4fd0"
 
@@ -733,7 +751,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = '29b34a3d-d301-4e57-8fc2-2c0a201c4fd0'
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id)
+transactionBody = PaymentTransaction(payment_id=payment_id)
 
 paymentApi.void_payment(payment_id,
                         transactionBody,
@@ -748,7 +766,7 @@ const transactionBody: killbill.PaymentTransaction = {paymentId:'536e3955-f69b-4
 
 const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
 
-paymentApi.voidTransaction(transactionBody, paymentId, 'created_by');
+paymentApi.voidPayment(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -809,6 +827,10 @@ paymentApi.voidPaymentByExternalKey(body,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                          = KillBillClient::Model::Transaction.new
 transaction.transaction_external_key = "payment2-121268-void"
 
@@ -823,7 +845,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
 
-transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key)
+transactionBody = PaymentTransaction(payment_external_key=payment_external_key)
 
 paymentApi.void_payment_by_external_key(transactionBody,
                                         created_by='demo',
@@ -895,6 +917,10 @@ Payment payment = paymentApi.chargebackPayment(paymentId, body, NULL_PLUGIN_NAME
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                = KillBillClient::Model::Transaction.new
 transaction.payment_id     = "42ab1653-051f-416c-8c70-bf5d4061d4fa"
 transaction.amount         = '50.0'
@@ -914,10 +940,10 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = '42ab1653-051f-416c-8c70-bf5d4061d4fa'
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
-                                              amount=50.0,
-                                              currency='USD',
-                                              effective_date=None)
+transactionBody = PaymentTransaction(payment_id=payment_id,
+                                     amount=50.0,
+                                     currency='USD',
+                                     effective_date=None)
 
 paymentApi.chargeback_payment(payment_id,
                               transactionBody,
@@ -929,8 +955,7 @@ paymentApi.chargeback_payment(payment_id,
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const transactionBody: killbill.PaymentTransaction = {amount: 100,
-                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f'
-                                                     };
+                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f'};
 
 const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
 
@@ -996,6 +1021,10 @@ Payment payment = paymentApi.chargebackPaymentByExternalKey(body, NULL_PLUGIN_NA
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                      = KillBillClient::Model::Transaction.new
 transaction.payment_external_key = "example_payment_external_key"
 transaction.amount               = '50.0'
@@ -1015,10 +1044,10 @@ paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'sample_external_key'
 
-transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key,
-                                              amount=50.0,
-                                              currency='USD',
-                                              effective_date=None)
+transactionBody = PaymentTransaction(payment_external_key=payment_external_key,
+                                     amount=50.0,
+                                     currency='USD',
+                                     effective_date=None)
 
 paymentApi.chargeback_payment_by_external_key(transactionBody,
                                               created_by='demo',
@@ -1095,6 +1124,10 @@ Payment payment = paymentApi.chargebackReversalPayment(payment_id,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                          = KillBillClient::Model::Transaction.new
 transaction.transaction_external_key = "9ceb96a2-5407-482b-8847-7b08cc64213f"
 transaction.payment_id               = "74a82e25-120a-4a39-a7f7-7b5c2b4ac05d"
@@ -1111,8 +1144,8 @@ paymentApi = killbill.PaymentApi()
 payment_id = '74a82e25-120a-4a39-a7f7-7b5c2b4ac05d'
 transaction_external_key = '9ceb96a2-5407-482b-8847-7b08cc64213f'
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
-                                              transaction_external_key=transaction_external_key)
+transactionBody = PaymentTransaction(payment_id=payment_id,
+                                     transaction_external_key=transaction_external_key)
 
 paymentApi.chargeback_reversal_payment(payment_id,
                                        transactionBody,
@@ -1123,10 +1156,8 @@ paymentApi.chargeback_reversal_payment(payment_id,
 ```javascript
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
-const transactionBody: killbill.PaymentTransaction = {
-                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f',
-                                                      transactionExternalKey: 'transactionExternalKey'
-                                                      };
+const transactionBody: killbill.PaymentTransaction = {paymentId: '536e3955-f69b-409f-8447-7cc24361f03f',
+                                                      transactionExternalKey:'transactionExternalKey'};
 
 const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
 
@@ -1195,6 +1226,10 @@ Payment payment = paymentApi.chargebackReversalPaymentByExternalKey(body,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                      = KillBillClient::Model::Transaction.new
 transaction.payment_external_key = "example_payment_external_key"
 
@@ -1207,8 +1242,8 @@ transaction.chargeback_reversals(user,
 ```python
 paymentApi = killbill.PaymentApi()
 
-transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key,
-                                              transaction_external_key=transaction_external_key)
+transactionBody = PaymentTransaction(payment_external_key=payment_external_key,
+                                     transaction_external_key=transaction_external_key)
 
 paymentApi.chargeback_reversal_payment_by_external_key(transactionBody,
                                                        created_by='demo',
@@ -1218,10 +1253,8 @@ paymentApi.chargeback_reversal_payment_by_external_key(transactionBody,
 ```javascript
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
-const transactionBody: killbill.PaymentTransaction = {
-                                                      paymentExternalKey: 'paymentExternalKey',
-                                                      transactionExternalKey: 'transactionExternalKey'
-                                                      };
+const transactionBody: killbill.PaymentTransaction = {paymentExternalKey: 'paymentExternalKey',
+                                                      transactionExternalKey: 'transactionExternalKey'};
 
 paymentApi.chargebackReversalPaymentByExternalKey(transactionBody,'created_by');
 ```
@@ -1291,6 +1324,10 @@ Payment refundPayment = paymentApi.refundPayment(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction            = KillBillClient::Model::Transaction.new
 transaction.payment_id = "dce5b2a0-0f0f-430b-9427-545ba4be5c7f"
 transaction.amount     = '50.0'
@@ -1308,8 +1345,8 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = 'dce5b2a0-0f0f-430b-9427-545ba4be5c7f' 
 
-transactionBody = killbill.PaymentTransaction(payment_id=payment_id,
-                                              amount=50.0)
+transactionBody = PaymentTransaction(payment_id=payment_id,
+                                     amount=50.0)
 
 paymentApi.refund_payment(payment_id,
                           transactionBody,
@@ -1320,10 +1357,8 @@ paymentApi.refund_payment(payment_id,
 ```javascript
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
-const transactionBody: killbill.PaymentTransaction = {
-                                                      amount: 100,
-                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f'
-                                                      };
+const transactionBody: killbill.PaymentTransaction = {amount: 100,
+                                                      paymentId: '536e3955-f69b-409f-8447-7cc24361f03f'};
 
 const paymentId = '536e3955-f69b-409f-8447-7cc24361f03f';
 
@@ -1390,6 +1425,10 @@ Payment refundPayment = paymentApi.refundPaymentByExternalKey(body, NULL_PLUGIN_
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                      = KillBillClient::Model::Transaction.new
 transaction.payment_external_key = "example_payment_external_key"
 transaction.amount               = '50.0'
@@ -1407,8 +1446,8 @@ paymentApi = killbill.PaymentApi()
 
 payment_external_key = 'example_payment_external_key'
 
-transactionBody = killbill.PaymentTransaction(payment_external_key=payment_external_key,
-                                              amount=50.0)
+transactionBody = PaymentTransaction(payment_external_key=payment_external_key,
+                                     amount=50.0)
 
 paymentApi.refund_payment_by_external_key(transactionBody,
                                           created_by='demo',
@@ -1418,11 +1457,8 @@ paymentApi.refund_payment_by_external_key(transactionBody,
 ```javascript
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
-const transactionBody: killbill.PaymentTransaction = 
-                                              {
-                                                amount: 100,
-                                                paymentExternalKey:'536e3955-f69b-409f-8447-7cc24361f03f'
-                                               };
+const transactionBody: killbill.PaymentTransaction = { amount: 100,
+                                                       paymentExternalKey:'536e3955-f69b-409f-8447-7cc24361f03f'};
 
 paymentApi.refundPaymentByExternalKey(transactionBody,'created_by');
 ```
@@ -1473,6 +1509,10 @@ paymentApi.cancelScheduledPaymentTransactionById(paymentTransactionId, requestOp
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                = KillBillClient::Model::Transaction.new
 transaction.transaction_id = "231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c"
 
@@ -1543,6 +1583,10 @@ paymentApi.cancelScheduledPaymentTransactionByExternalKey(transactionExternalKey
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 transaction                          = KillBillClient::Model::Transaction.new
 transaction.transaction_external_key = "example_payment_external_key"
 
@@ -1648,6 +1692,10 @@ Payment result = paymentApi.createComboPayment(body,  NULL_PLUGIN_NAMES, request
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 combo_transaction = KillBillClient::Model::ComboTransaction.new
 combo_transaction.account = account_obj
 combo_transaction.payment_method = payment_method_obj
@@ -1680,13 +1728,13 @@ combo_transaction.credit(user,
 ```python
 paymentApi = killbill.PaymentApi()
 
-accountBody = killbill.Account(name='John Doe',email='john@laposte.com',currency='USD')
+accountBody = Account(name='John Doe',email='john@laposte.com',currency='USD')
 
-paymentMethodBody = killbill.PaymentMethod(plugin_name="__EXTERNAL_PAYMENT__")
+paymentMethodBody = PaymentMethod(plugin_name="__EXTERNAL_PAYMENT__")
 
-paymentTransactionBody = killbill.PaymentTransaction(transaction_type='AUTHORIZE',
-                                                     amount=50,
-                                                     currency='USD')
+paymentTransactionBody = PaymentTransaction(transaction_type='AUTHORIZE',
+                                            amount=50,
+                                            currency='USD')
 
 comboPaymentTransactionBody = ComboPaymentTransaction(accountBody, 
                                                       paymentMethodBody, 
@@ -1700,25 +1748,19 @@ paymentApi.create_combo_payment(comboPaymentTransactionBody,
 ```javascript
 const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
-const accountBody: killbill.Account = {
-                                        name: 'John Doe 28thSep',
-                                        email: 'john@laposte.com',
-                                        currency: 'USD'
-                                      };
+const accountBody: killbill.Account = {name: 'John Doe 28thSep',
+                                       email: 'john@laposte.com',
+                                       currency: 'USD'};
 
 const paymentMethodBody: killbill.PaymentMethod = { pluginName: '__EXTERNAL_PAYMENT__' };
 
-const paymentTransactionBody: killbill.PaymentTransaction = {
-                                                              transactionType: 'AUTHORIZE',
-                                                              amount: 50,
-                                                              currency: 'USD'
-                                                            };
+const paymentTransactionBody: killbill.PaymentTransaction = {transactionType: 'AUTHORIZE',
+                                                             amount: 50,
+                                                             currency: 'USD'};
 
-const comboPaymentTransactionBody: killbill.ComboPaymentTransaction = {
-                                                                      account: accountBody,
-                                                                      paymentMethod: paymentMethodBody,
-                                                                      transaction: paymentTransactionBody
-                                                                      };
+const comboPaymentTransactionBody: killbill.ComboPaymentTransaction = {account: accountBody,
+                                                                       paymentMethod: paymentMethodBody,
+                                                                       transaction: paymentTransactionBody};
 
 paymentApi.createComboPayment(comboPaymentTransactionBody, 'created_by');
 ```
@@ -1812,6 +1854,10 @@ paymentApi.createPaymentCustomFields(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.object_type = 'PAYMENT'
 custom_field.name = 'Test Custom Field'
@@ -1829,7 +1875,7 @@ paymentApi = killbill.PaymentApi()
 
 payment_id = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 
-customFieldBody = killbill.CustomField(name='Test Custom Field', value='test_value')
+customFieldBody = CustomField(name='Test Custom Field', value='test_value')
 
 paymentApi.create_payment_custom_fields(payment_id,
                                         [customFieldBody],
@@ -1842,9 +1888,9 @@ const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
 
-const customFieldBody: killbill.CustomField[] = [{ name: 'Test Custom Field', value: 'test_value' }];
+const customFieldsBody: killbill.CustomField[] = [{ name: 'Test Custom Field', value: 'test_value' }];
 
-paymentApi.createPaymentCustomFields(customFieldBody, paymentId, 'created_by');
+paymentApi.createPaymentCustomFields(customFieldsBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -1986,11 +2032,15 @@ paymentApi.modifyPaymentCustomFields(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
 custom_field.name = 'Test Modify'
 custom_field.value = 'test_modify_value'
 
-payment.modify_custom_field(custom_field,                                                                                            
+payment.modify_custom_field(custom_field,
                             user, 
                             reason,
                             comment, 
@@ -2002,7 +2052,7 @@ paymentApi = killbill.PaymentApi()
 payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 
-body = killbill.CustomField(custom_field_id=custom_field_id, value='test_modify_value')
+body = CustomField(custom_field_id=custom_field_id, value='test_modify_value')
 
 paymentApi.modify_payment_custom_fields(payment_id,
                                         [body],
@@ -2016,9 +2066,9 @@ const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 const paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 const customFieldId = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 
-const customFieldBody:killbill.CustomField[] = [{customFieldId:customFieldId,value:'test_modify_value'}];
+const customFieldsBody:killbill.CustomField[] = [{customFieldId:customFieldId,value:'test_modify_value'}];
 
-paymentApi.modifyPaymentCustomFields(customFieldBody, paymentId, 'created_by');
+paymentApi.modifyPaymentCustomFields(customFieldsBody, paymentId, 'created_by');
 ```
 
 ```php
@@ -2074,9 +2124,13 @@ paymentApi.deletePaymentCustomFields(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 custom_field_id = custom_field.id
 
-payment.remove_custom_field(custom_field_id,                                                                                            
+payment.remove_custom_field(custom_field_id,
                             user, 
                             reason,
                             comment, 
@@ -2164,6 +2218,10 @@ Tags result = paymentApi.createPaymentTags(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 tag_name = 'foo'
 
 payment.add_tag(tag_name,
@@ -2331,6 +2389,10 @@ paymentApi.deletePaymentTags(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
 tag_name = 'TEST'
 
 payment.remove_tag(tag_name,
@@ -2426,8 +2488,7 @@ const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const paymentId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
 
-const paymentAuditLogs: AxiosResponse<killbill.AuditLog[]> =
-      await paymentApi.getPaymentAuditLogsWithHistory(paymentId);
+const paymentAuditLogs: AxiosResponse<killbill.AuditLog[]> = await paymentApi.getPaymentAuditLogsWithHistory(paymentId);
 ```
 
 ```php
@@ -2518,8 +2579,7 @@ const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const paymentAttemptId = 'bfc12b3c-0042-48c5-b233-2d8e015f49f6';
 
-const paymentAttemptAuditLogs: AxiosResponse<killbill.AuditLog[]> =
-      await paymentApi.getPaymentAttemptAuditLogsWithHistory(paymentId);
+const paymentAttemptAuditLogs: AxiosResponse<killbill.AuditLog[]> = await paymentApi.getPaymentAttemptAuditLogsWithHistory(paymentId);
 ```
 
 ```php
@@ -2798,7 +2858,7 @@ const paymentApi: killbill.PaymentApi = new killbill.PaymentApi(config);
 
 const searchKey = 'SUCCESS'
 
-const payment: AxiosResponse<killbill.Payment[]> = await paymentApi.searchPayments(searchKey);
+const payments: AxiosResponse<killbill.Payment[]> = await paymentApi.searchPayments(searchKey);
 ```
 
 ```php
