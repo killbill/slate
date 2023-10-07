@@ -660,9 +660,10 @@ invoice_payment.add_custom_field(custom_field,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
+paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 customField = CustomField(name='Test Custom Field', value='test_value')
 
-invoicePaymentApi.create_invoice_payment_custom_fields(payment_id,
+invoicePaymentApi.create_invoice_payment_custom_fields(paymentId,
                                                        [customField],
                                                        created_by='demo',
                                                        reason='reason', 
@@ -738,9 +739,9 @@ invoice_payment.custom_fields(audit, options)
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 
-invoicePaymentCustomFields = invoicePaymentApi.get_invoice_payment_custom_fields(payment_id)
+invoicePaymentCustomFields = invoicePaymentApi.get_invoice_payment_custom_fields(paymentId)
 ```
 
 ```javascript
@@ -838,13 +839,13 @@ invoice_payment.modify_custom_field(custom_field,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
-custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
+paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+customFieldId = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 
-customFieldBody = CustomField(custom_field_id=custom_field_id,                             
-                                       value='test_modify_value')
+customFieldBody = CustomField(custom_field_id=customFieldId,                             
+                              value='test_modify_value')
 
-invoicePaymentApi.modify_invoice_payment_custom_fields(payment_id,
+invoicePaymentApi.modify_invoice_payment_custom_fields(paymentId,
                                                        [customFieldBody],
                                                        created_by='demo',
                                                        reason='reason', 
@@ -927,10 +928,10 @@ invoice_payment.remove_custom_field(custom_field_id,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
 customFields = ['9913e0f6-b5ef-498b-ac47-60e1626eba8f']
 
-invoicePaymentApi.delete_invoice_payment_custom_fields(payment_id,
+invoicePaymentApi.delete_invoice_payment_custom_fields(paymentId,
                                                        custom_field=customFields,
                                                        created_by='demo',
                                                        reason='reason', 
@@ -1018,10 +1019,10 @@ invoice_payment.add_tag(tag_name,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
+paymentId = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
 
-invoicePaymentApi.create_invoice_payment_tags(payment_id,
+invoicePaymentApi.create_invoice_payment_tags(paymentId,
                                               tag,
                                               created_by='demo',
                                               reason='reason', 
@@ -1097,9 +1098,9 @@ invoice_payment.tags(included_deleted,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '2a1ffd2c-0de1-4f5c-b2a9-27d8deebe596'
+paymentId = '2a1ffd2c-0de1-4f5c-b2a9-27d8deebe596'
 
-invoicePaymentTags = invoicePaymentApi.get_invoice_payment_tags(payment_id)
+invoicePaymentTags = invoicePaymentApi.get_invoice_payment_tags(paymentId)
 ```
 
 ```javascript
@@ -1188,10 +1189,10 @@ invoice_payment.remove_tag(tag_name,
 ```python
 invoicePaymentApi = killbill.InvoicePaymentApi()
 
-payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
+paymentId = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 tagDefIds = ["00000000-0000-0000-0000-000000000002"]
 
-invoicePaymentApi.delete_invoice_payment_tags(payment_id,
+invoicePaymentApi.delete_invoice_payment_tags(paymentId,
                                               tag_def=tagDefIds,
                                               created_by='demo',
                                               reason='reason', 
