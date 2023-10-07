@@ -293,10 +293,10 @@ payment_id = "12c70604-cede-4df3-a321-38be4d176e9a"
 with_plugin_info = false
 with_attempts = false
 
-KillBillClient::Model::Payment.find_by_id(payment_id, 
-                                          with_plugin_info, 
-                                          with_attempts, 
-                                          options)
+payment = KillBillClient::Model::Payment.find_by_id(payment_id, 
+                                                    with_plugin_info, 
+                                                    with_attempts, 
+                                                    options)
 ```
 
 ```python
@@ -417,10 +417,10 @@ external_key = "example_payment_external_key"
 with_plugin_info = false
 with_attempts = false
 
-KillBillClient::Model::Payment.find_by_external_key(external_key, 
-                                                    with_plugin_info, 
-                                                    with_attempts, 
-                                                    options)
+payment = KillBillClient::Model::Payment.find_by_external_key(external_key, 
+                                                              with_plugin_info, 
+                                                              with_attempts, 
+                                                              options)
 ```
 
 ```python
@@ -516,10 +516,7 @@ curl \
     -H 'X-Killbill-ApiKey: bob' \
     -H 'X-Killbill-ApiSecret: lazar' \
     -H 'Content-Type: application/json' \
-    -H 'X-Killbill-CreatedBy: demo' \
-    -d '{ 
-    		"paymentId": "8fe697d4-2c25-482c-aa45-f6cd5a48186d"
-      }' \
+    -H 'X-Killbill-CreatedBy: demo' \    
     'http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d' 
 ```
 
@@ -550,11 +547,11 @@ transaction            = KillBillClient::Model::Transaction.new
 transaction.payment_id = "7dcda896-808b-414c-aad4-74ddc98e3dcb"
 refresh_options        = nil
 
-transaction.complete_initial_transaction(user, 
-                                         reason, 
-                                         comment, 
-                                         options, 
-                                         refresh_options)
+transaction.complete(user, 
+                     reason, 
+                     comment, 
+                     options, 
+                     refresh_options)
 ```
 
 ```python
@@ -585,7 +582,7 @@ paymentApi.completeTransaction(transactionBody, paymentId, 'created_by');
 ```
 **Request Body**
 
-A PaymentTransaction object containing, at least, the `paymentId`
+A PaymentTransaction object containing, at least, the `paymentId`, though it is not required for CURL requests and can be empty in Python, JS etc. 
 
 **Query Parameters**
 
@@ -647,11 +644,11 @@ transaction                      = KillBillClient::Model::Transaction.new
 transaction.payment_external_key = "example_payment_external_key"
 refresh_options                  = nil
 
-transaction.complete_initial_transaction(user, 
-                                         reason, 
-                                         comment, 
-                                         options, 
-                                         refresh_options)
+transaction.complete(user, 
+                     reason, 
+                     comment, 
+                     options, 
+                     refresh_options)
 ```
 
 ```python
@@ -679,7 +676,7 @@ paymentApi.completeTransactionByExternalKey(transactionBody, 'created_by');
 ```
 **Request Body**
 
-A PaymentTransaction object containing, at least, the `paymentExternalKey`
+A PaymentTransaction object containing, at least, the `paymentExternalKey`.
 
 **Query Parameters**
 
@@ -707,10 +704,7 @@ curl -v \
     -H 'X-Killbill-ApiKey: bob' \
     -H 'X-Killbill-ApiSecret: lazar' \
     -H 'Content-Type: application/json' \
-    -H 'X-Killbill-CreatedBy: demo' \
-    -d '{ 
-    		"paymentId": "8fe697d4-2c25-482c-aa45-f6cd5a48186d"
-      }' \    
+    -H 'X-Killbill-CreatedBy: demo' \       
     'http://127.0.0.1:8080/1.0/kb/payments/8fe697d4-2c25-482c-aa45-f6cd5a48186d' 	
 ```
 
@@ -774,7 +768,7 @@ paymentApi.voidPayment(transactionBody, paymentId, 'created_by');
 ```
 **Request Body**
 
-A PaymentTransaction object containing, at least, the `paymentId`
+A PaymentTransaction object containing, at least, the `paymentId`, though it is not required for CURL requests and can be empty in Python, JS etc. 
 
 **Query Parameters**
 
@@ -832,7 +826,7 @@ reason = 'reason'
 comment = 'comment'
 
 transaction                          = KillBillClient::Model::Transaction.new
-transaction.transaction_external_key = "payment2-121268-void"
+transaction.payment_external_key     = "payment2-121268-void"
 
 transaction.void(user, 
                  reason, 
@@ -1231,7 +1225,8 @@ reason = 'reason'
 comment = 'comment'
 
 transaction                      = KillBillClient::Model::Transaction.new
-transaction.payment_external_key = "example_payment_external_key"
+transaction.payment_external_key = "PaymentExtKeychargebacktest2"
+transaction.transaction_external_key  = "eb189948-42dd-4d64-8e99-1a276a19c15d"
 
 transaction.chargeback_reversals(user, 
                                  reason, 
@@ -1331,6 +1326,7 @@ comment = 'comment'
 transaction            = KillBillClient::Model::Transaction.new
 transaction.payment_id = "dce5b2a0-0f0f-430b-9427-545ba4be5c7f"
 transaction.amount     = '50.0'
+
 refresh_options        = nil
 
 transaction.refund(user, 
@@ -1525,9 +1521,9 @@ transaction.cancel_scheduled_payment(user,
 ```python
 paymentApi = killbill.PaymentApi()
 
-payment_transaction_id = '231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c'
+paymentTransactionId = '231d2bbc-7ce3-4946-b6d9-f24f9a25ff6c'
 
-paymentApi.cancel_scheduled_payment_transaction_by_id(payment_transaction_id,
+paymentApi.cancel_scheduled_payment_transaction_by_id(paymentTransactionId,
                                                       created_by='demo',
                                                       reason='reason', 
                                                       comment='comment')
@@ -1696,7 +1692,21 @@ user = 'user'
 reason = 'reason'
 comment = 'comment'
 
+account_obj = KillBillClient::Model::Account.new
+payment_method_obj = KillBillClient::Model::PaymentMethod.new
+transaction_obj = KillBillClient::Model::Transaction.new
 combo_transaction = KillBillClient::Model::ComboTransaction.new
+
+account_obj.name = "John Doe"
+account_obj.email = "john@laposte.com"
+account_obj.currency = "USD"
+
+payment_method_obj.plugin_name = '__EXTERNAL_PAYMENT__'
+
+transaction_obj.transaction_type = 'AUTHORIZE'
+transaction_obj.amount = '50'
+transaction_obj.currency = 'USD'
+
 combo_transaction.account = account_obj
 combo_transaction.payment_method = payment_method_obj
 combo_transaction.transaction = transaction_obj
@@ -1858,7 +1868,11 @@ user = 'user'
 reason = 'reason'
 comment = 'comment'
 
+payment = KillBillClient::Model::Payment.new
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
+
+payment.payment_id = 'c2d0514c-775a-4bc4-9091-0655ed3e2425'
+
 custom_field.object_type = 'PAYMENT'
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
@@ -1943,7 +1957,9 @@ List<CustomField> customFields = paymentApi.getPaymentCustomFields(paymentId,
 ```ruby
 audit = 'NONE'
 
-payment.custom_fields(audit, options)
+payment = KillBillClient::Model::Payment.new
+
+paymentCustomFields = payment.custom_fields(audit,options)
 ```
 
 ```python
@@ -2036,8 +2052,12 @@ user = 'user'
 reason = 'reason'
 comment = 'comment'
 
-custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
-custom_field.name = 'Test Modify'
+payment = KillBillClient::Model::Payment.new
+custom_field = KillBillClient::Model::CustomFieldAttributes.new
+
+payment.payment_id = 'c2d0514c-775a-4bc4-9091-0655ed3e2425'
+
+custom_field.custom_field_id = 'ab7eed13-c8d4-48a9-bb95-1efac7a5e70f'
 custom_field.value = 'test_modify_value'
 
 payment.modify_custom_field(custom_field,
@@ -2049,12 +2069,12 @@ payment.modify_custom_field(custom_field,
 ```python
 paymentApi = killbill.PaymentApi()
 
-payment_id = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
-custom_field_id = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
+paymentId = 'f33e0adc-78df-438a-b920-aaacd7f8597a'
+customFieldId = '9913e0f6-b5ef-498b-ac47-60e1626eba8f'
 
-body = CustomField(custom_field_id=custom_field_id, value='test_modify_value')
+body = CustomField(custom_field_id=customFieldId, value='test_modify_value')
 
-paymentApi.modify_payment_custom_fields(payment_id,
+paymentApi.modify_payment_custom_fields(paymentId,
                                         [body],
                                         created_by='demo',
                                         reason='reason', 
@@ -2128,7 +2148,9 @@ user = 'user'
 reason = 'reason'
 comment = 'comment'
 
-custom_field_id = custom_field.id
+payment = KillBillClient::Model::Payment.new
+
+custom_field_id = 'ab7eed13-c8d4-48a9-bb95-1efac7a5e70f'
 
 payment.remove_custom_field(custom_field_id,
                             user, 
@@ -2224,6 +2246,10 @@ comment = 'comment'
 
 tag_name = 'foo'
 
+payment = KillBillClient::Model::Payment.new
+
+payment.payment_id = 'c2d0514c-775a-4bc4-9091-0655ed3e2425'
+
 payment.add_tag(tag_name,
                 user,
                 reason,
@@ -2305,9 +2331,13 @@ List<Tag> tags = paymentApi.getPaymentTags(paymentId,
 included_deleted = false
 audit = 'NONE'
 
-payment.tags(included_deleted,
-             audit,
-             options)
+payment = KillBillClient::Model::Payment.new
+
+payment.payment_id = 'c2d0514c-775a-4bc4-9091-0655ed3e2425'
+
+paymentTags = payment.tags(included_deleted,
+                           audit,
+                           options)
 ```
 
 ```python
@@ -2393,6 +2423,10 @@ user = 'user'
 reason = 'reason'
 comment = 'comment'
 
+payment = KillBillClient::Model::Payment.new
+
+payment.payment_id = 'c2d0514c-775a-4bc4-9091-0655ed3e2425'
+
 tag_name = 'TEST'
 
 payment.remove_tag(tag_name,
@@ -2405,10 +2439,10 @@ payment.remove_tag(tag_name,
 ```python
 paymentApi = killbill.PaymentApi()
 
-payment_id = 'dce5b2a0-0f0f-430b-9427-545ba4be5c7f'
+paymentId = 'dce5b2a0-0f0f-430b-9427-545ba4be5c7f'
 tagDefIds = ["353752dd-9041-4450-b782-a8bb03a923c8"] 
 
-paymentApi.delete_payment_tags(payment_id,                               
+paymentApi.delete_payment_tags(paymentId,                               
                                tag_def=tagDefIds,
                                created_by='demo',
                                reason='reason', 
@@ -2473,14 +2507,18 @@ List<AuditLog> paymentAuditLogWithHistory = paymentApi.getPaymentAuditLogsWithHi
                                                                                       requestOptions);
 ```
 ```ruby
-account.audit_logs_with_history(options)
+payment = KillBillClient::Model::Payment.new
+
+payment.payment_id = 'c2d0514c-775a-4bc4-9091-0655ed3e2425'
+
+auditLogsWithHistory = payment.audit_logs_with_history(options)
 ```
 ```python
 paymentApi = killbill.PaymentApi()
 
-payment_id = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
+paymentId = '0d636af4-1e46-401d-b5ce-9a094130f3ba'
 
-paymentAuditLogs = paymentApi.get_payment_audit_logs_with_history(payment_id)
+paymentAuditLogs = paymentApi.get_payment_audit_logs_with_history(paymentId)
 ```
 
 ```javascript
@@ -2565,6 +2603,11 @@ AuditLogs logs = paymentApi.getPaymentAttemptAuditLogsWithHistory(paymentAttempt
 ```
 
 ```ruby
+payment = KillBillClient::Model::Payment
+
+payment_attempt_id = '342cb53a-004f-4dd8-ac36-9369b3088ddd'
+
+auditLogs = payment.attempt_audit_logs_with_history(payment_attempt_id,options)
 ```
 
 ```python
@@ -2713,9 +2756,12 @@ Payments payments = paymentApi.getPayments(offset,
 ```ruby
 offset = 0
 limit = 100
-payment.find_in_batches(offset, 
-                        limit, 
-                        options)
+
+payment = KillBillClient::Model::Payment
+
+payments = payment.find_in_batches(offset, 
+                                   limit, 
+                                   options)
 ```
 
 ```python
@@ -2840,10 +2886,12 @@ search_key = 'PURCHASE'
 offset = 0
 limit = 100
 
-payment.find_in_batches_by_search_key(search_key,
-                                      offset,
-                                      limit,
-                                      options)
+payment = KillBillClient::Model::Payment
+
+payments = payment.find_in_batches_by_search_key(search_key,
+                                                 offset,
+                                                 limit,
+                                                 options)
 ```
 
 ```python
