@@ -118,14 +118,16 @@ InvoicePayment invoicePayment = invoicePaymentApi.getInvoicePayment(paymentId,
 ```
 
 ```ruby
+invoice_payment = KillBillClient::Model::InvoicePayment
+
 payment_id = '28aef37a-7655-4351-985a-02b961ae4ac7'
 with_plugin_info = false
 with_attempts = false
 
-KillBillClient::Model::InvoicePayment.find_by_id(payment_id, 
-                                                 with_plugin_info, 
-                                                 with_attempts, 
-                                                 @options)
+invoice_payment = invoice_payment.find_by_id(payment_id, 
+                                             with_plugin_info, 
+                                             with_attempts, 
+                                             options)
 ```
 
 ```python
@@ -248,16 +250,23 @@ invoicePaymentApi.createRefundWithAdjustments(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment
+
 payment_id = '8d85a8e8-c94b-438f-aac1-e8cb436b2c05'
 amount ='50.0'
 adjustments = nil
-KillBillClient::Model::InvoicePayment.refund(payment_id, 
-                                             amount, 
-                                             adjustments, 
-                                             user, 
-                                             reason, 
-                                             comment, 
-                                             options)
+
+invoice_payment.refund(payment_id, 
+                       amount, 
+                       adjustments, 
+                       user, 
+                       reason, 
+                       comment, 
+                       options)
 ```
 
 ```python
@@ -345,19 +354,25 @@ InvoicePayment result = invoicePaymentApi.createChargeback(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment
+
 payment_id = '2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'
 amount = '50.0'
 currency = 'USD'
-effective_date = "2013-08-01"
+effective_date = "2023-08-01"
 
-KillBillClient::Model::InvoicePayment.chargeback(payment_id, 
-                                                 amount,
-                                                 currency,
-                                                 effective_date,
-                                                 user, 
-                                                 reason,
-                                                 comment, 
-                                                 options)
+invoice_payment.chargeback(payment_id, 
+                           amount,
+                           currency,
+                           effective_date,
+                           user, 
+                           reason,
+                           comment, 
+                           options)
 ```
 
 ```python
@@ -450,17 +465,23 @@ invoicePaymentApi.createChargebackReversal(paymentId, body, NULL_PLUGIN_PROPERTI
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment
+
 payment_id = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 chargeback_transaction_external_key = '99c45d07-abe4-4bc7-a207-0524548c1b08'
-effective_date = "2013-08-01"
+effective_date = "2023-08-01"
 
-KillBillClient::Model::InvoicePayment.chargeback_reversal(payment_id,
-                                                          chargeback_transaction_external_key, 
-                                                          effective_date, 
-                                                          user, 
-                                                          reason, 
-                                                          comment, 
-                                                          options)
+invoice_payment.chargeback_reversal(payment_id,
+                                    chargeback_transaction_external_key, 
+                                    effective_date, 
+                                    user, 
+                                    reason, 
+                                    comment, 
+                                    options)
 ```
 
 ```python
@@ -548,13 +569,19 @@ invoicePaymentApi.completeInvoicePaymentTransaction(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment
+
 payment_id = '2276b3c9-4e51-41b2-b5bf-9ddc11582ee4'
 
-KillBillClient::Model::InvoicePayment.complete_invoice_payment_transaction(payment_id, 
-                                                                           user, 
-                                                                           reason, 
-                                                                           comment, 
-                                                                           options)
+invoice_payment.complete_invoice_payment_transaction(payment_id, 
+                                                     user, 
+                                                     reason, 
+                                                     comment, 
+                                                     options)
 ```
 
 ```python
@@ -576,7 +603,7 @@ const invoicePaymentApi: killbill.InvoicePaymentApi = new killbill.InvoicePaymen
 
 const paymentId = '7a5d4997-5d44-4a82-8371-a410ea5615f4'
 
-invoicePaymentTransactionBody = killbill.InvoicePaymentTransaction(paymentId:paymentId)
+invoicePaymentTransactionBody : killbill.InvoicePaymentTransaction = {paymentId:paymentId}
 
 invoicePaymentApi.completeInvoicePaymentTransaction(invoicePaymentTransactionBody, 
                                                     paymentId, 
@@ -645,8 +672,15 @@ invoicePaymentApi.createInvoicePaymentCustomFields(paymentId,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment.new
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
-custom_field.object_type = 'INVOICE_PAYMENT'
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
 
@@ -668,7 +702,6 @@ invoicePaymentApi.create_invoice_payment_custom_fields(paymentId,
                                                        created_by='demo',
                                                        reason='reason', 
                                                        comment='comment')
-
 ```
 
 ```javascript
@@ -731,9 +764,13 @@ List<CustomField> customFields = invoicePaymentApi.getInvoicePaymentCustomFields
 ```
 
 ```ruby
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+
 audit = 'NONE'
 
-invoice_payment.custom_fields(audit, options)
+customFields = invoice_payment.custom_fields(audit,options)
 ```
 
 ```python
@@ -825,11 +862,19 @@ invoicePaymentApi.modifyInvoicePaymentCustomFields(paymentId,
 ```
 
 ```ruby
-custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
-custom_field.name = 'Test Modify'
-custom_field.value = 'test_modify_value'
+user = 'user'
+reason = 'reason'
+comment = 'comment'
 
-invoice_payment.modify_custom_field(custom_field,                                                                                            
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+custom_fields = KillBillClient::Model::CustomField.new
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+
+custom_fields.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
+custom_fields.value = 'test_modify_value'
+
+invoice_payment.modify_custom_field(custom_fields,                                            
                                     user, 
                                     reason,
                                     comment, 
@@ -869,7 +914,7 @@ invoicePaymentApi.modifyInvoicePaymentCustomFields([paymentCustomField],
 
 ```php
 ```
-**Requst Body**
+**Request Body**
 
 A JSON string representing a list of custom fields to substitute for the existing ones.
 
@@ -916,7 +961,15 @@ invoicePaymentApi.deleteInvoicePaymentCustomFields(paymentId,
 ```
 
 ```ruby
-custom_field_id = custom_field.id
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+
+custom_field_id = 'a1ebea02-cc76-4594-bca3-2074c193b5c9'
 
 invoice_payment.remove_custom_field(custom_field_id,                                        
                                     user, 
@@ -1007,7 +1060,14 @@ Tags result = invoicePaymentApi.createInvoicePaymentTags(paymentId,
 ```
 
 ```ruby
-tag_name = 'foo'
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+tag_name = 'invoicepaymenttag'
 
 invoice_payment.add_tag(tag_name,
                         user,
@@ -1090,9 +1150,13 @@ List<Tag> tags = invoicePaymentApi.getInvoicePaymentTags(paymentId,
 included_deleted = false
 audit = 'NONE'
 
-invoice_payment.tags(included_deleted,
-                     audit,
-                     options)
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+
+invoicePaymentTags = invoice_payment.tags(included_deleted,
+                                          audit,
+                                          options)
 ```
 
 ```python
@@ -1177,7 +1241,15 @@ invoicePaymentApi.deleteInvoicePaymentTags(paymentId,
 ```
 
 ```ruby
-tag_name = 'TEST'
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+
+
+invoice_payment.payment_id = 'e905eaf6-89d8-445e-93ac-4276035b5922'
+tag_name = 'invoicepaymenttag'
 
 invoice_payment.remove_tag(tag_name,
                            user,
@@ -1258,6 +1330,11 @@ AuditLogs invoicePaymentAuditLogs = invoicePaymentApi.getInvoicePaymentAuditLogs
 ```
 
 ```ruby
+invoice_payment = KillBillClient::Model::InvoicePayment.new
+
+invoice_payment.payment_id = '30b1585c-6ace-4288-b874-5429f9065d21'
+
+auditLogs = invoice_payment.audit_logs_with_history(options)
 ```
 
 ```python
