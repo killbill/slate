@@ -66,10 +66,11 @@ bundle.find_by_id(bundle_id, options)
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = 'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'
 
-bundleApi.get_bundle(bundle_id, api_key, api_secret)
+bundle = bundleApi.get_bundle(bundle_id)
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -296,10 +297,11 @@ bundle.find_by_external_key(external_key,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_external_key = 'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'
 
-bundleApi.get_bundle_by_key(bundle_external_key, api_key, api_secret)
+bundle = bundleApi.get_bundle_by_key(bundle_external_key)
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -474,6 +476,7 @@ $bundleResult = $apiInstance->getBundleByKey($bundleKey);
 | Name | Type | Required | Default | Description |
 | ---- | -----| -------- | ------- | ----------- |
 | **externalKey** | String | yes | none | The subscription external key |
+| **includedDeleted** | boolean | no | false | If true, include deleted bundles |
 | **audit** | string | no | "NONE" | Level of audit information to return: "NONE", "MINIMAL" (only inserts), or "FULL" |
 
 **Response**
@@ -530,15 +533,18 @@ bundle.rename_external_key(user,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
-body = Bundle(bundle_id=bundle_id, 
+bundleApi = killbill.BundleApi()
+
+bundleID = 'd65d22aa-483e-45fb-9335-cb6636514479'
+
+body = Bundle(bundle_id=bundleID,
               external_key='new_external_key')
 
-bundleApi.rename_external_key(bundle_id,
+bundleApi.rename_external_key(bundleID,
                               body,
-                              created_by,
-                              api_key,
-                              api_secret)
+                              created_by='demo',
+                              reason='reason', 
+                              comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -667,16 +673,18 @@ bundle.transfer(requested_date,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = 'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'
 new_account_id = '71499886-296d-4b0f-8b76-0eed352d8801'
+
 body = Bundle(bundle_id=bundle_id, account_id=new_account_id)
 
 bundleApi.transfer_bundle(bundle_id, 
                           body, 
-                          created_by, 
-                          api_key, 
-                          api_secret)
+                          created_by='demo',
+                          reason='reason', 
+                          comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -780,13 +788,14 @@ bundle.pause(requested_date,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = 'ce967207-851c-4040-bfbd-74a8924f9b8a'
 
 bundleApi.pause_bundle(bundle_id, 
-                       created_by, 
-                       api_key, 
-                       api_secret)
+                       created_by='demo',
+                       reason='reason', 
+                       comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -810,6 +819,7 @@ $apiInstance->pauseBundle($bundleId,$xKillbillCreatedBy);
 | Name | Type | Required | Default | Description |
 | ---- | -----| -------- | ------- | ----------- |
 | **requestedDate** | string | no | current date | requested date for pausing |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -862,13 +872,14 @@ bundle.resume(requested_date,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = 'ce967207-851c-4040-bfbd-74a8924f9b8a'
 
 bundleApi.resume_bundle(bundle_id, 
-                        created_by, 
-                        api_key, 
-                        api_secret)
+                        created_by='demo',
+                        reason='reason', 
+                        comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -892,6 +903,7 @@ $apiInstance->resumeBundle($bundleId,$xKillbillCreatedBy);
 | Name | Type | Required | Default | Description |
 | ---- | -----| -------- | ------- | ----------- |
 | **requestedDate** | string | no | current date | requested date to resume |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -986,8 +998,10 @@ bundle.set_blocking_state(state_name,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = 'a760fdc8-1e2d-4020-918a-6e4f7a9cd691'
+
 body = BlockingState(state_name='STATE1', 
                      service='ServiceStateService', 
                      is_block_change=False, 
@@ -996,9 +1010,9 @@ body = BlockingState(state_name='STATE1',
 
 bundleApi.add_bundle_blocking_state(bundle_id,
                                     body,
-                                    created_by,
-                                    api_key,
-                                    api_secret)
+                                    created_by='demo',
+                                    reason='reason', 
+                                    comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1055,6 +1069,7 @@ A blocking state resource representing the intended new blocking state. For exam
 | Name | Type | Required | Default | Description |
 | ---- | -----| -------- | ------- | ----------- |
 | **requestedDate** | string | no | immediate | requested date for blocking |
+| **pluginProperty** | array of strings | false | empty list | List of plugin properties, if any |
 
 **Response**
 
@@ -1131,14 +1146,15 @@ bundle.add_custom_field(custom_field,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 body = CustomField(name='Test Custom Field', value='test_value')
 
 bundleApi.create_bundle_custom_fields(bundle_id,
                                       [body],
-                                      created_by,
-                                      api_key,
-                                      api_secret)
+                                      created_by='demo',
+                                      reason='reason', 
+                                      comment='comment')
 ```
 ```javascript
 const customFields: killbill.CustomField = {name: 'Test Custom Field',value: 'test_value'};
@@ -1234,10 +1250,11 @@ bundleCustomFields = bundle.custom_fields(audit, options)
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = 'ce967207-851c-4040-bfbd-74a8924f9b8a'
 
-bundleApi.get_bundle_custom_fields(bundle_id, api_key, api_secret)
+bundleCustomFields = bundleApi.get_bundle_custom_fields(bundle_id)
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1342,16 +1359,19 @@ bundle.modify_custom_field(custom_field,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
-body = CustomField(custom_field_id=custom_field_id, 
-                   name='Test Custom Field', 
-                   value='test_value')
+bundleApi = killbill.BundleApi()
+
+custom_field_id = 'f3e2dc9d-1222-48ae-8658-35dd0acb53cd'
+bundle_id = '424475ed-3fda-4a8c-9dfd-dacc80a06242'
+
+body = Killbill.CustomField(custom_field_id=custom_field_id,                   
+                            value='test_value_modified')
 
 bundleApi.modify_bundle_custom_fields(bundle_id, 
                                       [body], 
-                                      created_by, 
-                                      api_key, 
-                                      api_secret)
+                                      created_by='demo',
+                                      reason='reason', 
+                                      comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1454,13 +1474,16 @@ bundle.remove_custom_field(custom_field_id,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
-bundle_id = 'ce967207-851c-4040-bfbd-74a8924f9b8a' 
+bundleApi = killbill.BundleApi()
 
-bundleApi.delete_bundle_custom_fields(bundle_id, 
-                                      created_by, 
-                                      api_key, 
-                                      api_secret)
+bundleId = 'ce967207-851c-4040-bfbd-74a8924f9b8a' 
+customFieldIds = ['859a4053-4946-4be0-b94b-fe7a9409d785']
+
+bundleApi.delete_bundle_custom_fields(bundleId, 
+                                      custom_field = customFieldIds,
+                                      created_by='demo',
+                                      reason='reason', 
+                                      comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1553,15 +1576,16 @@ bundle.add_tag(tag_name,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
+tags = ["353752dd-9041-4450-b782-a8bb03a923c8"]
 
 bundleApi.create_bundle_tags(bundle_id, 
-                             tag, 
-                             created_by, 
-                             api_key, 
-                             api_secret)
+                             tags, 
+                             created_by='demo',
+                             reason='reason', 
+                             comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1647,10 +1671,11 @@ bundleTags = bundle.tags(included_deleted,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
 
-bundleApi.get_bundle_tags(bundle_id, api_key, api_secret)
+bundleTags = bundleApi.get_bundle_tags(bundle_id)
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1746,15 +1771,16 @@ bundle.remove_tag(tag_name,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 bundle_id = '28af3cb9-275b-4ac4-a55d-a0536e479069'
-tag = ["353752dd-9041-4450-b782-a8bb03a923c8"]
+tagDefIds = ["353752dd-9041-4450-b782-a8bb03a923c8"]
 
 bundleApi.delete_bundle_tags(bundle_id, 
-                             created_by, 
-                             api_key, 
-                             api_secret,
-                             tag_def=tag)
+                             tag_def=tagDefIds,
+                             created_by='demo',
+                             reason='reason', 
+                             comment='comment')
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -1821,7 +1847,13 @@ curl \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.BundleApi;
+protected BundleApi bundleApi;
 
+UUID bundleId = UUID.fromString("917992d3-5f1f-4828-9fff-799cc4211aa9");
+
+AuditLogs bundleAuditLogs = bundleApi.getBundleAuditLogsWithHistory(bundleId,                            
+                                                                    requestOptions);
 ```
 
 ```ruby
@@ -1833,7 +1865,11 @@ bundleAuditLogs = bundle.audit_logs_with_history(options)
 ```
 
 ```python
+bundleApi = killbill.BundleApi()
 
+bundleId = '424475ed-3fda-4a8c-9dfd-dacc80a06242'
+
+bundleAuditLogs = bundleApi.get_bundle_audit_logs_with_history(bundleId)
 ```
 
 ```javascript
@@ -1960,9 +1996,9 @@ paginatedBundles = bundle.find_in_batches(offset,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
 
-bundleApi.get_bundles(api_key, api_secret,)
+bundles = bundleApi.get_bundles()
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
@@ -2394,10 +2430,11 @@ bundles = bundle.find_in_batches_by_search_key(search_key,
 ```
 
 ```python
-bundleApi = killbill.api.BundleApi()
+bundleApi = killbill.BundleApi()
+
 search_key = '7b26b0ce-a495-4c0c-9dd5-11a556f03e8c'
 
-bundleApi.search_bundles(search_key, api_key, api_secret)
+bundles = bundleApi.search_bundles(search_key)
 ```
 ```javascript
 const bundleApi: killbill.BundleApi = new killbill.BundleApi(config);
