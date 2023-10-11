@@ -304,6 +304,24 @@ invoicePaymentApi.createRefundWithAdjustments(invoicePaymentTransactionBody,
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '2f18cc82-48a7-4abc-9920-c877ec4264b9';
+
+$invoicePaymentBody = new InvoicePaymentTransaction();
+
+$invoicePaymentBody->setPaymentId('2f18cc82-48a7-4abc-9920-c877ec4264b9');
+$invoicePaymentBody->setAmount(50);
+
+$apiInstance->createRefundWithAdjustments($invoicePaymentBody,
+                                          $xKillbillCreatedBy,
+                                          $paymentId,
+                                          $xKillbillReason,
+                                          $xKillbillComment);
 ```
 
 **Request Body**
@@ -413,6 +431,24 @@ invoicePaymentApi.createChargeback(invoicePaymentTransactionBody, paymentId, 'cr
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '2f18cc82-48a7-4abc-9920-c877ec4264b9';
+
+$invoicePaymentBody = new InvoicePaymentTransaction();
+
+$invoicePaymentBody->setPaymentId('2f18cc82-48a7-4abc-9920-c877ec4264b9');
+$invoicePaymentBody->setAmount(5);
+
+$apiInstance->createChargeback($invoicePaymentBody,
+                               $xKillbillCreatedBy,
+                               $paymentId,
+                               $xKillbillReason,
+                               $xKillbillComment);
 ```
 
 **Request Body**
@@ -523,6 +559,23 @@ invoicePaymentApi.createChargebackReversal(invoicePaymentTransactionBody, paymen
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '2f18cc82-48a7-4abc-9920-c877ec4264b9';
+
+$invoicePaymentBody = new InvoicePaymentTransaction();
+
+$invoicePaymentBody->setTransactionExternalKey('2db3c714-e1d5-4e31-8b47-5fae55a7b29e');
+
+$apiInstance->createChargebackReversal($invoicePaymentBody,
+                                       $xKillbillCreatedBy,
+                                       $paymentId,
+                                       $xKillbillReason,
+                                       $xKillbillComment);
 ```
 **Request Body**
 
@@ -620,6 +673,23 @@ invoicePaymentApi.completeInvoicePaymentTransaction(invoicePaymentTransactionBod
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+
+$invoicePaymentBody = new PaymentTransaction();
+$invoicePaymentBody->setTransactionExternalKey('08610314-5c89-4483-9f4b-a496c8abd359');
+$invoicePaymentBody->setPaymentId('ec2c9789-31f6-463d-8742-b7eec9d93a45');
+
+$apiInstance->completeInvoicePaymentTransaction($invoicePaymentBody,
+                                                $xKillbillCreatedBy,
+                                                $paymentId,
+                                                $xKillbillReason,
+                                                $xKillbillComment);
 ```
 **Query Parameters**
 
@@ -727,6 +797,24 @@ invoicePaymentApi.createInvoicePaymentCustomFields([paymentCustomField],
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+
+$invoicePaymentCustomFieldsBody = new CustomField();
+
+$invoicePaymentCustomFieldsBody->setName('CustomFieldName');
+$invoicePaymentCustomFieldsBody->setValue('CustomFieldValue');
+
+$apiInstance->createInvoicePaymentCustomFields([$invoicePaymentCustomFieldsBody],
+                                                $xKillbillCreatedBy,
+                                                $paymentId,
+                                                $xKillbillReason,
+                                                $xKillbillComment);
 ```
 **Request Body**
 
@@ -800,6 +888,15 @@ const paymentCustomFields: AxiosResponse<killbill.CustomField[]> =
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+
+$invoicePaymentCustomFields = $apiInstance->getInvoicePaymentCustomFields($paymentId);
 ```
 > Example Response:
 
@@ -922,6 +1019,24 @@ invoicePaymentApi.modifyInvoicePaymentCustomFields([paymentCustomField],
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+
+$invoicePaymentCustomFieldsBody = new CustomField();
+
+$invoicePaymentCustomFieldsBody->setCustomFieldId('204b5162-c499-4699-a9aa-9c293627c0d3');
+$invoicePaymentCustomFieldsBody->setValue('CustomFieldValueModified');
+
+$apiInstance->modifyInvoicePaymentCustomFields([$invoicePaymentCustomFieldsBody],
+                                               $xKillbillCreatedBy,
+                                               $paymentId,
+                                               $xKillbillReason,
+                                               $xKillbillComment);
 ```
 **Request Body**
 
@@ -1013,6 +1128,20 @@ invoicePaymentApi.deleteInvoicePaymentCustomFields(paymentId,
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+$invoicePaymentCustomFieldIds = ['204b5162-c499-4699-a9aa-9c293627c0d3'];
+
+$apiInstance->deleteInvoicePaymentCustomFields($paymentId,
+                                               $xKillbillCreatedBy,
+                                               $invoicePaymentCustomFieldIds,
+                                               $xKillbillReason,
+                                               $xKillbillComment);
 ```
 **Query Parameters**
 
@@ -1109,6 +1238,21 @@ invoicePaymentApi.createInvoicePaymentTags(invoicePaymentTags, paymentId, 'creat
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+
+$invoicePaymentTags = ['3875dc8d-29df-4132-b935-5599e703011b'];
+
+$apiInstance->createInvoicePaymentTags($invoicePaymentTags,
+                                       $xKillbillCreatedBy,
+                                       $paymentId,
+                                       $xKillbillReason,
+                                       $xKillbillComment);
 ```
 **Request Body**
 
@@ -1186,6 +1330,15 @@ const invoicePaymentTags: AxiosResponse<killbill.Tag[]> =
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+
+$invoicePaymentTags = $apiInstance->getInvoicePaymentTags($paymentId);
 ```
 > Example Response:
 
@@ -1291,6 +1444,20 @@ invoicePaymentApi.deleteInvoicePaymentTags(paymentId, 'created_by', invoicePayme
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ec2c9789-31f6-463d-8742-b7eec9d93a45';
+$tagDefId = ['3875dc8d-29df-4132-b935-5599e703011b'];
+
+$apiInstance->deleteInvoicePaymentTags($paymentId,
+                                       $xKillbillCreatedBy,
+                                       $tagDefId,
+                                       $xKillbillReason,
+                                       $xKillbillComment);
 ```
 **Query Parameters**
 
@@ -1364,6 +1531,15 @@ const invoicePaymentAuditLogs: AxiosResponse<killbill.AuditLog[]> =
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '30b1585c-6ace-4288-b874-5429f9065d21';
+
+$invoicePaymentAuditLogs = $apiInstance->getInvoicePaymentAuditLogsWithHistory($paymentId);
 ```
 
 > Example Response:
