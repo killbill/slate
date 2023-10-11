@@ -147,6 +147,15 @@ const invoicePayment: AxiosResponse<killbill.InvoicePayment,any> = await invoice
 ```
 
 ```php
+$apiInstance = $client->getInvoicePaymentApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'e905eaf6-89d8-445e-93ac-4276035b5922';
+
+$payment = $apiInstance->getInvoicePayment($paymentId);
 ```
 
 > Example Response:
