@@ -1305,7 +1305,7 @@ Retrieves a list of audit log records showing events that occurred involving cha
 
 **HTTP Request** 
 
-`GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{paymentId}/auditLogsWithHistory`
+`GET http://127.0.0.1:8080/1.0/kb/invoicePayments/{invoicePaymentId}/auditLogsWithHistory`
 
 > Example Request:
 
