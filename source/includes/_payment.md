@@ -137,7 +137,23 @@ paymentApi.captureAuthorization(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '11c47433-ffc7-43f0-87dc-69461f99177c';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setAmount(50);
+
+$apiInstance->captureAuthorization($paymentTransactionBody,
+                                   $xKillbillCreatedBy,
+                                   $paymentId,
+                                   $xKillbillReason,
+                                   $xKillbillComment);
 ```
 
 **Request Body**
@@ -237,7 +253,24 @@ paymentApi.captureAuthorizationByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '11c47433-ffc7-43f0-87dc-69461f99177c';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentExternalKey('paymentExtKey');
+$paymentTransactionBody->setAmount(70);
+
+$apiInstance->captureAuthorizationByExternalKey($paymentTransactionBody,
+                                                $xKillbillCreatedBy,
+                                                $paymentId,
+                                                $xKillbillReason,
+                                                $xKillbillComment);
 ```
 **Request Body**
 
@@ -315,7 +348,11 @@ const payment: AxiosResponse<killbill.Payment> = await paymentApi.getPayment(pay
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentId = '11c47433-ffc7-43f0-87dc-69461f99177c';
+
+$payment = $apiInstance->getPayment($paymentId);
 ```
 > Example Response:
 
@@ -439,7 +476,11 @@ const payment: AxiosResponse<killbill.Payment> = await paymentApi.getPaymentByEx
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentExternalKey = 'pau8thOctExtKey3';
+
+$payment = $apiInstance->getPaymentByExternalKey($paymentExternalKey);
 ```
 > Example Response:
 
@@ -578,7 +619,23 @@ paymentApi.completeTransaction(transactionBody, paymentId, 'created_by');
 ``` 
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ea371233-c5ff-4439-b3c2-02a447fcfee9';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentId($paymentId);
+
+$apiInstance->completeTransaction($paymentTransactionBody,
+                                  $xKillbillCreatedBy,
+                                  $paymentId,
+                                  $xKillbillReason,
+                                  $xKillbillComment);
 ```
 **Request Body**
 
@@ -672,7 +729,22 @@ paymentApi.completeTransactionByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentExternalKey = 'paymentExternalKey';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentExternalKey($paymentExternalKey);
+
+$apiInstance->completeTransactionByExternalKey($paymentTransactionBody,
+                                               $xKillbillCreatedBy,
+                                               $xKillbillReason,
+                                               $xKillbillComment);
 ```
 **Request Body**
 
@@ -764,7 +836,23 @@ paymentApi.voidPayment(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'dc91aea2-bd92-4bbf-8710-90d930ba8248';
+
+$paymentTransactionBody = new PaymentTransaction();
+ 
+$paymentTransactionBody->setPaymentId($paymentId);
+
+$apiInstance->voidPayment($paymentTransactionBody,
+                          $xKillbillCreatedBy,
+                          $paymentId,
+                          $xKillbillReason,
+                          $xKillbillComment);
 ```
 **Request Body**
 
@@ -855,7 +943,22 @@ paymentApi.voidPaymentByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentExternalKey = 'paymentExternalKey';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentExternalKey($paymentExternalKey);
+
+$apiInstance->voidPaymentByExternalKey($paymentTransactionBody,
+                                       $xKillbillCreatedBy,
+                                       $xKillbillReason,
+                                       $xKillbillComment);
 ```
 **Request Body**
 
@@ -957,7 +1060,24 @@ paymentApi.chargebackPayment(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ded80305-5096-44e0-acd1-df97e6323858';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setAmount(70); 
+$paymentTransactionBody->setPaymentId($paymentId);
+
+$apiInstance->chargebackPayment($paymentTransactionBody,
+                                $xKillbillCreatedBy,
+                                $paymentId,
+                                $xKillbillReason,
+                                $xKillbillComment);
 ```
 **Request Body**
 
@@ -1058,7 +1178,23 @@ paymentApi.chargebackPaymentByExternalKey(transactionBody, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentExternalKey = 'paymentExternalKey';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentExternalKey($paymentExternalKey);
+$paymentTransactionBody->setAmount(70); 
+
+$apiInstance->chargebackPaymentByExternalKey($paymentTransactionBody,
+                                             $xKillbillCreatedBy,
+                                             $xKillbillReason,
+                                             $xKillbillComment);
 ```
 **Request Body**
 
@@ -1159,7 +1295,25 @@ paymentApi.chargebackReversalPayment(transactionBody, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = 'ded80305-5096-44e0-acd1-df97e6323858';
+$transactionExternalKey = 'dd7ce7b0-c4a7-4ca2-84b5-80d0ae84c884';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentId($paymentId);
+$paymentTransactionBody->setTransactionExternalKey($transactionExternalKey);
+
+$apiInstance->chargebackReversalPayment($paymentTransactionBody,
+                                        $xKillbillCreatedBy,
+                                        $paymentId,
+                                        $xKillbillReason,
+                                        $xKillbillComment);
 ```
 **Request Body**
 
@@ -1258,7 +1412,24 @@ paymentApi.chargebackReversalPaymentByExternalKey(transactionBody,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentExternalKey = 'paymentExternalKey'
+$transactionExternalKey = '7bf3e12a-cf24-4cdc-9ec2-9c0b319cb082';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentExternalKey($paymentExternalKey);
+$paymentTransactionBody->setTransactionExternalKey($transactionExternalKey);
+
+$apiInstance->chargebackReversalPaymentByExternalKey($paymentTransactionBody,
+                                                     $xKillbillCreatedBy,
+                                                     $xKillbillReason,
+                                                     $xKillbillComment);
 ```
 **Request Body**
 
@@ -1365,7 +1536,23 @@ paymentApi.refundPayment(transactionBody,paymentId,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '20ff8016-5ca3-486b-9dab-a7253074a933';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setAmount(20); 
+
+$apiInstance->refundPayment($paymentTransactionBody,
+                            $xKillbillCreatedBy,
+                            $paymentId,
+                            $xKillbillReason,
+                            $xKillbillComment);
 ```
 **Request Body**
 
@@ -1463,7 +1650,23 @@ paymentApi.refundPaymentByExternalKey(transactionBody,'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentExternalKey = 'paymentExternalKey';
+
+$paymentTransactionBody = new PaymentTransaction();
+
+$paymentTransactionBody->setPaymentExternalKey($paymentExternalKey);
+$paymentTransactionBody->setAmount(30); 
+
+$apiInstance->refundPaymentByExternalKey($paymentTransactionBody,
+                                         $xKillbillCreatedBy,
+                                         $xKillbillReason,
+                                         $xKillbillComment);
 ```
 **Request Body**
 
@@ -1540,7 +1743,18 @@ paymentApi.cancelScheduledPaymentTransactionById(paymentTransactionId,'created_b
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentTransactionId = '20ff8016-5ca3-486b-9dab-a7253074a933';
+
+$apiInstance->cancelScheduledPaymentTransactionById($paymentTransactionId,
+                                                    $xKillbillCreatedBy,
+                                                    $xKillbillReason,
+                                                    $xKillbillComment);
 ```
 
 **Query Parameters**
@@ -1614,7 +1828,18 @@ paymentApi.cancelScheduledPaymentTransactionByExternalKey(paymentTransactionExte
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentTransactionExternalKey = '20ff8016-5ca3-486b-9dab-a7253074a933';
+
+$apiInstance->cancelScheduledPaymentTransactionByExternalKey($paymentTransactionExternalKey,
+                                                             $xKillbillCreatedBy,
+                                                             $xKillbillReason,
+                                                             $xKillbillComment);
 ```
 **Query Parameters**
 
@@ -1779,7 +2004,35 @@ paymentApi.createComboPayment(comboPaymentTransactionBody, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$account = new Account();
+
+$account->setName('TestPHPAccount');
+$account->setEmail('TestPHPAccount@email.com');
+$account->setCurrency('USD');
+
+$paymentMethod = new PaymentMethod();
+$paymentMethod->setPluginName('__EXTERNAL_PAYMENT__');
+
+$paymentTransaction = new PaymentTransaction();
+$paymentTransaction->setTransactionType('AUTHORIZE');
+$paymentTransaction->setAmount(50);
+$paymentTransaction->setCurrency('USD');
+
+$comboTransactionBody = new ComboPaymentTransaction();
+$comboTransactionBody->setAccount($account);
+$comboTransactionBody->setPaymentMethod($paymentMethod);
+$comboTransactionBody->setTransaction($paymentTransaction);
+
+$apiInstance->createComboPayment($comboTransactionBody,
+                                 $xKillbillCreatedBy,
+                                 $xKillbillComment,
+                                 $xKillbillReason);
 ```
 **Request Body**
 
@@ -1911,7 +2164,23 @@ paymentApi.createPaymentCustomFields(customFieldsBody, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$customFieldsBody = new CustomField();
+$customFieldsBody->setName('CustomFieldName1');
+$customFieldsBody->setValue('CustomFieldValue1');
+
+$apiInstance->createPaymentCustomFields([$customFieldsBody],
+                                        $xKillbillCreatedBy,
+                                        $paymentId,
+                                        $xKillbillReason,
+                                        $xKillbillComment);
 ```
 **Request Body**
 
@@ -1981,7 +2250,11 @@ const paymentCustomFields: AxiosResponse<killbill.CustomField[]> = await payment
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$paymentCustomFields = $apiInstance->getPaymentCustomFields($paymentId);
 ```
 > Example Response:
 
@@ -2095,7 +2368,24 @@ paymentApi.modifyPaymentCustomFields(customFieldsBody, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$customFieldsBody = new CustomField();
+
+$customFieldsBody->setCustomFieldId('44d8e6ba-d364-4a61-bcbd-11ead9d20bb1');
+$customFieldsBody->setValue('CustomFieldValue1modified');
+
+$apiInstance->modifyPaymentCustomFields([$customFieldsBody],
+                                        $xKillbillCreatedBy,
+                                        $paymentId,
+                                        $xKillbillReason,
+                                        $xKillbillComment);
 ```
 **Requst Body**
 
@@ -2184,7 +2474,21 @@ paymentApi.deletePaymentCustomFields(paymentId, 'created_by', customFieldIds);
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$customFields = [('44d8e6ba-d364-4a61-bcbd-11ead9d20bb1')];
+
+$apiInstance->deletePaymentCustomFields($paymentId,
+                                        $xKillbillCreatedBy,
+                                        $customFields,
+                                        $xKillbillReason,
+                                        $xKillbillComment);
 ```
 
 **Query Parameters**
@@ -2283,7 +2587,21 @@ paymentApi.createPaymentTags(tagDefIds, paymentId, 'created_by');
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$tagDefIds = ['5071f544-c29f-47f5-a2ab-a6092c5bba74'];
+
+$apiInstance->createPaymentTags($tagDefIds,
+                                $xKillbillCreatedBy,
+                                $paymentId,
+                                $xKillbillReason,
+                                $xKillbillComment);
 ```
 **Request Body**
 
@@ -2360,7 +2678,11 @@ const paymentTags: AxiosResponse<killbill.Tag[]> = await paymentApi.getPaymentTa
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$paymentTags = $apiInstance->getPaymentTags($paymentId);
 ```
 > Example Response:
 
@@ -2463,7 +2785,21 @@ paymentApi.deletePaymentTags(paymentId,'created_by',tagDefIds);
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$tagDefIds = ['5071f544-c29f-47f5-a2ab-a6092c5bba74'];
+
+$apiInstance->deletePaymentTags($paymentId,
+                                $xKillbillCreatedBy,
+                                $tagDefIds,
+                                $xKillbillReason,
+                                $xKillbillComment);
 ```
 
 **Query Parameters**
@@ -2534,7 +2870,11 @@ const paymentAuditLogs: AxiosResponse<killbill.AuditLog[]> = await paymentApi.ge
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentId = '4a605386-b016-4e74-9da8-0b32a818fb4c';
+
+$paymentAuditLogsWithHistory = $apiInstance->getPaymentAuditLogsWithHistory($paymentId);
 ```
 > Example Response:
 
@@ -2630,7 +2970,11 @@ const paymentAttemptAuditLogs: AxiosResponse<killbill.AuditLog[]> = await paymen
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentAttemptId = 'be18c71b-e0e5-4ffc-8845-71d0b09b1826';
+
+$paymentAttemptAuditLogsWithHistory = $apiInstance->getPaymentAttemptAuditLogsWithHistory($paymentAttemptId);
 ```
 > Example Response:
 
@@ -2780,7 +3124,9 @@ const payments: AxiosResponse<killbill.Payment[]> = await paymentApi.getPayments
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$payments = $apiInstance->getPayments();
 ```
 > Example Response:
 
@@ -2914,7 +3260,11 @@ const payments: AxiosResponse<killbill.Payment[]> = await paymentApi.searchPayme
 ```
 
 ```php
+$apiInstance = $client->getPaymentApi();
 
+$paymentSearchKey = 'SUCCESS';
+
+$payments = $apiInstance->searchPayments($paymentSearchKey);
 ```
 > Example Response:
 
