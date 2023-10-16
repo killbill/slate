@@ -1140,6 +1140,12 @@
 
                       </li>
                       <li class="site-navigator__submenu-container">
+                        <a href="#subscriptionevent-resource" class="site-navigator__item site-navigator__submenu-item" data-title="SubscriptionEvent Resource">
+                          <span>SubscriptionEvent Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
                         <a href="#subscriptions" class="site-navigator__item site-navigator__submenu-item" data-title="Subscriptions">
                           <span>Subscriptions</span>
                         </a>
@@ -2351,8 +2357,8 @@
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
-                        <a href="#adminpayment-object" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment object">
-                          <span>AdminPayment object</span>
+                        <a href="#adminpayment-resource" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment Resource">
+                          <span>AdminPayment Resource</span>
                         </a>
 
                       </li>
@@ -2479,6 +2485,12 @@
 <td>user</td>
 <td>Plugin specific information (see below)</td>
 </tr>
+<tr>
+<td><strong>auditLogs</strong></td>
+<td>array</td>
+<td>system</td>
+<td>Array of audit log records for this payment method</td>
+</tr>
 </tbody></table>
 
 <p>All payment operations associated with this payment method will be delegated to the plugin specified by <strong>pluginName</strong>.</p>
@@ -2555,6 +2567,7 @@
                                                 <span class="n">with_plugin_info</span><span class="p">,</span>
                                                 <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'83fc2425-ede3-4fbd-b117-2eff4c660cfe'</span>
 
 <span class="n">payment_method</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="p">.</span><span class="n">get_payment_method</span><span class="p">(</span><span class="n">payment_method_id</span><span class="p">)</span>
@@ -2752,17 +2765,30 @@
 <td>If true, include plugin details (see below)</td>
 </tr>
 <tr>
+<td>account should be invoiced)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>no</td>
+<td>omit</td>
+<td>list of plugin properties, if any. Should be in the format <code>key%3Dvalue</code></td>
+</tr>
+<tr>
 <td><strong>audit</strong></td>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
 <ul>
 <li>If <strong>withPluginInfo</strong> is set to true, a plugin details resource with the plugin specific information is returned.</li>
-<li>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</li>
 </ul>
 
 <p><strong>Response</strong></p>
@@ -2809,6 +2835,7 @@
                                                           <span class="n">audit</span><span class="p">,</span>
                                                           <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">external_key</span> <span class="o">=</span> <span class="s">'sample_external_key'</span>
 
 <span class="n">payment_method</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="p">.</span><span class="n">get_payment_method_by_key</span><span class="p">(</span><span class="n">external_key</span><span class="p">)</span>
@@ -2873,17 +2900,23 @@
 <td>If true, include plugin details (see below)</td>
 </tr>
 <tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>no</td>
+<td>omit</td>
+<td>list of plugin properties, if any. Should be in the format <code>key%3Dvalue</code></td>
+</tr>
+<tr>
 <td><strong>audit</strong></td>
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
 <ul>
 <li>If <strong>withPluginInfo</strong> is set to true, a plugin details resource with the plugin specific information is returned.</li>
-<li>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</li>
 </ul>
 
 <p><strong>Response</strong></p>
@@ -2934,6 +2967,7 @@
                                              <span class="n">comment</span><span class="p">,</span>
                                              <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'0052cddd-0f61-4f68-b653-ca49b5d7f915'</span>
 
 <span class="n">paymentMethodApi</span><span class="p">.</span><span class="n">delete_payment_method</span><span class="p">(</span><span class="n">payment_method_id</span><span class="p">,</span>
@@ -2982,6 +3016,13 @@
 <td>no</td>
 <td>false</td>
 <td>if true, force default payment method deletion</td>
+</tr>
+<tr>
+<td><strong>pluginProperty</strong></td>
+<td>array of strings</td>
+<td>no</td>
+<td>omit</td>
+<td>list of plugin properties, if any. Should be in the format <code>key%3Dvalue</code></td>
 </tr>
 </tbody></table>
 
@@ -3112,7 +3153,7 @@
 <td>If present, list only payment methods that use this plugin</td>
 </tr>
 <tr>
-<td><strong>pluginProperties</strong></td>
+<td><strong>pluginProperty</strong></td>
 <td>array of strings</td>
 <td>no</td>
 <td>no properties</td>
@@ -3123,13 +3164,12 @@
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
 <ul>
 <li>If <strong>withPluginInfo</strong> is set to true, a plugin details resource with the plugin specific information is returned.</li>
-<li>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</li>
 </ul>
 
 <p><strong>Response</strong></p>
@@ -3178,6 +3218,7 @@
                                              <span class="n">limit</span><span class="p">,</span>
                                              <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">search_key</span> <span class="o">=</span> <span class="s">'__EXTERNAL_PAYMENT__'</span>
 
 <span class="n">payment_methods</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="p">.</span><span class="n">search_payment_methods</span><span class="p">(</span><span class="n">search_key</span><span class="p">)</span>
@@ -3253,7 +3294,7 @@
 <td>If present, list only payment methods that use this plugin</td>
 </tr>
 <tr>
-<td><strong>pluginProperties</strong></td>
+<td><strong>pluginProperty</strong></td>
 <td>array of strings</td>
 <td>no</td>
 <td>no properties</td>
@@ -3264,13 +3305,12 @@
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
 <ul>
 <li>If <strong>withPluginInfo</strong> is set to true, a plugin details resource with the plugin specific information is returned.</li>
-<li>Audit information options are &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;.</li>
 </ul>
 
 <p><strong>Response</strong></p>
@@ -3335,6 +3375,7 @@
                                 <span class="n">comment</span><span class="p">,</span>
                                 <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'34150e56-c1fe-4560-a177-2e1376662e20'</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Test Custom Field'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_value'</span><span class="p">)</span>
 
@@ -3416,6 +3457,7 @@
 
 <span class="n">fields</span> <span class="o">=</span> <span class="n">payment_method</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'34150e56-c1fe-4560-a177-2e1376662e20'</span>
 
 <span class="n">fields</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="p">.</span><span class="n">get_payment_method_custom_fields</span><span class="p">(</span><span class="n">payment_method_id</span><span class="p">)</span>
@@ -3462,7 +3504,7 @@
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -3470,7 +3512,7 @@
 
 <p>If successful, returns a status code of 200 and a (possibly empty) list of custom field objects.</p>
 <h3 id='modify-custom-fields-for-payment-method'>Modify custom fields for payment method</h3>
-<p>Modifies the value of one or more existing custom fields associated with a payment object. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.</p>
+<p>Modifies the value of one or more existing custom fields associated with a payment method object. Note that it is not possible to modify the name of a custom field, it is only possible to modify its value.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3523,6 +3565,7 @@
                                    <span class="n">comment</span><span class="p">,</span>
                                    <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'34150e56-c1fe-4560-a177-2e1376662e20'</span>
 <span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'75d6449f-d012-42d8-a9bc-56261a63281f'</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span>
@@ -3574,7 +3617,7 @@
 
 <p>If successful, a status code of 204 and an empty body.</p>
 <h3 id='remove-custom-fields-from-payment-method'>Remove custom fields from payment method</h3>
-<p>Delete one or more custom fields from a payment method. It accepts query parameters corresponding to the custom field ids to be deleted. if no query parameters are specified, it deletes all the custom fields corresponding to the payment method.</p>
+<p>Delete one or more custom fields from a payment method. It accepts query parameters corresponding to the custom field ids to be deleted. If no query parameters are specified, it deletes all the custom fields corresponding to the payment method.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -3614,6 +3657,7 @@
                                    <span class="n">comment</span><span class="p">,</span>
                                    <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'34150e56-c1fe-4560-a177-2e1376662e20'</span>
 
 <span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">'0ef3863d-1d3f-4b18-a795-9bb6b68cef83'</span><span class="p">]</span>
@@ -3658,7 +3702,7 @@
 <td>string</td>
 <td>yes</td>
 <td>none</td>
-<td>Custom field object ID that should be deleted. Multiple custom fields can be deleted by specifying a separate <strong>customField</strong> parameter corresponding to each field.</td>
+<td>Custom field ID that should be deleted. Multiple custom fields can be deleted by specifying a separate <strong>customField</strong> parameter corresponding to each field.</td>
 </tr>
 </tbody></table>
 
@@ -3674,7 +3718,7 @@
 
 <ul>
 <li>If this API is invoked after a payment method is created, it would return a single <code>INSERT</code> record corresponding to the payment method creation.</li>
-<li>* If this API is invoked after a payment method is deleted, it would return two records:
+<li>If this API is invoked after a payment method is deleted, it would return two records:
 
 <ul>
 <li>An <code>INSERT</code> record corresponding to the payment method creation.</li>
@@ -3702,10 +3746,14 @@
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">AuditLog</span><span class="o">&gt;</span> <span class="n">auditLog</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="o">.</span><span class="na">getPaymentMethodAuditLogsWithHistory</span><span class="o">(</span><span class="n">paymentMethodId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentMethodApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentMethodApi</span><span class="p">()</span>
+
 <span class="n">payment_method_id</span> <span class="o">=</span> <span class="s">'34150e56-c1fe-4560-a177-2e1376662e20'</span>
 
 <span class="n">audit_logs</span> <span class="o">=</span> <span class="n">paymentMethodApi</span><span class="p">.</span><span class="n">get_payment_method_audit_logs_with_history</span><span class="p">(</span><span class="n">payment_method_id</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">payment_method</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">PaymentMethod</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_method</span><span class="p">.</span><span class="nf">payment_method_id</span> <span class="o">=</span> <span class="s2">"06e5c871-3caf-41c2-9d7e-30c95f6e309c"</span>
+
+<span class="n">audit_logs</span> <span class="o">=</span> <span class="n">payment_method</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentMethodApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentMethodApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">paymentMethodId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">06e5c871-3caf-41c2-9d7e-30c95f6e309c</span><span class="dl">'</span><span class="p">;</span>

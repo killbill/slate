@@ -1140,6 +1140,12 @@
 
                       </li>
                       <li class="site-navigator__submenu-container">
+                        <a href="#subscriptionevent-resource" class="site-navigator__item site-navigator__submenu-item" data-title="SubscriptionEvent Resource">
+                          <span>SubscriptionEvent Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
                         <a href="#subscriptions" class="site-navigator__item site-navigator__submenu-item" data-title="Subscriptions">
                           <span>Subscriptions</span>
                         </a>
@@ -2351,8 +2357,8 @@
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
-                        <a href="#adminpayment-object" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment object">
-                          <span>AdminPayment object</span>
+                        <a href="#adminpayment-resource" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment Resource">
+                          <span>AdminPayment Resource</span>
                         </a>
 
                       </li>
@@ -2778,6 +2784,7 @@ attached to various objects in the system by using tags. There are two categorie
 <span class="n">audit_logs</span> <span class="o">=</span> <span class="n">tag</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 <span class="nb">puts</span> <span class="s2">"logs </span><span class="si">#{</span><span class="n">audit_logs</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tagApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TagApi</span><span class="p">()</span>
+
 <span class="n">tag_id</span> <span class="o">=</span> <span class="s">"5ad7519f-3698-4c75-8d93-98c7a465010e"</span>
 
 <span class="n">audit_logs</span> <span class="o">=</span> <span class="n">tagApi</span><span class="p">.</span><span class="n">get_tag_audit_logs_with_history</span><span class="p">(</span><span class="n">tag_id</span><span class="p">)</span>

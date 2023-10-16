@@ -1140,6 +1140,12 @@
 
                       </li>
                       <li class="site-navigator__submenu-container">
+                        <a href="#subscriptionevent-resource" class="site-navigator__item site-navigator__submenu-item" data-title="SubscriptionEvent Resource">
+                          <span>SubscriptionEvent Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
                         <a href="#subscriptions" class="site-navigator__item site-navigator__submenu-item" data-title="Subscriptions">
                           <span>Subscriptions</span>
                         </a>
@@ -2351,8 +2357,8 @@
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
-                        <a href="#adminpayment-object" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment object">
-                          <span>AdminPayment object</span>
+                        <a href="#adminpayment-resource" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment Resource">
+                          <span>AdminPayment Resource</span>
                         </a>
 
                       </li>
@@ -2609,6 +2615,7 @@
 
 <span class="n">tenant</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">find_by_id</span><span class="p">(</span><span class="n">tenant_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
 <span class="n">tenant</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_tenant</span><span class="p">(</span><span class="n">tenant_id</span><span class="o">=</span><span class="s">'1a723c1a-9287-459f-9e40-eca9f0fd213e'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
@@ -2663,6 +2670,7 @@
 
 <span class="n">tenant</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">find_by_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
 <span class="n">tenant</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_tenant_by_api_key</span><span class="p">(</span><span class="n">api_key</span><span class="o">=</span><span class="s">'bob'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">TenantApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
@@ -3178,6 +3186,7 @@ Some of the configuration can be overriden at the tenant level to allow for diff
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">uploadPerTenantConfiguration</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
+
 <span class="n">body</span> <span class="o">=</span> <span class="s">'{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}'</span>
 
 <span class="n">tenantApi</span><span class="p">.</span><span class="n">upload_per_tenant_configuration</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>

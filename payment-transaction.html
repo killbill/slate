@@ -1140,6 +1140,12 @@
 
                       </li>
                       <li class="site-navigator__submenu-container">
+                        <a href="#subscriptionevent-resource" class="site-navigator__item site-navigator__submenu-item" data-title="SubscriptionEvent Resource">
+                          <span>SubscriptionEvent Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
                         <a href="#subscriptions" class="site-navigator__item site-navigator__submenu-item" data-title="Subscriptions">
                           <span>Subscriptions</span>
                         </a>
@@ -2351,8 +2357,8 @@
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
-                        <a href="#adminpayment-object" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment object">
-                          <span>AdminPayment object</span>
+                        <a href="#adminpayment-resource" class="site-navigator__item site-navigator__submenu-item" data-title="AdminPayment Resource">
+                          <span>AdminPayment Resource</span>
                         </a>
 
                       </li>
@@ -2542,6 +2548,12 @@ that work directly at the transaction level.</p>
 <td>user</td>
 <td>see below</td>
 </tr>
+<tr>
+<td><strong>auditlogs</strong></td>
+<td>array</td>
+<td>system</td>
+<td>Array of audit log records for this invoice</td>
+</tr>
 </tbody></table>
 
 <ul>
@@ -2582,6 +2594,7 @@ that work directly at the transaction level.</p>
 
 <span class="n">payment</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Payment</span><span class="p">.</span><span class="nf">find_by_transaction_id</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">,</span> <span class="n">with_plugin_info</span><span class="p">,</span> <span class="n">with_attempts</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'edb52a56-f5d2-4285-9a23-ccafb6f1ae1f'</span>
 
 <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_payment_by_transaction_id</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
@@ -2714,6 +2727,7 @@ that work directly at the transaction level.</p>
 
 <span class="n">payment</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Payment</span><span class="p">.</span><span class="nf">find_by_transaction_external_key</span><span class="p">(</span><span class="n">external_key</span><span class="p">,</span> <span class="n">with_plugin_info</span><span class="p">,</span> <span class="n">with_attempts</span><span class="p">,</span> <span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_key</span> <span class="o">=</span> <span class="s">'edb52a56-f5d2-4285-9a23-ccafb6f1ae1f'</span>
 
 <span class="n">payment</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_payment_by_transaction_external_key</span><span class="p">(</span><span class="n">payment_transaction_key</span><span class="p">)</span>
@@ -2860,6 +2874,7 @@ that work directly at the transaction level.</p>
 
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">PaymentTransaction</span><span class="p">(</span><span class="n">payment_id</span><span class="o">=</span><span class="s">'8cc963a6-786a-4dd1-bcfb-5edc266c01b9'</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="s">'SUCCESS'</span><span class="p">)</span>
 
@@ -2894,7 +2909,23 @@ that work directly at the transaction level.</p>
 
 <p><strong>Query Parameters</strong></p>
 
-<p>None.</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>controlPluginName</strong></td>
+<td>array of strings</td>
+<td>false</td>
+<td>omit</td>
+<td>List of control plugin names, if any</td>
+</tr>
+</tbody></table>
 
 <p><strong>Response</strong></p>
 
@@ -2907,7 +2938,7 @@ that work directly at the transaction level.</p>
 <p>Some examples:</p>
 
 <ul>
-<li>Assuming the API is invoked for a payment transaction belonging to a successful payment, it would return two records:
+<li><p>Assuming the API is invoked for a payment transaction belonging to a successful payment, it would return two records:</p>
 
 <ul>
 <li>An <code>INSERT</code> record corresponding to the payment transaction record creation.</li>
@@ -2940,6 +2971,7 @@ that work directly at the transaction level.</p>
 
 <span class="n">audit_logs</span> <span class="o">=</span> <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">audit_logs</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_audit_logs_with_history</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">PaymentTransactionApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
@@ -3089,6 +3121,7 @@ that work directly at the transaction level.</p>
                                 <span class="n">comment</span><span class="p">,</span>
                                 <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">'Test Custom Field'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'test_value'</span><span class="p">)</span>
 
@@ -3164,6 +3197,7 @@ that work directly at the transaction level.</p>
 
 <span class="n">fields</span> <span class="o">=</span> <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">custom_fields</span><span class="p">(</span><span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 
 <span class="n">fields</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_custom_fields</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
@@ -3270,6 +3304,7 @@ that work directly at the transaction level.</p>
                                    <span class="n">comment</span><span class="p">,</span>
                                    <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">custom_field_id</span> <span class="o">=</span> <span class="s">'eddc016c-0336-44d3-9383-a29962e276b7'</span>
 <span class="n">body</span> <span class="o">=</span> <span class="n">CustomField</span><span class="p">(</span><span class="n">custom_field_id</span><span class="o">=</span><span class="n">custom_field_id</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s">'new value'</span><span class="p">)</span>
@@ -3358,6 +3393,7 @@ that work directly at the transaction level.</p>
                                    <span class="n">comment</span><span class="p">,</span>
                                    <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s">'494c8e9b-0840-4955-9e23-e84d4c353c25'</span><span class="p">]</span>
 
@@ -3409,7 +3445,7 @@ that work directly at the transaction level.</p>
 
 <p>If successful, returns a status code of 204 and an empty body.</p>
 <h2 id='tags'>Tags</h2>
-<p>See <a href="account.html#account-tags">Account Tags</a> for an introduction. </p>
+<p>See section <a href="tag.html">Tags</a> for an introduction.</p>
 
 <p><strong>Note:</strong>
 None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable for Payment Transactions, only a <a href="tag.html#tag">user tag</a> can be associated with a payment transaction.</p>
@@ -3459,6 +3495,7 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
                      <span class="n">comment</span><span class="p">,</span>
                      <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">tagDefIds</span>  <span class="o">=</span> <span class="p">[</span><span class="s">"3d70a355-8342-4042-8694-a2447f0f2b1e"</span><span class="p">]</span>
 
@@ -3533,6 +3570,7 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
                   <span class="n">audit</span><span class="p">,</span>
                   <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 
 <span class="n">tags</span> <span class="o">=</span> <span class="n">paymentTransactionApi</span><span class="p">.</span><span class="n">get_transaction_tags</span><span class="p">(</span><span class="n">payment_transaction_id</span><span class="p">)</span>
@@ -3644,6 +3682,7 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
                         <span class="n">comment</span><span class="p">,</span>
                         <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
+
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
 <span class="n">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="s">"3d70a355-8342-4042-8694-a2447f0f2b1e"</span><span class="p">]</span>
 
