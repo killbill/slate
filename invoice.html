@@ -1460,12 +1460,6 @@
 
                       </li>
                       <li class="site-navigator__submenu-container">
-                        <a href="#invoiceitem-resource" class="site-navigator__item site-navigator__submenu-item" data-title="InvoiceItem Resource">
-                          <span>InvoiceItem Resource</span>
-                        </a>
-
-                      </li>
-                      <li class="site-navigator__submenu-container">
                         <a href="#invoicedryrun-resource" class="site-navigator__item site-navigator__submenu-item" data-title="InvoiceDryRun Resource">
                           <span>InvoiceDryRun Resource</span>
                         </a>
@@ -1712,11 +1706,6 @@
                                   <span>Retrieve invoice audit logs with history by invoice id</span>
                                 </a>
                               </li>
-                              <li>
-                                <a href="#retrieve-invoice-item-audit-logs-with-history-by-invoice-item-id" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve invoice item audit logs with history by invoice item id">
-                                  <span>Retrieve invoice item audit logs with history by invoice item id</span>
-                                </a>
-                              </li>
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
@@ -1733,6 +1722,84 @@
                               <li>
                                 <a href="#search-invoices" class="site-navigator__item site-navigator__submenu-item" data-title="Search invoices">
                                   <span>Search invoices</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+              <li>
+                <a href="invoice-item.html" class="site-navigator__item site-navigator__menu-item" data-title="Invoice Item">
+                  <span>Invoice Item</span>
+                </a>
+                
+                  <ul class="site-navigator__submenu">
+                      <li class="site-navigator__submenu-container">
+                        <a href="#invoiceitem-resource" class="site-navigator__item site-navigator__submenu-item" data-title="InvoiceItem Resource">
+                          <span>InvoiceItem Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#custom-fields" class="site-navigator__item site-navigator__submenu-item" data-title="Custom Fields">
+                          <span>Custom Fields</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#add-custom-fields-to-an-invoice-item" class="site-navigator__item site-navigator__submenu-item" data-title="Add custom fields to an invoice item">
+                                  <span>Add custom fields to an invoice item</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#retrieve-invoice-item-custom-fields" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve invoice item custom fields">
+                                  <span>Retrieve invoice item custom fields</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#modify-custom-fields-for-an-invoice-item" class="site-navigator__item site-navigator__submenu-item" data-title="Modify custom fields for an invoice item">
+                                  <span>Modify custom fields for an invoice item</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#remove-custom-fields-from-invoice-item" class="site-navigator__item site-navigator__submenu-item" data-title="Remove custom fields from invoice item">
+                                  <span>Remove custom fields from invoice item</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#tags" class="site-navigator__item site-navigator__submenu-item" data-title="Tags">
+                          <span>Tags</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#add-tags-to-invoice-item" class="site-navigator__item site-navigator__submenu-item" data-title="Add tags to invoice item">
+                                  <span>Add tags to invoice item</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#retrieve-invoice-item-tags" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve invoice item tags">
+                                  <span>Retrieve invoice item tags</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#remove-tags-from-invoice-item" class="site-navigator__item site-navigator__submenu-item" data-title="Remove tags from invoice item">
+                                  <span>Remove tags from invoice item</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#audit-logs" class="site-navigator__item site-navigator__submenu-item" data-title="Audit Logs">
+                          <span>Audit Logs</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#retrieve-invoice-item-audit-logs-with-history-by-invoice-item-id" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve invoice item audit logs with history by invoice item id">
+                                  <span>Retrieve invoice item audit logs with history by invoice item id</span>
                                 </a>
                               </li>
                           </ul>
@@ -2439,9 +2506,6 @@
         <h1 id='invoice'>Invoice</h1>
 <p>An invoice is a bill provided to a customer for charges that are payable on the customer&#39;s account. A single invoice consolidates charges for all subscriptions held by that customer for a specified time period. Invoices may be set to be paid automatically, or may be paid manually by the customer.</p>
 
-<p>An invoice contains a list of <code>InvoiceItem</code>s. The system will always invoice at the <code>Account</code> level, and will therefore create as many items on a given
-invoice as there are things to invoice. Given an active <code>Subscription</code>, one could see multiple items for that subscription on a single invoice including recurring items, usage items, fixed price items, etc. There can also be items for different subscriptions on the same invoice, as well as items that are unrelated to subscriptions such as adjustments and taxes.</p>
-
 <p>An invoice can be generated manually if there are any outstanding charges. In addition, charges can be explicitly added that will also result in an invoice being generated. Invoices can also be automatically generated by the system when there are existing active subscriptions for the <code>Account</code>. In the latter case, the <code>targetDate</code> will determine up to which point to invoice, and the billing mode (<code>IN_ADVANCE</code> or <code>IN_ARREAR</code>) will determine which period to charge for.</p>
 
 <p>An invoice can have one of the following status values: DRAFT, COMMITTED, or VOID.</p>
@@ -2544,7 +2608,7 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td><strong>items</strong></td>
 <td>list</td>
 <td>system</td>
-<td>List of invoice items on this invoice. See InvoiceItem resource below.</td>
+<td>List of invoice items on this invoice. See <a href="invoiceitem.html">InvoiceItem</a> resource.</td>
 </tr>
 <tr>
 <td><strong>trackingIds</strong></td>
@@ -2577,198 +2641,6 @@ invoice as there are things to invoice. Given an active <code>Subscription</code
 <td>Array of audit log records for this invoice</td>
 </tr>
 </tbody></table>
-<h2 id='invoiceitem-resource'>InvoiceItem Resource</h2>
-<p>An <code>InvoiceItem</code> resource represents a single item charged on an invoice. The attributes contained in this resource are the following:</p>
-
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Generated by</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>invoiceItemId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for the invoice item</td>
-</tr>
-<tr>
-<td><strong>invoiceId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for the invoice</td>
-</tr>
-<tr>
-<td><strong>linkedInvoiceItemId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for the linked item, if any (see below)</td>
-</tr>
-<tr>
-<td><strong>accountId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for the account</td>
-</tr>
-<tr>
-<td><strong>childAccountId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>In the hierarchical model, the UUID of the child account</td>
-</tr>
-<tr>
-<td><strong>bundleId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for the bundle</td>
-</tr>
-<tr>
-<td><strong>subscriptionId</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for the subscription (present only if invoice item corresponds to a subscription)</td>
-</tr>
-<tr>
-<td><strong>productName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Name of the <code>Product</code> for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>planName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Name of the <code>Plan</code> for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>phaseName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Name of the <code>PlanPhase</code> for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>usageName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Name of the <code>Usage</code> section for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>prettyProductName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Pretty name of the <code>Product</code> for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>prettyPlanName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Pretty name of the <code>Plan</code> for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>prettyPhaseName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Pretty name of the <code>PlanPhase</code> for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>prettyUsageName</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Pretty name of the <code>Usage</code> section for this subscription if any</td>
-</tr>
-<tr>
-<td><strong>itemType</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Item type (see below)</td>
-</tr>
-<tr>
-<td><strong>description</strong></td>
-<td>string</td>
-<td>user or system</td>
-<td>Optional description of the item</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>date</td>
-<td>user or system</td>
-<td>Start date of the period invoiced</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>date</td>
-<td>user or system</td>
-<td>End date of the period invoiced</td>
-</tr>
-<tr>
-<td><strong>amount</strong></td>
-<td>number</td>
-<td>user or system</td>
-<td>Amount being invoiced</td>
-</tr>
-<tr>
-<td><strong>rate</strong></td>
-<td>number</td>
-<td>user or system</td>
-<td>Rate associated with the <code>Plan</code></td>
-</tr>
-<tr>
-<td><strong>currency</strong></td>
-<td>string</td>
-<td>user or system</td>
-<td>Currency associated with the account</td>
-</tr>
-<tr>
-<td><strong>quantity</strong></td>
-<td>number</td>
-<td>system</td>
-<td>Quantity of usage blocks (number of units/block size). Applicable only for itemType=USAGE and when org.killbill.invoice.item.result.behavior.mode=DETAIL is specified</td>
-</tr>
-<tr>
-<td><strong>itemDetails</strong></td>
-<td>string</td>
-<td>system</td>
-<td>JSON list correpsonding to usage items being invoiced. It contains one entry per tier</td>
-</tr>
-<tr>
-<td><strong>catalogEffectiveDate</strong></td>
-<td>DateTime</td>
-<td>system</td>
-<td>The effective date of the underlying catalog. Applicable only for itemType=RECURRING</td>
-</tr>
-<tr>
-<td><strong>childItems</strong></td>
-<td>list</td>
-<td>user or system</td>
-<td>In the hierarchical model, the items for the children.</td>
-</tr>
-<tr>
-<td><strong>auditLogs</strong></td>
-<td>array</td>
-<td>system</td>
-<td>Array of audit log records for this invoice item</td>
-</tr>
-</tbody></table>
-
-<p><strong>linkedInvoiceItemId</strong>: This ID is used to link to another item. For example, an item representing an adjustment would link to the item being adjusted.</p>
-
-<p><strong>itemType</strong>: The following invoice item types are currently supported:</p>
-
-<ul>
-<li><code>EXTERNAL_CHARGE</code>: Charge independent of any subscription state - typically added using invoice APIs.</li>
-<li><code>FIXED</code>: Fixed (one-time) charge associated with a subscription.</li>
-<li><code>RECURRING</code>: Recurring charge associated with a subscription.</li>
-<li><code>REPAIR_ADJ</code>: Internal adjustment generated by the system, used for billing in advance when the subscription state changed.</li>
-<li><code>CBA_ADJ</code>: Credit (positive or negative) generated by the system.</li>
-<li><code>ITEM_ADJ</code>: Invoice item adjustment - Typically generated by an operator and associated with a refund.</li>
-<li><code>USAGE</code>: Usage charge associated with a subscription</li>
-<li><code>TAX</code>: Tax item.</li>
-<li><code>PARENT_SUMMARY</code>: In the hierarchical model, represents the summary across all children</li>
-</ul>
-
-<p>Refer to the <a href="https://docs.killbill.io/latest/userguide_subscription.html#components-invoicing">Subscription Billing</a> document for further details.  </p>
 <h2 id='invoicedryrun-resource'>InvoiceDryRun Resource</h2>
 <p>An <code>InvoiceDryRun</code> object encapsulates parameters that can be used to generate an invoice preview. Such an invoice preview can be generated to determine what would be in the invoice scheduled on a certain date, or if certain changes are made. A dry run has no actual effect on the system. The attributes contained in this resource are the following:</p>
 
@@ -5382,7 +5254,11 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createInvoiceCustomFields</span><span class="o">(</span><span class="n">invoiceId</span><span class="o">,</span> 
                                      <span class="n">customFields</span><span class="o">,</span> 
                                      <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">invoice</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">new</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">invoice</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice</span><span class="p">.</span><span class="nf">invoice_id</span> <span class="o">=</span> <span class="s1">'7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'</span>
 
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
@@ -5410,9 +5286,9 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Test Custom Field</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">test_value</span><span class="dl">"</span><span class="p">};</span>
 <span class="kd">const</span> <span class="nx">customFields</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="nx">api</span><span class="p">.</span><span class="nx">createInvoiceCustomFields</span><span class="p">(</span><span class="nx">customFields</span><span class="p">,</span> <span class="nx">invoiceIdId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">createInvoiceCustomFields</span><span class="p">(</span><span class="nx">customFields</span><span class="p">,</span> <span class="nx">invoiceId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
@@ -5478,10 +5354,10 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">custom_fields</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="p">.</span><span class="n">get_invoice_custom_fields</span><span class="p">(</span><span class="n">invoice_id</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">audit</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">NONE</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getInvoiceCustomFields</span><span class="p">(</span><span class="nx">invoiceIdId</span><span class="p">,</span> <span class="nx">audit</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getInvoiceCustomFields</span><span class="p">(</span><span class="nx">invoiceId</span><span class="p">,</span> <span class="nx">audit</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$invoiceId</span> <span class="o">=</span> <span class="s2">"800ca6d0-8c33-458c-bf1a-4de22e960441"</span><span class="p">;</span>
@@ -5519,7 +5395,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
+<td>Level of audit information to return:&quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -5594,12 +5470,12 @@ If successful, returns a status code of 200 and a list of invoice objects for th
                                         <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">CustomField</span> <span class="o">=</span> <span class="p">{</span><span class="na">customFieldId</span><span class="p">:</span> <span class="dl">"</span><span class="s2">45ee24dd-cb1c-48a9-91a8-ecf5b76fd76b</span><span class="dl">"</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">new_value</span><span class="dl">"</span><span class="p">};</span>
     <span class="kd">const</span> <span class="nx">customFields</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
 
-<span class="nx">api</span><span class="p">.</span><span class="nx">modifyInvoiceCustomFields</span><span class="p">(</span><span class="nx">customFields</span><span class="p">,</span> <span class="nx">invoiceIdId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">modifyInvoiceCustomFields</span><span class="p">(</span><span class="nx">customFields</span><span class="p">,</span> <span class="nx">invoiceId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
@@ -5686,12 +5562,12 @@ If successful, returns a status code of 200 and a list of invoice objects for th
                                         <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">customField</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">45ee24dd-cb1c-48a9-91a8-ecf5b76fd76b</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">customFields</span> <span class="o">=</span> <span class="p">[</span><span class="nx">customField</span><span class="p">];</span>
 
-<span class="nx">api</span><span class="p">.</span><span class="nx">deleteInvoiceCustomFields</span><span class="p">(</span><span class="nx">invoiceIdId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">customFields</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">deleteInvoiceCustomFields</span><span class="p">(</span><span class="nx">invoiceId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">customFields</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
@@ -5789,10 +5665,10 @@ If successful, returns a status code of 200 and a list of invoice objects for th
                                <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">00000000-0000-0000-0000-000000000004</span><span class="dl">'</span><span class="p">];</span>
 
-<span class="nx">api</span><span class="p">.</span><span class="nx">createInvoiceTags</span><span class="p">(</span><span class="nx">tagDefIds</span><span class="p">,</span> <span class="nx">invoiceIdId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">createInvoiceTags</span><span class="p">(</span><span class="nx">tagDefIds</span><span class="p">,</span> <span class="nx">invoiceId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
@@ -5858,11 +5734,11 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">tags</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="p">.</span><span class="n">get_invoice_tags</span><span class="p">(</span><span class="n">invoice_id</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">includeDeleted</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">audit</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">NONE</span><span class="dl">'</span><span class="p">;</span>
 
-<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Tag</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getInvoiceTags</span><span class="p">(</span><span class="nx">invoiceIdId</span><span class="p">,</span> <span class="nx">includeDeleted</span><span class="p">,</span> <span class="nx">audit</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Tag</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getInvoiceTags</span><span class="p">(</span><span class="nx">invoiceId</span><span class="p">,</span> <span class="nx">includeDeleted</span><span class="p">,</span> <span class="nx">audit</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$invoiceId</span> <span class="o">=</span> <span class="s2">"800ca6d0-8c33-458c-bf1a-4de22e960441"</span><span class="p">;</span>
@@ -5908,7 +5784,7 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <td>string</td>
 <td>no</td>
 <td>&quot;NONE&quot;</td>
-<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot;, or &quot;FULL&quot;</td>
+<td>Level of audit information to return: &quot;NONE&quot;, &quot;MINIMAL&quot; (only inserts), or &quot;FULL&quot;</td>
 </tr>
 </tbody></table>
 
@@ -5969,10 +5845,10 @@ If successful, returns a status code of 200 and a list of invoice objects for th
                                <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">invoiceIdId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">invoiceId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">800ca6d0-8c33-458c-bf1a-4de22e960441</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">tagDefIds</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">00000000-0000-0000-0000-000000000004</span><span class="dl">'</span><span class="p">];</span>
 
-<span class="nx">api</span><span class="p">.</span><span class="nx">deleteInvoiceTags</span><span class="p">(</span><span class="nx">invoiceIdId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">tagDefIds</span><span class="p">);</span>
+<span class="nx">api</span><span class="p">.</span><span class="nx">deleteInvoiceTags</span><span class="p">(</span><span class="nx">invoiceId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">,</span> <span class="nx">tagDefIds</span><span class="p">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceApi</span><span class="p">();</span>
 
 <span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
@@ -7001,115 +6877,6 @@ curl <span class="nt">-v</span> <span class="se">\</span>
       </span><span class="nl">"writtenOff"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="nl">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INVOICES"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INVOICE_HISTORY"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre></div>
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 200 and a list of audit logs with history.</p>
-<h3 id='retrieve-invoice-item-audit-logs-with-history-by-invoice-item-id'>Retrieve invoice item audit logs with history by invoice item id</h3>
-<p>Retrieve a list of audit log records showing events that occurred involving changes to a specified invoice item. History information (a copy of the full invoice item object) is included with each record.</p>
-
-<p>Some examples:</p>
-
-<ul>
-<li>Assuming this API is invoked with an invoice item id as soon as the invoice is generated, it would return:
-
-<ul>
-<li>An <code>INSERT</code> record corresponding to the invoice item creation</li>
-</ul></li>
-<li>Assuming a CBA_ADJ invoice item is deleted, and this API is invoked with the CBA_ADJ invoice item id, this API would return two records:
-
-<ul>
-<li>An <code>INSERT</code> record corresponding to the invoice item creation</li>
-<li>An <code>UPDATE</code> record corresponding to the invoice item deletion</li>
-</ul></li>
-</ul>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>GET http://127.0.0.1:8080/1.0/kb/invoiceItems/{invoiceItemId}/auditLogsWithHistory</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="se">\</span>
-    <span class="nt">-u</span> admin:password <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoiceItems/b45ef2ac-e4b7-4e79-89d8-1c2e95838300/auditLogsWithHistory"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoiceItemApi</span><span class="o">;</span>
-<span class="kd">protected</span> <span class="nc">InvoiceItemApi</span> <span class="n">invoiceItemApi</span><span class="o">;</span>
-
-<span class="no">UUID</span> <span class="n">invoiceItemId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"57f4f41d-81a2-4521-8420-c241ecc90a80"</span><span class="o">);</span>
-<span class="nc">AuditLogs</span> <span class="n">logs</span> <span class="o">=</span> <span class="n">invoiceItemApi</span><span class="o">.</span><span class="na">getInvoiceItemAuditLogsWithHistory</span><span class="o">(</span><span class="n">invoiceItemId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_item</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span>
-<span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_item_id</span> <span class="o">=</span> <span class="s2">"6f3d5bd3-f8b3-4615-9940-5a15a5060fb5"</span>
-
-<span class="n">audit_logs</span> <span class="o">=</span> <span class="n">invoice_item</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoiceItemApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoiceItemApi</span><span class="p">()</span>
-
-<span class="n">invoice_item_id</span> <span class="o">=</span> <span class="s">"6f3d5bd3-f8b3-4615-9940-5a15a5060fb5"</span>
-
-<span class="n">audit_logs</span> <span class="o">=</span> <span class="n">invoiceItemApi</span><span class="p">.</span><span class="n">get_invoice_item_audit_logs_with_history</span><span class="p">(</span><span class="n">invoice_item_id</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">api</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceItemApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">InvoiceItemApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">invoiceItemId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">6f3d5bd3-f8b3-4615-9940-5a15a5060fb5</span><span class="dl">'</span><span class="p">;</span>
-
-<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">AuditLog</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">getInvoiceItemAuditLogsWithHistory</span><span class="p">(</span><span class="nx">invoiceItemId</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getInvoiceItemApi</span><span class="p">();</span>
-
-<span class="nv">$invoiceItemId</span> <span class="o">=</span> <span class="s2">"6f3d5bd3-f8b3-4615-9940-5a15a5060fb5"</span><span class="p">;</span>
-
-<span class="nv">$result</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getInvoiceItemAuditLogsWithHistory</span><span class="p">(</span><span class="nv">$invoiceItemId</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"changeType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INSERT"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"changeDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-22T22:38:10.000Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"objectType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INVOICE_ITEM"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"objectId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b45ef2ac-e4b7-4e79-89d8-1c2e95838300"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"changedBy"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SubscriptionBaseTransition"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"reasonCode"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"comments"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1f03e074-dea1-45c5-aee3-c9464886f476"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"history"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-22T22:38:10.000Z"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"updatedDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">2698</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"accountRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"tenantRecordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RECURRING"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"invoiceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d456a9b3-7e48-4f56-b387-1d65a492e75e"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7b3e14b1-6e76-46d3-bbfd-5a16e5b5eca2"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"childAccountId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"bundleId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1b329c7-7dcf-466c-aaca-47bff304dab0"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"subscriptionId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"70b6856e-6938-495f-9ae9-0a8ec0571c37"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo-monthly-evergreen"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"productName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Foo"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"planName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo-monthly"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"phaseName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"foo-monthly-evergreen"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"usageName"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-02-22"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-03-22"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"linkedItemId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"itemDetails"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INVOICE_ITEMS"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"historyTableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INVOICE_ITEM_HISTORY"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
