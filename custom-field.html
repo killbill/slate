@@ -2305,8 +2305,8 @@
                                 </a>
                               </li>
                               <li>
-                                <a href="#search-custom-fields-by-id" class="site-navigator__item site-navigator__submenu-item" data-title="Search custom fields by ID">
-                                  <span>Search custom fields by ID</span>
+                                <a href="#search-custom-fields" class="site-navigator__item site-navigator__submenu-item" data-title="Search custom fields">
+                                  <span>Search custom fields</span>
                                 </a>
                               </li>
                               <li>
@@ -2630,7 +2630,34 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/customFields/pagination"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.CustomFields</span><span class="o">;</span>
 
+<span class="kd">protected</span> <span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span><span class="o">;</span>
+
+<span class="nc">Long</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">;</span>
+<span class="nc">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">100L</span><span class="o">;</span>
+
+<span class="nc">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="o">.</span><span class="na">getCustomFields</span><span class="o">(</span><span class="n">offset</span><span class="o">,</span> 
+                                                           <span class="n">limit</span><span class="o">,</span> 
+                                                           <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">FULL</span><span class="o">,</span> 
+                                                           <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">customField</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomField</span>
+
+<span class="n">customFields</span> <span class="o">=</span> <span class="n">customField</span><span class="p">.</span><span class="nf">find_in_batches</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span>
+                                           <span class="n">limit</span><span class="p">,</span>
+                                           <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">customFieldApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CustomFieldApi</span><span class="p">()</span>
+
+<span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="p">.</span><span class="n">get_custom_fields</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">customFieldApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">customFields</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">customFieldApi</span><span class="p">.</span><span class="nx">getCustomFields</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCustomFieldApi</span><span class="p">();</span>
+
+<span class="nv">$customFields</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCustomFields</span><span class="p">();</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2645,12 +2672,12 @@
     </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
-</span></code></pre></div><h3 id='search-custom-fields-by-id'>Search custom fields by ID</h3>
-<p>Searches for a specific custom field by its ID</p>
+</span></code></pre></div><h3 id='search-custom-fields'>Search custom fields</h3>
+<p>Searches for custom fields by specified search string. The search string is compared to the following attributes: <code>customFieldId</code>, <code>objectId</code>, <code>objectType</code>, <code>name</code>, and <code>value</code>. The operation returns the custom field records in which the search string matches all or part of any one of the attributes <code>objectId</code>, <code>objectType</code>, <code>name</code>, <code>value</code>. However, the string must match the entire attribute in case of <code>customFieldId</code>. </p>
 
 <p><strong>HTTP Request</strong></p>
 
-<p><code>GET http://127.0.0.1:8080/1.0/kb/customField/search/{customFieldId}</code></p>
+<p><code>GET http://127.0.0.1:8080/1.0/kb/customField/search/{searchKey}</code></p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -2688,7 +2715,7 @@
 
 <p><strong>Returns</strong></p>
 
-<p>Returns the record for the specified custom field, if it exists</p>
+<p>Returns the records for matching custom fields, if any.</p>
 
 <blockquote>
 <p>Example Request:</p>
@@ -2698,8 +2725,46 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="s2">"http://127.0.0.1:8080/1.0/kb/customFields/search/13fe6f2c-91af-4635-aa9c-52e04d99b5ec"</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/customFields/search/ACCOUNT"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.CustomFields</span><span class="o">;</span>
 
+<span class="kd">protected</span> <span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span><span class="o">;</span>
+
+<span class="nc">Long</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">;</span>
+<span class="nc">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">100L</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">searchKey</span> <span class="o">=</span> <span class="s">"ACCOUNT"</span><span class="o">;</span>
+
+<span class="nc">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="o">.</span><span class="na">searchCustomFields</span><span class="o">(</span><span class="n">searchKey</span><span class="o">,</span> 
+                                                              <span class="n">offset</span><span class="o">,</span> 
+                                                              <span class="n">limit</span><span class="o">,</span> 
+                                                              <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">FULL</span><span class="o">,</span>
+                                                              <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">customFieldsApi</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomField</span>
+
+<span class="n">searchKey</span> <span class="o">=</span> <span class="s1">'ACCOUNT'</span>
+
+<span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldsApi</span><span class="p">.</span><span class="nf">find_in_batches_by_search_key</span><span class="p">(</span><span class="n">searchKey</span><span class="p">,</span>
+                                                             <span class="n">offset</span><span class="p">,</span>
+                                                             <span class="n">limit</span><span class="p">,</span>
+                                                             <span class="n">options</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">customFieldApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CustomFieldApi</span><span class="p">()</span>
+
+<span class="n">searchKey</span> <span class="o">=</span> <span class="s">'ACCOUNT'</span>
+
+<span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="p">.</span><span class="n">search_custom_fields</span><span class="p">(</span><span class="n">searchKey</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">customFieldApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">searchKey</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ACCOUNT</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">customFields</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">customFieldApi</span><span class="p">.</span><span class="nx">searchCustomFields</span><span class="p">(</span><span class="nx">searchKey</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCustomFieldApi</span><span class="p">();</span>
+
+<span class="nv">$searchKey</span> <span class="o">=</span> <span class="s1">'ACCOUNT'</span><span class="p">;</span>
+
+<span class="nv">$customFields</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">searchCustomFields</span><span class="p">(</span><span class="nv">$searchKey</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2789,7 +2854,55 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/customFields/search?objectType=ACCOUNT&amp;fieldName=importance"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.CustomFields</span><span class="o">;</span>
 
+<span class="kd">protected</span> <span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span><span class="o">;</span>
+
+<span class="nc">String</span> <span class="n">objectType</span> <span class="o">=</span> <span class="s">"ACCOUNT"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">fieldName</span> <span class="o">=</span> <span class="s">"customFieldName"</span><span class="o">;</span>
+<span class="nc">String</span> <span class="n">fieldValue</span> <span class="o">=</span> <span class="s">"customFieldValue"</span><span class="o">;</span>
+
+<span class="nc">CustomFields</span> <span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="o">.</span><span class="na">searchCustomFieldsByTypeName</span><span class="o">(</span><span class="n">objectType</span><span class="o">,</span> 
+                                                                        <span class="n">fieldName</span><span class="o">,</span> 
+                                                                        <span class="n">fieldValue</span><span class="o">,</span>
+                                                                        <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">customFields</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomField</span>
+
+<span class="n">objectType</span> <span class="o">=</span> <span class="s1">'ACCOUNT'</span><span class="p">;</span>
+<span class="n">fieldName</span> <span class="o">=</span> <span class="s1">'customFieldName'</span><span class="p">;</span>
+<span class="n">fieldValue</span> <span class="o">=</span> <span class="s1">'customFieldValue'</span><span class="p">;</span>
+
+<span class="n">customField</span> <span class="o">=</span> <span class="n">customFields</span><span class="p">.</span><span class="nf">find_in_batches_by_search_type_name</span><span class="p">(</span><span class="n">objectType</span><span class="p">,</span>
+                                                               <span class="n">fieldName</span><span class="p">,</span>
+                                                               <span class="n">fieldValue</span><span class="p">,</span>
+                                                               <span class="n">offset</span><span class="p">,</span>
+                                                               <span class="n">limit</span><span class="p">,</span>
+                                                               <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">customFieldApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CustomFieldApi</span><span class="p">()</span>
+
+<span class="n">objectType</span> <span class="o">=</span> <span class="s">'ACCOUNT'</span><span class="p">;</span>
+<span class="n">fieldName</span> <span class="o">=</span> <span class="s">'customFieldName'</span><span class="p">;</span>
+
+<span class="n">customFields</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="p">.</span><span class="n">search_custom_fields_by_type_name</span><span class="p">(</span><span class="n">object_type</span><span class="o">=</span><span class="n">objectType</span><span class="p">,</span>
+                                                                <span class="n">field_name</span><span class="o">=</span><span class="n">fieldName</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">customFieldApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">objectType</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ACCOUNT</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">fieldName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">customFieldName</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">customField</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomField</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">customFieldApi</span><span class="p">.</span><span class="nx">searchCustomFieldsByTypeName</span><span class="p">(</span><span class="nx">objectType</span><span class="p">,</span> <span class="nx">fieldName</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCustomFieldApi</span><span class="p">();</span>
+
+<span class="nv">$objectType</span> <span class="o">=</span> <span class="s1">'ACCOUNT'</span><span class="p">;</span>
+<span class="nv">$fieldName</span> <span class="o">=</span> <span class="s1">'customFieldName'</span><span class="p">;</span>
+<span class="nv">$fieldValue</span> <span class="o">=</span> <span class="s1">'customFieldValue'</span><span class="p">;</span>
+
+<span class="nv">$customFields</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">searchCustomFieldsByTypeName</span><span class="p">(</span><span class="nv">$objectType</span><span class="p">,</span>
+                                                           <span class="nv">$fieldName</span><span class="p">,</span>
+                                                           <span class="nv">$fieldValue</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2818,6 +2931,34 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/customFields/4b498210-b177-4aae-a539-cf594adaa221/auditLogsWithHistory"</span>
 
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CustomFieldApi</span><span class="o">;</span>
+
+<span class="kd">protected</span> <span class="nc">CustomFieldApi</span> <span class="n">customFieldApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">customFieldId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"d7c2ed2e-9fcf-491c-9844-2d9e5efbfc4b"</span><span class="o">);</span>
+
+<span class="nc">AuditLogs</span> <span class="n">auditLogsWithHistory</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="o">.</span><span class="na">getCustomFieldAuditLogsWithHistory</span><span class="o">(</span><span class="n">customFieldId</span><span class="o">,</span>
+                                                                                   <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">customFields</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomField</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">customFields</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'d7c2ed2e-9fcf-491c-9844-2d9e5efbfc4b'</span>
+
+<span class="n">auditLogsWithHistory</span> <span class="o">=</span> <span class="n">customFields</span><span class="p">.</span><span class="nf">audit_logs_with_history</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">customFieldApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CustomFieldApi</span><span class="p">()</span>
+
+<span class="n">customFieldId</span> <span class="o">=</span> <span class="s">'d7c2ed2e-9fcf-491c-9844-2d9e5efbfc4b'</span>
+
+<span class="n">customFieldAuditLogs</span> <span class="o">=</span> <span class="n">customFieldApi</span><span class="p">.</span><span class="n">get_custom_field_audit_logs_with_history</span><span class="p">(</span><span class="n">customFieldId</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">customFieldApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CustomFieldApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">customFieldId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">d7c2ed2e-9fcf-491c-9844-2d9e5efbfc4b</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">customFieldAuditLogs</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">AuditLog</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">customFieldApi</span><span class="p">.</span><span class="nx">getCustomFieldAuditLogsWithHistory</span><span class="p">(</span><span class="nx">customFieldId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCustomFieldApi</span><span class="p">();</span>
+
+<span class="nv">$customFieldId</span> <span class="o">=</span> <span class="s1">'d7c2ed2e-9fcf-491c-9844-2d9e5efbfc4b'</span><span class="p">;</span>
+
+<span class="nv">$customFieldAuditLogsWithHistory</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCustomFieldAuditLogsWithHistory</span><span class="p">(</span><span class="nv">$customFieldId</span><span class="p">);</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
