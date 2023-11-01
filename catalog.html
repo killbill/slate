@@ -2632,13 +2632,14 @@
                                                      <span class="n">reason</span><span class="p">,</span>
                                                      <span class="n">comment</span><span class="p">,</span>
                                                      <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
 <span class="n">xml_catalog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"../resources/SpyCarBasic.xml"</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
 
 <span class="n">catalogApi</span><span class="p">.</span><span class="n">upload_catalog_xml</span><span class="p">(</span><span class="n">xml_catalog</span><span class="p">,</span> 
-                              <span class="n">created_by</span><span class="p">,</span> 
-                              <span class="n">api_key</span><span class="p">,</span> 
-                              <span class="n">api_secret</span><span class="p">)</span>
+                              <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                              <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                              <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
@@ -2689,9 +2690,9 @@
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_xml</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span>
                                                       <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_xml</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">catalog_xml</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_xml</span><span class="p">()</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -2967,9 +2968,9 @@
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_json</span><span class="o">.</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span> 
                                                         <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_json</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">catalog_json</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_json</span><span class="p">()</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3180,9 +3181,9 @@
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">DateTime</span><span class="o">&gt;</span> <span class="n">versions</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogVersions</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_versions</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_versions</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">catalog_versions</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_versions</span><span class="p">()</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3221,9 +3222,9 @@
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">PlanDetail</span><span class="o">&gt;</span> <span class="n">basePlans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getAvailableBasePlans</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">available_base_plans</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_base_plans</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">available_base_plans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_base_plans</span><span class="p">()</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3300,11 +3301,9 @@
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">base_product_name</span> <span class="o">=</span> <span class="s1">'Basic'</span>
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">available_addons</span><span class="p">(</span><span class="n">base_product_name</span><span class="p">,</span> 
                                                 <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_addons</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
-                                <span class="n">api_secret</span><span class="p">,</span> 
-                                <span class="n">base_product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">)</span>
+<span class="n">available_add_on_plans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_addons</span><span class="p">(</span><span class="n">base_product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3381,9 +3380,11 @@
                                               <span class="n">reason</span><span class="p">,</span>
                                               <span class="n">comment</span><span class="p">,</span>
                                               <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">delete_catalog</span><span class="p">(</span><span class="n">created_by</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">delete_catalog</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                          <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                          <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
@@ -3430,7 +3431,14 @@
 <span class="nc">CatalogValidation</span> <span class="n">validation</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">validateCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">CatalogValidationError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="na">getCatalogValidationErrors</span><span class="o">();</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+
+<span class="n">xml_catalog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"H:/killbill/catalog.xml"</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">catalog_validation_errors</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">validate_catalog_xml</span><span class="p">(</span><span class="n">xml_catalog</span><span class="p">,</span>
+                                                            <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                                            <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                                            <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3477,11 +3485,11 @@
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_phase</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
                                                  <span class="n">requested_date</span><span class="p">,</span> 
                                                  <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_phase_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
-                                               <span class="n">api_secret</span><span class="p">,</span> 
-                                               <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
+
+<span class="n">phase</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_phase_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3548,11 +3556,11 @@
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_plan</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
                                                 <span class="n">requested_date</span><span class="p">,</span> 
                                                 <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_plan_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
-                                              <span class="n">api_secret</span><span class="p">,</span> 
-                                              <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
+
+<span class="n">plan</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_plan_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3645,11 +3653,11 @@
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_price_list</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
                                                       <span class="n">requested_date</span><span class="p">,</span> 
                                                       <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_price_list_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
-                                                    <span class="n">api_secret</span><span class="p">,</span> 
-                                                    <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
+
+<span class="n">price_list</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_price_list_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3714,11 +3722,11 @@
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_product</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
                                                    <span class="n">requested_date</span><span class="p">,</span> 
                                                    <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">get_product_for_subscription_and_date</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> 
-                                                 <span class="n">api_secret</span><span class="p">,</span> 
-                                                 <span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
+
+<span class="n">product</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_product_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
 </code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3839,17 +3847,21 @@ a new version of this catalog. So, this functionality can also be a stepping sto
                                                               <span class="n">reason</span><span class="p">,</span>
                                                               <span class="n">comment</span><span class="p">,</span>
                                                               <span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
-<span class="n">body</span> <span class="o">=</span> <span class="n">SimplePlan</span><span class="p">(</span><span class="n">plan_id</span><span class="o">=</span><span class="s">'basic-annual'</span><span class="p">,</span>
-                  <span class="n">product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">,</span>
-                  <span class="n">product_category</span><span class="o">=</span><span class="s">'BASE'</span><span class="p">,</span>
-                  <span class="n">currency</span><span class="o">=</span><span class="s">'USD'</span><span class="p">,</span>
-                  <span class="n">amount</span><span class="o">=</span><span class="mf">10000.00</span><span class="p">,</span>
-                  <span class="n">billing_period</span><span class="o">=</span><span class="s">'ANNUAL'</span><span class="p">,</span>
-                  <span class="n">trial_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                  <span class="n">trial_time_unit</span><span class="o">=</span><span class="s">'UNLIMITED'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
-<span class="n">catalogApi</span><span class="p">.</span><span class="n">add_simple_plan</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">created_by</span><span class="p">,</span> <span class="n">api_key</span><span class="p">,</span> <span class="n">api_secret</span><span class="p">)</span>
+<span class="n">body</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SimplePlan</span><span class="p">(</span><span class="n">plan_id</span><span class="o">=</span><span class="s">'basic-annual'</span><span class="p">,</span>
+                           <span class="n">product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">,</span>
+                           <span class="n">product_category</span><span class="o">=</span><span class="s">'BASE'</span><span class="p">,</span>
+                           <span class="n">currency</span><span class="o">=</span><span class="s">'USD'</span><span class="p">,</span>
+                           <span class="n">amount</span><span class="o">=</span><span class="mf">10000.00</span><span class="p">,</span>
+                           <span class="n">billing_period</span><span class="o">=</span><span class="s">'ANNUAL'</span><span class="p">,</span>
+                           <span class="n">trial_length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">trial_time_unit</span><span class="o">=</span><span class="s">'UNLIMITED'</span><span class="p">)</span>
+
+<span class="n">catalogApi</span><span class="p">.</span><span class="n">add_simple_plan</span><span class="p">(</span><span class="n">body</span><span class="p">,</span>
+                           <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                           <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                           <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Request Body</strong></p>
 
