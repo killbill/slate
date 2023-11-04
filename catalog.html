@@ -2626,12 +2626,19 @@
 <span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">getResourceBodyString</span><span class="o">(</span><span class="n">catalog</span><span class="o">);</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">uploadCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog_file_xml</span> <span class="o">=</span> <span class="n">resource_file</span><span class="p">.</span><span class="nf">read</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">upload_tenant_catalog</span><span class="p">(</span><span class="n">catalog_file_xml</span><span class="p">,</span> 
-                                                     <span class="n">user</span><span class="p">,</span>
-                                                     <span class="n">reason</span><span class="p">,</span>
-                                                     <span class="n">comment</span><span class="p">,</span>
-                                                     <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">catalog_file_xml</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"H:/killbill/catalog.xml"</span><span class="p">)</span>
+
+<span class="n">catalog</span><span class="p">.</span><span class="nf">upload_tenant_catalog</span><span class="p">(</span><span class="n">catalog_file_xml</span><span class="p">,</span>
+                              <span class="n">user</span><span class="p">,</span>
+                              <span class="n">reason</span><span class="p">,</span>
+                              <span class="n">comment</span><span class="p">,</span>
+                              <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">xml_catalog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"../resources/SpyCarBasic.xml"</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
@@ -2640,7 +2647,14 @@
                               <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
                               <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
                               <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">H:/killbill/catalog.xml</span><span class="dl">'</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>    
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">uploadCatalogXml</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <p><strong>Request Body</strong></p>
 
 <p>Contains the complete catalog in XML format</p>
@@ -2686,14 +2700,18 @@
 <span class="nc">String</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogXml</span><span class="o">(</span><span class="n">requestedDate</span><span class="o">,</span> 
                                           <span class="n">accountId</span><span class="o">,</span> 
                                           <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_xml</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span>
-                                                      <span class="n">options</span><span class="p">)</span>
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">catalog_xml</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_xml</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">catalog_xml</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_xml</span><span class="p">()</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">catalogXml</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getCatalogXml</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -2964,14 +2982,18 @@
 <span class="nc">Catalogs</span> <span class="n">catalogsJson</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogJson</span><span class="o">(</span><span class="n">requestedDate</span><span class="o">,</span> 
                                                   <span class="n">accountId</span><span class="o">,</span> 
                                                   <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_json</span><span class="o">.</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span> 
-                                                        <span class="n">options</span><span class="p">)</span>
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">catalog_json</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_json</span><span class="p">(</span><span class="n">requested_date</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">catalog_json</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_json</span><span class="p">()</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">catalogJson</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Catalog</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getCatalogJson</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3180,11 +3202,16 @@
 <span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">DateTime</span><span class="o">&gt;</span> <span class="n">versions</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogVersions</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_versions</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">catalog_versions</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_tenant_catalog_versions</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">catalog_versions</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_catalog_versions</span><span class="p">()</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">catalogVersions</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getCatalogVersions</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3221,11 +3248,16 @@
 <span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">PlanDetail</span><span class="o">&gt;</span> <span class="n">basePlans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getAvailableBasePlans</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">available_base_plans</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">available_base_plans</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">available_base_plans</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">available_base_plans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_base_plans</span><span class="p">()</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">availableBasePlans</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">PlanDetail</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getAvailableBasePlans</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3298,13 +3330,19 @@
                                                                  <span class="n">priceListName</span><span class="o">,</span> 
                                                                  <span class="n">accountId</span><span class="o">,</span> 
                                                                  <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">base_product_name</span> <span class="o">=</span> <span class="s1">'Basic'</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">available_addons</span><span class="p">(</span><span class="n">base_product_name</span><span class="p">,</span> 
-                                                <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">base_product_name</span> <span class="o">=</span> <span class="s1">'Standard'</span>
+
+<span class="n">available_addons</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">available_addons</span><span class="p">(</span><span class="n">base_product_name</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">available_add_on_plans</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_available_addons</span><span class="p">(</span><span class="n">base_product_name</span><span class="o">=</span><span class="s">'Basic'</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">availableAddOns</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">PlanDetail</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getAvailableAddons</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3376,16 +3414,18 @@
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">deleteCatalog</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">delete_catalog</span><span class="p">(</span><span class="n">user</span><span class="p">,</span>
-                                              <span class="n">reason</span><span class="p">,</span>
-                                              <span class="n">comment</span><span class="p">,</span>
-                                              <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">catalog</span><span class="p">.</span><span class="nf">delete_catalog</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">catalogApi</span><span class="p">.</span><span class="n">delete_catalog</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
                           <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
                           <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">deleteCatalog</span><span class="p">(</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -3439,7 +3479,14 @@
                                                             <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
                                                             <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
                                                             <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">fs</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">H:/killbill/catalog.xml</span><span class="dl">'</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+
+<span class="kd">const</span> <span class="nx">catalogValidationErrors</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogValidation</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">validateCatalogXml</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3481,16 +3528,25 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/phase?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>    
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_phase</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
-                                                 <span class="n">requested_date</span><span class="p">,</span> 
-                                                 <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s1">'dc99644c-04a3-49b3-9abc-6e94cffc7e60'</span>
+
+<span class="n">phase</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_catalog_phase</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span>
+                                  <span class="n">requested_date</span><span class="p">,</span>
+                                  <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
 
 <span class="n">phase</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_phase_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">phase</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Phase</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getPhaseForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3552,16 +3608,25 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/plan?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span> 
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_plan</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
-                                                <span class="n">requested_date</span><span class="p">,</span> 
-                                                <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s1">'dc99644c-04a3-49b3-9abc-6e94cffc7e60'</span>
+
+<span class="n">plan</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_catalog_plan</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                <span class="n">requested_date</span><span class="p">,</span> 
+                                <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
 
 <span class="n">plan</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_plan_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">plan</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Plan</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getPlanForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3649,16 +3714,25 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/priceList?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>    
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_price_list</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
-                                                      <span class="n">requested_date</span><span class="p">,</span> 
-                                                      <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s1">'dc99644c-04a3-49b3-9abc-6e94cffc7e60'</span>
+
+<span class="n">price_list</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_catalog_price_list</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                            <span class="n">requested_date</span><span class="p">,</span> 
+                                            <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
 
 <span class="n">price_list</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_price_list_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">priceList</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">PriceList</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getPriceListForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3718,16 +3792,25 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/product?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>  
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">get_catalog_product</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
-                                                   <span class="n">requested_date</span><span class="p">,</span> 
-                                                   <span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">subscription_id</span> <span class="o">=</span> <span class="s1">'dc99644c-04a3-49b3-9abc-6e94cffc7e60'</span>
+
+<span class="n">product</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">get_catalog_product</span><span class="p">(</span><span class="n">subscription_id</span><span class="p">,</span> 
+                                      <span class="n">requested_date</span><span class="p">,</span> 
+                                      <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'ad924bca-00f4-4287-82c2-e2932a5f7371'</span>
 
 <span class="n">product</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="p">.</span><span class="n">get_product_for_subscription_and_date</span><span class="p">(</span><span class="n">subscription_id</span><span class="o">=</span><span class="n">subscription_id</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">product</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Product</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getProductForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3832,7 +3915,13 @@ a new version of this catalog. So, this functionality can also be a stepping sto
                                  <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">())</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">addSimplePlan</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">simple_plan</span>                  <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">SimplePlanAttributes</span><span class="p">.</span><span class="nf">new</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+<span class="n">simple_plan</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">SimplePlanAttributes</span><span class="p">.</span><span class="nf">new</span>
+
 <span class="n">simple_plan</span><span class="p">.</span><span class="nf">plan_id</span>          <span class="o">=</span> <span class="s1">'basic-annual'</span>
 <span class="n">simple_plan</span><span class="p">.</span><span class="nf">product_name</span>     <span class="o">=</span> <span class="s1">'Basic'</span>
 <span class="n">simple_plan</span><span class="p">.</span><span class="nf">product_category</span> <span class="o">=</span> <span class="s1">'BASE'</span>
@@ -3842,11 +3931,11 @@ a new version of this catalog. So, this functionality can also be a stepping sto
 <span class="n">simple_plan</span><span class="p">.</span><span class="nf">trial_length</span>     <span class="o">=</span> <span class="mi">0</span>
 <span class="n">simple_plan</span><span class="p">.</span><span class="nf">trial_time_unit</span>  <span class="o">=</span> <span class="s1">'UNLIMITED'</span>
 
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span><span class="p">.</span><span class="nf">add_tenant_catalog_simple_plan</span><span class="p">(</span><span class="n">simple_plan</span><span class="p">,</span>
-                                                              <span class="n">user</span><span class="p">,</span>
-                                                              <span class="n">reason</span><span class="p">,</span>
-                                                              <span class="n">comment</span><span class="p">,</span>
-                                                              <span class="n">options</span><span class="p">)</span>
+<span class="n">catalog</span><span class="p">.</span><span class="nf">add_tenant_catalog_simple_plan</span><span class="p">(</span><span class="n">simple_plan</span><span class="p">,</span>
+                                       <span class="n">user</span><span class="p">,</span>
+                                       <span class="n">reason</span><span class="p">,</span>
+                                       <span class="n">comment</span><span class="p">,</span>
+                                       <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">body</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SimplePlan</span><span class="p">(</span><span class="n">plan_id</span><span class="o">=</span><span class="s">'basic-annual'</span><span class="p">,</span>
@@ -3862,7 +3951,22 @@ a new version of this catalog. So, this functionality can also be a stepping sto
                            <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
                            <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
                            <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">simplePlan</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SimplePlan</span> <span class="o">=</span> <span class="p">{</span>
+                                          <span class="na">planId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">basic-annual</span><span class="dl">'</span><span class="p">,</span>
+                                          <span class="na">productName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Basic</span><span class="dl">'</span><span class="p">,</span>
+                                          <span class="na">productCategory</span><span class="p">:</span> <span class="dl">'</span><span class="s1">BASE</span><span class="dl">'</span><span class="p">,</span>
+                                          <span class="na">currency</span><span class="p">:</span> <span class="dl">'</span><span class="s1">USD</span><span class="dl">'</span><span class="p">,</span>
+                                          <span class="na">amount</span><span class="p">:</span> <span class="mi">10000</span><span class="p">,</span>
+                                          <span class="na">billingPeriod</span><span class="p">:</span> <span class="dl">'</span><span class="s1">ANNUAL</span><span class="dl">'</span><span class="p">,</span>
+                                          <span class="na">trialLength</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                                          <span class="na">trialTimeUnit</span><span class="p">:</span> <span class="dl">'</span><span class="s1">UNLIMITED</span><span class="dl">'</span>
+                                        <span class="p">};</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">addSimplePlan</span><span class="p">(</span><span class="nx">simplePlan</span><span class="p">,</span>
+                                                                            <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
 <p><strong>Request Body</strong></p>
 
 <p>Provides the content for the plan in JSON form. This should be very simple. Note that the &quot;planId&quot; becomes the <code>planName</code> attribute. For example:</p>
