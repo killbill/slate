@@ -2654,7 +2654,18 @@
 <span class="kd">const</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">H:/killbill/catalog.xml</span><span class="dl">'</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>    
 
 <span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">uploadCatalogXml</span><span class="p">(</span><span class="nx">content</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$filename</span> <span class="o">=</span> <span class="s2">"H:/killbill/catalog.xml"</span><span class="p">;</span>
+
+<span class="nv">$fileContents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">uploadCatalogXml</span><span class="p">(</span><span class="nv">$fileContents</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
 <p><strong>Request Body</strong></p>
 
 <p>Contains the complete catalog in XML format</p>
@@ -2711,7 +2722,10 @@
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">catalogXml</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getCatalogXml</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$catalogXml</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCatalogXml</span><span class="p">();</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -2993,7 +3007,10 @@
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">catalogJson</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Catalog</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getCatalogJson</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$catalogJson</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCatalogJson</span><span class="p">();</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3211,7 +3228,10 @@
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">catalogVersions</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getCatalogVersions</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$catalogVersions</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCatalogVersions</span><span class="p">();</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3257,7 +3277,10 @@
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">availableBasePlans</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">PlanDetail</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getAvailableBasePlans</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$availableBasePlans</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getAvailableBasePlans</span><span class="p">();</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3342,7 +3365,12 @@
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">availableAddOns</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">PlanDetail</span><span class="p">[],</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getAvailableAddons</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$baseProductName</span> <span class="o">=</span> <span class="s1">'Standard'</span><span class="p">;</span>
+
+<span class="nv">$availableAddOns</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getAvailableAddons</span><span class="p">(</span><span class="nv">$baseProductName</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3425,7 +3453,14 @@
 </code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">catalogApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 
 <span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">deleteCatalog</span><span class="p">(</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">deleteCatalog</span><span class="p">(</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -3486,7 +3521,18 @@
 <span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="dl">'</span><span class="s1">H:/killbill/catalog.xml</span><span class="dl">'</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
 
 <span class="kd">const</span> <span class="nx">catalogValidationErrors</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">CatalogValidation</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">validateCatalogXml</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$filename</span> <span class="o">=</span> <span class="s2">"H:/killbill/catalog.xml"</span><span class="p">;</span>
+
+<span class="nv">$fileContents</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$filename</span><span class="p">);</span>
+
+<span class="nv">$catalogValidationErrors</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">validateCatalogXml</span><span class="p">(</span><span class="nv">$fileContents</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3546,7 +3592,12 @@
 <span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">phase</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Phase</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getPhaseForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$subscriptionId</span> <span class="o">=</span> <span class="s1">'d28b70f8-6bc7-4cde-b21f-eaf723e146fc'</span><span class="p">;</span>
+
+<span class="nv">$phase</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPhaseForSubscriptionAndDate</span><span class="p">(</span><span class="nv">$subscriptionId</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3626,7 +3677,12 @@
 <span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">plan</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Plan</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getPlanForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$subscriptionId</span> <span class="o">=</span> <span class="s1">'d28b70f8-6bc7-4cde-b21f-eaf723e146fc'</span><span class="p">;</span>
+
+<span class="nv">$plan</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPlanForSubscriptionAndDate</span><span class="p">(</span><span class="nv">$subscriptionId</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3732,7 +3788,12 @@
 <span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">priceList</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">PriceList</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getPriceListForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$subscriptionId</span> <span class="o">=</span> <span class="s1">'d28b70f8-6bc7-4cde-b21f-eaf723e146fc'</span><span class="p">;</span>
+
+<span class="nv">$priceList</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getPriceListForSubscriptionAndDate</span><span class="p">(</span><span class="nv">$subscriptionId</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3810,7 +3871,12 @@
 <span class="kd">const</span> <span class="nx">subscriptionId</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ad924bca-00f4-4287-82c2-e2932a5f7371</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">const</span> <span class="nx">product</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Product</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">getProductForSubscriptionAndDate</span><span class="p">(</span><span class="nx">subscriptionId</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$subscriptionId</span> <span class="o">=</span> <span class="s1">'d28b70f8-6bc7-4cde-b21f-eaf723e146fc'</span><span class="p">;</span>
+
+<span class="nv">$product</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getProductForSubscriptionAndDate</span><span class="p">(</span><span class="nv">$subscriptionId</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -3966,7 +4032,25 @@ a new version of this catalog. So, this functionality can also be a stepping sto
 
 <span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">,</span> <span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">catalogApi</span><span class="p">.</span><span class="nx">addSimplePlan</span><span class="p">(</span><span class="nx">simplePlan</span><span class="p">,</span>
                                                                             <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getCatalogApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$simplePlan</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimplePlan</span><span class="p">();</span>
+
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setPlanId</span><span class="p">(</span><span class="s1">'basic-annual'</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setProductName</span><span class="p">(</span><span class="s1">'Basic'</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setProductCategory</span><span class="p">(</span><span class="s1">'BASE'</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setCurrency</span><span class="p">(</span><span class="s1">'USD'</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setAmount</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setBillingPeriod</span><span class="p">(</span><span class="s1">'ANNUAL'</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setTrialLength</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nv">$simplePlan</span><span class="o">-&gt;</span><span class="nf">setTrialTimeUnit</span><span class="p">(</span><span class="s1">'UNLIMITED'</span><span class="p">);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">addSimplePlan</span><span class="p">(</span><span class="nv">$simplePlan</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
 <p><strong>Request Body</strong></p>
 
 <p>Provides the content for the plan in JSON form. This should be very simple. Note that the &quot;planId&quot; becomes the <code>planName</code> attribute. For example:</p>
