@@ -2621,9 +2621,14 @@
     <span class="nt">-d</span> <span class="s1">'&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;&lt;catalog&gt; ...'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/xml"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Path</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
-<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">getResourceBodyString</span><span class="o">(</span><span class="n">catalog</span><span class="o">);</span>
+<span class="nc">Path</span> <span class="n">filePath</span> <span class="o">=</span> <span class="nc">Path</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"H:/killbill/spycarcatalog.xml"</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">readString</span><span class="o">(</span><span class="n">filePath</span><span class="o">);</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">uploadCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
@@ -2703,9 +2708,11 @@
     <span class="nt">-H</span> <span class="s2">"Accept: text/xml"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/catalog/xml"</span>  
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
-<span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="nc">DateTime</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 <span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="nc">String</span> <span class="n">catalog</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getCatalogXml</span><span class="o">(</span><span class="n">requestedDate</span><span class="o">,</span> 
@@ -2987,7 +2994,10 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog"</span>  
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.joda.time.DateTime</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.Catalogs</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
 <span class="nc">DateTime</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -3263,6 +3273,8 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/availableBasePlans"</span>   
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.PlanDetail</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
 <span class="no">UUID</span> <span class="n">accountId</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
@@ -3343,6 +3355,8 @@
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/availableAddons"</span>  
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.PlanDetail</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
 <span class="nc">String</span> <span class="n">baseProductName</span> <span class="o">=</span> <span class="s">"Bullets"</span><span class="o">;</span>
@@ -3439,6 +3453,7 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog"</span>  
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">deleteCatalog</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
@@ -3498,12 +3513,16 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     <span class="nt">-d</span> @&lt;path_to_catalog_xml&gt; <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/xml/validate"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.nio.file.Files</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.nio.file.Path</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.CatalogValidation</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.CatalogValidationError</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
-<span class="nc">String</span> <span class="n">catalogPath</span> <span class="o">=</span> <span class="s">"in-advance-arrear.xml"</span><span class="o">;</span>
-<span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="n">getResourceBodyString</span><span class="o">(</span><span class="n">catalogPath</span><span class="o">);</span>
 <span class="nc">CatalogValidation</span> <span class="n">validation</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">validateCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">CatalogValidationError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="na">getCatalogValidationErrors</span><span class="o">();</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
@@ -3573,7 +3592,16 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/phase?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>    
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.joda.time.LocalDate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.Phase</span><span class="o">;</span>
+
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"4c3fd23c-7b15-4acc-811e-fe92ee7fdffd"</span><span class="o">);</span>
+<span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">Phase</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getPhaseForSubscriptionAndDate</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
 
 <span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
@@ -3658,7 +3686,16 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/plan?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span> 
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.joda.time.LocalDate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.Plan</span><span class="o">;</span>
+
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"4c3fd23c-7b15-4acc-811e-fe92ee7fdffd"</span><span class="o">);</span>
+<span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">Plan</span> <span class="n">plan</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getPlanForSubscriptionAndDate</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
 
 <span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
@@ -3769,7 +3806,16 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/priceList?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>    
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.joda.time.LocalDate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.PriceList</span><span class="o">;</span>
+
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"4c3fd23c-7b15-4acc-811e-fe92ee7fdffd"</span><span class="o">);</span>
+<span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">PriceList</span> <span class="n">priceList</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getPriceListForSubscriptionAndDate</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span><span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
 
 <span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
@@ -3852,7 +3898,16 @@
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/catalog/product?subscriptionId=8ab101b6-15e8-433b-b4f7-f99eeaa56a77&amp;requestedDate=2018-7-18"</span>  
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.joda.time.LocalDate</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.Product</span><span class="o">;</span>
+
+<span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
+
+<span class="no">UUID</span> <span class="n">subscriptionId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"4c3fd23c-7b15-4acc-811e-fe92ee7fdffd"</span><span class="o">);</span>
+<span class="nc">LocalDate</span> <span class="n">requestedDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+<span class="nc">Product</span> <span class="n">product</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">getProductForSubscriptionAndDate</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> <span class="n">requestedDate</span><span class="o">,</span><span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
 
 <span class="n">requested_date</span> <span class="o">=</span> <span class="kp">nil</span>
@@ -3963,7 +4018,17 @@ a new version of this catalog. So, this functionality can also be a stepping sto
     <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{ "planId": "basic-annual", "productName": "Basic", "productCategory": "BASE", "currency": "USD", "amount": 1000, "billingPeriod": "ANNUAL", "trialLength": 0, "trialTimeUnit": "UNLIMITED"}'</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/catalog/simplePlan"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.math.BigDecimal</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.CatalogApi</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.killbill.billing.catalog.api.BillingPeriod</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.catalog.api.Currency</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.catalog.api.ProductCategory</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.catalog.api.TimeUnit</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.SimplePlan</span><span class="o">;</span>
+
 <span class="kd">protected</span> <span class="nc">CatalogApi</span> <span class="n">catalogApi</span><span class="o">;</span>
 
 <span class="nc">String</span> <span class="n">planId</span> <span class="o">=</span> <span class="s">"foo-monthly"</span><span class="o">;</span>
@@ -3978,7 +4043,7 @@ a new version of this catalog. So, this functionality can also be a stepping sto
                                  <span class="nc">BillingPeriod</span><span class="o">.</span><span class="na">MONTHLY</span><span class="o">,</span> 
                                  <span class="n">trialLength</span><span class="o">,</span> 
                                  <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">UNLIMITED</span><span class="o">,</span> 
-                                 <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">())</span>
+                                 <span class="nc">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">());</span>
 
 <span class="n">catalogApi</span><span class="o">.</span><span class="na">addSimplePlan</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
