@@ -425,7 +425,7 @@ curl -v \
      -H "X-Killbill-ApiKey: bob" \
      -H "X-Killbill-ApiSecret: lazar" \
      -H "Accept: application/json" \
-     'http://127.0.0.1:8080/1.0/kb/security/roles/ROLE'
+     'http://127.0.0.1:8080/1.0/kb/security/roles/{role}'
 ```
 
 ```java
