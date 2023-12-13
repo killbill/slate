@@ -8,18 +8,405 @@ Please refer to our [RBAC manual](https://docs.killbill.io/latest/user_managemen
 
 ### List user permissions
 
+```shell
+curl -v \
+     -u admin:password \
+     -H "X-Killbill-ApiKey: bob" \
+     -H "X-Killbill-ApiSecret: lazar" \
+     -H "Accept: application/json" \
+    "http://localhost:8080/1.0/kb/security/permissions"
+```
+
+```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.Strings;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+Strings currentUserPermissions = securityApi.getCurrentUserPermissions(requestOptions);
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+currentUserPermissions = securityApi.get_current_user_permissions()
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const currentUserPermissions: AxiosResponse<string[],any> = await securityApi.getCurrentUserPermissions();
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$currentUserPermissions = $apiInstance->getCurrentUserPermissions();
+```
+> Example Response:
+
+```json
+[
+  "invoice:commit",
+  "invoice:item_adjust",
+  "entitlement:pause_resume",
+  "invoice:write_off",
+  "account:credit",
+  "account:create",
+  "invoice:credit",
+  "entitlement:cancel",
+  "account:update",
+  "invoice:void",
+  "payment:transition",
+  "account:charge",
+  "payment:refund",
+  "invoice:delete_cba",
+  "invoice:dry_run",
+  "payment:chargeback",
+  "payment:trigger",
+  "entitlement:transfer",
+  "entitlement:create",
+  "payment:notification",
+  "entitlement:change_plan"
+]
+```
 ### Get user information
 
+```shell
+curl -v \
+     -u admin:password \
+     -H "X-Killbill-ApiKey: bob" \
+     -H "X-Killbill-ApiSecret: lazar" \
+     -H "Accept: application/json" \
+    "http://localhost:8080/1.0/kb/security/subject"
+```
+
+```java
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+currentUserSubject = securityApi.get_current_user_subject()
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const currentUserSubject: AxiosResponse<killbill.Subject,any> = await securityApi.getCurrentUserSubject();
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$currentUserSubject = $apiInstance->getCurrentUserSubject();
+```
+> Example Response:
+
+```json
+{
+  "principal": "admin",
+  "isAuthenticated": true,
+  "isRemembered": false,
+  "session": {
+    "id": "f6738239-b803-4fa5-85b9-b3ad13a8312c",
+    "startDate": "2023-11-12T07:17:56.856Z",
+    "lastAccessDate": "2023-11-12T07:27:03.792Z",
+    "timeout": 3600000,
+    "host": "0:0:0:0:0:0:0:1"
+  }
+}
+```
 ### Add a new user with roles
 
-### Update a user password
+```shell
+curl -v \
+    -X POST \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \
+    -d '{ "username": "testUserName", "password": "testUserPassword", "roles": ["TestRole"]}' \
+    "http://localhost:8080/1.0/kb/security/users"
+```
 
+```java
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+userBody = killbill.UserRoles(username = 'testUserName',
+                              password = 'testUserPassword',
+                              roles=['TestRole','finance'])
+
+securityApi.add_user_roles(userBody,
+                           created_by='demo',
+                           reason='reason', 
+                           comment='comment')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const body: killbill.UserRoles = {username: 'testUserName',
+                                  password: 'testUserPassword',
+                                  roles: ['TestRole', 'finance']};
+
+securityApi.addUserRoles(body,'created_by');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new UserRoles();
+
+$body->setUsername('TestUserName');
+$body->setPassword('TestUserPassword');
+$body->setRoles(['TestRole']);
+
+$apiInstance->addUserRoles($body,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
+> Example Response:
+
+```json
+
+```
+### Update a user password
+```shell
+curl -v \
+    -X PUT \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \
+    -d '{ "username": "testUserName", "password": "Updatedpassword"}' \
+    "http://localhost:8080/1.0/kb/security/users/{username}/password"
+```
+
+```java
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+userRoles = killbill.UserRoles(username='userName',
+                               password='userNameUpdatedpassword',
+                               roles=['TestRole'])
+
+securityApi.update_user_password('userName',
+                                  userRoles,
+                                  created_by='demo',
+                                  reason='reason', 
+                                  comment='comment')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const body: killbill.UserRoles = {username: 'userName',
+                                  password: 'userNameUpdatedpassword',
+                                  roles: ['TestRole', 'finance']};
+
+securityApi.updateUserPassword(body, 'userName', 'created_by');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new UserRoles();
+
+$body->setUsername('TestUserName');
+$body->setPassword('TestUserUpdatedPassword');
+$body->setRoles(['TestRole']);
+
+$apiInstance->updateUserPassword($body,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
+> Example Response:
+
+```json
+
+```
 ### Get roles associated to a user
 
+```shell
+curl -v \
+     -u admin:password \
+     -H "X-Killbill-ApiKey: bob" \
+     -H "X-Killbill-ApiSecret: lazar" \
+     -H "Accept: application/json" \
+    "http://localhost:8080/1.0/kb/security/users/{username}/roles"
+```
+
+```java
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+userRoles = securityApi.get_user_roles('testUser')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const response: AxiosResponse<killbill.UserRoles,any> = await securityApi.getUserRoles('testUser');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$username = 'testUser';
+
+$userRoles = $apiInstance->getUserRoles($username);
+```
+> Example Response:
+
+```json
+{
+  "username": "testuser23rd_1",
+  "password": null,
+  "roles": [
+    "TestRole23rd_1"
+  ]
+}
+```
 ### Update roles associated to a user
 
+```shell
+curl -v \
+    -X PUT \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \
+    -d '{"roles":["TestRole"]}' \
+    "http://localhost:8080/1.0/kb/security/users/{username}/roles"
+```
+
+```java
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+userRoles = killbill.UserRoles(username='testUser',                               
+                               roles=['TestRole'])
+
+securityApi.update_user_roles('testUser',
+                               userRoles,
+                               created_by='demo',
+                               reason='reason', 
+                               comment='comment')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const body: killbill.UserRoles = {username: 'testUser',
+                                  password: 'testUserPassword',
+                                  roles: ['TestRole']};
+
+securityApi.updateUserRoles(body, 'testUser', 'created_by');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$body = new UserRoles();
+
+$body->setUsername('TestUserName');
+$body->setPassword('TestUserPassword');
+$body->setRoles(['TestUpdatedRole']);
+
+$apiInstance->updateUserRoles($body,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
+> Example Response:
+
+```json
+
+```
 ### Invalidate an existing user
 
+```shell
+curl -v \
+    -X DELETE \
+    -u admin:password \
+    -H "X-Killbill-ApiKey: bob" \
+    -H "X-Killbill-ApiSecret: lazar" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "X-Killbill-CreatedBy: demo" \
+    -H "X-Killbill-Reason: demo" \
+    -H "X-Killbill-Comment: demo" \    
+    "http://localhost:8080/1.0/kb/security/users/{username}"
+```
+
+```java
+```
+
+```ruby
+```
+
+```python
+securityApi = killbill.SecurityApi()
+
+securityApi.invalidate_user('testUser',
+                             created_by='demo',
+                             reason='reason', 
+                             comment='comment')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+securityApi.invalidateUser('testUser', 'created_by');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$username = 'username';
+
+$apiInstance->invalidateUser($username,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
+> Example Response:
+
+```json
+
+```
 ## Roles
 
 ### Retrieve a role definition
@@ -38,7 +425,7 @@ curl -v \
      -H "X-Killbill-ApiKey: bob" \
      -H "X-Killbill-ApiSecret: lazar" \
      -H "Accept: application/json" \
-     'http://127.0.0.1:8080/1.0/kb/security/roles/ROLE'
+     'http://127.0.0.1:8080/1.0/kb/security/roles/{role}'
 ```
 
 ```java
@@ -48,8 +435,24 @@ curl -v \
 ```
 
 ```python
-```
+securityApi = killbill.SecurityApi()
 
+role = 'TestRole'
+
+roleDefinition = securityApi.get_role_definition(role)
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const roleDefinition:AxiosResponse<killbill.RoleDefinition,any> = await securityApi.getRoleDefinition('TestRole');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$role = 'TestRole';
+
+$roleDefinition = $apiInstance->getRoleDefinition($role);
+```
 > Example Response:
 
 ```json
@@ -102,8 +505,38 @@ curl -v \
 ```
 
 ```python
-```
+securityApi = killbill.SecurityApi()
 
+roleDefinition =killbill.RoleDefinition(role='TestRole2',
+                                        permissions=["account:*","invoice:trigger"])
+
+securityApi.add_role_definition(roleDefinition,
+                                created_by='demo',
+                                reason='reason', 
+                                comment='comment')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const body: killbill.RoleDefinition = {role: 'TestRole2',
+                                       permissions: ['account:*', 'invoice:trigger']};
+
+securityApi.addRoleDefinition(body, 'created_by');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$roleDefinition = new RoleDefinition();
+
+$roleDefinition->setRole('TestRole');
+$roleDefinition->setPermissions(['account:*', 'invoice:trigger']);
+
+$apiInstance->addRoleDefinition($roleDefinition,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
 **Query Parameters**
 
 None.
@@ -144,8 +577,35 @@ curl -v \
 ```
 
 ```python
-```
+securityApi = killbill.SecurityApi()
 
+roleDefinition =killbill.RoleDefinition(role='TestRole2',
+                                        permissions=["invoice:trigger"])
+
+securityApi.update_role_definition(roleDefinition,'KB')
+```
+```javascript
+const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
+
+const body: killbill.RoleDefinition = {role: 'TestRole2',
+                                       permissions: ['invoice:trigger']};
+
+securityApi.updateRoleDefinition(body, 'created_by');
+```
+```php
+$apiInstance = $client->getSecurityApi();
+
+$xKillbillCreatedBy = "user";
+$xKillbillReason = "reason";
+$xKillbillComment = "comment";
+
+$roleDefinition = new RoleDefinition();
+
+$roleDefinition->setRole('TestRole10');
+$roleDefinition->setPermissions(['account:*', 'invoice:*']);
+
+$apiInstance->updateRoleDefinition($roleDefinition,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
+```
 **Query Parameters**
 
 None.
