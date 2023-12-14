@@ -83,6 +83,12 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.Subject;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+Subject currentUserSubject = securityApi.getCurrentUserSubject(requestOptions);
 ```
 
 ```ruby
@@ -137,6 +143,20 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.UserRoles;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+List<String> roles = List.of("TestRole");
+
+UserRoles userRoles = new UserRoles();
+
+userRoles.setUsername("TestUserName");
+userRoles.setPassword("TestUserPassword");
+userRoles.setRoles(roles);
+
+UserRoles newUserDetails = securityApi.addUserRoles(userRoles, requestOptions);
 ```
 
 ```ruby
@@ -200,6 +220,18 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.UserRoles;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+String userName = "TestUserName";
+
+UserRoles userRoles = new UserRoles();
+   
+userRoles.setPassword("TestUserPassUpdated");    
+
+securityApi.updateUserPassword(userName, userRoles, requestOptions);
 ```
 
 ```ruby
@@ -259,6 +291,14 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.UserRoles;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+String userName = "testuser";
+
+UserRoles userRoles = securityApi.getUserRoles(userName, requestOptions);
 ```
 
 ```ruby
@@ -285,10 +325,10 @@ $userRoles = $apiInstance->getUserRoles($username);
 
 ```json
 {
-  "username": "testuser23rd_1",
+  "username": "testUser",
   "password": null,
   "roles": [
-    "TestRole23rd_1"
+    "TestRole"
   ]
 }
 ```
@@ -310,6 +350,20 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.UserRoles;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+List<String> roles = List.of("UpdatedRole");
+
+UserRoles userRoles = new UserRoles();
+
+String userName = "TestUser";
+
+userRoles.setRoles(roles);
+
+securityApi.updateUserRoles(userName, userRoles, requestOptions);
 ```
 
 ```ruby
@@ -373,6 +427,13 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+String userName = "testuser";
+
+securityApi.invalidateUser(userName, requestOptions);
 ```
 
 ```ruby
@@ -429,7 +490,16 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.RoleDefinition;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+String role = "TestRole";
+
+RoleDefinition roleDefinition = securityApi.getRoleDefinition(role, requestOptions);
 ```
+
 
 ```ruby
 ```
@@ -499,6 +569,20 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.RoleDefinition;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+List<String> permissions = List.of("account:*", "invoice:trigger");
+
+String role = "TestRole";
+
+RoleDefinition roleDefinition = new RoleDefinition();
+roleDefinition.setRole(role);
+roleDefinition.setPermissions(permissions);
+
+RoleDefinition newRoleDefinition = securityApi.addRoleDefinition(roleDefinition, requestOptions);
 ```
 
 ```ruby
@@ -571,6 +655,20 @@ curl -v \
 ```
 
 ```java
+import org.killbill.billing.client.api.gen.SecurityApi;
+import org.killbill.billing.client.model.gen.RoleDefinition;
+
+SecurityApi securityApi = new SecurityApi(killBillHttpClient);
+
+List<String> permissions = List.of("account:*", "invoice:trigger");
+
+String role = "TestRole";
+
+RoleDefinition roleDefinition = new RoleDefinition();
+roleDefinition.setRole(role);
+roleDefinition.setPermissions(permissions);
+
+securityApi.updateRoleDefinition(roleDefinition, requestOptions);
 ```
 
 ```ruby
