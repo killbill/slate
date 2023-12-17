@@ -27,6 +27,9 @@ Strings currentUserPermissions = securityApi.getCurrentUserPermissions(requestOp
 ```
 
 ```ruby
+securityApi = KillBillClient::Model::Security
+
+currentUserPermissions = securityApi.find_permissions(options)
 ```
 
 ```python
@@ -92,6 +95,9 @@ Subject currentUserSubject = securityApi.getCurrentUserSubject(requestOptions);
 ```
 
 ```ruby
+securityApi = KillBillClient::Model::Security
+
+currentUserSubject = securityApi.find_subject(options)
 ```
 
 ```python
@@ -160,6 +166,17 @@ UserRoles newUserDetails = securityApi.addUserRoles(userRoles, requestOptions);
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+userRoles = KillBillClient::Model::UserRoles.new
+
+userRoles.username = 'TestUserName'
+userRoles.password = 'TestUserPassword'
+userRoles.roles = ['TestRole']
+
+userRoles.create(user,reason,comment,options)
 ```
 
 ```python
@@ -235,6 +252,16 @@ securityApi.updateUserPassword(userName, userRoles, requestOptions);
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+userRoles = KillBillClient::Model::UserRoles.new
+
+userRoles.username = 'userName'
+userRoles.password = 'userNameUpdatedpassword'
+
+userRoles.update(user,reason,comment,options)
 ```
 
 ```python
@@ -302,6 +329,11 @@ UserRoles userRoles = securityApi.getUserRoles(userName, requestOptions);
 ```
 
 ```ruby
+userRoles = KillBillClient::Model::UserRoles.new
+
+userRoles.username = 'testuser'
+
+userRoles.list(options)
 ```
 
 ```python
@@ -367,6 +399,16 @@ securityApi.updateUserRoles(userName, userRoles, requestOptions);
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+userRoles = KillBillClient::Model::UserRoles.new
+
+userRoles.username = 'TestUser'
+userRoles.roles = ['UpdatedRole']
+
+userRoles.update(user,reason,comment,options)
 ```
 
 ```python
@@ -437,6 +479,15 @@ securityApi.invalidateUser(userName, requestOptions);
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+userRoles = KillBillClient::Model::UserRoles.new
+
+userRoles.username = 'TestUser'
+
+userRoles.destroy(user,reason,comment,options)
 ```
 
 ```python
@@ -586,12 +637,22 @@ RoleDefinition newRoleDefinition = securityApi.addRoleDefinition(roleDefinition,
 ```
 
 ```ruby
+user = 'user'
+reason = 'reason'
+comment = 'comment'
+
+roleDef = KillBillClient::Model::RoleDefinition.new
+
+roleDef.role = 'testRole17thDec'
+roleDef.permissions = ["account:*", "invoice:trigger"]
+
+roleDef.create(user,reason,comment,options)
 ```
 
 ```python
 securityApi = killbill.SecurityApi()
 
-roleDefinition =killbill.RoleDefinition(role='TestRole2',
+roleDefinition =killbill.RoleDefinition(role='TestRole',
                                         permissions=["account:*","invoice:trigger"])
 
 securityApi.add_role_definition(roleDefinition,
@@ -602,7 +663,7 @@ securityApi.add_role_definition(roleDefinition,
 ```javascript
 const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
 
-const body: killbill.RoleDefinition = {role: 'TestRole2',
+const body: killbill.RoleDefinition = {role: 'TestRole',
                                        permissions: ['account:*', 'invoice:trigger']};
 
 securityApi.addRoleDefinition(body, 'created_by');
@@ -677,7 +738,7 @@ securityApi.updateRoleDefinition(roleDefinition, requestOptions);
 ```python
 securityApi = killbill.SecurityApi()
 
-roleDefinition =killbill.RoleDefinition(role='TestRole2',
+roleDefinition =killbill.RoleDefinition(role='TestRole',
                                         permissions=["invoice:trigger"])
 
 securityApi.update_role_definition(roleDefinition,'KB')
@@ -685,7 +746,7 @@ securityApi.update_role_definition(roleDefinition,'KB')
 ```javascript
 const securityApi: killbill.SecurityApi = new killbill.SecurityApi(config);
 
-const body: killbill.RoleDefinition = {role: 'TestRole2',
+const body: killbill.RoleDefinition = {role: 'TestRole',
                                        permissions: ['invoice:trigger']};
 
 securityApi.updateRoleDefinition(body, 'created_by');
@@ -699,7 +760,7 @@ $xKillbillComment = "comment";
 
 $roleDefinition = new RoleDefinition();
 
-$roleDefinition->setRole('TestRole10');
+$roleDefinition->setRole('TestRole');
 $roleDefinition->setPermissions(['account:*', 'invoice:*']);
 
 $apiInstance->updateRoleDefinition($roleDefinition,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
