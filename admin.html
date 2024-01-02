@@ -2787,7 +2787,7 @@ This could happen, for example, if a call to a third party payment gateway times
 <h2 id='operational-apis'>Operational Apis</h2>
 <p>These APIs invalidate caches and move a host in and out of the rotation</p>
 <h3 id='invalidate-a-specific-cache-or-invalidate-all-caches'>Invalidate a specific cache, or invalidate all caches</h3>
-<p>Invalidates a specified cache. If no cache is specified, it invalidates all Kill Bill caches on the server.</p>
+<p>Invalidates a specified cache. If no cache is specified, it invalidates all Kill Bill caches on the server. Note that this method only clears the local cache. In case of a multi-node implementation, this method would need to be invoked on each node.</p>
 
 <p><strong>HTTP Request</strong></p>
 
