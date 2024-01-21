@@ -1,12 +1,22 @@
 # Security
 
-Kill Bill supports fine grained roles and permissions.
+Kill Bill supports fine grained roles and permissions for the users accessing the system either through the UI or API. This can be useful in case of organizations looking to limit access across departments/teams etc. The endpoints in this group manage the users, roles and the associated permissions. 
 
 Please refer to our [RBAC manual](https://docs.killbill.io/latest/user_management.html) for more details.
 
 ## Users
 
+A user refers to any `user or the api` that maps to the user credential passed through the API. 
+
 ### List user permissions
+
+Lists the permissions associated with the current API user.
+
+**HTTP Request** 
+
+`GET http://127.0.0.1:8080/1.0/kb/security/permissions` 
+
+> Example Request:
 
 ```shell
 curl -v \
@@ -74,7 +84,24 @@ $currentUserPermissions = $apiInstance->getCurrentUserPermissions();
   "entitlement:change_plan"
 ]
 ```
+
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 200 and a list of permissions associated with the current API user.
+
 ### Get user information
+
+Lists the session information associated with the current API user.
+
+**HTTP Request** 
+
+`GET http://127.0.0.1:8080/1.0/kb/security/subject`
+
+> Example Request:
 
 ```shell
 curl -v \
@@ -131,7 +158,24 @@ $currentUserSubject = $apiInstance->getCurrentUserSubject();
   }
 }
 ```
+
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 200 and the session information associated with the current API user.
+
 ### Add a new user with roles
+
+Create a new user (username, password, associated roles).
+
+**HTTP Request** 
+
+`POST http://127.0.0.1:8080/1.0/kb/security/users` 
+
+> Example Request:
 
 ```shell
 curl -v \
@@ -215,12 +259,26 @@ $body->setRoles(['TestRole']);
 
 $apiInstance->addUserRoles($body,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
-> Example Response:
+**Request Body**
 
-```json
+A `userRoles` object consisting of the username, password and the roles to be associated with the user.
 
-```
+**Query Parameters**
+
+None.
+
+**Response**
+
+If successful, returns a status code of 201 without any data.
+
 ### Update a user password
+
+Updates Password for a User.
+
+**HTTP Request** 
+
+`PUT http://127.0.0.1:8080/1.0/kb/security/users/{username}/password`
+
 ```shell
 curl -v \
     -X PUT \
@@ -301,14 +359,25 @@ $body->setRoles(['TestRole']);
 
 $apiInstance->updateUserPassword($body,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
-> Example Response:
+**Query Parameters**
 
-```json
+None
 
-```
+**Response**
+
+If successful, returns a status code of 204 and an empty body.
+
 ### Get roles associated to a user
 
-```shell
+Lists the roles associated with a User.
+
+**HTTP Request** 
+
+`GET http://127.0.0.1:8080/1.0/kb/security/users/{username}/roles`
+
+> Example Request:
+
+  ```shell
 curl -v \
      -u admin:password \
      -H "X-Killbill-ApiKey: bob" \
@@ -364,7 +433,24 @@ $userRoles = $apiInstance->getUserRoles($username);
   ]
 }
 ```
+
+**Query Parameters**
+
+None
+
+**Response**
+
+If successful, returns a status code of 200 and a userRoles object.
+
 ### Update roles associated to a user
+
+Updates the Roles associated with a User.
+
+**HTTP Request** 
+
+`PUT http://127.0.0.1:8080/1.0/kb/security/users/{username}/roles`
+
+> Example Request:
 
 ```shell
 curl -v \
@@ -447,12 +533,24 @@ $body->setRoles(['TestUpdatedRole']);
 
 $apiInstance->updateUserRoles($body,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
-> Example Response:
 
-```json
+**Query Parameters**
 
-```
+None
+
+**Response**
+
+If successful, returns a status code of 204 and an empty body.
+
 ### Invalidate an existing user
+
+Deletes/Invalidates/Deactivates a User.
+
+**HTTP Request** 
+
+`DELETE http://127.0.0.1:8080/1.0/kb/security/users/{username}`
+
+> Example Request:
 
 ```shell
 curl -v \
@@ -514,11 +612,14 @@ $username = 'username';
 
 $apiInstance->invalidateUser($username,$xKillbillCreatedBy,$xKillbillReason,$xKillbillComment);
 ```
-> Example Response:
+**Query Parameters**
 
-```json
+None
 
-```
+**Response**
+
+If successful, returns a status code of 204 and an empty body.
+
 ## Roles
 
 ### Retrieve a role definition
