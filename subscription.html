@@ -4994,11 +4994,12 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">subscription</span><span class="p">.</span><span class="nf">subscription_id</span> <span class="o">=</span> <span class="s2">"2207150d-0652-43eb-abbe-2cbd0092b744"</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
-
-<span class="n">subscription</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                               <span class="n">user</span><span class="p">,</span>
                               <span class="n">reason</span><span class="p">,</span>
                               <span class="n">comment</span><span class="p">,</span>
@@ -5182,11 +5183,13 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">subscription</span><span class="p">.</span><span class="nf">subscription_id</span> <span class="o">=</span> <span class="s2">"2207150d-0652-43eb-abbe-2cbd0092b744"</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'a04adaca-78a4-41fe-b512-a8d620aad456'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_modify_value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">subscription</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                                  <span class="n">user</span><span class="p">,</span>
                                  <span class="n">reason</span><span class="p">,</span>
                                  <span class="n">comment</span><span class="p">,</span>
@@ -5275,9 +5278,11 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="n">subscription</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">subscription</span><span class="p">.</span><span class="nf">subscription_id</span> <span class="o">=</span> <span class="s2">"2207150d-0652-43eb-abbe-2cbd0092b744"</span>
 
+<span class="n">custom_field_ids</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field_id</span> <span class="o">=</span> <span class="s1">'a04adaca-78a4-41fe-b512-a8d620aad456'</span>
+<span class="n">custom_field_ids</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field_id</span>
 
-<span class="n">subscription</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_ids</span><span class="p">,</span>
                                  <span class="n">user</span><span class="p">,</span>
                                  <span class="n">reason</span><span class="p">,</span>
                                  <span class="n">comment</span><span class="p">,</span>

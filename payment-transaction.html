@@ -3199,11 +3199,13 @@ that work directly at the transaction level.</p>
 <span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                                 <span class="n">user</span><span class="p">,</span>
                                 <span class="n">reason</span><span class="p">,</span>
                                 <span class="n">comment</span><span class="p">,</span>
@@ -3382,11 +3384,14 @@ that work directly at the transaction level.</p>
 <span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'7fb3dde7-0911-4477-99e3-69d142509bb9'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Modify'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_modify_value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                                    <span class="n">user</span><span class="p">,</span>
                                    <span class="n">reason</span><span class="p">,</span>
                                    <span class="n">comment</span><span class="p">,</span>
@@ -3473,9 +3478,10 @@ that work directly at the transaction level.</p>
 <span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
 
+<span class="n">custom_field_ids</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field_id</span> <span class="o">=</span> <span class="s1">'cda969c3-1092-4702-b155-05d0ef899fa2'</span>
-
-<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span>
+<span class="n">custom_field_ids</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field_id</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_ids</span><span class="p">,</span>
                                    <span class="n">user</span><span class="p">,</span>
                                    <span class="n">reason</span><span class="p">,</span>
                                    <span class="n">comment</span><span class="p">,</span>

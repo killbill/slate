@@ -2767,12 +2767,14 @@
 <span class="n">invoice_item</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_item_id</span> <span class="o">=</span> <span class="s1">'75939764-7776-4ae6-8319-a30a20f6a181'</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">object_type</span> <span class="o">=</span> <span class="s1">'INVOICE_ITEM'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">invoice_item</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">invoice_item</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                          <span class="n">user</span><span class="p">,</span>
                          <span class="n">reason</span><span class="p">,</span>
                          <span class="n">comment</span><span class="p">,</span>
@@ -2950,11 +2952,13 @@
 <span class="n">invoice_item</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_item_id</span> <span class="o">=</span> <span class="s1">'75939764-7776-4ae6-8319-a30a20f6a181'</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'0580cb5b-b0a7-43a1-8d85-ac3f2316213c'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'new value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">invoice_item</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">invoice_item</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                             <span class="n">user</span><span class="p">,</span>
                             <span class="n">reason</span><span class="p">,</span>
                             <span class="n">comment</span><span class="p">,</span>
@@ -3043,9 +3047,11 @@
 <span class="n">invoice_item</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_item_id</span> <span class="o">=</span> <span class="s1">'75939764-7776-4ae6-8319-a30a20f6a181'</span>
 
+<span class="n">custom_field_ids</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field_id</span> <span class="o">=</span> <span class="s1">'0580cb5b-b0a7-43a1-8d85-ac3f2316213c'</span>
+<span class="n">custom_field_ids</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field_id</span>
 
-<span class="n">invoice_item</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span>
+<span class="n">invoice_item</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_ids</span><span class="p">,</span>
                             <span class="n">user</span><span class="p">,</span>
                             <span class="n">reason</span><span class="p">,</span>
                             <span class="n">comment</span><span class="p">,</span>

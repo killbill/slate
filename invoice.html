@@ -5282,12 +5282,14 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">invoice</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice</span><span class="p">.</span><span class="nf">invoice_id</span> <span class="o">=</span> <span class="s1">'7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">object_type</span> <span class="o">=</span> <span class="s1">'INVOICE'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">name</span> <span class="o">=</span> <span class="s1">'Test Custom Field'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'test_value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">invoice</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">invoice</span><span class="p">.</span><span class="nf">add_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                          <span class="n">user</span><span class="p">,</span>
                          <span class="n">reason</span><span class="p">,</span>
                          <span class="n">comment</span><span class="p">,</span>
@@ -5469,11 +5471,13 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">invoice</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice</span><span class="p">.</span><span class="nf">invoice_id</span> <span class="o">=</span> <span class="s1">'7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'</span>
 
+<span class="n">custom_fields</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomFieldAttributes</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">custom_field_id</span> <span class="o">=</span> <span class="s1">'ec53d741-e52a-4860-a6d3-03bb22b24a90'</span>
 <span class="n">custom_field</span><span class="p">.</span><span class="nf">value</span> <span class="o">=</span> <span class="s1">'new value'</span>
+<span class="n">custom_fields</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field</span>
 
-<span class="n">invoice</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_field</span><span class="p">,</span>
+<span class="n">invoice</span><span class="p">.</span><span class="nf">modify_custom_field</span><span class="p">(</span><span class="n">custom_fields</span><span class="p">,</span>
                             <span class="n">user</span><span class="p">,</span>
                             <span class="n">reason</span><span class="p">,</span>
                             <span class="n">comment</span><span class="p">,</span>
@@ -5564,9 +5568,11 @@ If successful, returns a status code of 200 and a list of invoice objects for th
 <span class="n">invoice</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice</span><span class="p">.</span><span class="nf">invoice_id</span> <span class="o">=</span> <span class="s1">'7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'</span>
 
+<span class="n">custom_field_ids</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">custom_field_id</span> <span class="o">=</span> <span class="s1">'ec53d741-e52a-4860-a6d3-03bb22b24a90'</span>
+<span class="n">custom_field_ids</span><span class="p">.</span><span class="nf">push</span> <span class="n">custom_field_id</span>
 
-<span class="n">invoice</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_id</span><span class="p">,</span>
+<span class="n">invoice</span><span class="p">.</span><span class="nf">remove_custom_field</span><span class="p">(</span><span class="n">custom_field_ids</span><span class="p">,</span>
                             <span class="n">user</span><span class="p">,</span>
                             <span class="n">reason</span><span class="p">,</span>
                             <span class="n">comment</span><span class="p">,</span>
