@@ -3152,9 +3152,9 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_item_id</span> <span class="o">=</span> <span class="s1">'df124876-fbe4-4d61-897d-6eb0d3f3862c'</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">account_id</span><span class="o">=</span><span class="s1">'0f84a73c-9f1d-44e0-962e-e7d554e9cff6'</span>
 
-<span class="n">tag_def_id</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2c1f8309-24d7-437c-971b-7e68ff2d393a'</span><span class="p">]</span>
+<span class="n">tag_definition_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2c1f8309-24d7-437c-971b-7e68ff2d393a'</span><span class="p">]</span>
 
-<span class="n">invoice_item</span><span class="p">.</span><span class="nf">add_tags_from_definition_ids</span><span class="p">(</span><span class="n">tag_def_id</span><span class="p">,</span>
+<span class="n">invoice_item</span><span class="p">.</span><span class="nf">add_tags_from_definition_ids</span><span class="p">(</span><span class="n">tag_definition_ids</span><span class="p">,</span>
                <span class="n">user</span><span class="p">,</span>
                <span class="n">reason</span><span class="p">,</span>
                <span class="n">comment</span><span class="p">,</span>
@@ -3342,9 +3342,9 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
 <span class="n">invoice_item</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">InvoiceItem</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">invoice_item</span><span class="p">.</span><span class="nf">invoice_item_id</span> <span class="o">=</span> <span class="s1">'df124876-fbe4-4d61-897d-6eb0d3f3862c'</span>
 
-<span class="n">tag_name</span><span class="o">=</span><span class="s1">'subscription_item'</span>
+<span class="n">tag_definition_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2c1f8309-24d7-437c-971b-7e68ff2d393a'</span><span class="p">]</span>
 
-<span class="n">invoice_item</span><span class="p">.</span><span class="nf">remove_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+<span class="n">invoice_item</span><span class="p">.</span><span class="nf">remove_tags_from_definition_ids</span><span class="p">(</span><span class="n">tag_definition_ids</span><span class="p">,</span>
                   <span class="n">user</span><span class="p">,</span>
                   <span class="n">reason</span><span class="p">,</span>
                   <span class="n">comment</span><span class="p">,</span>
