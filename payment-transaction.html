@@ -3584,9 +3584,9 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
 <span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
 
-<span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'sample_tag'</span>
+<span class="n">tag_definition_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2c1f8309-24d7-437c-971b-7e68ff2d393a'</span><span class="p">]</span>
 
-<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">add_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">add_tags_from_definition_ids</span><span class="p">(</span><span class="n">tag_definition_ids</span><span class="p">,</span>
                      <span class="n">user</span><span class="p">,</span>
                      <span class="n">reason</span><span class="p">,</span>
                      <span class="n">comment</span><span class="p">,</span>
@@ -3771,9 +3771,9 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
 <span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
 <span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"e5f000f7-0733-4828-a887-3a4a58d27596"</span>
 
-<span class="n">tag_name</span> <span class="o">=</span> <span class="s1">'sample_tag'</span>
+<span class="n">tag_definition_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'2c1f8309-24d7-437c-971b-7e68ff2d393a'</span><span class="p">]</span>
 
-<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">remove_tag</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">remove_tags_from_definition_ids</span><span class="p">(</span><span class="n">tag_definition_ids</span><span class="p">,</span>
                         <span class="n">user</span><span class="p">,</span>
                         <span class="n">reason</span><span class="p">,</span>
                         <span class="n">comment</span><span class="p">,</span>
