@@ -110,12 +110,14 @@ comment = nil
 invoice_item = KillBillClient::Model::InvoiceItem.new
 invoice_item.invoice_item_id = '75939764-7776-4ae6-8319-a30a20f6a181'
 
+custom_fields = []
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.object_type = 'INVOICE_ITEM'
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
+custom_fields.push custom_field
 
-invoice_item.add_custom_field(custom_field,
+invoice_item.add_custom_field(custom_fields,
                          user,
                          reason,
                          comment,
@@ -318,11 +320,13 @@ comment = nil
 invoice_item = KillBillClient::Model::InvoiceItem.new
 invoice_item.invoice_item_id = '75939764-7776-4ae6-8319-a30a20f6a181'
 
+custom_fields = []
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.custom_field_id = '0580cb5b-b0a7-43a1-8d85-ac3f2316213c'
 custom_field.value = 'new value'
+custom_fields.push custom_field
 
-invoice_item.modify_custom_field(custom_field,
+invoice_item.modify_custom_field(custom_fields,
                             user,
                             reason,
                             comment,
@@ -431,9 +435,11 @@ comment = nil
 invoice_item = KillBillClient::Model::InvoiceItem.new
 invoice_item.invoice_item_id = '75939764-7776-4ae6-8319-a30a20f6a181'
 
+custom_field_ids = []
 custom_field_id = '0580cb5b-b0a7-43a1-8d85-ac3f2316213c'
+custom_field_ids.push custom_field_id
 
-invoice_item.remove_custom_field(custom_field_id,
+invoice_item.remove_custom_field(custom_field_ids,
                             user,
                             reason,
                             comment,
@@ -542,9 +548,9 @@ invoice_item = KillBillClient::Model::InvoiceItem.new
 invoice_item.invoice_item_id = 'df124876-fbe4-4d61-897d-6eb0d3f3862c'
 invoice_item.account_id='0f84a73c-9f1d-44e0-962e-e7d554e9cff6'
 
-tag_def_id = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
+tag_definition_ids = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
 
-invoice_item.add_tags_from_definition_ids(tag_def_id,
+invoice_item.add_tags_from_definition_ids(tag_definition_ids,
                user,
                reason,
                comment,
@@ -745,9 +751,9 @@ comment = nil
 invoice_item = KillBillClient::Model::InvoiceItem.new
 invoice_item.invoice_item_id = 'df124876-fbe4-4d61-897d-6eb0d3f3862c'
 
-tag_name='subscription_item'
+tag_definition_ids = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
 
-invoice_item.remove_tag(tag_name,
+invoice_item.remove_tags_from_definition_ids(tag_definition_ids,
                   user,
                   reason,
                   comment,

@@ -75,11 +75,17 @@ PaymentMethod paymentMethod = paymentMethodApi.getPaymentMethod(paymentMethodId,
 
 ```ruby
 payment_method_id = "6a0bf13e-d57f-4f79-84bd-3690135f1923"
+included_deleted = false
 with_plugin_info = false
+audit = "NONE"
+plugin_properties = ["key%3Dvalue"]
 
 payment_method = KillBillClient::Model::PaymentMethod.find_by_id(payment_method_id,
-                                                with_plugin_info,
-                                                options)
+                                                                 included_deleted,
+                                                                 with_plugin_info,
+                                                                 plugin_properties,
+                                                                 audit,
+                                                                 options)
 ```
 
 ```python
@@ -322,11 +328,13 @@ PaymentMethod paymentMethod = paymentMethodApi.getPaymentMethodByKey(externalKey
 payment_method_key = "sample_external_key"
 included_deleted = false
 with_plugin_info = false
+plugin_properties = ["key%3Dvalue"]
 audit = 'NONE'
 
 payment_method = KillBillClient::Model::PaymentMethod.find_by_external_key(payment_method_key,
                                                           included_deleted,
                                                           with_plugin_info,
+                                                          plugin_properties,
                                                           audit,
                                                           options)
 ```
@@ -787,11 +795,13 @@ comment = nil
 payment_method = KillBillClient::Model::PaymentMethod.new
 payment_method.payment_method_id = "06e5c871-3caf-41c2-9d7e-30c95f6e309c"
 
+custom_fields = []
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
+custom_fields.push custom_field
 
-payment_method.add_custom_field(custom_field,
+payment_method.add_custom_field(custom_fields,
                                 user,
                                 reason,
                                 comment,
@@ -1004,10 +1014,12 @@ comment = nil
 payment_method = KillBillClient::Model::PaymentMethod.new
 payment_method.payment_method_id = "06e5c871-3caf-41c2-9d7e-30c95f6e309c"
 
+custom_fields = []
 custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
 custom_field.value = 'new value'
+custom_fields.push custom_field
 
-payment_method.modify_custom_field(custom_field,
+payment_method.modify_custom_field(custom_fields,
                                    user,
                                    reason,
                                    comment,
@@ -1115,9 +1127,11 @@ comment = nil
 payment_method = KillBillClient::Model::PaymentMethod.new
 payment_method.payment_method_id = "06e5c871-3caf-41c2-9d7e-30c95f6e309c"
 
+custom_field_ids = []
 custom_field_id = 'cda969c3-1092-4702-b155-05d0ef899fa2'
+custom_field_ids.push custom_field_id
 
-payment_method.remove_custom_field(custom_field_id,
+payment_method.remove_custom_field(custom_field_ids,
                                    user,
                                    reason,
                                    comment,
