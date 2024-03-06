@@ -261,7 +261,7 @@ These APIs invalidate caches and move a host in and out of the rotation
 
 ### Invalidate a specific cache, or invalidate all caches
 
-Invalidates a specified cache. If no cache is specified, it invalidates all Kill Bill caches on the server.
+Invalidates a specified cache. If no cache is specified, it invalidates all Kill Bill caches on the server. Note that this method only clears the local cache. In case of a multi-node implementation, this method would need to be invoked on each node.
 
 **HTTP Request**
 

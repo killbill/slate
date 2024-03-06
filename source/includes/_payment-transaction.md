@@ -79,10 +79,12 @@ Payment payment = paymentTransactionApi.getPaymentByTransactionId(paymentTransac
 
 ```ruby
 payment_transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
-with_plugin_info = false
 with_attempts = false
+with_plugin_info = false
+plugin_properties = ["key%3Dvalue"]
+audit = "NONE"
 
-payment = KillBillClient::Model::Payment.find_by_transaction_id(payment_transaction_id, with_plugin_info, with_attempts, options)
+payment = KillBillClient::Model::Payment.find_by_transaction_id(payment_transaction_id, with_attempts, with_plugin_info, plugin_properties, audit, options)
 ```
 
 ```python
@@ -203,9 +205,10 @@ Payment payment = paymentTransactionApi.getPaymentByTransactionExternalKey(trans
 external_key = "e5f000f7-0733-4828-a887-3a4a58d27596"
 with_plugin_info = false
 with_attempts = false
+plugin_properties = ["key%3Dvalue"]
 audit = 'NONE'
 
-payment = KillBillClient::Model::Payment.find_by_transaction_external_key(external_key, with_plugin_info, with_attempts, audit, options)
+payment = KillBillClient::Model::Payment.find_by_transaction_external_key(external_key, with_plugin_info, with_attempts, plugin_properties, audit, options)
 ```
 
 ```python
@@ -598,11 +601,13 @@ comment = nil
 payment_transaction = KillBillClient::Model::Transaction.new
 payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
 
+custom_fields = []
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
+custom_fields.push custom_field
 
-payment_transaction.add_custom_field(custom_field,
+payment_transaction.add_custom_field(custom_fields,
                                 user,
                                 reason,
                                 comment,
@@ -805,11 +810,14 @@ comment = nil
 payment_transaction = KillBillClient::Model::Transaction.new
 payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
 
+custom_fields = []
+custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.custom_field_id = '7fb3dde7-0911-4477-99e3-69d142509bb9'
 custom_field.name = 'Test Modify'
 custom_field.value = 'test_modify_value'
+custom_fields.push custom_field
 
-payment_transaction.modify_custom_field(custom_field,
+payment_transaction.modify_custom_field(custom_fields,
                                    user,
                                    reason,
                                    comment,
@@ -915,9 +923,10 @@ comment = nil
 payment_transaction = KillBillClient::Model::Transaction.new
 payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
 
+custom_field_ids = []
 custom_field_id = 'cda969c3-1092-4702-b155-05d0ef899fa2'
-
-payment_transaction.remove_custom_field(custom_field_id,
+custom_field_ids.push custom_field_id
+payment_transaction.remove_custom_field(custom_field_ids,
                                    user,
                                    reason,
                                    comment,
@@ -1025,9 +1034,9 @@ comment = nil
 payment_transaction = KillBillClient::Model::Transaction.new
 payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
 
-tag_name = 'sample_tag'
+tag_definition_ids = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
 
-payment_transaction.add_tag(tag_name,
+payment_transaction.add_tags_from_definition_ids(tag_definition_ids,
                      user,
                      reason,
                      comment,
@@ -1224,9 +1233,9 @@ comment = nil
 payment_transaction = KillBillClient::Model::Transaction.new
 payment_transaction.transaction_id = "e5f000f7-0733-4828-a887-3a4a58d27596"
 
-tag_name = 'sample_tag'
+tag_definition_ids = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
 
-payment_transaction.remove_tag(tag_name,
+payment_transaction.remove_tags_from_definition_ids(tag_definition_ids,
                         user,
                         reason,
                         comment,

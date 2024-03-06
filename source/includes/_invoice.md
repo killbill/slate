@@ -704,9 +704,11 @@ Invoice invoiceWithItems = invoiceApi.getInvoice(invoiceId,
 
 ```ruby
 invoice_id = "5c6083c1-a673-4b67-9b86-74139df50448"
+with_children_items = false
 audit = 'NONE'
 
 invoice = KillBillClient::Model::Invoice.find_by_id(invoice_id,
+                                          with_children_items,
                                           audit,
                                           options)
 ```
@@ -838,9 +840,11 @@ Invoice invoiceByNumber = invoiceApi.getInvoiceByNumber(invoiceNumber,
 
 ```ruby
 invoice_number = "7318"
+with_children_items = false
 audit = 'NONE'
 
 invoice = KillBillClient::Model::Invoice.find_by_number(invoice_number,
+                                              with_children_items,
                                               audit,
                                               options)
 ```
@@ -2591,12 +2595,14 @@ comment = nil
 invoice = KillBillClient::Model::Invoice.new
 invoice.invoice_id = '7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'
 
+custom_fields = []
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.object_type = 'INVOICE'
 custom_field.name = 'Test Custom Field'
 custom_field.value = 'test_value'
+custom_fields.push custom_field
 
-invoice.add_custom_field(custom_field,
+invoice.add_custom_field(custom_fields,
                          user,
                          reason,
                          comment,
@@ -2803,11 +2809,13 @@ comment = nil
 invoice = KillBillClient::Model::Invoice.new
 invoice.invoice_id = '7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'
 
+custom_fields = []
 custom_field = KillBillClient::Model::CustomFieldAttributes.new
 custom_field.custom_field_id = 'ec53d741-e52a-4860-a6d3-03bb22b24a90'
 custom_field.value = 'new value'
+custom_fields.push custom_field
 
-invoice.modify_custom_field(custom_field,
+invoice.modify_custom_field(custom_fields,
                             user,
                             reason,
                             comment,
@@ -2919,9 +2927,11 @@ comment = nil
 invoice = KillBillClient::Model::Invoice.new
 invoice.invoice_id = '7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'
 
+custom_field_ids = []
 custom_field_id = 'ec53d741-e52a-4860-a6d3-03bb22b24a90'
+custom_field_ids.push custom_field_id
 
-invoice.remove_custom_field(custom_field_id,
+invoice.remove_custom_field(custom_field_ids,
                             user,
                             reason,
                             comment,
@@ -3030,9 +3040,9 @@ comment = nil
 invoice = KillBillClient::Model::Invoice.new
 invoice.invoice_id = '7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'
 
-tag_name = 'WRITTEN_OFF'
+tag_definition_ids = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
 
-invoice.add_tag(tag_name,
+invoice.add_tags_from_definition_ids(tag_definition_ids,
                user,
                reason,
                comment,
@@ -3229,9 +3239,9 @@ comment = nil
 invoice = KillBillClient::Model::Invoice.new
 invoice.invoice_id = '7bf0f3d6-4ffb-4d5a-98c7-1158083432d0'
 
-tag_name = 'WRITTEN_OFF'
+tag_definition_ids = ['2c1f8309-24d7-437c-971b-7e68ff2d393a']
 
-invoice.remove_tag(tag_name,
+invoice.remove_tags_from_definition_ids(tag_definition_ids,
                   user,
                   reason,
                   comment,
