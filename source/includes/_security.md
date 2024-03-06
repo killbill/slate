@@ -475,7 +475,7 @@ None
 
 **Response**
 
-If successful, returns a status code of 200 and a userRoles object.
+If successful, returns a status code of 200 and a UserRoles object.
 
 ### Update roles associated with a user
 
