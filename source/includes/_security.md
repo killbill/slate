@@ -661,6 +661,8 @@ If successful, returns a status code of 204 and an empty body.
 
 ## Roles
 
+Kill Bill allows to segregate permissions associated with a user by defining the roles assigned to the user. For example, a user having finance role can have permissions associated to the payments, viewing invoice etc. whereas a user having sales role can have permissions to generate invoices, viewing payments etc.
+
 ### Retrieve a role definition
 
 Retrieve an existing role definition.
