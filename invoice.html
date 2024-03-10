@@ -4461,12 +4461,20 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="c1"># to see what is the next invoice that the system will generate for this account </span>
 <span class="c1"># </span>
 <span class="n">account_id</span> <span class="o">=</span> <span class="s2">"5527abbc-d83d-447f-bf3d-ab9542ea631e"</span>
+<span class="n">user</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">target_date</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">upcoming_invoice_target_date</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">plugin_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"key%3Dvalue"</span><span class="p">]</span>
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">trigger_invoice_dry_run</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> 
                                                        <span class="n">target_date</span><span class="p">,</span> 
-                                                       <span class="n">upcoming_invoice_target_date</span><span class="p">,</span> 
+                                                       <span class="n">upcoming_invoice_target_date</span><span class="p">,</span>
+                                                       <span class="n">plugin_properties</span><span class="p">,</span>
+                                                       <span class="n">user</span><span class="p">,</span>
+                                                       <span class="n">reason</span><span class="p">,</span>
+                                                       <span class="n">comment</span><span class="p">,</span>
                                                        <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="c1">#
 # This case is when you create a dry-run invoice with UPCOMING_INVOICE, 
