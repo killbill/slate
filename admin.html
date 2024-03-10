@@ -2598,10 +2598,16 @@
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">ofset</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">plugin_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"key%3Dvalue"</span><span class="p">]</span>
 
 <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">trigger_invoice_generation_for_parked_accounts</span><span class="p">(</span><span class="n">ofset</span><span class="p">,</span>
                                                                             <span class="n">limit</span><span class="p">,</span>
+                                                                            <span class="n">plugin_properties</span><span class="p">,</span>
                                                                             <span class="n">user</span><span class="p">,</span>
+                                                                            <span class="n">reason</span><span class="p">,</span>
+                                                                            <span class="n">comment</span><span class="p">,</span>
                                                                             <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
@@ -2727,20 +2733,24 @@ This could happen, for example, if a call to a third party payment gateway times
                                        <span class="n">paymentTransactionId</span><span class="o">,</span>
                                        <span class="n">body</span><span class="o">,</span>
                                        <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">created_by</span> <span class="o">=</span> <span class="s2">"demo"</span>
 <span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
 <span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
-
 <span class="n">payment_id</span> <span class="o">=</span> <span class="s2">"6cb944a-b308-4488-b046-4b4d61d375a6"</span>
 <span class="n">transaction_id</span> <span class="o">=</span> <span class="s2">"8gb944a-b308-4488-b046-4b4d61d375r3"</span>
-<span class="n">body</span> <span class="o">=</span> <span class="no">AdminPayment</span><span class="p">(</span><span class="n">transaction_status</span><span class="o">=</span><span class="s1">'PAYMENT_FAILURE'</span><span class="p">)</span>
-
-<span class="n">adminApi</span><span class="p">.</span><span class="nf">update_payment_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
-                                          <span class="n">payment_transaction_id</span><span class="p">,</span>
-                                          <span class="n">body</span><span class="p">,</span>
-                                          <span class="n">created_by</span><span class="o">=</span><span class="s1">'demo'</span><span class="p">,</span>
-                                          <span class="n">reason</span><span class="o">=</span><span class="s1">'reason'</span><span class="p">,</span>
-                                          <span class="n">comment</span><span class="o">=</span><span class="s1">'comment'</span><span class="p">)</span>
+<span class="n">transaction_status</span> <span class="o">=</span> <span class="s2">"PAYMENT_FAILURE"</span>
+<span class="n">payment_state_param</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"lastSuccessPaymentState"</span> <span class="o">=&gt;</span> <span class="s2">"AUTH_FAILED"</span><span class="p">,</span>
+  <span class="s2">"currentPaymentStateName"</span> <span class="o">=&gt;</span> <span class="s2">"AUTH_FAILED"</span>
+<span class="p">}</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">fix_transaction_state</span><span class="p">(</span><span class="n">payment_id</span><span class="p">,</span>
+                                                  <span class="n">transaction_id</span><span class="p">,</span>
+                                                  <span class="n">transaction_status</span><span class="p">,</span>
+                                                  <span class="n">payment_state_param</span><span class="p">,</span>
+                                                  <span class="n">created_by</span><span class="p">,</span>
+                                                  <span class="n">reason</span><span class="p">,</span>
+                                                  <span class="n">comment</span><span class="p">,</span>
+                                                  <span class="n">options_for_klient</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
 <span class="n">payment_id</span> <span class="o">=</span> <span class="s">'770d7802-9e03-45dc-a16a-dc58ddcb44d1'</span>
@@ -3048,7 +3058,24 @@ This could happen, for example, if a call to a third party payment gateway times
                          <span class="n">outputStream</span><span class="o">,</span>
                          <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">account_id</span> <span class="o">=</span> <span class="s2">"864c1418-e768-4cd5-a0db-67537144b685"</span>
-<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">get_queues_entries</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+<span class="n">queue_name</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">service_name</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">with_history</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">min_date</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">max_date</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">with_in_processing</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">with_notifications</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">outputStream</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Admin</span><span class="p">.</span><span class="nf">get_queues_entries</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span>
+                                                <span class="n">queue_name</span><span class="p">,</span>
+                                                <span class="n">service_name</span><span class="p">,</span>
+                                                <span class="n">with_history</span><span class="p">,</span>
+                                                <span class="n">min_date</span><span class="p">,</span>
+                                                <span class="n">max_date</span><span class="p">,</span>
+                                                <span class="n">with_in_processing</span><span class="p">,</span>
+                                                <span class="n">with_notifications</span><span class="p">,</span>
+                                                <span class="n">outputStream</span><span class="p">,</span>
+                                                <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">adminApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">AdminApi</span><span class="p">()</span>
 
 <span class="n">adminApi</span><span class="p">.</span><span class="n">get_queue_entries</span><span class="p">()</span>
