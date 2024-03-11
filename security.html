@@ -2516,6 +2516,104 @@
                       </li>
                   </ul>
               </li>
+              <li>
+                <a href="#security" class="site-navigator__item site-navigator__menu-item" data-title="Security">
+                  <span>Security</span>
+                </a>
+                
+                  <ul class="site-navigator__submenu">
+                      <li class="site-navigator__submenu-container">
+                        <a href="#users" class="site-navigator__item site-navigator__submenu-item" data-title="Users">
+                          <span>Users</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#user-roles-resource" class="site-navigator__item site-navigator__submenu-item" data-title="User Roles Resource">
+                          <span>User Roles Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#subject-resource" class="site-navigator__item site-navigator__submenu-item" data-title="Subject Resource">
+                          <span>Subject Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#role-definition-resource" class="site-navigator__item site-navigator__submenu-item" data-title="Role Definition Resource">
+                          <span>Role Definition Resource</span>
+                        </a>
+
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#session-resource" class="site-navigator__item site-navigator__submenu-item" data-title="Session Resource">
+                          <span>Session Resource</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#list-user-permissions" class="site-navigator__item site-navigator__submenu-item" data-title="List user permissions">
+                                  <span>List user permissions</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#get-user-information" class="site-navigator__item site-navigator__submenu-item" data-title="Get user information">
+                                  <span>Get user information</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#add-a-new-user-with-roles" class="site-navigator__item site-navigator__submenu-item" data-title="Add a new user with roles">
+                                  <span>Add a new user with roles</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#update-a-user-password" class="site-navigator__item site-navigator__submenu-item" data-title="Update a user password">
+                                  <span>Update a user password</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#get-roles-associated-with-a-user" class="site-navigator__item site-navigator__submenu-item" data-title="Get roles associated with a user">
+                                  <span>Get roles associated with a user</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#update-roles-associated-with-a-user" class="site-navigator__item site-navigator__submenu-item" data-title="Update roles associated with a user">
+                                  <span>Update roles associated with a user</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#invalidate-an-existing-user" class="site-navigator__item site-navigator__submenu-item" data-title="Invalidate an existing user">
+                                  <span>Invalidate an existing user</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#roles" class="site-navigator__item site-navigator__submenu-item" data-title="Roles">
+                          <span>Roles</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#retrieve-a-role-definition" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve a role definition">
+                                  <span>Retrieve a role definition</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#add-a-role-definition" class="site-navigator__item site-navigator__submenu-item" data-title="Add a role definition">
+                                  <span>Add a role definition</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#update-a-role-definition" class="site-navigator__item site-navigator__submenu-item" data-title="Update a role definition">
+                                  <span>Update a role definition</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
           </ul>
             <ul class="site-navigator__footer">
                 <li><a href="mailto:support@killbill.io">Report a doc problem </a></li>
@@ -2525,10 +2623,655 @@
 
       <div class="page__content content">
         <h1 id='security'>Security</h1>
-<p>Kill Bill supports fine grained roles and permissions.</p>
+<p>Kill Bill supports fine grained roles and permissions for the users accessing the system either through the UI or API. This can be useful in case of organizations looking to limit access across departments/teams etc. The endpoints in this group manage the users, roles and the associated permissions. </p>
 
 <p>Please refer to our <a href="https://docs.killbill.io/latest/user_management.html">RBAC manual</a> for more details.</p>
-<h2 id='users'>Users</h2><h3 id='list-user-permissions'>List user permissions</h3><h3 id='get-user-information'>Get user information</h3><h3 id='add-a-new-user-with-roles'>Add a new user with roles</h3><h3 id='update-a-user-password'>Update a user password</h3><h3 id='get-roles-associated-to-a-user'>Get roles associated to a user</h3><h3 id='update-roles-associated-to-a-user'>Update roles associated to a user</h3><h3 id='invalidate-an-existing-user'>Invalidate an existing user</h3><h2 id='roles'>Roles</h2><h3 id='retrieve-a-role-definition'>Retrieve a role definition</h3>
+<h2 id='users'>Users</h2>
+<p>A user refers to any <code>user or the api</code> that maps to the user credential passed through the API.</p>
+<h2 id='user-roles-resource'>User Roles Resource</h2>
+<p>A <code>userRoles</code> object contains the username, the password and the roles associated with the user. </p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>username</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Username for this user.</td>
+</tr>
+<tr>
+<td><strong>password</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Password for this user.</td>
+</tr>
+<tr>
+<td><strong>roles</strong></td>
+<td>list</td>
+<td>user</td>
+<td>List of roles associated with this user.</td>
+</tr>
+</tbody></table>
+<h2 id='subject-resource'>Subject Resource</h2>
+<p>A <code>Subject</code> resource contains the information of the currently logged-in user as well as the related session information.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>principal</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Username for this user.</td>
+</tr>
+<tr>
+<td><strong>isAuthenticated</strong></td>
+<td>boolean</td>
+<td>user</td>
+<td>Is the user authenticated.</td>
+</tr>
+<tr>
+<td><strong>isRemembered</strong></td>
+<td>boolean</td>
+<td>user</td>
+<td>Specifies if <code>Remember Me</code> is checked for this user.</td>
+</tr>
+<tr>
+<td><strong>session</strong></td>
+<td>json</td>
+<td>system</td>
+<td>Session information for the user. Refer <a href="security.html#session-resource">Session Resource</a> for more information.</td>
+</tr>
+</tbody></table>
+<h2 id='role-definition-resource'>Role Definition Resource</h2>
+<p>A <code>RoleDefinition</code> resource contains the information of the permissions associated with a role.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>role</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Name of the role.</td>
+</tr>
+<tr>
+<td><strong>permissions</strong></td>
+<td>list</td>
+<td>user</td>
+<td>List of permissions associated with the role.</td>
+</tr>
+</tbody></table>
+<h2 id='session-resource'>Session Resource</h2>
+<p>A <code>Session</code> resource contains the session information of the currently logged-in user.</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>id</strong></td>
+<td>string</td>
+<td>system</td>
+<td>UUID for this session.</td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>datetime</td>
+<td>system</td>
+<td>Specifies the start date for the session in UTC.</td>
+</tr>
+<tr>
+<td><strong>lastAccessDate</strong></td>
+<td>datetime</td>
+<td>system</td>
+<td>Specifies the last access timestamp within the session in UTC.</td>
+</tr>
+<tr>
+<td><strong>timeout</strong></td>
+<td>long</td>
+<td>system</td>
+<td>Specifies the default time in ms that any session may remain idle before expiring.</td>
+</tr>
+<tr>
+<td><strong>host</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Specifies the host information for the session.</td>
+</tr>
+</tbody></table>
+<h3 id='list-user-permissions'>List user permissions</h3>
+<p>Lists the permissions associated with the current API user.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/security/permissions</code> </p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+     <span class="nt">-u</span> admin:password <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/security/permissions"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.Strings</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">Strings</span> <span class="n">currentUserPermissions</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getCurrentUserPermissions</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Security</span>
+
+<span class="n">currentUserPermissions</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="nf">find_permissions</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">currentUserPermissions</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_current_user_permissions</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">currentUserPermissions</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">[],</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getCurrentUserPermissions</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$currentUserPermissions</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCurrentUserPermissions</span><span class="p">();</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="s2">"invoice:commit"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoice:item_adjust"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"entitlement:pause_resume"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoice:write_off"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account:credit"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account:create"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoice:credit"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"entitlement:cancel"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account:update"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoice:void"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"payment:transition"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"account:charge"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"payment:refund"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoice:delete_cba"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"invoice:dry_run"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"payment:chargeback"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"payment:trigger"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"entitlement:transfer"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"entitlement:create"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"payment:notification"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"entitlement:change_plan"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a list of permissions associated with the current API user.</p>
+<h3 id='get-user-information'>Get user information</h3>
+<p>Lists the session information associated with the currently logged-in (principal) user.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/security/subject</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+     <span class="nt">-u</span> admin:password <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/security/subject"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.Subject</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">Subject</span> <span class="n">currentUserSubject</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getCurrentUserSubject</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Security</span>
+
+<span class="n">currentUserSubject</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="nf">find_subject</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">currentUserSubject</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_current_user_subject</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">currentUserSubject</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Subject</span><span class="p">,</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getCurrentUserSubject</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$currentUserSubject</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCurrentUserSubject</span><span class="p">();</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"principal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"isAuthenticated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"isRemembered"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"session"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6738239-b803-4fa5-85b9-b3ad13a8312c"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-11-12T07:17:56.856Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"lastAccessDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-11-12T07:27:03.792Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0:0:0:0:0:0:0:1"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and the session information associated with the current API user.</p>
+<h3 id='add-a-new-user-with-roles'>Add a new user with roles</h3>
+<p>Create a new user (username, password, associated roles).</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>POST http://127.0.0.1:8080/1.0/kb/security/users</code> </p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{ "username": "testUserName", "password": "testUserPassword", "roles": ["TestRole"]}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/security/users"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"TestRole"</span><span class="o">);</span>
+
+<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="o">();</span>
+
+<span class="n">userRoles</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"TestUserName"</span><span class="o">);</span>
+<span class="n">userRoles</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"TestUserPassword"</span><span class="o">);</span>
+<span class="n">userRoles</span><span class="o">.</span><span class="na">setRoles</span><span class="o">(</span><span class="n">roles</span><span class="o">);</span>
+
+<span class="nc">UserRoles</span> <span class="n">newUserDetails</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">addUserRoles</span><span class="o">(</span><span class="n">userRoles</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'TestUserName'</span>
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s1">'TestUserPassword'</span>
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">roles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'TestRole'</span><span class="p">]</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">userBody</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">UserRoles</span><span class="p">(</span><span class="n">username</span> <span class="o">=</span> <span class="s">'testUserName'</span><span class="p">,</span>
+                              <span class="n">password</span> <span class="o">=</span> <span class="s">'testUserPassword'</span><span class="p">,</span>
+                              <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s">'TestRole'</span><span class="p">,</span><span class="s">'finance'</span><span class="p">])</span>
+
+<span class="n">securityApi</span><span class="p">.</span><span class="n">add_user_roles</span><span class="p">(</span><span class="n">userBody</span><span class="p">,</span>
+                           <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                           <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                           <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span> <span class="o">=</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUserName</span><span class="dl">'</span><span class="p">,</span>
+                                  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUserPassword</span><span class="dl">'</span><span class="p">,</span>
+                                  <span class="na">roles</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">finance</span><span class="dl">'</span><span class="p">]};</span>
+
+<span class="nx">securityApi</span><span class="p">.</span><span class="nx">addUserRoles</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="p">();</span>
+
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setUsername</span><span class="p">(</span><span class="s1">'TestUserName'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setPassword</span><span class="p">(</span><span class="s1">'TestUserPassword'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setRoles</span><span class="p">([</span><span class="s1">'TestRole'</span><span class="p">]);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">addUserRoles</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A <code>UserRoles</code> object consisting of the username, password and the roles to be associated with the user. The required attributes are <code>username</code>,<code>password</code>,<code>roles</code>.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None.</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and the <code>UserRoles</code> object for the newly created user.</p>
+<h3 id='update-a-user-password'>Update a user password</h3>
+<p>Updates the password for a user.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>PUT http://127.0.0.1:8080/1.0/kb/security/users/{username}/password</code></p>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> PUT <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{ "username": "testUserName", "password": "Updatedpassword"}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}/password"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"TestUserName"</span><span class="o">;</span>
+
+<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="o">();</span>
+
+<span class="n">userRoles</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"TestUserPassUpdated"</span><span class="o">);</span>    
+
+<span class="n">securityApi</span><span class="o">.</span><span class="na">updateUserPassword</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">userRoles</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'userName'</span>
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s1">'userNameUpdatedpassword'</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">UserRoles</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'userName'</span><span class="p">,</span>
+                               <span class="n">password</span><span class="o">=</span><span class="s">'userNameUpdatedpassword'</span><span class="p">,</span>
+                               <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s">'TestRole'</span><span class="p">])</span>
+
+<span class="n">securityApi</span><span class="p">.</span><span class="n">update_user_password</span><span class="p">(</span><span class="s">'userName'</span><span class="p">,</span>
+                                  <span class="n">userRoles</span><span class="p">,</span>
+                                  <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                  <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                  <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span> <span class="o">=</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">userName</span><span class="dl">'</span><span class="p">,</span>
+                                  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">userNameUpdatedpassword</span><span class="dl">'</span><span class="p">,</span>
+                                  <span class="na">roles</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">finance</span><span class="dl">'</span><span class="p">]};</span>
+
+<span class="nx">securityApi</span><span class="p">.</span><span class="nx">updateUserPassword</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">userName</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="p">();</span>
+
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setUsername</span><span class="p">(</span><span class="s1">'TestUserName'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setPassword</span><span class="p">(</span><span class="s1">'TestUserUpdatedPassword'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setRoles</span><span class="p">([</span><span class="s1">'TestRole'</span><span class="p">]);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updateUserPassword</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A <code>userRoles</code> object consisting of the username, password and the roles to be associated with the user. The required attributes are <code>username</code>,<code>password</code>,<code>roles</code>.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h3 id='get-roles-associated-with-a-user'>Get roles associated with a user</h3>
+<p>Lists the roles associated with a user.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>GET http://127.0.0.1:8080/1.0/kb/security/users/{username}/roles</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+     <span class="nt">-u</span> admin:password <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}/roles"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"testuser"</span><span class="o">;</span>
+
+<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getUserRoles</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'testuser'</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">list</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_user_roles</span><span class="p">(</span><span class="s">'testUser'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span><span class="p">,</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getUserRoles</span><span class="p">(</span><span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$username</span> <span class="o">=</span> <span class="s1">'testUser'</span><span class="p">;</span>
+
+<span class="nv">$userRoles</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getUserRoles</span><span class="p">(</span><span class="nv">$username</span><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testUser"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"TestRole"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and a UserRoles object.</p>
+<h3 id='update-roles-associated-with-a-user'>Update roles associated with a user</h3>
+<p>Updates the roles associated with a user.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>PUT http://127.0.0.1:8080/1.0/kb/security/users/{username}/roles</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> PUT <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{"roles":["TestRole"]}'</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}/roles"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"UpdatedRole"</span><span class="o">);</span>
+
+<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="o">();</span>
+
+<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"TestUser"</span><span class="o">;</span>
+
+<span class="n">userRoles</span><span class="o">.</span><span class="na">setRoles</span><span class="o">(</span><span class="n">roles</span><span class="o">);</span>
+
+<span class="n">securityApi</span><span class="o">.</span><span class="na">updateUserRoles</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">userRoles</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'TestUser'</span>
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">roles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'UpdatedRole'</span><span class="p">]</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">UserRoles</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'testUser'</span><span class="p">,</span>                               
+                               <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s">'TestRole'</span><span class="p">])</span>
+
+<span class="n">securityApi</span><span class="p">.</span><span class="n">update_user_roles</span><span class="p">(</span><span class="s">'testUser'</span><span class="p">,</span>
+                               <span class="n">userRoles</span><span class="p">,</span>
+                               <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                               <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                               <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span> <span class="o">=</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">,</span>
+                                  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUserPassword</span><span class="dl">'</span><span class="p">,</span>
+                                  <span class="na">roles</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">]};</span>
+
+<span class="nx">securityApi</span><span class="p">.</span><span class="nx">updateUserRoles</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="p">();</span>
+
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setUsername</span><span class="p">(</span><span class="s1">'TestUserName'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setPassword</span><span class="p">(</span><span class="s1">'TestUserPassword'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setRoles</span><span class="p">([</span><span class="s1">'TestUpdatedRole'</span><span class="p">]);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updateUserRoles</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A <code>userRoles</code> object consisting of the username, password and the roles to be associated with the user. The required attributes are <code>username</code>,<code>password</code>,<code>roles</code>.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h3 id='invalidate-an-existing-user'>Invalidate an existing user</h3>
+<p>Invalidates a user.</p>
+
+<p><strong>HTTP Request</strong> </p>
+
+<p><code>DELETE http://127.0.0.1:8080/1.0/kb/security/users/{username}</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> DELETE <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\ </span>   
+    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}"</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"testuser"</span><span class="o">;</span>
+
+<span class="n">securityApi</span><span class="o">.</span><span class="na">invalidateUser</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'TestUser'</span>
+
+<span class="n">userRoles</span><span class="p">.</span><span class="nf">destroy</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">securityApi</span><span class="p">.</span><span class="n">invalidate_user</span><span class="p">(</span><span class="s">'testUser'</span><span class="p">,</span>
+                             <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                             <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                             <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="nx">securityApi</span><span class="p">.</span><span class="nx">invalidateUser</span><span class="p">(</span><span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$username</span> <span class="o">=</span> <span class="s1">'username'</span><span class="p">;</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">invalidateUser</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 204 and an empty body.</p>
+<h2 id='roles'>Roles</h2>
+<p>Kill Bill allows to segregate permissions associated with a user by defining the roles assigned to the user. For example, a user having finance role can have permissions associated to the payments, viewing invoice etc. whereas a user having sales role can have permissions to generate invoices, viewing payments etc.</p>
+<h3 id='retrieve-a-role-definition'>Retrieve a role definition</h3>
 <p>Retrieve an existing role definition.</p>
 
 <p><strong>HTTP Request</strong></p>
@@ -2543,8 +3286,29 @@
      <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-     <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles/ROLE'</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div>
+     <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles/{role}'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.RoleDefinition</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
+
+<span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getRoleDefinition</span><span class="o">(</span><span class="n">role</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">role</span> <span class="o">=</span> <span class="s">'TestRole'</span>
+
+<span class="n">roleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_role_definition</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">roleDefinition</span><span class="p">:</span><span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">RoleDefinition</span><span class="p">,</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getRoleDefinition</span><span class="p">(</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$role</span> <span class="o">=</span> <span class="s1">'TestRole'</span><span class="p">;</span>
+
+<span class="nv">$roleDefinition</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getRoleDefinition</span><span class="p">(</span><span class="nv">$role</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
@@ -2585,7 +3349,62 @@
              "permissions": ["account:*","invoice:trigger"]
      }'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles'</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.RoleDefinition</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">permissions</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"account:*"</span><span class="o">,</span> <span class="s">"invoice:trigger"</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
+
+<span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="o">();</span>
+<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setPermissions</span><span class="o">(</span><span class="n">permissions</span><span class="o">);</span>
+
+<span class="nc">RoleDefinition</span> <span class="n">newRoleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">addRoleDefinition</span><span class="o">(</span><span class="n">roleDefinition</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">roleDef</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RoleDefinition</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">roleDef</span><span class="p">.</span><span class="nf">role</span> <span class="o">=</span> <span class="s1">'testRole17thDec'</span>
+<span class="n">roleDef</span><span class="p">.</span><span class="nf">permissions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"account:*"</span><span class="p">,</span> <span class="s2">"invoice:trigger"</span><span class="p">]</span>
+
+<span class="n">roleDef</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">roleDefinition</span> <span class="o">=</span><span class="n">killbill</span><span class="p">.</span><span class="n">RoleDefinition</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s">'TestRole'</span><span class="p">,</span>
+                                        <span class="n">permissions</span><span class="o">=</span><span class="p">[</span><span class="s">"account:*"</span><span class="p">,</span><span class="s">"invoice:trigger"</span><span class="p">])</span>
+
+<span class="n">securityApi</span><span class="p">.</span><span class="n">add_role_definition</span><span class="p">(</span><span class="n">roleDefinition</span><span class="p">,</span>
+                                <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
+                                <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
+                                <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">RoleDefinition</span> <span class="o">=</span> <span class="p">{</span><span class="na">role</span><span class="p">:</span> <span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span>
+                                       <span class="na">permissions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">account:*</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">invoice:trigger</span><span class="dl">'</span><span class="p">]};</span>
+
+<span class="nx">securityApi</span><span class="p">.</span><span class="nx">addRoleDefinition</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="p">();</span>
+
+<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setRole</span><span class="p">(</span><span class="s1">'TestRole'</span><span class="p">);</span>
+<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setPermissions</span><span class="p">([</span><span class="s1">'account:*'</span><span class="p">,</span> <span class="s1">'invoice:trigger'</span><span class="p">]);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">addRoleDefinition</span><span class="p">(</span><span class="nv">$roleDefinition</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A <code>RoleDefinition</code> object consisting of the role and the list of permissions to be associated with the role. The required attributes are <code>role</code> and the associated <code>permissions</code>.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
@@ -2615,7 +3434,49 @@
              "permissions": ["account:*"]
      }'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles'</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.RoleDefinition</span><span class="o">;</span>
+
+<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
+
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">permissions</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"account:*"</span><span class="o">,</span> <span class="s">"invoice:trigger"</span><span class="o">);</span>
+
+<span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
+
+<span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="o">();</span>
+<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setPermissions</span><span class="o">(</span><span class="n">permissions</span><span class="o">);</span>
+
+<span class="n">securityApi</span><span class="o">.</span><span class="na">updateRoleDefinition</span><span class="o">(</span><span class="n">roleDefinition</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+
+<span class="n">roleDefinition</span> <span class="o">=</span><span class="n">killbill</span><span class="p">.</span><span class="n">RoleDefinition</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s">'TestRole'</span><span class="p">,</span>
+                                        <span class="n">permissions</span><span class="o">=</span><span class="p">[</span><span class="s">"invoice:trigger"</span><span class="p">])</span>
+
+<span class="n">securityApi</span><span class="p">.</span><span class="n">update_role_definition</span><span class="p">(</span><span class="n">roleDefinition</span><span class="p">,</span><span class="s">'KB'</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">RoleDefinition</span> <span class="o">=</span> <span class="p">{</span><span class="na">role</span><span class="p">:</span> <span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span>
+                                       <span class="na">permissions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">invoice:trigger</span><span class="dl">'</span><span class="p">]};</span>
+
+<span class="nx">securityApi</span><span class="p">.</span><span class="nx">updateRoleDefinition</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
+
+<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
+<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
+<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
+
+<span class="nv">$roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="p">();</span>
+
+<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setRole</span><span class="p">(</span><span class="s1">'TestRole'</span><span class="p">);</span>
+<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setPermissions</span><span class="p">([</span><span class="s1">'account:*'</span><span class="p">,</span> <span class="s1">'invoice:*'</span><span class="p">]);</span>
+
+<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updateRoleDefinition</span><span class="p">(</span><span class="nv">$roleDefinition</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A <code>RoleDefinition</code> object consisting of the role and the list of permissions to be associated with the role. The required attributes are <code>role</code> and the associated <code>permissions</code>.</p>
+
 <p><strong>Query Parameters</strong></p>
 
 <p>None.</p>
