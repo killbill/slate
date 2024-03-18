@@ -2741,11 +2741,13 @@
                                                            <span class="n">requestOptions</span><span class="o">);</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
 
 <span class="n">customField</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">CustomField</span>
 
 <span class="n">customFields</span> <span class="o">=</span> <span class="n">customField</span><span class="p">.</span><span class="nf">find_in_batches</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span>
                                            <span class="n">limit</span><span class="p">,</span>
+                                           <span class="n">audit</span><span class="p">,</span>
                                            <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">customFieldApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CustomFieldApi</span><span class="p">()</span>
 
