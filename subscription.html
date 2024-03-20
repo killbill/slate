@@ -3005,7 +3005,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
         }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span>
 
-<span class="c"># With Datetime</span>
+<span class="c"># With Datetime (No Timezone, so taken to be UTC)</span>
 
 curl <span class="nt">-v</span> <span class="se">\</span>
     <span class="nt">-X</span> POST <span class="se">\</span>
@@ -3019,6 +3019,21 @@ curl <span class="nt">-v</span> <span class="se">\</span>
             "planName": "pistol-monthly-notrial"
         }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions?billingDate=2023-02-07T11:15&amp;entitlementDate=2023-02-07T11:15"</span> 
+
+<span class="c"># Datetime with timezone</span>
+
+curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> POST <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{ 
+            "accountId": "325fbe1c-7c35-4d96-a4e5-2cbaabe218c6",
+            "planName": "pistol-monthly-notrial"
+        }'</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions?billingDate=2024-03-10T11:00:00-08:00&amp;entitlementDate=2024-03-10T11:00:00-08:00"</span>    
 
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="nc">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
@@ -3130,14 +3145,14 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <td>string</td>
 <td>no</td>
 <td>immediately</td>
-<td>Date/DateTime at which the entitlement (service) starts in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code> format.</td>
+<td>Date/DateTime at which the entitlement (service) starts in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm:ssZ</code> format.</td>
 </tr>
 <tr>
 <td><strong>billingDate</strong></td>
 <td>string</td>
 <td>no</td>
 <td>immediately</td>
-<td>Date/DateTime at which the entitlement (service) starts in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code> format.</td>
+<td>Date/DateTime at which the entitlement (service) starts in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm:ssZ</code> format.</td>
 </tr>
 <tr>
 <td><strong>renameKeyIfExistsAndUnused</strong></td>
@@ -3183,6 +3198,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <ul>
 <li>Specifying the <code>startDate</code>/<code>billingStartDate</code> as part of the request body has no effect, these dates need to be passed as query parameters (<code>entitlementDate</code>/<code>billingDate</code>). </li>
 <li>The <code>entitlementDate</code> drives the subscription state. So, if a subscription is created with a future <code>entitlementDate</code>, its state remains <code>PENDING</code> until the date is reached after which it becomes <code>ACTIVE</code>.</li>
+<li>When a <code>DateTime</code> is specified corresponding to the <code>entitlementDate</code>/<code>billingDate</code> parameters, it may or may not include a timezone component. If a timezone is included (like <code>entitlementDate=2024-03-10T11:00:00-08:00</code>), the specified timezone (<code>PST</code> in this case) is used. If timezone is not included (like <code>entitlementDate=2024-03-07T11:15</code>), it defaults to UTC.</li>
 </ul>
 
 <p><strong>Response</strong></p>
@@ -4517,7 +4533,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <td>string</td>
 <td>no</td>
 <td>immediate</td>
-<td>Date/DateTime at which this change should become effective in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code>  format.</td>
+<td>Date/DateTime at which this change should become effective in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm:ssZ</code>  format.</td>
 </tr>
 <tr>
 <td><strong>callCompletion</strong></td>
@@ -4547,6 +4563,12 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <p><strong>requestedDate</strong>: This date is only used if no billingPolicy was specified.</p>
 
 <p>Changing the plan associated to a subscription often triggers the creation of an invoice, and associated with this there is often a payment (against the invoice). If <strong>callCompletion</strong> is true, the call to this API will be delayed until the invoice is created and/or the payment is processed. However, the maximum delay in seconds will be given by <strong>callTimeoutSec</strong>.</p>
+
+<p><strong>Other Notes:</strong></p>
+
+<ul>
+<li>When a <code>DateTime</code> is specified corresponding to the <code>requestedDate</code> parameter, it may or may not include a timezone component. If a timezone is included (like <code>entitlementDate=2024-03-10T11:00:00-08:00</code>), the specified timezone (<code>PST</code> in this case) is used. If timezone is not included (like <code>entitlementDate=2024-03-07T11:15</code>), it defaults to UTC.</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
@@ -4735,7 +4757,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <td>string</td>
 <td>no</td>
 <td>immediate</td>
-<td>Date/DateTime at which this change should become effective in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code>  format.</td>
+<td>Date/DateTime at which this change should become effective in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm:ssZ</code>  format.</td>
 </tr>
 <tr>
 <td><strong>entitlementPolicy</strong></td>
@@ -4808,8 +4830,12 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 
 <p>The reason for all this complexity is to allow to control entitlement and billing date separately, and also avoid users to have to compute dates to achieve certain behavior by relying on well defined policies.</p>
 
-<p><strong>Other Notes:</strong>
-* If a subscription is created with a future date and if the cancel method is invoked for immediate cancellation, the cancellation takes effect only after the subscription creation date is reached. Thus, the subscription remains in <code>PENDING</code> state until the subscription creation date is reached after which it is moved to the <code>CANCELLED</code> state.</p>
+<p><strong>Other Notes:</strong></p>
+
+<ul>
+<li>If a subscription is created with a future date and if the cancel method is invoked for immediate cancellation, the cancellation takes effect only after the subscription creation date is reached. Thus, the subscription remains in <code>PENDING</code> state until the subscription creation date is reached after which it is moved to the <code>CANCELLED</code> state.</li>
+<li>When a <code>DateTime</code> is specified corresponding to the <code>requestedDate</code> parameter, it may or may not include a timezone component. If a timezone is included (like <code>entitlementDate=2024-03-10T11:00:00-08:00</code>), the specified timezone (<code>PST</code> in this case) is used. If timezone is not included (like <code>entitlementDate=2024-03-07T11:15</code>), it defaults to UTC.</li>
+</ul>
 
 <p><strong>Returns</strong></p>
 
@@ -5038,9 +5064,15 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <td>string</td>
 <td>no</td>
 <td>immediate</td>
-<td>Date/DateTime to begin blocking in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm</code> format.</td>
+<td>Date/DateTime to begin blocking in <code>yyyy-mm-dd</code>/<code>yyyy-mm-ddThh:mm:ssZ</code> format.</td>
 </tr>
 </tbody></table>
+
+<p><strong>Other Notes:</strong></p>
+
+<ul>
+<li>When a <code>DateTime</code> is specified corresponding to the <code>requestedDate</code> parameter, it may or may not include a timezone component. If a timezone is included (like <code>entitlementDate=2024-03-10T11:00:00-08:00</code>), the specified timezone (<code>PST</code> in this case) is used. If timezone is not included (like <code>entitlementDate=2024-03-07T11:15</code>), it defaults to UTC.</li>
+</ul>
 
 <p><strong>Response</strong></p>
 
