@@ -3202,7 +3202,12 @@ in this tenant, the callback will be invoked.</p>
 <span class="nc">String</span> <span class="n">cb</span> <span class="o">=</span> <span class="s">"http://demo/callmeback"</span><span class="o">;</span>
 
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">registerPushNotificationCallback</span><span class="o">(</span><span class="n">cb</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">cb</span> <span class="o">=</span> <span class="s2">"http://demo/callmeback"</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s1">'demo'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">''</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">register_push_notification</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">tenantApi</span><span class="p">.</span><span class="n">register_push_notification_callback</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span> <span class="n">cb</span><span class="o">=</span><span class="s">'http://demo/callmeback'</span><span class="p">)</span>
@@ -3260,7 +3265,7 @@ in this tenant, the callback will be invoked.</p>
 <span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPushNotificationCallbacks</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">result</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">retrieve_push_notification</span><span class="p">(</span><span class="n">cb</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_push_notification_callbacks</span><span class="p">()</span>
@@ -3311,7 +3316,10 @@ in this tenant, the callback will be invoked.</p>
 <span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
 <span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePushNotificationCallbacks</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'demo'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">delete_push_notification</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_push_notification_callbacks</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
@@ -3370,7 +3378,11 @@ Some of the configuration can be overriden at the tenant level to allow for diff
 <span class="nc">String</span> <span class="n">body</span> <span class="o">=</span> <span class="s">"{'org.killbill.invoice.sanitySafetyBoundEnabled':'false'}"</span><span class="o">;</span>
 
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">uploadPerTenantConfiguration</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">configuration</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"org.killbill.invoice.sanitySafetyBoundEnabled"</span><span class="p">:</span> <span class="kp">false</span><span class="p">}</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s1">'demo'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">result</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">add_system_configuration</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">body</span> <span class="o">=</span> <span class="s">'{"org.killbill.invoice.sanitySafetyBoundEnabled":"false"}'</span>
@@ -3422,7 +3434,7 @@ Some of the configuration can be overriden at the tenant level to allow for diff
 <span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPerTenantConfiguration</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">result</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">retrieve_system_configurations</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">tenantKeyValue</span> <span class="o">=</span>  <span class="n">tenantApi</span><span class="p">.</span><span class="n">get_per_tenant_configuration</span><span class="p">()</span>
@@ -3473,7 +3485,10 @@ Some of the configuration can be overriden at the tenant level to allow for diff
 <span class="kd">protected</span> <span class="nc">TenantApi</span> <span class="n">tenantApi</span><span class="o">;</span>
 
 <span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePerTenantConfiguration</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'demo'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">delete_system_configurations</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">tenantApi</span><span class="p">.</span><span class="n">delete_per_tenant_configuration</span><span class="p">(</span><span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">)</span>
@@ -3759,7 +3774,13 @@ org.killbill.billing.plugin.avatax.licenseKey=ZZZ'</span> <span class="se">\</sp
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">uploadPluginPaymentStateMachineConfig</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span>
                                                                         <span class="n">stateMachineConfig</span><span class="o">,</span>
                                                                         <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">plugin_name</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+<span class="n">state_machine_config</span> <span class="o">=</span> <span class="s2">"&lt;xml&gt;..&lt;/xml&gt;"</span><span class="p">;</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s1">'demo'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">''</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">add_payment_state_machine</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">state_machine_config</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
@@ -3812,7 +3833,9 @@ org.killbill.billing.plugin.avatax.licenseKey=ZZZ'</span> <span class="se">\</sp
 <span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"demo_plugin"</span><span class="o">;</span>
 
 <span class="nc">TenantKeyValue</span> <span class="n">result</span> <span class="o">=</span> <span class="n">tenantApi</span><span class="o">.</span><span class="na">getPluginPaymentStateMachineConfig</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">plugin_name</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span><span class="p">;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">retrieve_payment_state_machine</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
@@ -3933,7 +3956,12 @@ org.killbill.billing.plugin.avatax.licenseKey=ZZZ'</span> <span class="se">\</sp
 <span class="nc">String</span> <span class="n">pluginName</span> <span class="o">=</span> <span class="s">"demo_plugin"</span><span class="o">;</span>
 
 <span class="n">tenantApi</span><span class="o">.</span><span class="na">deletePluginPaymentStateMachineConfig</span><span class="o">(</span><span class="n">pluginName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">plugin_name</span> <span class="o">=</span> <span class="s2">"demo_plugin"</span>
+<span class="n">user</span> <span class="o">=</span> <span class="s1">'demo'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">''</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">''</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Tenant</span><span class="p">.</span><span class="nf">delete_payment_state_machine</span><span class="p">(</span><span class="n">plugin_name</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">reason</span><span class="p">,</span> <span class="n">comment</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">tenantApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">TenantApi</span><span class="p">()</span>
 
 <span class="n">plugin_name</span> <span class="o">=</span> <span class="s">'demo_plugin'</span>
