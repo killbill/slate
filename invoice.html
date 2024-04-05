@@ -4820,7 +4820,22 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="no">NULL_PLUGIN_PROPERTIES</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="nc">Invoices</span> <span class="n">invoices</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">createFutureInvoiceGroup</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">targetDate</span><span class="o">,</span> <span class="no">NULL_PLUGIN_PROPERTIES</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">account_id</span> <span class="o">=</span> <span class="s2">"3ee3aa82-1d45-4bbc-b36b-74d628e095d0"</span>
+<span class="n">target_date</span> <span class="o">=</span> <span class="s2">"2024-12-05"</span>
+<span class="n">plugin_property</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">trigger_invoice_group_run</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span>
+                                                         <span class="n">target_date</span><span class="p">,</span>
+                                                         <span class="n">plugin_property</span>
+                                                         <span class="n">user</span><span class="p">,</span>
+                                                         <span class="n">reason</span><span class="p">,</span>
+                                                         <span class="n">comment</span><span class="p">,</span>
+                                                         <span class="n">options</span><span class="p">)</span>
+
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoiceApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoiceApi</span><span class="p">()</span>
 
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'8452df66-ded8-4fba-b7dc-50302d19bc5b'</span>
@@ -4909,7 +4924,16 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <span class="no">UUID</span> <span class="n">groupId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"f5ecf703-10b9-4019-8044-8db1163bef56"</span><span class="o">);</span>
 
 <span class="nc">Invoices</span> <span class="n">invoices</span> <span class="o">=</span> <span class="n">invoiceApi</span><span class="o">.</span><span class="na">getInvoicesGroup</span><span class="o">(</span><span class="n">groupId</span><span class="o">,</span> <span class="n">accountId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">account_id</span> <span class="o">=</span> <span class="s2">"3ee3aa82-1d45-4bbc-b36b-74d628e095d0"</span>
+<span class="n">group_id</span> <span class="o">=</span> <span class="s2">"f5ecf703-10b9-4019-8044-8db1163bef56"</span>
+<span class="n">with_children_items</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s2">"NONE"</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">retrieve_invoice_group</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span>
+                                                      <span class="n">group_id</span><span class="p">,</span>
+                                                      <span class="n">with_children_items</span><span class="p">,</span>
+                                                      <span class="n">audit</span><span class="p">,</span>
+                                                      <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoiceApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoiceApi</span><span class="p">()</span>
 
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'8452df66-ded8-4fba-b7dc-50302d19bc5b'</span>
@@ -5245,7 +5269,16 @@ If successful, returns a status code of 200 and a list of invoice objects for th
         <span class="n">withAttempts</span><span class="o">,</span>
         <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span>
         <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">invoice_id</span> <span class="o">=</span> <span class="s2">"3ee3aa82-1d45-4bbc-b36b-74d628e095d0"</span>
+<span class="n">with_plugin_info</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">with_attempts</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s2">"NONE"</span>
+
+<span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Invoice</span><span class="p">.</span><span class="nf">retrieve_payments_for_invoice</span><span class="p">(</span><span class="n">invoice_id</span><span class="p">,</span>
+                                                      <span class="n">with_plugin_info</span><span class="p">,</span>
+                                                      <span class="n">with_attempts</span><span class="p">,</span>
+                                                      <span class="n">audit</span><span class="p">,</span>
+                                                      <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">invoiceApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">InvoiceApi</span><span class="p">()</span>
 
 <span class="n">invoice_id</span> <span class="o">=</span> <span class="s">'46ab72dc-8abf-4984-818b-cf1558c7ef4b'</span>
