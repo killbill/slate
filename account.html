@@ -4234,11 +4234,13 @@ several such emails for one customer account.</p>
 <span class="nc">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10L</span><span class="o">;</span>       
 
 <span class="nc">Bundles</span> <span class="n">bundles</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getAccountBundlesPaginated</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">offset</span><span class="o">,</span> <span class="n">limit</span><span class="o">,</span> <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">account</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">new</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code>
+<span class="n">account_id</span> <span class="o">=</span> <span class="s1">'325fbe1c-7c35-4d96-a4e5-2cbaabe218c6'</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
 
-<span class="n">account</span><span class="p">.</span><span class="nf">account_id</span> <span class="o">=</span> <span class="s1">'15434b45-54c1-4a44-851c-b1f2f7a52f03'</span>
-
-<span class="n">accountBundles</span> <span class="o">=</span> <span class="n">account</span><span class="p">.</span><span class="nf">bundles</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+<span class="n">bundles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">paginated_bundles</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">accountApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">AccountApi</span><span class="p">()</span>
 
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'8992e146-bfa1-4126-a045-98b844a4adcb'</span>
@@ -4637,11 +4639,13 @@ several such emails for one customer account.</p>
 <span class="nc">Long</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0L</span><span class="o">;</span>
 <span class="nc">Long</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">10L</span><span class="o">;</span>       
 <span class="nc">Invoices</span> <span class="n">invoices</span> <span class="o">=</span> <span class="n">accountApi</span><span class="o">.</span><span class="na">getInvoicesForAccountPaginated</span><span class="o">(</span><span class="n">accountId</span><span class="o">,</span> <span class="n">offset</span><span class="o">,</span> <span class="n">limit</span><span class="o">,</span> <span class="nc">AuditLevel</span><span class="o">.</span><span class="na">NONE</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">account</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">new</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code>
+<span class="n">account_id</span> <span class="o">=</span> <span class="s1">'325fbe1c-7c35-4d96-a4e5-2cbaabe218c6'</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">audit</span> <span class="o">=</span> <span class="s1">'NONE'</span>
 
-<span class="n">account</span><span class="p">.</span><span class="nf">account_id</span> <span class="o">=</span> <span class="s1">'325fbe1c-7c35-4d96-a4e5-2cbaabe218c6'</span>
-
-<span class="n">accountInvoices</span> <span class="o">=</span> <span class="n">account</span><span class="p">.</span><span class="nf">invoices</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+<span class="n">invoices</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Account</span><span class="p">.</span><span class="nf">paginated_invoices</span><span class="p">(</span><span class="n">account_id</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">audit</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">accountApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">AccountApi</span><span class="p">()</span>
 
 <span class="n">account_id</span> <span class="o">=</span> <span class="s">'82ecbf80-ddd2-4208-92be-2d3b2b7fc266'</span>
