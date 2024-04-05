@@ -4318,7 +4318,24 @@ to realign invoicing, let&#39;s say on the 16th. </p>
 <span class="nc">LocalDate</span> <span class="n">effectiveFromDate</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
 
 <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">updateSubscriptionQuantity</span><span class="o">(</span><span class="n">subscriptionId</span><span class="o">,</span> <span class="n">body</span><span class="o">,</span> <span class="n">effectiveFromDate</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">subscription</span>                      <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">subscription_id</span>      <span class="o">=</span> <span class="s2">"161692a4-c293-410c-a92f-939c5e3dcba7"</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">quantity</span> <span class="o">=</span> <span class="s2">"16"</span>
+
+<span class="n">effective_from_date</span>  <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">force_new_quantity_with_past_effective_date</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">subscription</span><span class="p">.</span><span class="nf">update_quantity</span><span class="p">(</span>
+                        <span class="n">user</span><span class="p">,</span>
+                        <span class="n">reason</span><span class="p">,</span>
+                        <span class="n">comment</span><span class="p">,</span>
+                        <span class="n">effective_from_date</span><span class="p">,</span>
+                        <span class="n">force_new_quantity_with_past_effective_date</span><span class="p">,</span>
+                        <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">subscriptionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">SubscriptionApi</span><span class="p">()</span>
 
 <span class="n">subscription_id</span> <span class="o">=</span> <span class="s">'7b3f0181-d9e8-4886-a90a-af35e671f5f0'</span>
@@ -5913,7 +5930,12 @@ None of the <a href="tag.html#tag"><code>system</code> tags</a> are applicable f
 <span class="no">UUID</span> <span class="n">subscriptionEventId</span> <span class="o">=</span> <span class="no">UUID</span><span class="o">.</span><span class="na">fromString</span><span class="o">(</span><span class="s">"b4b6f990-4456-4009-9e6c-9825a99a1f25"</span><span class="o">);</span>
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">AuditLog</span><span class="o">&gt;</span> <span class="n">eventAuditLog</span> <span class="o">=</span> <span class="n">subscriptionApi</span><span class="o">.</span><span class="na">getSubscriptionEventAuditLogsWithHistory</span><span class="o">(</span><span class="n">subscriptionEventId</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">subscription</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Subscription</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">subscription</span><span class="p">.</span><span class="nf">subscription_id</span> <span class="o">=</span> <span class="s2">"88f0cd47-ed92-4143-89e1-31b79c533208"</span>
+
+<span class="n">event_id</span> <span class="o">=</span> <span class="s1">'dc283026-5be0-4e47-8190-b62fb0c9e357'</span>
+
+<span class="n">audit_logs</span> <span class="o">=</span> <span class="n">subscription</span><span class="p">.</span><span class="nf">event_audit_logs_with_history</span><span class="p">(</span><span class="n">event_id</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">subscriptionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">api</span><span class="p">.</span><span class="n">SubscriptionApi</span><span class="p">()</span>
 
 <span class="n">event_id</span> <span class="o">=</span> <span class="s">'dc283026-5be0-4e47-8190-b62fb0c9e357'</span>
