@@ -3622,7 +3622,19 @@
 <span class="nc">CatalogValidation</span> <span class="n">validation</span> <span class="o">=</span> <span class="n">catalogApi</span><span class="o">.</span><span class="na">validateCatalogXml</span><span class="o">(</span><span class="n">body</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
 
 <span class="nc">List</span><span class="o">&lt;</span><span class="nc">CatalogValidationError</span><span class="o">&gt;</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">validation</span><span class="o">.</span><span class="na">getCatalogValidationErrors</span><span class="o">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">catalog</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Catalog</span>
+
+<span class="n">catalog_file_xml</span> <span class="o">=</span> <span class="no">File</span><span class="p">.</span><span class="nf">read</span><span class="p">(</span><span class="s2">"H:/killbill/catalog.xml"</span><span class="p">)</span>
+
+<span class="n">errors</span> <span class="o">=</span> <span class="n">catalog</span><span class="p">.</span><span class="nf">validate_catalog</span><span class="p">(</span><span class="n">catalog_file_xml</span><span class="p">,</span>
+                                  <span class="n">user</span><span class="p">,</span>
+                                  <span class="n">reason</span><span class="p">,</span>
+                                  <span class="n">comment</span><span class="p">,</span>
+                                  <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">catalogApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">CatalogApi</span><span class="p">()</span>
 
 <span class="n">xml_catalog</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"H:/killbill/catalog.xml"</span><span class="p">,</span> <span class="s">"r+"</span><span class="p">).</span><span class="n">read</span><span class="p">()</span>
