@@ -3295,7 +3295,12 @@
 <span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
 
 <span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getRoleDefinition</span><span class="o">(</span><span class="n">role</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code>
+<span class="n">role</span> <span class="o">=</span> <span class="s1">'TestRole'</span>
+
+<span class="n">roleDef</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RoleDefinition</span><span class="p">.</span><span class="nf">find_by_name</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
+
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
 
 <span class="n">role</span> <span class="o">=</span> <span class="s">'TestRole'</span>
 
@@ -3448,7 +3453,17 @@
 <span class="n">roleDefinition</span><span class="o">.</span><span class="na">setPermissions</span><span class="o">(</span><span class="n">permissions</span><span class="o">);</span>
 
 <span class="n">securityApi</span><span class="o">.</span><span class="na">updateRoleDefinition</span><span class="o">(</span><span class="n">roleDefinition</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
+
+<span class="n">roleDef</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RoleDefinition</span><span class="p">.</span><span class="nf">new</span>
+
+<span class="n">roleDef</span><span class="p">.</span><span class="nf">role</span> <span class="o">=</span> <span class="s1">'TestRole'</span>
+<span class="n">roleDef</span><span class="p">.</span><span class="nf">permissions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"account:*"</span><span class="p">,</span> <span class="s2">"invoice:trigger"</span><span class="p">]</span>
+
+<span class="n">roleDef</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
 
 <span class="n">roleDefinition</span> <span class="o">=</span><span class="n">killbill</span><span class="p">.</span><span class="n">RoleDefinition</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s">'TestRole'</span><span class="p">,</span>
                                         <span class="n">permissions</span><span class="o">=</span><span class="p">[</span><span class="s">"invoice:trigger"</span><span class="p">])</span>
