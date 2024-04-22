@@ -3061,7 +3061,23 @@ that work directly at the transaction level.</p>
                                          <span class="kc">null</span><span class="o">,</span> 
                                          <span class="n">requestOptions</span><span class="o">));</span>
 
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="no">TODO</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s2">"demo"</span>
+<span class="n">reason</span> <span class="o">=</span> <span class="kp">nil</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="kp">nil</span>
+
+<span class="n">payment_transaction</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Transaction</span><span class="p">.</span><span class="nf">new</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">payment_id</span> <span class="o">=</span> <span class="s2">"caced2e2-717e-4cf7-a8fd-f760b5d2deb8"</span>
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">transaction_id</span> <span class="o">=</span> <span class="s2">"029d7d7b-d5fa-4a29-93f5-7f927d79f3f3"</span>
+
+<span class="n">status</span> <span class="o">=</span> <span class="s1">'PAYMENT_FAILURE'</span>
+<span class="n">control_plugin_name</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">payment_transaction</span><span class="p">.</span><span class="nf">update_transaction_state</span><span class="p">(</span><span class="n">status</span><span class="p">,</span>
+                                <span class="n">control_plugin_name</span><span class="p">,</span>
+                                <span class="n">user</span><span class="p">,</span>
+                                <span class="n">reason</span><span class="p">,</span>
+                                <span class="n">comment</span><span class="p">,</span>
+                                <span class="n">options</span><span class="p">)</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">paymentTransactionApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">PaymentTransactionApi</span><span class="p">()</span>
 
 <span class="n">payment_transaction_id</span> <span class="o">=</span> <span class="s">'02acb6b2-8139-40d3-816c-8b7ec858d350'</span>
