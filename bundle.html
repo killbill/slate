@@ -4958,7 +4958,76 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 
 <p>If successful, returns a status code of 200 and a list with all bundles.</p>
 <h3 id='search-bundles'>Search bundles</h3>
-<p>Search for a bundle by a specified search string.  The search string is compared to the <code>accountId</code>, the <code>bundleId</code>, and the bundle <code>externalKey</code>. The operation returns all bundle resources in which the search string matches any one of these attributes. Note: the string must match the <em>entire</em> attribute, not just a part of it.</p>
+<p>Search for a bundle by a specified search string.  Search operation can be of two types as follows:</p>
+
+<p><strong>Basic:</strong></p>
+
+<p>The search string is compared to the <code>accountId</code>, the <code>bundleId</code>, and the bundle <code>externalKey</code>. The operation returns all bundle resources in which the search string matches any one of these attributes. Note: the string must match the <em>entire</em> attribute, not just a part of it.</p>
+
+<p><strong>Advanced</strong>:</p>
+
+<p>Advanced search allows filtering on the specified fields. The prefix marker <code>_q=1</code> needs to be specified at the beginning of the search key to indicate this is an advanced query.</p>
+
+<p>The search key should be in the following format: <code>&lt;field&gt;[&lt;operator&gt;]=value</code>. Here:</p>
+
+<ul>
+<li><code>field</code>: The name of the field you want to filter by. Possible values are:
+
+<ul>
+<li>id</li>
+<li>external_key</li>
+<li>account_id</li>
+<li>last_sys_update_date</li>
+<li>original_created_date</li>
+<li>created_by</li>
+<li>created_date</li>
+<li>updated_by</li>
+<li>updated_date</li>
+</ul></li>
+<li><code>&lt;operator&gt;</code>: The comparison operator. This is optional and defaults to the equal to (=) operator if not specified. Possible values are:
+
+<ul>
+<li>and</li>
+<li>eq</li>
+<li>gte</li>
+<li>gt</li>
+<li>like</li>
+<li>lte</li>
+<li>lt</li>
+<li>neq</li>
+<li>or</li>
+</ul></li>
+<li><code>value</code>: The value to be used for filtering.</li>
+</ul>
+
+<p>Some advanced search key examples:</p>
+
+<ul>
+<li>_q=1&amp;account_id=beaefb2e-1747-4472-8a7f-ccd31ef94098 - Return bundles belonging to <code>accountId</code> <code>beaefb2e-1747-4472-8a7f-ccd31ef94098</code> </li>
+<li>_q=1&amp;created_by[like]=admin&amp;created_date[gt]=2024-06-12 - Returns bundles created by <code>admin</code> and created after <code>2024-06-12</code></li>
+</ul>
+
+<p>Note: The symbols <code>[</code>,<code>]</code>,<code>%</code> need to be URL encoded while using <code>cURL</code>/<code>Postman</code> as follows:</p>
+
+<table><thead>
+<tr>
+<th>Symbol</th>
+<th>Encoding</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[</td>
+<td>%5B</td>
+</tr>
+<tr>
+<td>]</td>
+<td>%5D</td>
+</tr>
+<tr>
+<td>%</td>
+<td>%25</td>
+</tr>
+</tbody></table>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -4967,12 +5036,21 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">## Basic Search</span>
+curl <span class="nt">-v</span> <span class="se">\</span>
     <span class="nt">-u</span> admin:password <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://localhost:8080/1.0/kb/bundles/search/another_external_key"</span>
+
+<span class="c">## Advanced Search (search by created_by and created_date)  </span>
+curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://localhost:8080/1.0/kb/bundles/search/_q=1&amp;created_by%5Blike%5D=admin&amp;created_date%5Bgt%5D=2024-06-12"</span>   
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.BundleApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="nc">BundleApi</span> <span class="n">bundleApi</span><span class="o">;</span>
 

@@ -7289,7 +7289,91 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 
 <p>If successful, returns a status code of 200 and a list of all invoices for this tenant.</p>
 <h3 id='search-invoices'>Search invoices</h3>
-<p>Search for an invoice by a specified search string. If the search string is a number, it is compared to the <code>invoiceNumber</code> attribute. An exact match is required. Otherwise, it is compared to the following attributes: <code>invoiceId</code>, <code>accountId</code>, or <code>currency</code>. The operation returns all invoice records in which the search string matches all or part of any one of these attributes.</p>
+<p>Search for an invoice by a specified search string. Search operation can be of two types as follows:</p>
+
+<p><strong>Basic:</strong></p>
+
+<p>If the search string is a number, it is compared to the <code>invoiceNumber</code> attribute. An exact match is required. Otherwise, it is compared to the following attributes: <code>invoiceId</code>, <code>accountId</code>, or <code>currency</code>. The operation returns all invoice records in which the search string matches all or part of any one of these attributes.</p>
+
+<p><strong>Advanced</strong>:</p>
+
+<p>Advanced search is of two types: Search by fields and Search by balance. </p>
+
+<p><strong>Search by field</strong> allows filtering on the specified fields. The prefix marker <code>_q=1</code> needs to be specified at the beginning of the search key to indicate this is an advanced query.</p>
+
+<p><strong>Search by balance</strong> allows filtering based on balance. In addition to the prefix marker <code>_q=1</code>, a balance query pattern (<code>balance=</code>) needs to be specified.</p>
+
+<p>Note that you can either filter by fields or filter by balance, it is not currently possible to do both.</p>
+
+<p>The search key should be in the following format: <code>&lt;field&gt;[&lt;operator&gt;]=value</code>. Here:</p>
+
+<ul>
+<li><code>field</code>: The name of the field you want to filter by. Possible values are:
+
+<ul>
+<li>id</li>
+<li>account_id</li>
+<li>invoice_date</li>
+<li>target_date</li>
+<li>currency</li>
+<li>status</li>
+<li>migrated</li>
+<li>parent_invoice</li>
+<li>grp_id</li>
+<li>created_by</li>
+<li>created_date</li>
+<li>updated_by</li>
+<li>updated_date</li>
+<li>balance (applicable only for search by balance)</li>
+</ul></li>
+<li><code>&lt;operator&gt;</code>: The comparison operator. This is optional and defaults to the equal to (=) operator if not specified. Possible values are:
+
+<ul>
+<li>and</li>
+<li>eq</li>
+<li>gte</li>
+<li>gt</li>
+<li>like</li>
+<li>lte</li>
+<li>lt</li>
+<li>neq</li>
+<li>or</li>
+</ul></li>
+<li><code>value</code>: The value to be used for filtering.</li>
+</ul>
+
+<p>Some search by field search key examples:
+* _q=1&amp;status=DRAFT - Returns invoices in <code>DRAFT</code> status.
+* _q=1&amp;status=DRAFT&amp;currency[eq]=USD - Returns invoices in <code>DRAFT</code> status where currency is <code>USD</code>.</p>
+
+<p>Some search by balance search key examples:</p>
+
+<ul>
+<li>_q=1&amp;balance[eq]=200 - Returns invoices with balance=200.</li>
+<li>_q=1&amp;balance[gt]100 - Returns invoices with balance greater than 100.</li>
+</ul>
+
+<p>Note: The symbols <code>[</code>,<code>]</code>,<code>%</code> need to be URL encoded while using <code>cURL</code>/<code>Postman</code> as follows:</p>
+
+<table><thead>
+<tr>
+<th>Symbol</th>
+<th>Encoding</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>[</td>
+<td>%5B</td>
+</tr>
+<tr>
+<td>]</td>
+<td>%5D</td>
+</tr>
+<tr>
+<td>%</td>
+<td>%25</td>
+</tr>
+</tbody></table>
 
 <p><strong>HTTP Request</strong></p>
 
@@ -7298,12 +7382,29 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">## Basic Search</span>
+curl <span class="nt">-v</span> <span class="se">\</span>
     <span class="nt">-u</span> admin:password <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/search/404a98a8-4dd8-4737-a39f-be871e916a8c"</span> 
+
+<span class="c">## Advanced Search (search by currency &amp; status)  </span>
+curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/search/_q=1&amp;currency%5Beq%5D=USD&amp;status%5Beq%5DDRAFT"</span>
+
+<span class="c">## Advanced Search (Search by balance):</span>
+curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
+    <span class="s2">"http://127.0.0.1:8080/1.0/kb/invoices/search/_q=1&amp;balance%5Beq%5D=200"</span> 
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.InvoiceApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="nc">InvoiceApi</span> <span class="n">invoiceApi</span><span class="o">;</span>
 
@@ -7381,13 +7482,6 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><strong>searchKey</strong></td>
-<td>string</td>
-<td>yes</td>
-<td>none</td>
-<td>What you want to find</td>
-</tr>
 <tr>
 <td><strong>offset</strong></td>
 <td>long</td>
