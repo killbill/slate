@@ -4441,6 +4441,28 @@ curl <span class="nt">-v</span> <span class="se">\</span>
             "planName": "sports-monthly"
         }'</span> <span class="se">\</span>
     <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/e1868fa6-ea97-493e-870d-50787f4b5921'</span>
+
+<span class="c"># with price overrides</span>
+curl <span class="nt">-v</span> <span class="se">\</span>
+    <span class="nt">-X</span> PUT <span class="se">\</span>
+    <span class="nt">-u</span> admin:password <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{
+            "planName": "shotgun-monthly",
+            "priceOverrides": [
+            {
+                "planName": "shotgun-monthly",
+                "phaseType": "EVERGREEN",
+                "fixedPrice": null,
+                "recurringPrice": 400,
+                "usagePrices": []
+            }
+        ]
+}'</span> <span class="se">\</span>
+    <span class="s1">'http://127.0.0.1:8080/1.0/kb/subscriptions/5aa1c9e6-bc90-46ca-a925-8f9a48b9dc7f'</span>       
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SubscriptionApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="nc">SubscriptionApi</span> <span class="n">subscriptionApi</span><span class="o">;</span>
 
