@@ -4551,7 +4551,7 @@ several such emails for one customer account.</p>
 <h2 id='invoice'>Invoice</h2>
 <p>This endpoint provides an API to list the Invoices associated with this account. See section <a href="invoice.html">Invoice</a> for details on invoices.</p>
 <h3 id='retrieve-account-invoices'>Retrieve account invoices</h3>
-<p>List the Invoices associated with this account.</p>
+<p>List the Invoices associated with this account. Note that this endpoint returns shallow invoices (the value 0 is returned for the <code>amount</code>, <code>creditAdj</code>, <code>refundAdj</code> and <code>balance</code> fields) unless <code>includeInvoiceComponents=true</code> is specified.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -4717,7 +4717,7 @@ several such emails for one customer account.</p>
 
 <p>If successful, returns a status of 200 and a list of invoice objects for this account.</p>
 <h3 id='retrieve-paginated-account-invoices'>Retrieve paginated account invoices</h3>
-<p>List the Invoices associated with this account in a paginated format.</p>
+<p>List the Invoices associated with this account in a paginated format. Note that this endpoint return shallow objects (the value 0 is returned for the <code>amount</code>, <code>creditAdj</code>, <code>refundAdj</code> and <code>balance</code> fields). In order to retrieve the account invoices with the actual data for these fields, you could use the <a href="account.html#retrieve-account-invoices">non-paginated retrieve account invoices</a> endpoint with <code>includeInvoiceComponents=true</code>. Alternatively, you could also use the <a href="invoice.htmll#retrieve-an-invoice-by-id">retrieve invoice by id</a> to obtain the complete invoice data for an individual invoice.</p>
 
 <p><strong>HTTP Request</strong> </p>
 
@@ -4766,34 +4766,27 @@ several such emails for one customer account.</p>
 <p>Example Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-   </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">50.0</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"currency"</span><span class="p">:</span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"status"</span><span class="p">:</span><span class="s2">"COMMITTED"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"creditAdj"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"refundAdj"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"invoiceId"</span><span class="p">:</span><span class="s2">"d981abbb-3622-487a-9564-d594c9d04f83"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"invoiceDate"</span><span class="p">:</span><span class="s2">"2013-08-01"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"targetDate"</span><span class="p">:</span><span class="s2">"2013-08-01"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"invoiceNumber"</span><span class="p">:</span><span class="s2">"1563"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"balance"</span><span class="p">:</span><span class="mf">0.0</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"accountId"</span><span class="p">:</span><span class="s2">"2ad52f53-85ae-408a-9879-32a7e59dd03d"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"items"</span><span class="p">:[</span><span class="w">
-         </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"invoiceItemId"</span><span class="p">:</span><span class="s2">"5f3b4e9c-66bd-4c5c-b84a-4ae951cc2f1d"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"invoiceId"</span><span class="p">:</span><span class="s2">"d981abbb-3622-487a-9564-d594c9d04f83"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"accountId"</span><span class="p">:</span><span class="s2">"2ad52f53-85ae-408a-9879-32a7e59dd03d"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"itemType"</span><span class="p">:</span><span class="s2">"EXTERNAL_CHARGE"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"description"</span><span class="p">:</span><span class="s2">"Some description"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"startDate"</span><span class="p">:</span><span class="s2">"2013-08-01"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"amount"</span><span class="p">:</span><span class="mf">50.0</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"currency"</span><span class="p">:</span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"auditLogs"</span><span class="p">:[]</span><span class="w">
-         </span><span class="p">}</span><span class="w">
-      </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"isParentInvoice"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"auditLogs"</span><span class="p">:[]</span><span class="w">
-   </span><span class="p">}</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COMMITTED"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"creditAdj"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"refundAdj"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"invoiceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"92d62ac0-606a-4f31-bb83-e03883cff710"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"invoiceDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-09-19"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"targetDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-09-19"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"invoiceNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"46166"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"73c90e84-42dc-406a-be87-b75c45e581a2"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bundleKeys"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"credits"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"trackingIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nl">"isParentInvoice"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"parentInvoiceId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"parentAccountId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"auditLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
 <p><strong>Query Parameters</strong></p>
