@@ -327,8 +327,8 @@ It can also include the following optional fields:
 
 | Name                           | Type | Required | Default | Description                                                                                            |
 |--------------------------------| ---- | -------- | ------- |--------------------------------------------------------------------------------------------------------|
-| **entitlementDate**            | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm:ssZ` format.     |
-| **billingDate**                | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm:ssZ` format. |
+| **entitlementDate**            | string | no | immediately | Date/DateTime at which the entitlement (service) starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm:ssZ` format. |
+| **billingDate**                | string | no | immediately | Date/DateTime at which the billing starts in `yyyy-mm-dd`/`yyyy-mm-ddThh:mm:ssZ` format.               |
 | **renameKeyIfExistsAndUnused** | boolean | no | true | If true, rename external key if it exists and is unused                                                |
 | **migrated**                   | boolean | no | false | If true, subscription is migrated                                                                      |
 | **skipResponse**               | boolean | no | false | TODO                                                                                                   |
