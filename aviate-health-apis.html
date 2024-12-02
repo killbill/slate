@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kill Bill security API Documentation">
+    <meta name="description" content="Kill Bill aviate-health-apis API Documentation">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
       <title>Kill Bill</title>
       <style media="screen">
@@ -2517,7 +2517,7 @@
                   </ul>
               </li>
               <li>
-                <a href="#security" class="site-navigator__item site-navigator__menu-item" data-title="Security">
+                <a href="security.html" class="site-navigator__item site-navigator__menu-item" data-title="Security">
                   <span>Security</span>
                 </a>
                 
@@ -2712,7 +2712,7 @@
                   </ul>
               </li>
               <li>
-                <a href="aviate-health-apis.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Health APIs">
+                <a href="#aviate-health-apis" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Health APIs">
                   <span>Aviate Health APIs</span>
                 </a>
                 
@@ -2808,14 +2808,10 @@
       </div>
 
       <div class="page__content content">
-        <h1 id='security'>Security</h1>
-<p>Kill Bill supports fine grained roles and permissions for the users accessing the system either through the UI or API. This can be useful in case of organizations looking to limit access across departments/teams etc. The endpoints in this group manage the users, roles and the associated permissions. </p>
-
-<p>Please refer to our <a href="https://docs.killbill.io/latest/user_management.html">RBAC manual</a> for more details.</p>
-<h2 id='users'>Users</h2>
-<p>A user refers to any <code>user or the api</code> that maps to the user credential passed through the API.</p>
-<h2 id='user-roles-resource'>User Roles Resource</h2>
-<p>A <code>userRoles</code> object contains the username, the password and the roles associated with the user. </p>
+        <h1 id='aviate-health-apis'>Aviate Health APIs</h1>
+<p>The Aviate Health feature provides several endpoints that allow you to view the health of your KillBill system and fix problems if any. This section documents the APIs exposed by the Aviate Health feature.</p>
+<h2 id='models'>Models</h2><h3 id='samplesforsamplekindandhost'>SamplesForSampleKindAndHost</h3>
+<p>It has the following fields:</p>
 
 <table><thead>
 <tr>
@@ -2826,26 +2822,44 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>username</strong></td>
+<td><strong>nodeName</strong></td>
 <td>string</td>
-<td>user</td>
-<td>Username for this user.</td>
+<td>system</td>
+<td>Node name</td>
 </tr>
 <tr>
-<td><strong>password</strong></td>
+<td><strong>eventGroup</strong></td>
 <td>string</td>
-<td>user</td>
-<td>Password for this user.</td>
+<td>system</td>
+<td>Event Group</td>
 </tr>
 <tr>
-<td><strong>roles</strong></td>
-<td>list</td>
-<td>user</td>
-<td>List of roles associated with this user.</td>
+<td><strong>eventCategory</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Event Category</td>
+</tr>
+<tr>
+<td><strong>sampleKind</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Sample Kind</td>
+</tr>
+<tr>
+<td><strong>sampleSerializationFormat</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Sample Serialization Format</td>
+</tr>
+<tr>
+<td><strong>samples</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Samples</td>
 </tr>
 </tbody></table>
-<h2 id='subject-resource'>Subject Resource</h2>
-<p>A <code>Subject</code> resource contains the information of the currently logged-in user as well as the related session information.</p>
+<h3 id='healthdata'>HealthData</h3>
+<p>Represents HealthData. It has the following fields:</p>
 
 <table><thead>
 <tr>
@@ -2856,32 +2870,422 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>principal</strong></td>
-<td>string</td>
-<td>user</td>
-<td>Username for this user.</td>
+<td><strong>nodeInfos</strong></td>
+<td>List of NodeInfo</td>
+<td>system</td>
+<td>Details on all nodes in the Kill Bill cluster.</td>
 </tr>
 <tr>
-<td><strong>isAuthenticated</strong></td>
+<td><strong>parkedAccounts</strong></td>
+<td>List of ParkedAccount</td>
+<td>system</td>
+<td>Parked accounts (limit 50), if any.</td>
+</tr>
+<tr>
+<td><strong>lateBusEvents</strong></td>
+<td>List of BusEvent</td>
+<td>system</td>
+<td>Bus events that need processing (limit 100), if any.</td>
+</tr>
+<tr>
+<td><strong>lateNotifications</strong></td>
+<td>List of Notification</td>
+<td>system</td>
+<td>Notifications that need processing (limit 100), if any.</td>
+</tr>
+<tr>
+<td><strong>recentBusEvents</strong></td>
+<td>List of BusEvent</td>
+<td>system</td>
+<td>Recent bus events that were processed (limit 100).</td>
+</tr>
+<tr>
+<td><strong>recentNotifications</strong></td>
+<td>List of Notification</td>
+<td>system</td>
+<td>Recent notifications that were processed (limit 100).</td>
+</tr>
+<tr>
+<td><strong>recentAccessLogs</strong></td>
+<td>List of AccessLog</td>
+<td>system</td>
+<td>Recent HTTP requests from all nodes (at most 2 days).</td>
+</tr>
+</tbody></table>
+<h3 id='accesslog'>AccessLog</h3>
+<p>Represents an Access Log. Captures information about the recent requests made to KB. It has the following fields:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>nodeName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Node name</td>
+</tr>
+<tr>
+<td><strong>hostName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Host name</td>
+</tr>
+<tr>
+<td><strong>timeStamp</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Datetime at which the request was made</td>
+</tr>
+<tr>
+<td><strong>method</strong></td>
+<td>string</td>
+<td>system</td>
+<td>HTTP method used</td>
+</tr>
+<tr>
+<td><strong>uri</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Requested URI</td>
+</tr>
+<tr>
+<td><strong>statusCode</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Status code returned</td>
+</tr>
+<tr>
+<td><strong>bytesSent</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Number of bytes sent</td>
+</tr>
+</tbody></table>
+<h3 id='notification'>Notification</h3>
+<p>Represents a notification from the KB <code>notifications</code> table. It has the following fields:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>recordId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Record id</td>
+</tr>
+<tr>
+<td><strong>className</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Class name</td>
+</tr>
+<tr>
+<td><strong>eventJson</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Event JSON</td>
+</tr>
+<tr>
+<td><strong>userToken</strong></td>
+<td>string</td>
+<td>system</td>
+<td>User token</td>
+</tr>
+<tr>
+<td><strong>createdDate</strong></td>
+<td>string</td>
+<td>system</td>
+<td>DateTime the notification was created</td>
+</tr>
+<tr>
+<td><strong>creatingOwner</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Creating Owner</td>
+</tr>
+<tr>
+<td><strong>processingOwner</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Processing Owner</td>
+</tr>
+<tr>
+<td><strong>processingAvailableDate</strong></td>
+<td>string</td>
+<td>system</td>
+<td>DateTime the notification becomes available for processing</td>
+</tr>
+<tr>
+<td><strong>processingState</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Processing State (One of <code>AVAILABLE</code>, <code>IN_PROCESSING</code>, <code>PROCESSED</code>, <code>REMOVED</code>, <code>FAILED</code>, <code>REAPED</code>)</td>
+</tr>
+<tr>
+<td><strong>errorCount</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Error Count</td>
+</tr>
+<tr>
+<td><strong>searchKey1</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Search Key 1</td>
+</tr>
+<tr>
+<td><strong>searchKey2</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Search Key 2</td>
+</tr>
+<tr>
+<td><strong>queueName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Queue Name</td>
+</tr>
+<tr>
+<td><strong>effectiveDate</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Effective Date</td>
+</tr>
+<tr>
+<td><strong>futureUserToken</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Future User Token</td>
+</tr>
+</tbody></table>
+<h3 id='busevent'>BusEvent</h3>
+<p>Represents a Bus event from the KB <code>bus_events</code> table. It has the following fields:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>recordId</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Record id</td>
+</tr>
+<tr>
+<td><strong>className</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Class name</td>
+</tr>
+<tr>
+<td><strong>eventJson</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Event JSON</td>
+</tr>
+<tr>
+<td><strong>userToken</strong></td>
+<td>string</td>
+<td>system</td>
+<td>User token</td>
+</tr>
+<tr>
+<td><strong>createdDate</strong></td>
+<td>string</td>
+<td>system</td>
+<td>DateTime the bus event was created</td>
+</tr>
+<tr>
+<td><strong>creatingOwner</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Creating Owner</td>
+</tr>
+<tr>
+<td><strong>processingOwner</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Processing Owner</td>
+</tr>
+<tr>
+<td><strong>processingAvailableDate</strong></td>
+<td>string</td>
+<td>system</td>
+<td>DateTime the bus event becomes available for processing</td>
+</tr>
+<tr>
+<td><strong>processingState</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Processing State (One of <code>AVAILABLE</code>, <code>IN_PROCESSING</code>, <code>PROCESSED</code>, <code>REMOVED</code>, <code>FAILED</code>, <code>REAPED</code>)</td>
+</tr>
+<tr>
+<td><strong>errorCount</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Error Count</td>
+</tr>
+<tr>
+<td><strong>searchKey1</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Search Key 1</td>
+</tr>
+<tr>
+<td><strong>searchKey2</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Search Key 2</td>
+</tr>
+</tbody></table>
+<h3 id='nodeinfo'>NodeInfo</h3>
+<p>Represents information about a KB node. It has the following fields:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>time</strong></td>
+<td>int</td>
+<td>system</td>
+<td>Time</td>
+</tr>
+<tr>
+<td><strong>kbClock</strong></td>
+<td>string</td>
+<td>system</td>
+<td>TODO</td>
+</tr>
+<tr>
+<td><strong>nodeName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Node Name</td>
+</tr>
+<tr>
+<td><strong>bootTime</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Boot Time</td>
+</tr>
+<tr>
+<td><strong>lastUpdatedDate</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Last Updated Date</td>
+</tr>
+<tr>
+<td><strong>killbillVersion</strong></td>
+<td>string</td>
+<td>system</td>
+<td>KB version</td>
+</tr>
+<tr>
+<td><strong>apiVersion</strong></td>
+<td>string</td>
+<td>system</td>
+<td>killbill-api version</td>
+</tr>
+<tr>
+<td><strong>platformVersion</strong></td>
+<td>string</td>
+<td>system</td>
+<td>killbill-platform version</td>
+</tr>
+<tr>
+<td><strong>commonVersion</strong></td>
+<td>string</td>
+<td>system</td>
+<td>killbill-commons version</td>
+</tr>
+<tr>
+<td><strong>pluginApiVersion</strong></td>
+<td>string</td>
+<td>system</td>
+<td>killbill-plugin-api version</td>
+</tr>
+<tr>
+<td><strong>pluginInfos</strong></td>
+<td>List of PluginInfo</td>
+<td>system</td>
+<td>Information about plugins on a node</td>
+</tr>
+</tbody></table>
+<h3 id='plugininfo'>PluginInfo</h3>
+<p>Represents information about a plugin. It has the following fields:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>pluginKey</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Plugin Key</td>
+</tr>
+<tr>
+<td><strong>bundleSymbolicName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Bundle Symbolic Name</td>
+</tr>
+<tr>
+<td><strong>pluginName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Plugin Name</td>
+</tr>
+<tr>
+<td><strong>version</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Plugin Version</td>
+</tr>
+<tr>
+<td><strong>pluginState</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Plugin State</td>
+</tr>
+<tr>
+<td><strong>isSelectedForStart</strong></td>
 <td>boolean</td>
-<td>user</td>
-<td>Is the user authenticated.</td>
-</tr>
-<tr>
-<td><strong>isRemembered</strong></td>
-<td>boolean</td>
-<td>user</td>
-<td>Specifies if <code>Remember Me</code> is checked for this user.</td>
-</tr>
-<tr>
-<td><strong>session</strong></td>
-<td>json</td>
 <td>system</td>
-<td>Session information for the user. Refer <a href="security.html#session-resource">Session Resource</a> for more information.</td>
+<td>Flag that indicates if plugin is started</td>
+</tr>
+<tr>
+<td><strong>services</strong></td>
+<td>List of PluginServiceInfo</td>
+<td>Information about services within a plugin</td>
+<td></td>
 </tr>
 </tbody></table>
-<h2 id='role-definition-resource'>Role Definition Resource</h2>
-<p>A <code>RoleDefinition</code> resource contains the information of the permissions associated with a role.</p>
+<h3 id='pluginserviceinfo'>PluginServiceInfo</h3>
+<p>Represents information about services offered by a plugin. It has the following fields:</p>
 
 <table><thead>
 <tr>
@@ -2892,799 +3296,527 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>role</strong></td>
+<td><strong>serviceTypeName</strong></td>
 <td>string</td>
-<td>user</td>
-<td>Name of the role.</td>
+<td>system</td>
+<td>Service Type</td>
 </tr>
 <tr>
-<td><strong>permissions</strong></td>
-<td>list</td>
-<td>user</td>
-<td>List of permissions associated with the role.</td>
+<td><strong>registrationName</strong></td>
+<td>string</td>
+<td>system</td>
+<td>Bundle Registration Name</td>
 </tr>
 </tbody></table>
-<h2 id='session-resource'>Session Resource</h2>
-<p>A <code>Session</code> resource contains the session information of the currently logged-in user.</p>
+<h2 id='endpoints'>Endpoints</h2><h3 id='retrieve-health-data'>Retrieve Health Data</h3>
+<p>Return the current HealthData report. It is meant to show the current health of the cluster, show debugging information, and draw attention to potential problems.</p>
 
-<table><thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Generated by</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>id</strong></td>
-<td>string</td>
-<td>system</td>
-<td>UUID for this session.</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>datetime</td>
-<td>system</td>
-<td>Specifies the start date for the session in UTC.</td>
-</tr>
-<tr>
-<td><strong>lastAccessDate</strong></td>
-<td>datetime</td>
-<td>system</td>
-<td>Specifies the last access timestamp within the session in UTC.</td>
-</tr>
-<tr>
-<td><strong>timeout</strong></td>
-<td>long</td>
-<td>system</td>
-<td>Specifies the default time in ms that any session may remain idle before expiring.</td>
-</tr>
-<tr>
-<td><strong>host</strong></td>
-<td>string</td>
-<td>system</td>
-<td>Specifies the host information for the session.</td>
-</tr>
-</tbody></table>
-<h3 id='list-user-permissions'>List user permissions</h3>
-<p>Lists the permissions associated with the current API user.</p>
+<p>//TODO - mention about com.killbill.billing.plugin.aviate.lockSleepMilliSeconds??</p>
 
-<p><strong>HTTP Request</strong> </p>
+<p><strong>HTTP Request</strong></p>
 
-<p><code>GET http://127.0.0.1:8080/1.0/kb/security/permissions</code> </p>
+<p><code>GET /plugins/aviate-plugin/v1/health/data</code></p>
 
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-     <span class="nt">-u</span> admin:password <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/security/permissions"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.Strings</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">Strings</span> <span class="n">currentUserPermissions</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getCurrentUserPermissions</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Security</span>
-
-<span class="n">currentUserPermissions</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="nf">find_permissions</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">currentUserPermissions</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_current_user_permissions</span><span class="p">()</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">currentUserPermissions</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">string</span><span class="p">[],</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getCurrentUserPermissions</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$currentUserPermissions</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCurrentUserPermissions</span><span class="p">();</span>
-</code></pre></div>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="s2">"invoice:commit"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"invoice:item_adjust"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"entitlement:pause_resume"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"invoice:write_off"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account:credit"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account:create"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"invoice:credit"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"entitlement:cancel"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account:update"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"invoice:void"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"payment:transition"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"account:charge"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"payment:refund"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"invoice:delete_cba"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"invoice:dry_run"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"payment:chargeback"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"payment:trigger"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"entitlement:transfer"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"entitlement:create"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"payment:notification"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"entitlement:change_plan"</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre></div>
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 200 and a list of permissions associated with the current API user.</p>
-<h3 id='get-user-information'>Get user information</h3>
-<p>Lists the session information associated with the currently logged-in (principal) user.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>GET http://127.0.0.1:8080/1.0/kb/security/subject</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-     <span class="nt">-u</span> admin:password <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/security/subject"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.Subject</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">Subject</span> <span class="n">currentUserSubject</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getCurrentUserSubject</span><span class="o">(</span><span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">Security</span>
-
-<span class="n">currentUserSubject</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="nf">find_subject</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">currentUserSubject</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_current_user_subject</span><span class="p">()</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">currentUserSubject</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">Subject</span><span class="p">,</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getCurrentUserSubject</span><span class="p">();</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$currentUserSubject</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getCurrentUserSubject</span><span class="p">();</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/data
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"principal"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"isAuthenticated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"isRemembered"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"session"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6738239-b803-4fa5-85b9-b3ad13a8312c"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-11-12T07:17:56.856Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"lastAccessDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-11-12T07:27:03.792Z"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">3600000</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"host"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0:0:0:0:0:0:0:1"</span><span class="w">
+  </span><span class="nl">"nodeInfos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1732797874123</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"kbClock"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T12:44:34.076252400"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"nodeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESKTOP-NCUS49R"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bootTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T12:37:23.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lastUpdatedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T12:37:23.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"killbillVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.24.12-SNAPSHOT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"apiVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.54.0"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"platformVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.41.11"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"commonVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.26.4"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pluginApiVersion"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.27.3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pluginInfos"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"pluginKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aviate"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"bundleSymbolicName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"com.kill-bill.billing.plugin.java.aviate-plugin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aviate-plugin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.13-SNAPSHOT"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RUNNING"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"isSelectedForStart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"services"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"serviceTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.killbill.billing.osgi.api.Healthcheck"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"registrationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aviate-plugin"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"serviceTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"javax.servlet.Servlet"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"registrationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"aviate-plugin"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"pluginKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"bundleSymbolicName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.killbill-platform-osgi-bundles-kpm"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.killbill-platform-osgi-bundles-kpm"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RUNNING"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"isSelectedForStart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"services"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"pluginKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"bundleSymbolicName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.killbill-platform-osgi-bundles-logger"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.killbill-platform-osgi-bundles-logger"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RUNNING"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"isSelectedForStart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"services"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"pluginKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"bundleSymbolicName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.killbill-platform-osgi-bundles-metrics"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.killbill-platform-osgi-bundles-metrics"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RUNNING"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"isSelectedForStart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"services"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"pluginKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"bundleSymbolicName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.kill-bill.billing.plugin.java.stripe-plugin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stripe-plugin"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"8.0.1"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"pluginState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RUNNING"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"isSelectedForStart"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"services"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"serviceTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.killbill.billing.payment.plugin.api.PaymentPluginApi"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"registrationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"killbill-stripe"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"serviceTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.killbill.billing.osgi.api.Healthcheck"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"registrationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"killbill-stripe"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"serviceTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"javax.servlet.Servlet"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"registrationName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"killbill-stripe"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"parkedAccounts"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"lateBusEvents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"className"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.killbill.billing.tenant.api.user.DefaultTenantConfigChangeInternalEvent"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"eventJson"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{</span><span class="se">\"</span><span class="s2">id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">85edc9d5-8683-434f-bfd5-ef2ebd7ab9b3</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">CATALOG</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">searchKey1</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">searchKey2</span><span class="se">\"</span><span class="s2">:1,</span><span class="se">\"</span><span class="s2">userToken</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">c4fe88f8-36c3-461d-8ace-0f0a7efc1a42</span><span class="se">\"</span><span class="s2">}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">"c4fe88f8-36c3-461d-8ace-0f0a7efc1a42"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-30T06:38:25.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"creatingOwner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESKTOP-NCUS49R"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingOwner"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingAvailableDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-30T06:38:25.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PROCESSED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"errorCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"searchKey1"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"searchKey2"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"lateNotifications"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"recentBusEvents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">184174</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"className"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.killbill.billing.util.broadcast.DefaultBroadcastInternalEvent"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"eventJson"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{</span><span class="se">\"</span><span class="s2">serviceName</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">broadcast-service</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">START_PLUGIN</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">jsonEvent</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{</span><span class="se">\\\"</span><span class="s2">pluginKey</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">aviate</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">pluginName</span><span class="se">\\\"</span><span class="s2">:null,</span><span class="se">\\\"</span><span class="s2">pluginVersion</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">1.0.13-d197203</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">properties</span><span class="se">\\\"</span><span class="s2">:[{</span><span class="se">\\\"</span><span class="s2">key</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">kbVersion</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">value</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">0.24.12-SNAPSHOT</span><span class="se">\\\"</span><span class="s2">}]}</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">searchKey1</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">searchKey2</span><span class="se">\"</span><span class="s2">:0,</span><span class="se">\"</span><span class="s2">userToken</span><span class="se">\"</span><span class="s2">:null}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T04:21:37.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"creatingOwner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESKTOP-NCUS49R"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingOwner"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingAvailableDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T04:21:37.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PROCESSED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"errorCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"searchKey1"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"searchKey2"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"recordId"</span><span class="p">:</span><span class="w"> </span><span class="mi">184173</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"className"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.killbill.billing.util.broadcast.DefaultBroadcastInternalEvent"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"eventJson"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{</span><span class="se">\"</span><span class="s2">serviceName</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">broadcast-service</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">type</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">INSTALL_PLUGIN</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">jsonEvent</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">{</span><span class="se">\\\"</span><span class="s2">pluginKey</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">aviate</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">pluginName</span><span class="se">\\\"</span><span class="s2">:null,</span><span class="se">\\\"</span><span class="s2">pluginVersion</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">1.0.13-d197203</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">properties</span><span class="se">\\\"</span><span class="s2">:[{</span><span class="se">\\\"</span><span class="s2">key</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">pluginUri</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">value</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">https://dl.cloudsmith.io/Y9NsUe0Lb5JBOnwf/killbill/aviate/maven/com/kill-bill/billing/plugin/java/aviate-plugin/1.0.13-d197203/aviate-plugin-1.0.13-d197203.jar</span><span class="se">\\\"</span><span class="s2">},{</span><span class="se">\\\"</span><span class="s2">key</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">pluginType</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">value</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">java</span><span class="se">\\\"</span><span class="s2">},{</span><span class="se">\\\"</span><span class="s2">key</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">kbVersion</span><span class="se">\\\"</span><span class="s2">,</span><span class="se">\\\"</span><span class="s2">value</span><span class="se">\\\"</span><span class="s2">:</span><span class="se">\\\"</span><span class="s2">0.24.12-SNAPSHOT</span><span class="se">\\\"</span><span class="s2">}]}</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">searchKey1</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">searchKey2</span><span class="se">\"</span><span class="s2">:0,</span><span class="se">\"</span><span class="s2">userToken</span><span class="se">\"</span><span class="s2">:null}"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"userToken"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T04:21:32.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"creatingOwner"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESKTOP-NCUS49R"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingOwner"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingAvailableDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-11-28T04:21:32.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"processingState"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PROCESSED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"errorCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"searchKey1"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"searchKey2"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"recentAccessLogs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"nodeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESKTOP-NCUS49R"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"hostName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27/Nov/2024:10:58:21 +0530"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/1.0/kb/security/subject"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"401"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bytesSent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"nodeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DESKTOP-NCUS49R"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"hostName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"27/Nov/2024:10:58:34 +0530"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GET"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"uri"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/1.0/kb/security/permissions"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"statusCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"bytesSent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>None</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a <code>HealthData</code> object.</p>
+<h3 id='retrieve-host-samples'>Retrieve Host Samples</h3>
+<p>Returns metrics data for dashboards.</p>
+
+<p>//TODO add more information here</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET /plugins/aviate-plugin/v1/health/host_samples</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/host_samples?group<span class="o">=</span>shiro.pool.Wait&amp;from<span class="o">=</span>2024-01-01T00:00:00&amp;to<span class="o">=</span>2025-03-14T00:00:00
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+
+<p>TODO</p>
+
+<p><strong>Request Body</strong></p>
+
+<p>None</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>startTimeParameter</strong></td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Start time for the samples</td>
+</tr>
+<tr>
+<td><strong>endTimeParameter</strong></td>
+<td>string</td>
+<td>false</td>
+<td>Current time</td>
+<td>End time for the samples</td>
+</tr>
+<tr>
+<td><strong>hostNames</strong></td>
+<td>List of String</td>
+<td>false</td>
+<td>None</td>
+<td>List of host names. Multiple host names can be specified by specifying a separate <code>hostNames</code> parameter corresponding to each host</td>
+</tr>
+<tr>
+<td><strong>group</strong></td>
+<td>string</td>
+<td>false</td>
+<td>None</td>
+<td>Event group for the requested sample kinds</td>
+</tr>
+<tr>
+<td><strong>category_and_sample_kind</strong></td>
+<td>List of String</td>
+<td>false</td>
+<td>None</td>
+<td>List of samples kinds (format: category,sample_kind). Multiple category and sample kinds can be specified by specifying a separate <code>category_and_sample_kind</code> parameter corresponding to each value</td>
+</tr>
+<tr>
+<td><strong>granularity</strong></td>
+<td>SampleGranularity</td>
+<td>false</td>
+<td>None</td>
+<td>Granularity (One of <code>SECOND</code>, <code>MINUTE</code>, <code>HOUR</code>, <code>DAY</code>)</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and the requested host data.</p>
+
+<p>// ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it</p>
+<h3 id='fix-stuck-bus-entries'>Fix Stuck Bus Entries</h3>
+<p>Fixes stuck bus entries. Basically sets the <code>creating_owner</code>, <code>processing_owner</code>, <code>processing_avialable_date</code>, <code>processing_state</code>, <code>error_count</code> fields to <code>null</code> in the <code>bus_events</code> table for the specified recordIds.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT /plugins/aviate-plugin/v1/health/bus/fixup</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/bus/fixup
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A List of <code>recordId</code> values from the <code>bus_events</code> table that need to be fixed.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and an empty body.</p>
+<h3 id='fix-stuck-notification-entries'>Fix Stuck Notification Entries</h3>
+<p>Fixes stuck notification entries. Basically sets the <code>creating_owner</code>, <code>processing_owner</code>, <code>processing_avialable_date</code>, <code>processing_state</code>, <code>error_count</code>, <code>effective_date</code> fields to <code>null</code> in the <code>notifications</code> table for the specified recordIds.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT /plugins/aviate-plugin/v1/health/notifications/fixup</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/notifications/fixup
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A List of <code>recordId</code> values from the <code>notifications</code> table that need to be fixed.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and an empty body.</p>
+<h3 id='retrieve-diagnostic-report'>Retrieve Diagnostic Report</h3>
+<p>This endpoint generates a diagnostic report. The report includes logs, tenant config, Kill Bill &amp; system config, and account data, similar to the <a href="https://docs.killbill.io/latest/how-to-use-kpm-diagnostic">kpm diagnostic tool</a>, either as JSON or as a ZIP file.</p>
+
+<p>A few pointers:</p>
+
+<ul>
+<li>if the <code>-H &quot;Accept: application/zip&quot; header is specified</code>, creates a zip file </li>
+<li>At least one query parameter needs to be specified, otherwise an empty response is returned.</li>
+<li>HealthData and logs are returned only when the <code>-H &quot;Accept: application/zip&quot;</code> header is specified</li>
+<li>Logs from only a single node will be included</li>
+</ul>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>GET /plugins/aviate-plugin/v1/health/diagnostic</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">## Example 1 - Returns data for the specified account in JSON format</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId<span class="o">=</span>af65531a-fc2e-43cd-8af1-6ec0709d9700
+
+<span class="c">## Example 2 - Creates a zip file. Includes account information, Kill Bill configuration data and tenant configuration data</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"Accept: application/zip"</span> <span class="se">\</span>
+     <span class="s2">"http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId=af65531a-fc2e-43cd-8af1-6ec0709d9700&amp;withKillbillConfig=true&amp;withTenantConfig=true"</span> <span class="nt">-JO</span>
+
+<span class="c">## Example 3 - Creates a zip file. Includes account information and the catalina.2024-11-27.log and localhost_access_log.2024-11-27.txt logs from the Tomcat directory.</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"Accept: application/zip"</span>  <span class="se">\</span>
+     <span class="s2">"http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId=68704a87-23d8-46db-a1ba-310daa8e1f4f&amp;withLogs=true&amp;logsFilenames=catalina.2024-11-27.log&amp;logsFilenames=localhost_access_log.2024-11-27.txt"</span> <span class="nt">-JO</span>
+
+<span class="c">## Example 4- Creates a zip file. Includes account information and the killbill.out/kaui.out log files from the /var/lib/killbill/logs directory.</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s2">"Accept: application/zip"</span>  <span class="se">\</span>
+     <span class="s2">"http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId=68704a87-23d8-46db-a1ba-310daa8e1f4f&amp;withLogs=true&amp;logsDir=/var/lib/killbill/logs&amp;logsFilenames=killbill.out&amp;logsFilenames=kaui.out"</span> <span class="nt">-JO</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"account.data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-- account_history record_id|id|target_record_id|external_key|email|name|first_name_length|currency|billing_cycle_day_local|parent_account_id|is_payment_delegated_to_parent|payment_method_id|reference_time|time_zone|locale|address1|address2|company_name|city|state_or_province|country|postal_code|phone|notes|migrated|change_type|created_by|created_date|updated_by|updated_date|tenant_record_id</span><span class="se">\n</span><span class="s2">12999|402d7c14-0318-4706-b110-eff813d59ce2|7077|user29Nov1||||USD|0||||2024-11-29T04:11:51.000+00:00|Etc/UTC|en_US||||||US||||false|INSERT|admin|2024-11-29T04:11:51.000+00:00|admin|2024-11-29T04:11:51.000+00:00|4621</span><span class="se">\n</span><span class="s2">-- accounts record_id|id|external_key|email|name|first_name_length|currency|billing_cycle_day_local|parent_account_id|is_payment_delegated_to_parent|payment_method_id|reference_time|time_zone|locale|address1|address2|company_name|city|state_or_province|country|postal_code|phone|notes|migrated|created_date|created_by|updated_date|updated_by|tenant_record_id</span><span class="se">\n</span><span class="s2">7077|68704a87-23d8-46db-a1ba-310daa8e1f4f|user29Nov1||||USD|0||||2024-11-29T04:11:51.000+00:00|Etc/UTC|en_US||||||US||||false|2024-11-29T04:11:51.000+00:00|admin|2024-11-29T04:11:51.000+00:00|admin|4621</span><span class="se">\n</span><span class="s2">-- audit_log record_id|id|target_record_id|table_name|change_type|created_date|created_by|reason_code|comments|user_token|account_record_id|tenant_record_id</span><span class="se">\n</span><span class="s2">525321|0d34f135-5a72-4acc-90d9-7e8615717cf0|12999|ACCOUNT_HISTORY|INSERT|2024-11-29T04:11:51.000+00:00|admin|||1b557c51-4a01-45d0-977b-49cd27810153|7077|4621</span><span class="se">\n</span><span class="s2">-- bus_events_history record_id|class_name|event_json|user_token|created_date|creating_owner|processing_owner|processing_available_date|processing_state|error_count|search_key1|search_key2</span><span class="se">\n</span><span class="s2">184177|org.killbill.billing.account.api.user.DefaultAccountCreationEvent|{</span><span class="se">\"</span><span class="s2">data</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">externalKey</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">user29Nov1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">user29Nov1</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">firstNameLength</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">billCycleDayLocal</span><span class="se">\"</span><span class="s2">:0,</span><span class="se">\"</span><span class="s2">currency</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">USD</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">parentAccountId</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">isPaymentDelegatedToParent</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">paymentMethodId</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">referenceTime</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">2024-11-29T04:11:51.000Z</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">timeZone</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Etc/UTC</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">locale</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">en_US</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">address1</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">address2</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">companyName</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">city</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">stateOrProvince</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">postalCode</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">country</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">US</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">phone</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">notes</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">isMigrated</span><span class="se">\"</span><span class="s2">:false},</span><span class="se">\"</span><span class="s2">id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">68704a87-23d8-46db-a1ba-310daa8e1f4f</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">searchKey1</span><span class="se">\"</span><span class="s2">:7077,</span><span class="se">\"</span><span class="s2">searchKey2</span><span class="se">\"</span><span class="s2">:4621,</span><span class="se">\"</span><span class="s2">userToken</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1b557c51-4a01-45d0-977b-49cd27810153</span><span class="se">\"</span><span class="s2">}|1b557c51-4a01-45d0-977b-49cd27810153|2024-11-29T04:11:51.000+00:00|DESKTOP-NCUS49R|DESKTOP-NCUS49R|2024-11-29T04:11:51.000+00:00|PROCESSED|0|7077|4621</span><span class="se">\n</span><span class="s2">-- bus_ext_events_history record_id|class_name|event_json|user_token|created_date|creating_owner|processing_owner|processing_available_date|processing_state|error_count|search_key1|search_key2</span><span class="se">\n</span><span class="s2">182535|org.killbill.billing.beatrix.extbus.DefaultBusExternalEvent|{</span><span class="se">\"</span><span class="s2">objectId</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">68704a87-23d8-46db-a1ba-310daa8e1f4f</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">objectType</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">ACCOUNT</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">eventType</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">ACCOUNT_CREATION</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">accountId</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">68704a87-23d8-46db-a1ba-310daa8e1f4f</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">tenantId</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">a7ac9384-f2aa-42cb-8367-9f298d228fae</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">metaData</span><span class="se">\"</span><span class="s2">:null}|1b557c51-4a01-45d0-977b-49cd27810153|2024-11-29T04:11:51.000+00:00|DESKTOP-NCUS49R|DESKTOP-NCUS49R|2024-11-29T04:11:51.000+00:00|PROCESSED|0|7077|4621</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tenant_config.data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CATALOG"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"&lt;catalog-xml-here&gt;"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INVOICE_TRANSLATION_fr_FR"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"values"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"invoiceTitle=FACTURE</span><span class="se">\n</span><span class="s2">invoiceDate=Date:</span><span class="se">\n</span><span class="s2">invoiceNumber=Facture #"</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"killbill_configuration.data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"awt.toolkit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sun.awt.windows.WToolkit"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"java.specification.version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.server.updateCheck.url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.github.com/killbill/killbill/master/profiles/killbill/src/main/resources/update-checker/killbill-server-update-list.properties"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sun.cpu.isalist"</span><span class="p">:</span><span class="w"> </span><span class="s2">"amd64"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sun.jnu.encoding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cp1252"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.billing.plugin.kpm.bundlesPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D:/var/tmp/bundles"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"java.naming.provider.url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rmi://127.0.0.1:1099"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sun.arch.data.model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.billing.plugin.auth.adminUsername"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.billing.plugin.kpm.kpmPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D:/Software/Ruby27-x64/bin/kpm.bat"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.billing.plugin.auth.adminPassword"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*****"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"com.killbill.billing.plugin.aviate.enableUsageApis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"kaui.db.password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"*****"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.server.lookupEnvironmentVariables"</span><span class="p">:</span><span class="w"> </span><span class="s2">"true"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"shared.loader"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"java.util.logging.manager"</span><span class="p">:</span><span class="w"> </span><span class="s2">"org.apache.juli.ClassLoaderLogManager"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"org.killbill.persistent.bus.external.tableName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bus_ext_events"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"java.vm.info"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mixed mode"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"java.vm.version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"11.0.6+8-LTS"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"java.class.version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55.0"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 200 and the session information associated with the current API user.</p>
-<h3 id='add-a-new-user-with-roles'>Add a new user with roles</h3>
-<p>Create a new user (username, password, associated roles).</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>POST http://127.0.0.1:8080/1.0/kb/security/users</code> </p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-    <span class="nt">-X</span> POST <span class="se">\</span>
-    <span class="nt">-u</span> admin:password <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    <span class="nt">-d</span> <span class="s1">'{ "username": "testUserName", "password": "testUserPassword", "roles": ["TestRole"]}'</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/security/users"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"TestRole"</span><span class="o">);</span>
-
-<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="o">();</span>
-
-<span class="n">userRoles</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"TestUserName"</span><span class="o">);</span>
-<span class="n">userRoles</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"TestUserPassword"</span><span class="o">);</span>
-<span class="n">userRoles</span><span class="o">.</span><span class="na">setRoles</span><span class="o">(</span><span class="n">roles</span><span class="o">);</span>
-
-<span class="nc">UserRoles</span> <span class="n">newUserDetails</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">addUserRoles</span><span class="o">(</span><span class="n">userRoles</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'TestUserName'</span>
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s1">'TestUserPassword'</span>
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">roles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'TestRole'</span><span class="p">]</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">userBody</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">UserRoles</span><span class="p">(</span><span class="n">username</span> <span class="o">=</span> <span class="s">'testUserName'</span><span class="p">,</span>
-                              <span class="n">password</span> <span class="o">=</span> <span class="s">'testUserPassword'</span><span class="p">,</span>
-                              <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s">'TestRole'</span><span class="p">,</span><span class="s">'finance'</span><span class="p">])</span>
-
-<span class="n">securityApi</span><span class="p">.</span><span class="n">add_user_roles</span><span class="p">(</span><span class="n">userBody</span><span class="p">,</span>
-                           <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
-                           <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
-                           <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span> <span class="o">=</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUserName</span><span class="dl">'</span><span class="p">,</span>
-                                  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUserPassword</span><span class="dl">'</span><span class="p">,</span>
-                                  <span class="na">roles</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">finance</span><span class="dl">'</span><span class="p">]};</span>
-
-<span class="nx">securityApi</span><span class="p">.</span><span class="nx">addUserRoles</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span><span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
-<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
-<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
-
-<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="p">();</span>
-
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setUsername</span><span class="p">(</span><span class="s1">'TestUserName'</span><span class="p">);</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setPassword</span><span class="p">(</span><span class="s1">'TestUserPassword'</span><span class="p">);</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setRoles</span><span class="p">([</span><span class="s1">'TestRole'</span><span class="p">]);</span>
-
-<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">addUserRoles</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
-</code></pre></div>
 <p><strong>Request Body</strong></p>
-
-<p>A <code>UserRoles</code> object consisting of the username, password and the roles to be associated with the user. The required attributes are <code>username</code>,<code>password</code>,<code>roles</code>.</p>
-
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 201 and the <code>UserRoles</code> object for the newly created user.</p>
-<h3 id='update-a-user-password'>Update a user password</h3>
-<p>Updates the password for a user.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>PUT http://127.0.0.1:8080/1.0/kb/security/users/{username}/password</code></p>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-    <span class="nt">-X</span> PUT <span class="se">\</span>
-    <span class="nt">-u</span> admin:password <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    <span class="nt">-d</span> <span class="s1">'{ "username": "testUserName", "password": "Updatedpassword"}'</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}/password"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"TestUserName"</span><span class="o">;</span>
-
-<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="o">();</span>
-
-<span class="n">userRoles</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="s">"TestUserPassUpdated"</span><span class="o">);</span>    
-
-<span class="n">securityApi</span><span class="o">.</span><span class="na">updateUserPassword</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">userRoles</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'userName'</span>
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">password</span> <span class="o">=</span> <span class="s1">'userNameUpdatedpassword'</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">UserRoles</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'userName'</span><span class="p">,</span>
-                               <span class="n">password</span><span class="o">=</span><span class="s">'userNameUpdatedpassword'</span><span class="p">,</span>
-                               <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s">'TestRole'</span><span class="p">])</span>
-
-<span class="n">securityApi</span><span class="p">.</span><span class="n">update_user_password</span><span class="p">(</span><span class="s">'userName'</span><span class="p">,</span>
-                                  <span class="n">userRoles</span><span class="p">,</span>
-                                  <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
-                                  <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
-                                  <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span> <span class="o">=</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">userName</span><span class="dl">'</span><span class="p">,</span>
-                                  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">userNameUpdatedpassword</span><span class="dl">'</span><span class="p">,</span>
-                                  <span class="na">roles</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">finance</span><span class="dl">'</span><span class="p">]};</span>
-
-<span class="nx">securityApi</span><span class="p">.</span><span class="nx">updateUserPassword</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">userName</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
-<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
-<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
-
-<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="p">();</span>
-
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setUsername</span><span class="p">(</span><span class="s1">'TestUserName'</span><span class="p">);</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setPassword</span><span class="p">(</span><span class="s1">'TestUserUpdatedPassword'</span><span class="p">);</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setRoles</span><span class="p">([</span><span class="s1">'TestRole'</span><span class="p">]);</span>
-
-<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updateUserPassword</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
-</code></pre></div>
-<p><strong>Request Body</strong></p>
-
-<p>A <code>userRoles</code> object consisting of the username, password and the roles to be associated with the user. The required attributes are <code>username</code>,<code>password</code>,<code>roles</code>.</p>
-
-<p><strong>Query Parameters</strong></p>
 
 <p>None</p>
 
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 204 and an empty body.</p>
-<h3 id='get-roles-associated-with-a-user'>Get roles associated with a user</h3>
-<p>Lists the roles associated with a user.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>GET http://127.0.0.1:8080/1.0/kb/security/users/{username}/roles</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-     <span class="nt">-u</span> admin:password <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}/roles"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"testuser"</span><span class="o">;</span>
-
-<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getUserRoles</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'testuser'</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">list</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_user_roles</span><span class="p">(</span><span class="s">'testUser'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">response</span><span class="p">:</span> <span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span><span class="p">,</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getUserRoles</span><span class="p">(</span><span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$username</span> <span class="o">=</span> <span class="s1">'testUser'</span><span class="p">;</span>
-
-<span class="nv">$userRoles</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getUserRoles</span><span class="p">(</span><span class="nv">$username</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testUser"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"roles"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"TestRole"</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
 <p><strong>Query Parameters</strong></p>
 
-<p>None</p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>accountId</strong></td>
+<td>UUID</td>
+<td>false</td>
+<td>none</td>
+<td>Account Id for which to create the diagnostic report</td>
+</tr>
+<tr>
+<td><strong>withTenantConfig</strong></td>
+<td>boolean</td>
+<td>false</td>
+<td>false</td>
+<td>If specified, includes per-tenant configuration properties (like catalog, overdue, etc.)</td>
+</tr>
+<tr>
+<td><strong>withSystemConfig</strong></td>
+<td>boolean</td>
+<td>false</td>
+<td>false</td>
+<td>If specified, includes system information (KB/Kaui version, environment variables, OS information, CPU information, memory information, disk information, etc).</td>
+</tr>
+<tr>
+<td><strong>withKillbillConfig</strong></td>
+<td>boolean</td>
+<td>false</td>
+<td>false</td>
+<td>If specified, includes the global Kill Bill configuration properties</td>
+</tr>
+<tr>
+<td><strong>withHealthData</strong></td>
+<td>boolean</td>
+<td>false</td>
+<td>false</td>
+<td>If specified, includes health data.</td>
+</tr>
+<tr>
+<td><strong>withLogs</strong></td>
+<td>boolean</td>
+<td>false</td>
+<td>false</td>
+<td>If specified, includes the logs specified via the <code>logsDir</code> parameter. If <code>logsDir</code> is not specified, includes the Tomcat logs. In either case, only the log files specified via <code>logFileNames</code> are included.</td>
+</tr>
+<tr>
+<td><strong>logsSize</strong></td>
+<td>int</td>
+<td>false</td>
+<td>5242880</td>
+<td>Desired log size. Applicable only if withLogs=true is specifed.</td>
+</tr>
+<tr>
+<td><strong>logsDir</strong></td>
+<td>string</td>
+<td>false</td>
+<td>The value of <code>com.killbill.billing.plugin.aviate.logsPath</code> if specified or TOMCAT_HOME/logs (TOMCAT_HOME is determined using the <code>catalina.base</code> system property</td>
+<td>The directory from which to include the logs. Works only if <code>withLogs=true</code> is specifed.</td>
+</tr>
+<tr>
+<td><strong>logsFilenames</strong></td>
+<td>List of String</td>
+<td>false</td>
+<td>catalina.out</td>
+<td>Desired log file names. Works only if <code>withLogs=true</code> is specifed. Multiple log file names can be specified by specifying a separate <code>logsFilenames</code> parameter corresponding to each value</td>
+</tr>
+</tbody></table>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a UserRoles object.</p>
-<h3 id='update-roles-associated-with-a-user'>Update roles associated with a user</h3>
-<p>Updates the roles associated with a user.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>PUT http://127.0.0.1:8080/1.0/kb/security/users/{username}/roles</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-    <span class="nt">-X</span> PUT <span class="se">\</span>
-    <span class="nt">-u</span> admin:password <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    <span class="nt">-d</span> <span class="s1">'{"roles":["TestRole"]}'</span> <span class="se">\</span>
-    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}/roles"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.UserRoles</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"UpdatedRole"</span><span class="o">);</span>
-
-<span class="nc">UserRoles</span> <span class="n">userRoles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="o">();</span>
-
-<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"TestUser"</span><span class="o">;</span>
-
-<span class="n">userRoles</span><span class="o">.</span><span class="na">setRoles</span><span class="o">(</span><span class="n">roles</span><span class="o">);</span>
-
-<span class="n">securityApi</span><span class="o">.</span><span class="na">updateUserRoles</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">userRoles</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'TestUser'</span>
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">roles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'UpdatedRole'</span><span class="p">]</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">UserRoles</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">'testUser'</span><span class="p">,</span>                               
-                               <span class="n">roles</span><span class="o">=</span><span class="p">[</span><span class="s">'TestRole'</span><span class="p">])</span>
-
-<span class="n">securityApi</span><span class="p">.</span><span class="n">update_user_roles</span><span class="p">(</span><span class="s">'testUser'</span><span class="p">,</span>
-                               <span class="n">userRoles</span><span class="p">,</span>
-                               <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
-                               <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
-                               <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">UserRoles</span> <span class="o">=</span> <span class="p">{</span><span class="na">username</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">,</span>
-                                  <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">testUserPassword</span><span class="dl">'</span><span class="p">,</span>
-                                  <span class="na">roles</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">]};</span>
-
-<span class="nx">securityApi</span><span class="p">.</span><span class="nx">updateUserRoles</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
-<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
-<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
-
-<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserRoles</span><span class="p">();</span>
-
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setUsername</span><span class="p">(</span><span class="s1">'TestUserName'</span><span class="p">);</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setPassword</span><span class="p">(</span><span class="s1">'TestUserPassword'</span><span class="p">);</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">setRoles</span><span class="p">([</span><span class="s1">'TestUpdatedRole'</span><span class="p">]);</span>
-
-<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updateUserRoles</span><span class="p">(</span><span class="nv">$body</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
-</code></pre></div>
-<p><strong>Request Body</strong></p>
-
-<p>A <code>userRoles</code> object consisting of the username, password and the roles to be associated with the user. The required attributes are <code>username</code>,<code>password</code>,<code>roles</code>.</p>
-
-<p><strong>Query Parameters</strong></p>
-
-<p>None</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 204 and an empty body.</p>
-<h3 id='invalidate-an-existing-user'>Invalidate an existing user</h3>
-<p>Invalidates a user.</p>
-
-<p><strong>HTTP Request</strong> </p>
-
-<p><code>DELETE http://127.0.0.1:8080/1.0/kb/security/users/{username}</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-    <span class="nt">-X</span> DELETE <span class="se">\</span>
-    <span class="nt">-u</span> admin:password <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
-    <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\ </span>   
-    <span class="s2">"http://localhost:8080/1.0/kb/security/users/{username}"</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="s">"testuser"</span><span class="o">;</span>
-
-<span class="n">securityApi</span><span class="o">.</span><span class="na">invalidateUser</span><span class="o">(</span><span class="n">userName</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
-
-<span class="n">userRoles</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">UserRoles</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">username</span> <span class="o">=</span> <span class="s1">'TestUser'</span>
-
-<span class="n">userRoles</span><span class="p">.</span><span class="nf">destroy</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">securityApi</span><span class="p">.</span><span class="n">invalidate_user</span><span class="p">(</span><span class="s">'testUser'</span><span class="p">,</span>
-                             <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
-                             <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
-                             <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="nx">securityApi</span><span class="p">.</span><span class="nx">invalidateUser</span><span class="p">(</span><span class="dl">'</span><span class="s1">testUser</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
-<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
-<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
-
-<span class="nv">$username</span> <span class="o">=</span> <span class="s1">'username'</span><span class="p">;</span>
-
-<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">invalidateUser</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
-</code></pre></div>
-<p><strong>Query Parameters</strong></p>
-
-<p>None</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 204 and an empty body.</p>
-<h2 id='roles'>Roles</h2>
-<p>Kill Bill allows to segregate permissions associated with a user by defining the roles assigned to the user. For example, a user having finance role can have permissions associated to the payments, viewing invoice etc. whereas a user having sales role can have permissions to generate invoices, viewing payments etc.</p>
-<h3 id='retrieve-a-role-definition'>Retrieve a role definition</h3>
-<p>Retrieve an existing role definition.</p>
-
-<p><strong>HTTP Request</strong></p>
-
-<p><code>GET http://127.0.0.1:8080/1.0/kb/security/roles/{role}</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-     <span class="nt">-u</span> admin:password <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"Accept: application/json"</span> <span class="se">\</span>
-     <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles/{role}'</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.RoleDefinition</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
-
-<span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">getRoleDefinition</span><span class="o">(</span><span class="n">role</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code>
-<span class="n">role</span> <span class="o">=</span> <span class="s1">'TestRole'</span>
-
-<span class="n">roleDef</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RoleDefinition</span><span class="p">.</span><span class="nf">find_by_name</span><span class="p">(</span><span class="n">role</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span>
-
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">role</span> <span class="o">=</span> <span class="s">'TestRole'</span>
-
-<span class="n">roleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="p">.</span><span class="n">get_role_definition</span><span class="p">(</span><span class="n">role</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">roleDefinition</span><span class="p">:</span><span class="nx">AxiosResponse</span><span class="o">&lt;</span><span class="nx">killbill</span><span class="p">.</span><span class="nx">RoleDefinition</span><span class="p">,</span><span class="nx">any</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">securityApi</span><span class="p">.</span><span class="nx">getRoleDefinition</span><span class="p">(</span><span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$role</span> <span class="o">=</span> <span class="s1">'TestRole'</span><span class="p">;</span>
-
-<span class="nv">$roleDefinition</span> <span class="o">=</span> <span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">getRoleDefinition</span><span class="p">(</span><span class="nv">$role</span><span class="p">);</span>
-</code></pre></div>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ROLE"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"account:*"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"invoice:trigger"</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 200 and the role object with associated permissions.</p>
-<h3 id='add-a-role-definition'>Add a role definition</h3>
-<p>Create a new role definition.</p>
-
-<p><strong>HTTP Request</strong></p>
-
-<p><code>POST http://127.0.0.1:8080/1.0/kb/roles</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-     <span class="nt">-X</span> POST <span class="se">\</span>
-     <span class="nt">-u</span> admin:password <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-     <span class="nt">-d</span> <span class="s1">'{
-             "role": "ROLE",
-             "permissions": ["account:*","invoice:trigger"]
-     }'</span> <span class="se">\</span>
-     <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles'</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.RoleDefinition</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">permissions</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"account:*"</span><span class="o">,</span> <span class="s">"invoice:trigger"</span><span class="o">);</span>
-
-<span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
-
-<span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="o">();</span>
-<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
-<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setPermissions</span><span class="o">(</span><span class="n">permissions</span><span class="o">);</span>
-
-<span class="nc">RoleDefinition</span> <span class="n">newRoleDefinition</span> <span class="o">=</span> <span class="n">securityApi</span><span class="o">.</span><span class="na">addRoleDefinition</span><span class="o">(</span><span class="n">roleDefinition</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
-
-<span class="n">roleDef</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RoleDefinition</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">roleDef</span><span class="p">.</span><span class="nf">role</span> <span class="o">=</span> <span class="s1">'testRole17thDec'</span>
-<span class="n">roleDef</span><span class="p">.</span><span class="nf">permissions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"account:*"</span><span class="p">,</span> <span class="s2">"invoice:trigger"</span><span class="p">]</span>
-
-<span class="n">roleDef</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">roleDefinition</span> <span class="o">=</span><span class="n">killbill</span><span class="p">.</span><span class="n">RoleDefinition</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s">'TestRole'</span><span class="p">,</span>
-                                        <span class="n">permissions</span><span class="o">=</span><span class="p">[</span><span class="s">"account:*"</span><span class="p">,</span><span class="s">"invoice:trigger"</span><span class="p">])</span>
-
-<span class="n">securityApi</span><span class="p">.</span><span class="n">add_role_definition</span><span class="p">(</span><span class="n">roleDefinition</span><span class="p">,</span>
-                                <span class="n">created_by</span><span class="o">=</span><span class="s">'demo'</span><span class="p">,</span>
-                                <span class="n">reason</span><span class="o">=</span><span class="s">'reason'</span><span class="p">,</span> 
-                                <span class="n">comment</span><span class="o">=</span><span class="s">'comment'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">RoleDefinition</span> <span class="o">=</span> <span class="p">{</span><span class="na">role</span><span class="p">:</span> <span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span>
-                                       <span class="na">permissions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">account:*</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">invoice:trigger</span><span class="dl">'</span><span class="p">]};</span>
-
-<span class="nx">securityApi</span><span class="p">.</span><span class="nx">addRoleDefinition</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
-<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
-<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
-
-<span class="nv">$roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="p">();</span>
-
-<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setRole</span><span class="p">(</span><span class="s1">'TestRole'</span><span class="p">);</span>
-<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setPermissions</span><span class="p">([</span><span class="s1">'account:*'</span><span class="p">,</span> <span class="s1">'invoice:trigger'</span><span class="p">]);</span>
-
-<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">addRoleDefinition</span><span class="p">(</span><span class="nv">$roleDefinition</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
-</code></pre></div>
-<p><strong>Request Body</strong></p>
-
-<p>A <code>RoleDefinition</code> object consisting of the role and the list of permissions to be associated with the role. The required attributes are <code>role</code> and the associated <code>permissions</code>.</p>
-
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 201 and an empty body.</p>
-<h3 id='update-a-role-definition'>Update a role definition</h3>
-<p>Update an existing role permissions.</p>
-
-<p><strong>HTTP Request</strong></p>
-
-<p><code>PUT http://127.0.0.1:8080/1.0/kb/roles</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-v</span> <span class="se">\</span>
-     <span class="nt">-X</span> PUT <span class="se">\</span>
-     <span class="nt">-u</span> admin:password <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiKey: bob"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-ApiSecret: lazar"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
-     <span class="nt">-d</span> <span class="s1">'{
-             "role": "ROLE",
-             "permissions": ["account:*"]
-     }'</span> <span class="se">\</span>
-     <span class="s1">'http://127.0.0.1:8080/1.0/kb/security/roles'</span>
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.SecurityApi</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">org.killbill.billing.client.model.gen.RoleDefinition</span><span class="o">;</span>
-
-<span class="nc">SecurityApi</span> <span class="n">securityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SecurityApi</span><span class="o">(</span><span class="n">killBillHttpClient</span><span class="o">);</span>
-
-<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">permissions</span> <span class="o">=</span> <span class="nc">List</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"account:*"</span><span class="o">,</span> <span class="s">"invoice:trigger"</span><span class="o">);</span>
-
-<span class="nc">String</span> <span class="n">role</span> <span class="o">=</span> <span class="s">"TestRole"</span><span class="o">;</span>
-
-<span class="nc">RoleDefinition</span> <span class="n">roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="o">();</span>
-<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setRole</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
-<span class="n">roleDefinition</span><span class="o">.</span><span class="na">setPermissions</span><span class="o">(</span><span class="n">permissions</span><span class="o">);</span>
-
-<span class="n">securityApi</span><span class="o">.</span><span class="na">updateRoleDefinition</span><span class="o">(</span><span class="n">roleDefinition</span><span class="o">,</span> <span class="n">requestOptions</span><span class="o">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="n">user</span> <span class="o">=</span> <span class="s1">'user'</span>
-<span class="n">reason</span> <span class="o">=</span> <span class="s1">'reason'</span>
-<span class="n">comment</span> <span class="o">=</span> <span class="s1">'comment'</span>
-
-<span class="n">roleDef</span> <span class="o">=</span> <span class="no">KillBillClient</span><span class="o">::</span><span class="no">Model</span><span class="o">::</span><span class="no">RoleDefinition</span><span class="p">.</span><span class="nf">new</span>
-
-<span class="n">roleDef</span><span class="p">.</span><span class="nf">role</span> <span class="o">=</span> <span class="s1">'TestRole'</span>
-<span class="n">roleDef</span><span class="p">.</span><span class="nf">permissions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"account:*"</span><span class="p">,</span> <span class="s2">"invoice:trigger"</span><span class="p">]</span>
-
-<span class="n">roleDef</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">user</span><span class="p">,</span><span class="n">reason</span><span class="p">,</span><span class="n">comment</span><span class="p">,</span><span class="n">options</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="n">securityApi</span> <span class="o">=</span> <span class="n">killbill</span><span class="p">.</span><span class="n">SecurityApi</span><span class="p">()</span>
-
-<span class="n">roleDefinition</span> <span class="o">=</span><span class="n">killbill</span><span class="p">.</span><span class="n">RoleDefinition</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s">'TestRole'</span><span class="p">,</span>
-                                        <span class="n">permissions</span><span class="o">=</span><span class="p">[</span><span class="s">"invoice:trigger"</span><span class="p">])</span>
-
-<span class="n">securityApi</span><span class="p">.</span><span class="n">update_role_definition</span><span class="p">(</span><span class="n">roleDefinition</span><span class="p">,</span><span class="s">'KB'</span><span class="p">)</span>
-</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">securityApi</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">SecurityApi</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
-
-<span class="kd">const</span> <span class="nx">body</span><span class="p">:</span> <span class="nx">killbill</span><span class="p">.</span><span class="nx">RoleDefinition</span> <span class="o">=</span> <span class="p">{</span><span class="na">role</span><span class="p">:</span> <span class="dl">'</span><span class="s1">TestRole</span><span class="dl">'</span><span class="p">,</span>
-                                       <span class="na">permissions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">invoice:trigger</span><span class="dl">'</span><span class="p">]};</span>
-
-<span class="nx">securityApi</span><span class="p">.</span><span class="nx">updateRoleDefinition</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="dl">'</span><span class="s1">created_by</span><span class="dl">'</span><span class="p">);</span>
-</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="nv">$apiInstance</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getSecurityApi</span><span class="p">();</span>
-
-<span class="nv">$xKillbillCreatedBy</span> <span class="o">=</span> <span class="s2">"user"</span><span class="p">;</span>
-<span class="nv">$xKillbillReason</span> <span class="o">=</span> <span class="s2">"reason"</span><span class="p">;</span>
-<span class="nv">$xKillbillComment</span> <span class="o">=</span> <span class="s2">"comment"</span><span class="p">;</span>
-
-<span class="nv">$roleDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RoleDefinition</span><span class="p">();</span>
-
-<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setRole</span><span class="p">(</span><span class="s1">'TestRole'</span><span class="p">);</span>
-<span class="nv">$roleDefinition</span><span class="o">-&gt;</span><span class="nf">setPermissions</span><span class="p">([</span><span class="s1">'account:*'</span><span class="p">,</span> <span class="s1">'invoice:*'</span><span class="p">]);</span>
-
-<span class="nv">$apiInstance</span><span class="o">-&gt;</span><span class="nf">updateRoleDefinition</span><span class="p">(</span><span class="nv">$roleDefinition</span><span class="p">,</span><span class="nv">$xKillbillCreatedBy</span><span class="p">,</span><span class="nv">$xKillbillReason</span><span class="p">,</span><span class="nv">$xKillbillComment</span><span class="p">);</span>
-</code></pre></div>
-<p><strong>Request Body</strong></p>
-
-<p>A <code>RoleDefinition</code> object consisting of the role and the list of permissions to be associated with the role. The required attributes are <code>role</code> and the associated <code>permissions</code>.</p>
-
-<p><strong>Query Parameters</strong></p>
-
-<p>None.</p>
-
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 204 and an empty body.</p>
+<p>If successful, returns a status code of 200 and the requested diagnostic data.</p>
 
       </div>
     </main>
