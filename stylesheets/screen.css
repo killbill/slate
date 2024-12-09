@@ -836,7 +836,6 @@ body.dark .theme-switch {
       color: var(--nav-active-color);
       text-decoration: none; }
     .site-navigator__item > span {
-      flex-grow: 1;
       overflow-x: hidden;
       white-space: nowrap;
       text-overflow: ellipsis; }
@@ -1143,3 +1142,19 @@ body.dark .theme-switch {
 
   .content {
     padding: 24px; } }
+.dot {
+  flex-shrink: 0;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: inherit;
+  margin-left: 5px;
+  line-height: 0;
+  /* Override any inherited line-height */
+  padding: 0;
+  vertical-align: middle;
+  position: relative;
+  /* Isolate from surrounding layout */
+  overflow: hidden;
+  /* Prevent parent influence on size */ }
