@@ -2817,6 +2817,56 @@
                       </li>
                   </ul>
               </li>
+              <li>
+                <a href="aviate-metering-apis.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Metering APIs">
+                  <span>Aviate Metering APIs</span>
+                    <span class="dot" style="background-color: #7C3AE3;"></span>
+                </a>
+                
+                  <ul class="site-navigator__submenu">
+                      <li class="site-navigator__submenu-container">
+                        <a href="#models" class="site-navigator__item site-navigator__submenu-item" data-title="Models">
+                          <span>Models</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#billingmeter" class="site-navigator__item site-navigator__submenu-item" data-title="BillingMeter">
+                                  <span>BillingMeter</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#usageevent" class="site-navigator__item site-navigator__submenu-item" data-title="UsageEvent">
+                                  <span>UsageEvent</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#endpoints" class="site-navigator__item site-navigator__submenu-item" data-title="Endpoints">
+                          <span>Endpoints</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#create-billing-meter" class="site-navigator__item site-navigator__submenu-item" data-title="Create Billing Meter">
+                                  <span>Create Billing Meter</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#retrieve-billing-meter" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve Billing Meter">
+                                  <span>Retrieve Billing Meter</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#submit-usage-events" class="site-navigator__item site-navigator__submenu-item" data-title="Submit Usage Events">
+                                  <span>Submit Usage Events</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
           </ul>
             <ul class="site-navigator__footer">
                 <li><a href="mailto:support@killbill.io">Report a doc problem </a></li>
@@ -2826,7 +2876,7 @@
 
       <div class="page__content content">
         <h1 id='aviate-catalog-apis'>Aviate Catalog APIs</h1>
-<p>The Aviate catalog plugin exposes catalog APIs to create individual catalog entries such as plans, products, and pricelists without the need to manage entire catalog versions. This section documents the catalog APIs exported by the Aviate catalog plugin.</p>
+<p>The <a href="https://docs.killbill.io/latest/aviate-catalog-plugin">Aviate catalog plugin</a> exposes catalog APIs to create individual catalog entries such as plans, products, and pricelists without the need to manage entire catalog versions. This section documents the catalog APIs exported by the Aviate catalog plugin.</p>
 <h2 id='before-you-begin'>Before You Begin</h2><h3 id='tenancy-amp-account-level'>Tenancy &amp; Account-level</h3>
 <p>Each of the aviate plugin endpoints below require specifying the standard Kill Bill <code>X-killbill-apiKey</code> and <code>X-killbill-apisecret</code> headers, which identify the tenant that should be used. In addition, it is possible to specify an optional <code>accountId</code> query parameter to create/access catalog entries on a per-account level. </p>
 
