@@ -335,14 +335,13 @@ None
 
 If successful, returns a `HealthData` object.
 
-### Retrieve Host Samples
+### Retrieve Metrics
 
 Returns metrics data for dashboards.
 
-
 **HTTP Request**
 
-`GET /plugins/aviate-plugin/v1/health/host_samples`
+`GET /plugins/aviate-plugin/v1/health/metrics`
 
 > Example Request:
 
@@ -352,7 +351,7 @@ curl -X GET \
      -H 'Authorization: Bearer ${ID_TOKEN}' \     
      -H 'X-killbill-apiKey: bob' \
      -H 'X-killbill-apisecret: lazar' \
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/host_samples?group=shiro.pool.Wait&from=2024-01-01T00:00:00&to=2025-03-14T00:00:00
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?from=2024-12-19T00%3A00%3A00&to=2025-01-04T11%3A59%3A00&name=queue.bus.incoming&name=queue.bus.processing&name=queue.bus.late&granularity=HOUR'
 ```
 
 ```java
@@ -372,7 +371,18 @@ curl -X GET \
 
 > Example Response:
 
-TODO
+````json
+[
+  {
+    "nodeName": "",
+    "eventGroup": "gauge",
+    "eventCategory": "queue.bus.late",
+    "sampleKind": "value",
+    "samplesSerializationFormat": "csv",
+    "samples": "1736394067,0,1736394129,0,1736394189,0,1736394249,0,1736394309,0,1736394369,0,1736394429,0,1736394490,0,1736394550,0,1736394610,0,1736394670,0,1736394730,0,1736394790,0,1736394851,0,1736394911,0,1736394971,0,1736395031,0,1736395091,0,1736395151,0,1736395211,0,1736395272,0,1736395332,0,1736395392,0,1736395452,0,1736395512,0,1736395572,0,1736395632,0,1736395692,0,1736395753,0,1736395813,0,1736395873,0,1736395933,0,1736395993,0,1736396053,0,1736396113,0,1736396174,0,1736396234,0,1736396294,0,1736396354,0,1736396414,0,1736396474,0,1736396534,0,1736396595,0,1736396655,0,1736396715,0,1736396775,0,1736396835,0,1736396895,0,1736396955,0,1736397016,0,1736397076,0,1736397136,0,1736397196,0,1736397256,0,1736397316,0,1736397377,0,1736397437,0,1736397497,0,1736397557,0,1736397617,0,1736397677,0,1736397738,0,1736397798,0,1736397858,0,1736397918,0,1736397978,0,1736398038,0,1736398099,0,1736398159,0,1736398219,0,1736398279,0,1736398339,0,1736398399,0,1736398460,0,1736398520,0,1736398580,0"
+  }
+]
+````
 
 
 **Request Body**
@@ -381,21 +391,51 @@ None
 
 **Query Parameters**
 
-| Name                   | Type           | Required | Default      | Description                                                                                                                                                                                         |
-|------------------------|----------------|----------|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| **startTimeParameter**          | string         | false    | none         | Start time for the samples                                                                                                                                                                          |
-| **endTimeParameter**   | string         | false    | Current time | End time for the samples                                                                                                                                                                            |
-| **hostNames**   | List of String | false    | None         | List of host names. Multiple host names can be specified by specifying a separate `hostNames` parameter corresponding to each host                                                                  |
-| **group** | string         | false    | None         | Event group for the requested sample kinds                                                                                                                                                          |
-| **category_and_sample_kind**     | List of String | false    | None         | List of samples kinds (format: category,sample_kind). Multiple category and sample kinds can be specified by specifying a separate `category_and_sample_kind` parameter corresponding to each value |
-| **granularity**     | SampleGranularity           | false    | None         | Granularity (One of `SECOND`, `MINUTE`, `HOUR`, `DAY`)                                                                                                                                              |
+| Name                         | Type           | Required | Default      | Description                                                                                                                                                                                         |
+|------------------------------|----------------|----------|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| **from**                     | string         | false    | none         | Start time for the samples                                                                                                                                                                          |
+| **to**                       | string         | false    | Current time | End time for the samples                                                                                                                                                                            |
+| **host**                     | List of String | false    | None         | List of host names. Multiple host names can be specified by specifying a separate `host` parameter corresponding to each host                                                                       |
+| **name**                     | List of String         | false    | None         | Metric name. Multiple metrics can be specified by specifying a separate `name` parameter corresponding to each metric                                                                               |
+| **granularity**              | SampleGranularity           | false    | None         | Granularity (One of `SECOND`, `MINUTE`, `HOUR`, `DAY`)                                                                                                                                              |
+
+Below is the list of published metric names. Any of these can be specified as the value for the name parameter.
+
+* queue.bus.late
+* queue.bus.incoming
+* queue.bus.processing
+* queue.notifications.late
+* queue.notifications.incoming
+* queue.notifications.processing
+* logs.rates.warn
+* logs.rates.error
+* servlets.responses.ok
+* servlets.responses.created
+* servlets.responses.badRequest
+* servlets.responses.noContent
+* servlets.responses.notFound
+* servlets.responses.serverError
+* servlets.responses.other
+* main.pool.TotalConnections
+* main.pool.ActiveConnections
+* main.pool.IdleConnections
+* main.pool.Wait
+* osgi.pool.TotalConnections
+* osgi.pool.ActiveConnections
+* osgi.pool.IdleConnections
+* osgi.pool.Wait
+* shiro.pool.TotalConnections
+* shiro.pool.ActiveConnections
+* shiro.pool.IdleConnections
+* shiro.pool.Wait
 
 **Response**
 
-If successful, returns a status code of 200 and the requested host data.
+If successful, returns a status code of 200 and the requested metric data.
 
 
-// ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it
+<!-- ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it
+--> 
 
 ### Fix Stuck Bus Entries
 
