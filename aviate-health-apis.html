@@ -2794,8 +2794,8 @@
                                 </a>
                               </li>
                               <li>
-                                <a href="#retrieve-host-samples" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve Host Samples">
-                                  <span>Retrieve Host Samples</span>
+                                <a href="#retrieve-metrics" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve Metrics">
+                                  <span>Retrieve Metrics</span>
                                 </a>
                               </li>
                               <li>
@@ -3559,29 +3559,64 @@
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a <code>HealthData</code> object.</p>
-<h3 id='retrieve-host-samples'>Retrieve Host Samples</h3>
-<p>Returns metrics data for dashboards.</p>
+<h3 id='retrieve-metrics'>Retrieve Metrics</h3>
+<p>This endpoint returns metric data. This data can be used to assess the health of the system and gain visibility into it. The metrics are computed by the aviate plugin when the <code>com.killbill.billing.plugin.aviate.enableHealthReporter</code> property is set to true. Each metric is a timeseries that can be analyzed and/or displayed.</p>
+
+<p>Some metrics are global to the deployment (i.e. independent of the number of Kill Bill nodes/containers deployed) and some others are per-node - in which case the <code>nodeName</code> parameter can be used to return metrics for a specific node.</p>
 
 <p><strong>HTTP Request</strong></p>
 
-<p><code>GET /plugins/aviate-plugin/v1/health/host_samples</code></p>
+<p><code>GET /plugins/aviate-plugin/v1/health/metrics</code></p>
 
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Returns metric data for the queue.bus.incoming,queue.bus.processing, queue.bus.late for the duration 2024-12-19T00:00:00 to 2025-01-04T11:59:00 with HOURLY granularity </span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/host_samples?group<span class="o">=</span>shiro.pool.Wait&amp;from<span class="o">=</span>2024-01-01T00:00:00&amp;to<span class="o">=</span>2025-03-14T00:00:00
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?from<span class="o">=</span>2024-12-19T00:00:00&amp;to<span class="o">=</span>2025-01-04T11:59:00&amp;metricName<span class="o">=</span>queue.bus.incoming&amp;metricName<span class="o">=</span>queue.bus.processing&amp;metricName<span class="o">=</span>queue.bus.late&amp;granularity<span class="o">=</span>HOUR<span class="s1">'
+
+# Returns the metric data for the logs.rates.error metric on the ip-172-31-6-87 node
+curl -X GET \
+     -H '</span>Content-Type: application/json<span class="s1">' \
+     -H '</span>Authorization: Bearer <span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s1">' \     
+     -H '</span>X-killbill-apiKey: bob<span class="s1">' \
+     -H '</span>X-killbill-apisecret: lazar<span class="s1">' \
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=logs.rates.error'</span>  
+
+<span class="c"># Returns metric data for the logs.rates.error metric for all the nodes:</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?name<span class="o">=</span>logs.rates.error<span class="s1">'   
+
+# Returns metric data for the queue.bus.incoming metric for all the nodes (nodeName is ignored since queue.bus.incoming is a global metric):
+curl -X GET \
+     -H '</span>Content-Type: application/json<span class="s1">' \
+     -H '</span>Authorization: Bearer <span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s1">' \     
+     -H '</span>X-killbill-apiKey: bob<span class="s1">' \
+     -H '</span>X-killbill-apisecret: lazar<span class="s1">' \
+     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=queue.bus.incoming'</span> 
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
-
-<p>TODO</p>
-
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"nodeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"eventGroup"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gauge"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"eventCategory"</span><span class="p">:</span><span class="w"> </span><span class="s2">"queue.bus.late"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sampleKind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"samplesSerializationFormat"</span><span class="p">:</span><span class="w"> </span><span class="s2">"csv"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"samples"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1736394067,0,1736394129,0,1736394189,0,1736394249,0,1736394309,0,1736394369,0,1736394429,0,1736394490,0,1736394550,0,1736394610,0,1736394670,0,1736394730,0,1736394790,0,1736394851,0,1736394911,0,1736394971,0,1736395031,0,1736395091,0,1736395151,0,1736395211,0,1736395272,0,1736395332,0,1736395392,0,1736395452,0,1736395512,0,1736395572,0,1736395632,0,1736395692,0,1736395753,0,1736395813,0,1736395873,0,1736395933,0,1736395993,0,1736396053,0,1736396113,0,1736396174,0,1736396234,0,1736396294,0,1736396354,0,1736396414,0,1736396474,0,1736396534,0,1736396595,0,1736396655,0,1736396715,0,1736396775,0,1736396835,0,1736396895,0,1736396955,0,1736397016,0,1736397076,0,1736397136,0,1736397196,0,1736397256,0,1736397316,0,1736397377,0,1736397437,0,1736397497,0,1736397557,0,1736397617,0,1736397677,0,1736397738,0,1736397798,0,1736397858,0,1736397918,0,1736397978,0,1736398038,0,1736398099,0,1736398159,0,1736398219,0,1736398279,0,1736398339,0,1736398399,0,1736398460,0,1736398520,0,1736398580,0"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
 <p><strong>Request Body</strong></p>
 
 <p>None</p>
@@ -3598,54 +3633,80 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>startTimeParameter</strong></td>
+<td><strong>from</strong></td>
 <td>string</td>
 <td>false</td>
 <td>none</td>
-<td>Start time for the samples</td>
+<td>DateTime from which to start including metric data in <code>yyyy-dd-MMThh:mm:ss</code> format. If omitted, all the data since the aviate plugin started computing metrics is returned.</td>
 </tr>
 <tr>
-<td><strong>endTimeParameter</strong></td>
+<td><strong>to</strong></td>
 <td>string</td>
 <td>false</td>
 <td>Current time</td>
-<td>End time for the samples</td>
+<td>DateTime up to which metric data should be included in <code>yyyy-dd-MMThh:mm:ss</code> format. If omitted, all the data up to the current DateTime is returned.</td>
 </tr>
 <tr>
-<td><strong>hostNames</strong></td>
+<td><strong>nodeName</strong></td>
 <td>List of String</td>
 <td>false</td>
 <td>None</td>
-<td>List of host names. Multiple host names can be specified by specifying a separate <code>hostNames</code> parameter corresponding to each host</td>
+<td>Specifies the name of the node for which metric data should be returned. This parameter applies only to node-specific metrics. When provided, it retrieves metric data for the specified node. For global metrics, this parameter is ignored, global data is returned regardless of the node. If omitted for a node-specific metric, metric data for all nodes will be returned. To specify multiple nodes, include a separate <code>nodeName</code> parameter for each node.</td>
 </tr>
 <tr>
-<td><strong>group</strong></td>
-<td>string</td>
-<td>false</td>
-<td>None</td>
-<td>Event group for the requested sample kinds</td>
-</tr>
-<tr>
-<td><strong>category_and_sample_kind</strong></td>
+<td><strong>metricName</strong></td>
 <td>List of String</td>
 <td>false</td>
 <td>None</td>
-<td>List of samples kinds (format: category,sample_kind). Multiple category and sample kinds can be specified by specifying a separate <code>category_and_sample_kind</code> parameter corresponding to each value</td>
+<td>Name of the metric for which to return data.(See list below). To obtain data for multiple metrics, include a separate <code>metricName</code> parameter for each metric.</td>
 </tr>
 <tr>
 <td><strong>granularity</strong></td>
 <td>SampleGranularity</td>
 <td>false</td>
-<td>None</td>
-<td>Granularity (One of <code>SECOND</code>, <code>MINUTE</code>, <code>HOUR</code>, <code>DAY</code>)</td>
+<td><code>MINUTE</code></td>
+<td>Specifies the time unit for the intervals between consecutive data points. One of <code>MINUTE</code>, <code>HOUR</code>, <code>DAY</code>)</td>
 </tr>
 </tbody></table>
 
+<p>Below is the list of metric names. Any of these can be specified as the value for the <code>metricName</code> parameter.</p>
+
+<ul>
+<li>queue.bus.late</li>
+<li>queue.bus.incoming</li>
+<li>queue.bus.processing</li>
+<li>queue.notifications.late</li>
+<li>queue.notifications.incoming</li>
+<li>queue.notifications.processing</li>
+<li>logs.rates.warn</li>
+<li>logs.rates.error</li>
+<li>servlets.responses.ok</li>
+<li>servlets.responses.created</li>
+<li>servlets.responses.badRequest</li>
+<li>servlets.responses.noContent</li>
+<li>servlets.responses.notFound</li>
+<li>servlets.responses.serverError</li>
+<li>servlets.responses.other</li>
+<li>main.pool.TotalConnections</li>
+<li>main.pool.ActiveConnections</li>
+<li>main.pool.IdleConnections</li>
+<li>main.pool.Wait</li>
+<li>osgi.pool.TotalConnections</li>
+<li>osgi.pool.ActiveConnections</li>
+<li>osgi.pool.IdleConnections</li>
+<li>osgi.pool.Wait</li>
+<li>shiro.pool.TotalConnections</li>
+<li>shiro.pool.ActiveConnections</li>
+<li>shiro.pool.IdleConnections</li>
+<li>shiro.pool.Wait</li>
+</ul>
+
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and the requested host data.</p>
+<p>If successful, returns a status code of 200 and the requested metric data.</p>
 
-<p>// ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it</p>
+<!-- ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it
+--> 
 <h3 id='fix-stuck-bus-entries'>Fix Stuck Bus Entries</h3>
 <p>Fixes stuck bus entries. Basically sets the <code>creating_owner</code>, <code>processing_owner</code>, <code>processing_avialable_date</code>, <code>processing_state</code>, <code>error_count</code> fields to <code>null</code> in the <code>bus_events</code> table for the specified recordIds.</p>
 
@@ -3710,7 +3771,7 @@
 <p>A few pointers:</p>
 
 <ul>
-<li>if the <code>-H &quot;Accept: application/zip&quot; header is specified</code>, creates a zip file </li>
+<li>If the <code>-H &quot;Accept: application/zip&quot; header is specified</code>, creates a zip file </li>
 <li>At least one query parameter needs to be specified, otherwise an empty response is returned.</li>
 <li>HealthData and logs are returned only when the <code>-H &quot;Accept: application/zip&quot;</code> header is specified</li>
 <li>Logs from only a single node will be included</li>
