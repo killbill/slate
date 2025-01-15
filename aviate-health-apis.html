@@ -2741,8 +2741,8 @@
 
                           <ul class="site-navigator__submenu">
                               <li>
-                                <a href="#samplesforsamplekindandhost" class="site-navigator__item site-navigator__submenu-item" data-title="SamplesForSampleKindAndHost">
-                                  <span>SamplesForSampleKindAndHost</span>
+                                <a href="#metricsresult" class="site-navigator__item site-navigator__submenu-item" data-title="MetricsResult">
+                                  <span>MetricsResult</span>
                                 </a>
                               </li>
                               <li>
@@ -2877,8 +2877,8 @@
       <div class="page__content content">
         <h1 id='aviate-health-apis'>Aviate Health APIs</h1>
 <p>The <a href="https://docs.killbill.io/latest/aviate-health">Aviate Health feature</a> provides several endpoints that allow you to view the health of your KillBill system and fix problems if any. This section documents the APIs exposed by the Aviate Health feature.</p>
-<h2 id='models'>Models</h2><h3 id='samplesforsamplekindandhost'>SamplesForSampleKindAndHost</h3>
-<p>It has the following fields:</p>
+<h2 id='models'>Models</h2><h3 id='metricsresult'>MetricsResult</h3>
+<p>Represents metric result. It has the following fields:</p>
 
 <table><thead>
 <tr>
@@ -2892,37 +2892,37 @@
 <td><strong>nodeName</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Node name</td>
+<td>Name of the node for which data is being captured.</td>
 </tr>
 <tr>
 <td><strong>eventGroup</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Event Group</td>
+<td>Represents the metric type. Possible values are <code>gauge</code>/<code>meter</code>/<code>timer</code></td>
 </tr>
 <tr>
 <td><strong>eventCategory</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Event Category</td>
+<td>Represents the metric name.</td>
 </tr>
 <tr>
 <td><strong>sampleKind</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Sample Kind</td>
+<td>Represents the sample kind. Possible values are <code>value</code>/<code>count</code>/<code>{one_minute/five_minute/fifteen_minute}_rate</code>/<code>mean_rate</code>/<code>tp99</code>/<code>tp999</code>/<code>tp75</code>/<code>tp98</code>/<code>tp95</code>/<code>min</code>/<code>max</code>/<code>count</code>/<code>median</code>/<code>std_dev</code></td>
 </tr>
 <tr>
 <td><strong>sampleSerializationFormat</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Sample Serialization Format</td>
+<td>Sample Serialization Format . Hardcoded to <code>csv</code> at the time of writing</td>
 </tr>
 <tr>
 <td><strong>samples</strong></td>
 <td>string</td>
 <td>system</td>
-<td>Samples</td>
+<td>Comma separated list of timestamp and data value.</td>
 </tr>
 </tbody></table>
 <h3 id='healthdata'>HealthData</h3>
@@ -3564,6 +3564,8 @@
 
 <p>Some metrics are global to the deployment (i.e. independent of the number of Kill Bill nodes/containers deployed) and some others are per-node - in which case the <code>nodeName</code> parameter can be used to return metrics for a specific node.</p>
 
+<p>All the metrics exposed by the Aviate Plugin are documented <a href="https://docs.killbill.io/latest/aviate-health#_aviate_metrics">here</a>.</p>
+
 <p><strong>HTTP Request</strong></p>
 
 <p><code>GET /plugins/aviate-plugin/v1/health/metrics</code></p>
@@ -3668,38 +3670,6 @@ curl -X GET \
 <td>Specifies the time unit for the intervals between consecutive data points. One of <code>MINUTE</code>, <code>HOUR</code>, <code>DAY</code>)</td>
 </tr>
 </tbody></table>
-
-<p>Below is the list of metric names. Any of these can be specified as the value for the <code>metricName</code> parameter.</p>
-
-<ul>
-<li>queue.bus.late</li>
-<li>queue.bus.incoming</li>
-<li>queue.bus.processing</li>
-<li>queue.notifications.late</li>
-<li>queue.notifications.incoming</li>
-<li>queue.notifications.processing</li>
-<li>logs.rates.warn</li>
-<li>logs.rates.error</li>
-<li>servlets.responses.ok</li>
-<li>servlets.responses.created</li>
-<li>servlets.responses.badRequest</li>
-<li>servlets.responses.noContent</li>
-<li>servlets.responses.notFound</li>
-<li>servlets.responses.serverError</li>
-<li>servlets.responses.other</li>
-<li>main.pool.TotalConnections</li>
-<li>main.pool.ActiveConnections</li>
-<li>main.pool.IdleConnections</li>
-<li>main.pool.Wait</li>
-<li>osgi.pool.TotalConnections</li>
-<li>osgi.pool.ActiveConnections</li>
-<li>osgi.pool.IdleConnections</li>
-<li>osgi.pool.Wait</li>
-<li>shiro.pool.TotalConnections</li>
-<li>shiro.pool.ActiveConnections</li>
-<li>shiro.pool.IdleConnections</li>
-<li>shiro.pool.Wait</li>
-</ul>
 
 <p><strong>Response</strong></p>
 
