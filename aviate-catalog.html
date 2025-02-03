@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kill Bill aviate-metering-apis API Documentation">
+    <meta name="description" content="Kill Bill aviate-catalog API Documentation">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
       <title>Kill Bill</title>
       <style media="screen">
@@ -2615,8 +2615,8 @@
                   </ul>
               </li>
               <li>
-                <a href="aviate-catalog-apis.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Catalog APIs">
-                  <span>Aviate Catalog APIs</span>
+                <a href="#aviate-catalog" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Catalog">
+                  <span>Aviate Catalog</span>
                     <span class="dot" style="background-color: #7C3AE3;"></span>
                 </a>
                 
@@ -2645,8 +2645,8 @@
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
-                        <a href="#models" class="site-navigator__item site-navigator__submenu-item" data-title="Models">
-                          <span>Models</span>
+                        <a href="#resources" class="site-navigator__item site-navigator__submenu-item" data-title="Resources">
+                          <span>Resources</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2698,8 +2698,8 @@
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
-                        <a href="#endpoints" class="site-navigator__item site-navigator__submenu-item" data-title="Endpoints">
-                          <span>Endpoints</span>
+                        <a href="#catalog-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Catalog APIs">
+                          <span>Catalog APIs</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2728,15 +2728,15 @@
                   </ul>
               </li>
               <li>
-                <a href="aviate-health-apis.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Health APIs">
-                  <span>Aviate Health APIs</span>
+                <a href="aviate-health.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Health">
+                  <span>Aviate Health</span>
                     <span class="dot" style="background-color: #7C3AE3;"></span>
                 </a>
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
-                        <a href="#models" class="site-navigator__item site-navigator__submenu-item" data-title="Models">
-                          <span>Models</span>
+                        <a href="#resources" class="site-navigator__item site-navigator__submenu-item" data-title="Resources">
+                          <span>Resources</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2783,8 +2783,8 @@
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
-                        <a href="#endpoints" class="site-navigator__item site-navigator__submenu-item" data-title="Endpoints">
-                          <span>Endpoints</span>
+                        <a href="#health-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Health APIs">
+                          <span>Health APIs</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2808,15 +2808,15 @@
                   </ul>
               </li>
               <li>
-                <a href="#aviate-metering-apis" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Metering APIs">
-                  <span>Aviate Metering APIs</span>
+                <a href="aviate-metering.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Metering">
+                  <span>Aviate Metering</span>
                     <span class="dot" style="background-color: #7C3AE3;"></span>
                 </a>
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
-                        <a href="#models" class="site-navigator__item site-navigator__submenu-item" data-title="Models">
-                          <span>Models</span>
+                        <a href="#resources" class="site-navigator__item site-navigator__submenu-item" data-title="Resources">
+                          <span>Resources</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2833,8 +2833,8 @@
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
-                        <a href="#endpoints" class="site-navigator__item site-navigator__submenu-item" data-title="Endpoints">
-                          <span>Endpoints</span>
+                        <a href="#metering-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Metering APIs">
+                          <span>Metering APIs</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2865,12 +2865,20 @@
       </div>
 
       <div class="page__content content">
-        <h1 id='aviate-metering-apis'>Aviate Metering APIs</h1>
-<p>The Aviate plugin offers a metering feature that allows performing usage aggregation. As part of this functionality, the plugin exposes some metering APIs. These APIs provide the ability to create billing meters and record usage data against these meters. This section documents the metering APIs exported by the Aviate plugin.</p>
-<h2 id='models'>Models</h2><h3 id='billingmeter'>BillingMeter</h3>
-<p>A BillingMeter encapsulates how usages are aggregated. Before recording a usage, it is necessary to create a billing meter corresponding to it.</p>
+        <h1 id='aviate-catalog'>Aviate Catalog</h1>
+<p>The <a href="https://docs.killbill.io/latest/aviate-catalog-plugin">Aviate catalog plugin</a> exposes catalog APIs to create individual catalog entries such as plans, products, and pricelists without the need to manage entire catalog versions. This section documents the catalog APIs exported by the Aviate catalog plugin.</p>
+<h2 id='before-you-begin'>Before You Begin</h2><h3 id='tenancy-amp-account-level'>Tenancy &amp; Account-level</h3>
+<p>Each of the aviate plugin endpoints below require specifying the standard Kill Bill <code>X-killbill-apiKey</code> and <code>X-killbill-apisecret</code> headers, which identify the tenant that should be used. In addition, it is possible to specify an optional <code>accountId</code> query parameter to create/access catalog entries on a per-account level. </p>
 
-<p>It has the following fields:</p>
+<p>The Kill Bill system will retrieve such entries from the plugin each time there is a need to access the catalog for a particular tenant. If there are per-account entries, only these entries will be returned for the matching account.</p>
+<h3 id='idempotency'>Idempotency</h3>
+<p>Product, plan, and pricelist resources are uniquely identified by the tuple {tenantId, name}. If such a resource was created with or without an accountId, retrying the create call will be idempotent. If the call is however retried with a different accountId (or lackthereof) it will fail with a validation error.</p>
+<h3 id='catalog-retrieval-kb-catalog-apis'>Catalog Retrieval/KB Catalog APIs</h3>
+<p>At the time of writing, the aviate catalog plugin does not expose any endpoints for catalog retrieval. Instead, the catalog can be retrieved via the <a href="https://apidocs.killbill.io/catalog">KB Catalog APIs</a>.</p>
+<h2 id='resources'>Resources</h2>
+<p>This section lists the models used by the Catalog APIs</p>
+<h3 id='plandata'>PlanData</h3>
+<p>Represents a plan. It has the following attributes:</p>
 
 <table><thead>
 <tr>
@@ -2881,68 +2889,236 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>code</strong></td>
-<td>string</td>
-<td>user</td>
-<td>Billing meter code</td>
-</tr>
-<tr>
 <td><strong>name</strong></td>
 <td>string</td>
 <td>user</td>
-<td>Billing meter name</td>
+<td>Plan name</td>
 </tr>
 <tr>
-<td><strong>eventKey</strong></td>
+<td><strong>prettyName</strong></td>
 <td>string</td>
 <td>user</td>
-<td>The event to aggregate on</td>
+<td>Pretty name for the plan</td>
 </tr>
 <tr>
-<td><strong>eventFilters</strong></td>
-<td>List of String</td>
-<td>user</td>
-<td>Filters to be used to filter the events</td>
-</tr>
-<tr>
-<td><strong>aggregationType</strong></td>
+<td><strong>recurringBillingMode</strong></td>
 <td>string</td>
 <td>user</td>
-<td>Specifies how the usage events should be aggregated. Possible values are <code>COUNT</code>, <code>UNIQUE_COUNT</code>, <code>LATEST</code>, <code>MAX</code>, <code>SUM</code></td>
+<td>Billing mode (One of <code>IN_ADVANCE/IN_ARREAR</code>). Currently, only <code>IN_ADVANCE</code> is supported</td>
+</tr>
+<tr>
+<td><strong>effectiveDate</strong></td>
+<td>DateTime</td>
+<td>user</td>
+<td>DateTime when this plan is effective</td>
+</tr>
+<tr>
+<td><strong>effectiveDateForExistingSubscriptions</strong></td>
+<td>DateTime</td>
+<td>user</td>
+<td>DateTime when the price change is effective for existing subscriptions. (Applicable only for plan modifications)</td>
+</tr>
+<tr>
+<td><strong>productName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Name of the product to which the plan belongs</td>
+</tr>
+<tr>
+<td><strong>pricelistName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Name of the pricelist to which the plan belongs</td>
+</tr>
+<tr>
+<td><strong>retired</strong></td>
+<td>boolean</td>
+<td>user</td>
+<td>Flag that indicates if a plan is retired</td>
+</tr>
+<tr>
+<td><strong>phases</strong></td>
+<td>List of PhaseData</td>
+<td>user</td>
+<td>list of phases in the plan</td>
 </tr>
 </tbody></table>
-
-<p>The following table explains the different aggregation types:</p>
+<h3 id='phasedata'>PhaseData</h3>
+<p>Represents a plan phase. It has the following attributes:</p>
 
 <table><thead>
 <tr>
-<th>Aggregation Type</th>
-<th>Explanation</th>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>COUNT</td>
-<td>TODO</td>
+<td><strong>prettyName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Pretty name for the phase</td>
 </tr>
 <tr>
-<td>UNIQUE_COUNT</td>
-<td>TODO</td>
+<td><strong>type</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Phase type (One of <code>TRIAL/EVERGREEN/FIXEDTERM/DISCOUNT</code>)</td>
 </tr>
 <tr>
-<td>LATEST</td>
-<td>TODO</td>
+<td><strong>durationUnit</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Duration unit for a phase (One of <code>DAYS/WEEKS/MONTHS/YEARS/UNLIMITED</code>)</td>
 </tr>
 <tr>
-<td>MAX</td>
-<td>TODO</td>
+<td><strong>durationLength</strong></td>
+<td>int</td>
+<td>user</td>
+<td>Length of the duration</td>
 </tr>
 <tr>
-<td>SUM</td>
-<td>TODO</td>
+<td><strong>fixedPrices</strong></td>
+<td>List of PriceData</td>
+<td>user</td>
+<td>List of fixed prices</td>
+</tr>
+<tr>
+<td><strong>recurringPrices</strong></td>
+<td>RecurringPriceData</td>
+<td>user</td>
+<td>Recurring price details</td>
+</tr>
+<tr>
+<td><strong>usages</strong></td>
+<td>List of UsageData</td>
+<td>user</td>
+<td>List of usages</td>
 </tr>
 </tbody></table>
-<h3 id='usageevent'>UsageEvent</h3>
-<p>A UsageEvent represents a single usage to be recorded. It has the following fields:</p>
+<h3 id='recurringpricedata'>RecurringPriceData</h3>
+<p>Represents recurring price information. It has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>billingPeriod</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Recurring billing period. One of the value listed <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/catalog/api/BillingPeriod.java">here</a></td>
+</tr>
+<tr>
+<td><strong>prices</strong></td>
+<td>List of PriceData</td>
+<td>user</td>
+<td>List of recurring prices</td>
+</tr>
+</tbody></table>
+<h3 id='pricedata'>PriceData</h3>
+<p>Represents a price. It has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>currency</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Price currency</td>
+</tr>
+<tr>
+<td><strong>value</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Price value</td>
+</tr>
+</tbody></table>
+<h3 id='usagedata'>UsageData</h3>
+<p>Represents a usage. It has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>usageName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Usage name</td>
+</tr>
+<tr>
+<td><strong>usageType</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Usage type (One of <code>CONSUMABLE/CAPACITY</code>. Only <code>CONSUMABLE</code> supported at the time of writing)</td>
+</tr>
+<tr>
+<td><strong>prettyName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Pretty name for the usage</td>
+</tr>
+<tr>
+<td><strong>billingPeriod</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Recurring billing period. One of the value listed <a href="https://github.com/killbill/killbill-api/blob/master/src/main/java/org/killbill/billing/catalog/api/BillingPeriod.java">here</a></td>
+</tr>
+<tr>
+<td><strong>tierBlockPolicy</strong></td>
+<td>string</td>
+<td>user</td>
+<td>The tier block policy (One of <code>ALL_TIER/TOP_TIER</code>). Applicable only for <code>CONSUMABLE</code> usage type.</td>
+</tr>
+<tr>
+<td><strong>tiers</strong></td>
+<td>List of TierData</td>
+<td>user</td>
+<td>Usage price tiers</td>
+</tr>
+</tbody></table>
+<h3 id='tierdata'>TierData</h3>
+<p>Represents a usage tier. It has the following attributes:</p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>tierNumber</strong></td>
+<td>int</td>
+<td>user</td>
+<td>Tier number</td>
+</tr>
+<tr>
+<td><strong>blocks</strong></td>
+<td>List of BlockData</td>
+<td>user</td>
+<td>Tier blocks</td>
+</tr>
+</tbody></table>
+<h3 id='blockdata'>BlockData</h3>
+<p>Represents a tier block. It has the following fields:</p>
 
 <table><thead>
 <tr>
@@ -2954,138 +3130,221 @@
 </thead><tbody>
 <tr>
 <td><strong>billingMeterCode</strong></td>
-<td>string</td>
+<td><a href="aviate-metering-apis.html#billingmeter">BillingMeterCode</a></td>
 <td>user</td>
 <td>Billing meter code</td>
 </tr>
 <tr>
-<td><strong>subscriptionId</strong></td>
-<td>string</td>
+<td><strong>size</strong></td>
+<td>int</td>
 <td>user</td>
-<td>ID of the subscription against which usages should be recorded</td>
+<td>Block size</td>
 </tr>
 <tr>
-<td><strong>trackingId</strong></td>
-<td>string</td>
+<td><strong>max</strong></td>
+<td>int</td>
 <td>user</td>
-<td>User&#39;s tracking Id for this usage</td>
+<td>Max value in block</td>
 </tr>
 <tr>
-<td><strong>timeStamp</strong></td>
-<td>string</td>
+<td><strong>prices</strong></td>
+<td>List of PriceData</td>
 <td>user</td>
-<td>DateTime corresponding to the usage</td>
-</tr>
-<tr>
-<td><strong>value</strong></td>
-<td>number</td>
-<td>user</td>
-<td>Amount of usage</td>
+<td>Usage price details</td>
 </tr>
 </tbody></table>
-<h2 id='endpoints'>Endpoints</h2><h3 id='create-billing-meter'>Create Billing Meter</h3>
-<p>Creates billing meters. If the meter identified by <code>billingMeter#name</code>, <code>billingMeter#eventKey</code> and <code>billingMeter#eventFilters</code> already exists, returns an error.</p>
-
-<p><strong>HTTP Request</strong></p>
-
-<p><code>POST /plugins/aviate-plugin/v1/metering/billingMeters</code></p>
-
-<blockquote>
-<p>Example Request:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="se">\</span>
-     <span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\ </span>    
-     <span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
-     <span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
-     <span class="nt">-d</span> <span class="s1">'[
-          {
-            "name": "meter1",
-            "code": "meter1",
-            "eventKey": "eventKey",
-            "eventFilters": ["filter1", "filter2"],
-            "aggregationType": "SUM"
-          }
-         ]'</span> <span class="se">\</span>
-    http://127.0.0.1:8080/plugins/aviate-plugin/v1/metering/billingMeters
-</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
-<blockquote>
-<p>Example Response:</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meter1"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meter1"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"eventKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eventKey"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"eventFilters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-      </span><span class="s2">"filter1"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"filter2"</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nl">"aggregationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUM"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-</span></code></pre></div>
-<p><strong>Request Body</strong></p>
-
-<p>A <code>BillingMeter</code> list. At the minimum, one <code>BillingMeter</code> object need to be specified. For each <code>BillingMeter</code>, the following fields must be specified: <code>code</code>,<code>name</code>, <code>eventKey</code>, <code>aggregationType</code>. </p>
-
-<p><strong>Query Parameters</strong></p>
+<h3 id='productdata'>ProductData</h3>
+<p>Represents a product. It has the following attributes:</p>
 
 <table><thead>
 <tr>
 <th>Name</th>
 <th>Type</th>
-<th>Required</th>
-<th>Default</th>
+<th>Generated by</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>accountId</strong></td>
-<td>UUID</td>
-<td>false</td>
-<td>none</td>
-<td>Account Id to which the billing meter belongs</td>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Product name</td>
+</tr>
+<tr>
+<td><strong>prettyName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Pretty name for the product</td>
+</tr>
+<tr>
+<td><strong>category</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Product category (<code>BASE/ADD_ON/STANDALONE</code>)</td>
+</tr>
+<tr>
+<td><strong>availableForBps</strong></td>
+<td>string array</td>
+<td>user</td>
+<td>An array of base product names for which this addon is available (Applicable only for addon products)</td>
+</tr>
+<tr>
+<td><strong>availableAddons</strong></td>
+<td>string array</td>
+<td>user</td>
+<td>An array of addon product names available on this base product   (Applicable only for base products)</td>
 </tr>
 </tbody></table>
+<h3 id='cataloginputdata'>CatalogInputData</h3>
+<p>Represents the plans, products and pricelists to be created. It has the following attributes:</p>
 
-<p><strong>Response</strong></p>
-
-<p>If successful, returns a status code of 200 and a <code>BillingMeter</code> list</p>
-<h3 id='retrieve-billing-meter'>Retrieve Billing Meter</h3>
-<p>Returns the BillingMeter corresponding to the specified meter code. </p>
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Generated by</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>catalogName</strong></td>
+<td>string</td>
+<td>user</td>
+<td>Catalog name</td>
+</tr>
+<tr>
+<td><strong>plans</strong></td>
+<td>List of PlanData</td>
+<td>user</td>
+<td>List of plans included in this input</td>
+</tr>
+<tr>
+<td><strong>products</strong></td>
+<td>List of ProductData</td>
+<td>user</td>
+<td>List of products included in this input</td>
+</tr>
+</tbody></table>
+<h2 id='catalog-apis'>Catalog APIs</h2><h3 id='create-plan-product-pricelist'>Create Plan, Product, Pricelist</h3>
+<p>Creates one or multiple plans, products, and pricelists. This is a combo API that can be used to create a plan, its product, and pricelist in one go. If the plan identified by <code>plan#name</code> already exists, returns the existing plan.  If the plan pricelist (identified by <code>plan#pricelistName</code>) is missing, creates it. If the plan product (identified by <code>plan#productName</code>) is missing and not specified as part of <code>products</code>, returns an error.</p>
 
 <p><strong>HTTP Request</strong></p>
 
-<p><code>GET /plugins/aviate-plugin/v1/metering/{metercode}/billingMeter</code></p>
+<p><code>POST /plugins/aviate-plugin/v1/catalog/inputData</code></p>
 
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="se">\</span>
 <span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
 <span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
 <span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
-<span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/metering/meter1/billingMeter'</span>
+<span class="nt">-d</span> <span class="s1">'{
+  "plans": [
+    {
+      "name": "premium-annual",
+      "prettyName": "Premium Annual",
+      "recurringBillingMode": "IN_ADVANCE",
+      "pricelistName": "DEFAULT",
+      "productName": "Premium",
+      "phases": [
+        {
+          "prettyName": "Premium Annual Evergreen",
+          "type": "EVERGREEN",
+          "durationUnit": "UNLIMITED",
+          "durationLength": -1,
+          "fixedPrices": [
+            {
+              "currency": "USD",
+              "value": "0.50"
+            }
+          ],
+          "recurringPrices": {
+            "billingPeriod": "ANNUAL",
+            "prices": [
+              {
+                "currency": "USD",
+                "value": "15"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "name": "Premium",
+      "category": "BASE"
+    }
+  ]
+}'</span> <span class="se">\</span>
+http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/inputData
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meter1"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"meter1"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"eventKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eventKey"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"eventFilters"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="s2">"filter1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"filter2"</span><span class="w">
+  </span><span class="nl">"plans"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"premium-annual"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium Annual"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"recurringBillingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IN_ADVANCE"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"pricelistName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"productName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium Annual Evergreen"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"durationUnit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"durationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.50"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"recurringPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ANNUAL"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+                </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
-  </span><span class="nl">"aggregationType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUM"</span><span class="w">
+  </span><span class="nl">"products"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Premium"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BASE"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Request Body</strong></p>
 
-<p>None</p>
+<p>A <code>CatalogInputData</code> list. At the minimum, one <code>PlanData</code> object need to be included. </p>
+
+<p>For each <code>PlanData</code>, the following fields must be specified: <code>name</code>, <code>recurringBillingMode</code>, <code>pricelistName</code>, <code>productName</code>, <code>effectiveDate</code>, one or more <code>phases</code>.  For each phase, the following fields must be specified: <code>phaseType</code>, <code>durationUnit</code>, <code>durationLength</code>. In addition, the following rules are applicable:</p>
+
+<ul>
+<li>A <code>TRIAL</code> phase cannot have recurring prices</li>
+<li>A <code>NON-TRIAL</code> phase must have at least one fixed or recurring price</li>
+<li>An <code>EVERGREEN</code> phase must have at least one recurring price</li>
+</ul>
+
+<p>If a <code>ProductData</code> object is specified, at the minimum, the following fields need to be specified: <code>name</code>, <code>category</code>. In addition, the following rules are applicable:</p>
+
+<ul>
+<li>If <code>product#category</code> is <code>ADD_ON</code>, at least one value needs to be specified for <code>product#availableForBps</code>.</li>
+<li>If <code>product#category</code> is <code>ADD_ON</code>, no values should be specified for <code>product#availableAddons</code></li>
+<li>If <code>product#category</code> is <code>BASE</code>, no values should be specified for <code>product#availableForBps</code>.</li>
+</ul>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -3103,42 +3362,174 @@
 <td>UUID</td>
 <td>false</td>
 <td>none</td>
-<td>Account Id to which the billing meter belongs</td>
+<td>Account Id for which to create the plan/product/pricelist</td>
 </tr>
 </tbody></table>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a <code>BillingMeter</code> object.</p>
-<h3 id='submit-usage-events'>Submit Usage Events</h3>
-<p>Submits usage events.</p>
+<p>If successful, returns a status code of 201 and the <code>CatalogInputData</code> object.</p>
+<h3 id='create-plan'>Create Plan</h3>
+<p>Creates a new plan. If the plan identified by <code>plan#name</code> already exists, returns the existing plan.  If the underlying pricelist (identified by <code>plan#pricelistName</code>) is missing, creates it. If the underlying product (identified by <code>plan#productName</code>) is missing, returns an error. In other words, the caller of this API needs to ensure that the product corresponding to the plan exists in KB before invoking this endpoint. At the time of writing, the product can be created only via the <a href="aviate-catalog-apis.html#create-plan-product-pricelist">Create Plan/Product/Pricelist</a> endpoint.</p>
 
 <p><strong>HTTP Request</strong></p>
 
-<p><code>POST /plugins/aviate-plugin/v1/metering/billing/{accountID}</code></p>
+<p><code>POST /plugins/aviate-plugin/v1/catalog/plan</code></p>
 
 <blockquote>
 <p>Example Request:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> POST <span class="se">\</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">## without usages</span>
+curl <span class="nt">-X</span> POST <span class="se">\</span>
 <span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
 <span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
 <span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
 <span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
-     <span class="nt">-d</span> <span class="s1">'[
-  {
-    "billingMeterCode": "meter1",
-    "subscriptionId": "8e242ddd-eff9-41d9-b8ca-b2ed77b98da3",
-    "trackingId": "24f7f19b-7c05-41e5-82aa-2f85c8a332dc",
-    "timestamp": "2025-01-01T10:30",
-    "value": 1.2
-  }
-]'</span> <span class="se">\</span>
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/metering/billing/34c72fc8-fbe6-4dd0-b111-0bdaa8c9173d
+<span class="nt">-d</span> <span class="s1">'{
+      "name": "standard-weekly",
+      "prettyName": "Standard Weekly",
+      "recurringBillingMode": "IN_ADVANCE",
+      "effectiveDate": "2023-01-01T12:00",
+      "pricelistName": "DEFAULT",
+      "productName": "Standard",
+      "phases": [
+        {
+          "prettyName": "Standard Weekly Evergreen",
+          "type": "EVERGREEN",
+          "durationUnit": "UNLIMITED",
+          "durationLength": -1,
+          "fixedPrices": [
+            {
+              "currency": "USD",
+              "value": "1"
+            }
+          ],
+          "recurringPrices": {
+            "billingPeriod": "WEEKLY",
+            "prices": [
+              {
+                "currency": "USD",
+                "value": "3"
+              }
+            ]
+          }
+        }
+      ]
+}'</span> <span class="se">\</span>
+<span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/plan'</span>
+
+<span class="c">## with usages</span>
+curl <span class="nt">-X</span> POST <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
+<span class="nt">-d</span> <span class="s1">'{
+      "name": "standard-weekly",
+      "prettyName": "Standard Weekly",
+      "recurringBillingMode": "IN_ADVANCE",
+      "effectiveDate": "2023-01-01T12:00",
+      "pricelistName": "DEFAULT",
+      "productName": "Standard",
+      "phases": [
+        {
+          "prettyName": "Standard Weekly Evergreen",
+          "type": "EVERGREEN",
+          "durationUnit": "UNLIMITED",
+          "durationLength": -1,
+          "fixedPrices": [
+            {
+              "currency": "USD",
+              "value": "1"
+            }
+          ],
+          "recurringPrices": {
+            "billingPeriod": "WEEKLY",
+            "prices": [
+              {
+                "currency": "USD",
+                "value": "3"
+              }
+            ]
+          },
+          "usages": [ 
+            {
+                "usageName": "u1",
+                "usageType": "CONSUMABLE",
+                "billingPeriod": "MONTHLY",
+                "tiers": [
+                  {
+                    "tierNumber": 1,
+                    "blocks": [ 
+                      {
+                        "billingMeterCode": "meter1",
+                        "size": 1,
+                        "max": 1000,
+                        "prices": [ 
+                          {
+                            "currency": "USD",
+                            "value": "20.000000000"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]          
+            }
+          ]
+        }
+      ]
+}'</span> <span class="se">\</span>
+<span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/plan'</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-weekly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard Weekly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"recurringBillingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IN_ADVANCE"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-01-01T12:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pricelistName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"productName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard Weekly Evergreen"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"durationUnit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"durationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"recurringPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WEEKLY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <p><strong>Request Body</strong></p>
 
-<p>A <code>UsageEvent</code> list.</p>
+<p>A <code>PlanData</code> object. As a minimum, the following fields must be specified: <code>name</code>, <code>recurringBillingMode</code>, <code>pricelistName</code>, <code>productName</code>, <code>effectiveDate</code>, one or more <code>PhaseData</code>.  For each <code>PhaseData</code>, the following fields must be specified: <code>phaseType</code>, <code>durationUnit</code>, <code>durationLength</code>. </p>
+
+<p>In addition, the following rules are applicable:</p>
+
+<ul>
+<li>A <code>TRIAL</code> phase cannot have recurring prices</li>
+<li>A <code>NON-TRIAL</code> phase must have at least one fixed or recurring price</li>
+<li>An <code>EVERGREEN</code> phase must have at least one recurring price</li>
+</ul>
+
+<p>Optionally, each PhaseData can include one or more <code>usages</code> corresponding to usage data.</p>
 
 <p><strong>Query Parameters</strong></p>
 
@@ -3152,17 +3543,182 @@
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>pluginProperty</strong>       ??</td>
-<td>List of String</td>
+<td><strong>accountId</strong></td>
+<td>UUID</td>
 <td>false</td>
 <td>none</td>
-<td>List of plugin properties, if any. Should be in the format <code>key%3Dvalue</code></td>
+<td>Account Id for which to create the plan</td>
 </tr>
 </tbody></table>
 
 <p><strong>Response</strong></p>
 
-<p>If successful, returns a status code of 200 and a <code>UsageEvent</code> list</p>
+<p>If successful, returns a status code of 201 and the <code>PlanData</code> object.</p>
+<h3 id='modify-plan'>Modify Plan</h3>
+<p>This API is intended to modify price points associated with an existing plan. If the plan identified by <code>planName</code> does not exist, returns an error. When using the API, one must specify all the prices - whether fixed and/or recurring - for all the original phases configured on the plan even if the prices for some of the phases remain unchanged. Other attributes like duration of the phases, etc. are not allowed to be changed. Note that this behavior differs from the <code>/1.0/kb/catalog</code> KB APIs where phases from the same plan can be changed through catalog versions. Instead, of overloading the same plan in a future catalog version, we want to encourage users to create separate plans when those have different phases.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT /plugins/aviate-plugin/v1/catalog/{planName}/updatePlan</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
+<span class="nt">-d</span> <span class="s1">'[
+        {
+          "type": "EVERGREEN",
+          "fixedPrices": [
+            {
+              "currency": "USD",
+              "value": "15"
+            }
+          ],
+          "recurringPrices": {
+            "prices": [
+              {
+                "currency": "USD",
+                "value": "30"
+              }
+            ]
+          }
+        }
+      ]'</span> <span class="se">\</span>
+<span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/premium-monthly/updatePlan'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard-weekly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard Weekly"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"recurringBillingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"IN_ADVANCE"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"effectiveDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2023-01-01T12:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pricelistName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DEFAULT"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"productName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"prettyName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Standard Weekly Evergreen"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EVERGREEN"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"durationUnit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNLIMITED"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"durationLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"fixedPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"15"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"recurringPrices"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"billingPeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WEEKLY"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"prices"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"currency"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USD"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"30"</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A <code>PhaseData</code> List. As mentioned earlier, one must specify all the prices - whether fixed and/or recurring - for all the original phases configured on the plan even if these prices are unchanged. Other attributes like duration of the phases, etc. are not allowed to be changed.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>effectiveDateForExistingSubscriptions</strong></td>
+<td>String</td>
+<td>false</td>
+<td>none</td>
+<td>Datetime when the price change is applicable for existing subscriptions</td>
+</tr>
+<tr>
+<td><strong>effectiveDate</strong></td>
+<td>UUID</td>
+<td>false</td>
+<td>Current DateTime</td>
+<td>Datetime when the plan change is effective</td>
+</tr>
+<tr>
+<td><strong>accountId</strong></td>
+<td>UUID</td>
+<td>false</td>
+<td>none</td>
+<td>Account Id to which the plan belongs</td>
+</tr>
+</tbody></table>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>If <code>effectiveDateForExistingSubscriptions</code> is specified, it is necessary to specify <code>effectiveDate</code></li>
+<li>If both <code>effectiveDateForExistingSubscriptions</code> and <code>effectiveDate</code> are specified, <code>effectiveDateForExistingSubscriptions</code> cannot be prior to <code>effectiveDate</code></li>
+</ul>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 201 and the modified <code>PlanData</code> object.</p>
+<h3 id='retire-plan'>Retire Plan</h3>
+<p>Retire an existing plan</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE /plugins/aviate-plugin/v1/catalog/{planName}/retirePlan</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> DELETE <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
+<span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/premium-monthly/retirePlan'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+
+<p><strong>Request Body</strong></p>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>accountId</strong></td>
+<td>UUID</td>
+<td>false</td>
+<td>none</td>
+<td>Account Id to which the plan belongs</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and an empty body.</p>
 
       </div>
     </main>
