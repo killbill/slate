@@ -2615,6 +2615,21 @@
                   </ul>
               </li>
               <li>
+                <a href="aviate-auth.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Auth">
+                  <span>Aviate Auth</span>
+                    <span class="dot" style="background-color: #7C3AE3;"></span>
+                </a>
+                
+                  <ul class="site-navigator__submenu">
+                      <li class="site-navigator__submenu-container">
+                        <a href="#auth-api" class="site-navigator__item site-navigator__submenu-item" data-title="Auth API">
+                          <span>Auth API</span>
+                        </a>
+
+                      </li>
+                  </ul>
+              </li>
+              <li>
                 <a href="aviate-catalog.html" class="site-navigator__item site-navigator__menu-item" data-title="Aviate Catalog">
                   <span>Aviate Catalog</span>
                     <span class="dot" style="background-color: #7C3AE3;"></span>
@@ -2640,6 +2655,11 @@
                               <li>
                                 <a href="#catalog-retrieval-kb-catalog-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Catalog Retrieval/KB Catalog APIs">
                                   <span>Catalog Retrieval/KB Catalog APIs</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#authentication" class="site-navigator__item site-navigator__submenu-item" data-title="Authentication">
+                                  <span>Authentication</span>
                                 </a>
                               </li>
                           </ul>
@@ -2735,6 +2755,19 @@
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
+                        <a href="#before-you-begin" class="site-navigator__item site-navigator__submenu-item" data-title="Before You Begin">
+                          <span>Before You Begin</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#authentication" class="site-navigator__item site-navigator__submenu-item" data-title="Authentication">
+                                  <span>Authentication</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
                         <a href="#resources" class="site-navigator__item site-navigator__submenu-item" data-title="Resources">
                           <span>Resources</span>
                         </a>
@@ -2815,6 +2848,19 @@
                 
                   <ul class="site-navigator__submenu">
                       <li class="site-navigator__submenu-container">
+                        <a href="#before-you-begin" class="site-navigator__item site-navigator__submenu-item" data-title="Before You Begin">
+                          <span>Before You Begin</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#authentication" class="site-navigator__item site-navigator__submenu-item" data-title="Authentication">
+                                  <span>Authentication</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
                         <a href="#resources" class="site-navigator__item site-navigator__submenu-item" data-title="Resources">
                           <span>Resources</span>
                         </a>
@@ -2867,6 +2913,8 @@
       <div class="page__content content">
         <h1 id='aviate-metering'>Aviate Metering</h1>
 <p>The Aviate plugin offers a metering feature that allows performing usage aggregation. As part of this functionality, the plugin exposes some metering APIs. These APIs provide the ability to create billing meters and record usage data against these meters. This section documents the metering APIs exported by the Aviate plugin.</p>
+<h2 id='before-you-begin'>Before You Begin</h2><h3 id='authentication'>Authentication</h3>
+<p>The Aviate Plugin uses a JWT based authentication mechanism. Thus, all the APIs listed in this document require a valid token. This can be obtained via the <a href="aviate_auth.html#auth_api">Auth API</a>.</p>
 <h2 id='resources'>Resources</h2><h3 id='billingmeter'>BillingMeter</h3>
 <p>A BillingMeter encapsulates how usages are aggregated. Before recording a usage, it is necessary to create a billing meter corresponding to it.</p>
 
