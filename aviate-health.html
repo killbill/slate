@@ -3427,7 +3427,7 @@
      <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/data
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/data'</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3617,15 +3617,15 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?from<span class="o">=</span>2024-12-19T00:00:00&amp;to<span class="o">=</span>2025-01-04T11:59:00&amp;metricName<span class="o">=</span>queue.bus.incoming&amp;metricName<span class="o">=</span>queue.bus.processing&amp;metricName<span class="o">=</span>queue.bus.late&amp;granularity<span class="o">=</span>HOUR<span class="s1">'
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?from=2024-12-19T00:00:00&amp;to=2025-01-04T11:59:00&amp;metricName=queue.bus.incoming&amp;metricName=queue.bus.processing&amp;metricName=queue.bus.late&amp;granularity=HOUR'</span>
 
-# Returns the metric data for the logs.rates.error metric on the ip-172-31-6-87 node
-curl -X GET \
-     -H '</span>Content-Type: application/json<span class="s1">' \
-     -H '</span>Authorization: Bearer <span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s1">' \     
-     -H '</span>X-killbill-apiKey: bob<span class="s1">' \
-     -H '</span>X-killbill-apisecret: lazar<span class="s1">' \
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=logs.rates.error'</span>  
+<span class="c"># Returns the metric data for the logs.rates.error metric on the ip-172-31-6-87 node</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=logs.rates.error'</span>  
 
 <span class="c"># Returns metric data for the logs.rates.error metric for all the nodes:</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
@@ -3633,15 +3633,15 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?name<span class="o">=</span>logs.rates.error<span class="s1">'   
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?metricName=logs.rates.error'</span>   
 
-# Returns metric data for the queue.bus.incoming metric for all the nodes (nodeName is ignored since queue.bus.incoming is a global metric):
-curl -X GET \
-     -H '</span>Content-Type: application/json<span class="s1">' \
-     -H '</span>Authorization: Bearer <span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s1">' \     
-     -H '</span>X-killbill-apiKey: bob<span class="s1">' \
-     -H '</span>X-killbill-apisecret: lazar<span class="s1">' \
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=queue.bus.incoming'</span> 
+<span class="c"># Returns metric data for the queue.bus.incoming metric for all the nodes (nodeName is ignored since queue.bus.incoming is a global metric):</span>
+curl <span class="nt">-X</span> GET <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=queue.bus.incoming'</span> 
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
 <blockquote>
 <p>Example Response:</p>
@@ -3698,7 +3698,7 @@ curl -X GET \
 <td>List of String</td>
 <td>false</td>
 <td>None</td>
-<td>Name of the metric for which to return data.(See list below). To obtain data for multiple metrics, include a separate <code>metricName</code> parameter for each metric.</td>
+<td>Name of the metric for which to return data.(Refer to <a href="https://docs.killbill.io/latest/aviate-health#_aviate_metrics">this doc</a>). To obtain data for multiple metrics, include a separate <code>metricName</code> parameter for each metric.</td>
 </tr>
 <tr>
 <td><strong>granularity</strong></td>
@@ -3733,7 +3733,7 @@ curl -X PUT \
      -H 'X-killbill-apiKey: bob' \
      -H 'X-killbill-apisecret: lazar' \
      -d '[1,2]' \
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/bus/fixup
+     'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/bus/fixup'
 ```
 
 ```java
@@ -3781,7 +3781,7 @@ curl -X PUT \
      -H 'X-killbill-apiKey: bob' \
      -H 'X-killbill-apisecret: lazar' \
      -d '[1,2]' \
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/notifications/fixup
+     'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/notifications/fixup'
 ```
 
 ```java
@@ -3836,7 +3836,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
-     http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId<span class="o">=</span>af65531a-fc2e-43cd-8af1-6ec0709d9700
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId=af65531a-fc2e-43cd-8af1-6ec0709d9700'</span>
 
 <span class="c">## Example 2 - Creates a zip file. Includes account information, Kill Bill configuration data and tenant configuration data</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
