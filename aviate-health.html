@@ -2715,6 +2715,11 @@
                                   <span>CatalogInputData</span>
                                 </a>
                               </li>
+                              <li>
+                                <a href="#cataloginfo" class="site-navigator__item site-navigator__submenu-item" data-title="CatalogInfo">
+                                  <span>CatalogInfo</span>
+                                </a>
+                              </li>
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
@@ -2734,6 +2739,16 @@
                                 </a>
                               </li>
                               <li>
+                                <a href="#get-all-plans" class="site-navigator__item site-navigator__submenu-item" data-title="Get All Plans">
+                                  <span>Get All Plans</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#get-latest-plan" class="site-navigator__item site-navigator__submenu-item" data-title="Get Latest Plan">
+                                  <span>Get Latest Plan</span>
+                                </a>
+                              </li>
+                              <li>
                                 <a href="#modify-plan" class="site-navigator__item site-navigator__submenu-item" data-title="Modify Plan">
                                   <span>Modify Plan</span>
                                 </a>
@@ -2741,6 +2756,11 @@
                               <li>
                                 <a href="#retire-plan" class="site-navigator__item site-navigator__submenu-item" data-title="Retire Plan">
                                   <span>Retire Plan</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#get-catalog-info" class="site-navigator__item site-navigator__submenu-item" data-title="Get Catalog Info">
+                                  <span>Get Catalog Info</span>
                                 </a>
                               </li>
                           </ul>
@@ -2832,6 +2852,16 @@
                                 </a>
                               </li>
                               <li>
+                                <a href="#fix-stuck-bus-entries" class="site-navigator__item site-navigator__submenu-item" data-title="Fix Stuck Bus Entries">
+                                  <span>Fix Stuck Bus Entries</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#fix-stuck-notification-entries" class="site-navigator__item site-navigator__submenu-item" data-title="Fix Stuck Notification Entries">
+                                  <span>Fix Stuck Notification Entries</span>
+                                </a>
+                              </li>
+                              <li>
                                 <a href="#retrieve-diagnostic-report" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve Diagnostic Report">
                                   <span>Retrieve Diagnostic Report</span>
                                 </a>
@@ -2892,6 +2922,11 @@
                               <li>
                                 <a href="#retrieve-billing-meter" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve Billing Meter">
                                   <span>Retrieve Billing Meter</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#retrieve-all-billing-meters" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve All Billing Meters">
+                                  <span>Retrieve All Billing Meters</span>
                                 </a>
                               </li>
                               <li>
@@ -3797,104 +3832,65 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 <p>If successful, returns a status code of 200 and the requested metric data.</p>
 
 <!-- ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it
-
-
-### Fix Stuck Bus Entries
-
-Fixes stuck bus entries. Basically sets the `creating_owner`, `processing_owner`, `processing_avialable_date`, `processing_state`, `error_count` fields to `null` in the `bus_events` table for the specified recordIds.
-
-**HTTP Request**
-
-`PUT /plugins/aviate-plugin/v1/health/bus/fixup`
-
-> Example Request:
-
-```shell
-curl -X PUT \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: Bearer ${ID_TOKEN}' \     
-     -H 'X-killbill-apiKey: bob' \
-     -H 'X-killbill-apisecret: lazar' \
-     -d '[1,2]' \
-     'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/bus/fixup'
-```
-
-```java
-```
-
-```ruby
-```
-
-```python
-```
-
-````php
-````
-
-````javacript
-````
-
-**Request Body**
-
-A List of `recordId` values from the `bus_events` table that need to be fixed.
-
-**Query Parameters**
-
-None
-
-**Response**
-
-If successful, returns a status code of 200 and an empty body.
-
-
-### Fix Stuck Notification Entries
-
-Fixes stuck notification entries. Basically sets the `creating_owner`, `processing_owner`, `processing_avialable_date`, `processing_state`, `error_count`, `effective_date` fields to `null` in the `notifications` table for the specified recordIds.
-
-**HTTP Request**
-
-`PUT /plugins/aviate-plugin/v1/health/notifications/fixup`
-
-> Example Request:
-
-```shell
-curl -X PUT \
-     -H 'Content-Type: application/json' \
-     -H 'Authorization: Bearer ${ID_TOKEN}' \     
-     -H 'X-killbill-apiKey: bob' \
-     -H 'X-killbill-apisecret: lazar' \
-     -d '[1,2]' \
-     'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/notifications/fixup'
-```
-
-```java
-```
-
-```ruby
-```
-
-```python
-```
-
-````php
-````
-
-````javacript
-````
-
-**Request Body**
-
-A List of `recordId` values from the `notifications` table that need to be fixed.
-
-**Query Parameters**
-
-None
-
-**Response**
-
-If successful, returns a status code of 200 and an empty body.
-
 --> 
+<h3 id='fix-stuck-bus-entries'>Fix Stuck Bus Entries</h3>
+<p>Fixes stuck bus entries. Basically resets the <code>creating_owner</code>, <code>processing_owner</code>, <code>processing_avialable_date</code>, <code>processing_state</code>, <code>error_count</code> fields in the <code>bus_events</code> table for the specified recordIds.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT /plugins/aviate-plugin/v1/health/bus/fixup</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/bus/fixup'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A List of <code>recordId</code> values from the <code>bus_events</code> table that need to be fixed.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and an empty body.</p>
+<h3 id='fix-stuck-notification-entries'>Fix Stuck Notification Entries</h3>
+<p>Fixes stuck notification entries. Basically resets the <code>creating_owner</code>, <code>processing_owner</code>, <code>processing_avialable_date</code>, <code>processing_state</code>, <code>error_count</code>  fields to <code>null</code> in the <code>notifications</code> table for the specified recordIds.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>PUT /plugins/aviate-plugin/v1/health/notifications/fixup</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
+     <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
+     <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
+     <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/notifications/fixup'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<p><strong>Request Body</strong></p>
+
+<p>A List of <code>recordId</code> values from the <code>notifications</code> table that need to be fixed.</p>
+
+<p><strong>Query Parameters</strong></p>
+
+<p>None</p>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and an empty body.</p>
 <h3 id='retrieve-diagnostic-report'>Retrieve Diagnostic Report</h3>
 <p>This endpoint generates a diagnostic report. The report includes logs, tenant config, Kill Bill &amp; system config, and account data, similar to the <a href="https://docs.killbill.io/latest/how-to-use-kpm-diagnostic">kpm diagnostic tool</a>, either as JSON or as a ZIP file.</p>
 
