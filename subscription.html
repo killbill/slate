@@ -3491,16 +3491,33 @@ curl <span class="nt">-v</span> <span class="se">\</span>
     <span class="nt">-d</span> <span class="s1">'{ 
             "accountId": "944bf633-88a8-4575-96b5-80bf0a0fdfec",
             "planName": "pistol-monthly-notrial",
-             "priceOverrides": [
-
+              "priceOverrides": [
+    {
+      "planName": "training-usage-in-arrear",
+      "phaseType": "EVERGREEN",
+      "fixedPrice": null,
+      "recurringPrice":15,
+      "usagePrices": [
         {
-            "planName": "pistol-monthly-notrial",
-            "phaseType": "EVERGREEN",
-            "fixedPrice": null,
-            "recurringPrice": 400.00,
-            "usagePrices": []
-        }       
-    ]
+          "usageName": "training-in-arrear-usage",
+          "usageType": "CONSUMABLE",
+          "billingMode": "IN_ARREAR",
+          "tierPrices": [
+            {
+              "blockPrices": [
+                {
+                  "unitName": "hours",
+                  "size": 1,
+                  "price": 120,
+                  "max": -1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
         }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/subscriptions"</span>
 
@@ -5096,7 +5113,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 </tr>
 </tbody></table>
 
-<p><strong>billingPolicy</strong>: Possible values are START_OF_TERM, END_OF_TERM, IMMEDIATE, or ILLEGAL</p>
+<p><strong>billingPolicy</strong>: Possible values are <code>END_OF_TERM</code> and <code>IMMEDIATE</code>. Note that plan change with <code>START_OF_TERM</code> policy is not supported.</p>
 
 <p><strong>requestedDate</strong>: This date is only used if no billingPolicy was specified.</p>
 
