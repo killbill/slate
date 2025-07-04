@@ -2815,8 +2815,31 @@
                           </ul>
                       </li>
                       <li class="site-navigator__submenu-container">
-                        <a href="#catalog-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Catalog APIs">
-                          <span>Catalog APIs</span>
+                        <a href="#product-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Product APIs">
+                          <span>Product APIs</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
+                              <li>
+                                <a href="#get-all-products" class="site-navigator__item site-navigator__submenu-item" data-title="Get All Products">
+                                  <span>Get All Products</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#get-plans-per-product" class="site-navigator__item site-navigator__submenu-item" data-title="Get Plans Per Product">
+                                  <span>Get Plans Per Product</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#delete-product" class="site-navigator__item site-navigator__submenu-item" data-title="Delete Product">
+                                  <span>Delete Product</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#plan-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Plan APIs">
+                          <span>Plan APIs</span>
                         </a>
 
                           <ul class="site-navigator__submenu">
@@ -2850,6 +2873,19 @@
                                   <span>Retire Plan</span>
                                 </a>
                               </li>
+                              <li>
+                                <a href="#delete-plan" class="site-navigator__item site-navigator__submenu-item" data-title="Delete Plan">
+                                  <span>Delete Plan</span>
+                                </a>
+                              </li>
+                          </ul>
+                      </li>
+                      <li class="site-navigator__submenu-container">
+                        <a href="#catalog-apis" class="site-navigator__item site-navigator__submenu-item" data-title="Catalog APIs">
+                          <span>Catalog APIs</span>
+                        </a>
+
+                          <ul class="site-navigator__submenu">
                               <li>
                                 <a href="#get-catalog-info" class="site-navigator__item site-navigator__submenu-item" data-title="Get Catalog Info">
                                   <span>Get Catalog Info</span>
@@ -2944,6 +2980,26 @@
                                 </a>
                               </li>
                               <li>
+                                <a href="#get-failed-bus-events" class="site-navigator__item site-navigator__submenu-item" data-title="Get Failed Bus Events">
+                                  <span>Get Failed Bus Events</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#get-failed-notifications" class="site-navigator__item site-navigator__submenu-item" data-title="Get Failed Notifications">
+                                  <span>Get Failed Notifications</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#reinsert-failed-bus-events" class="site-navigator__item site-navigator__submenu-item" data-title="Reinsert Failed Bus Events">
+                                  <span>Reinsert Failed Bus Events</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#reinsert-failed-notifications" class="site-navigator__item site-navigator__submenu-item" data-title="Reinsert Failed Notifications">
+                                  <span>Reinsert Failed Notifications</span>
+                                </a>
+                              </li>
+                              <li>
                                 <a href="#fix-stuck-bus-entries" class="site-navigator__item site-navigator__submenu-item" data-title="Fix Stuck Bus Entries">
                                   <span>Fix Stuck Bus Entries</span>
                                 </a>
@@ -3019,6 +3075,11 @@
                               <li>
                                 <a href="#retrieve-all-billing-meters" class="site-navigator__item site-navigator__submenu-item" data-title="Retrieve All Billing Meters">
                                   <span>Retrieve All Billing Meters</span>
+                                </a>
+                              </li>
+                              <li>
+                                <a href="#delete-billing-meter" class="site-navigator__item site-navigator__submenu-item" data-title="Delete Billing Meter">
+                                  <span>Delete Billing Meter</span>
                                 </a>
                               </li>
                               <li>
@@ -3428,6 +3489,59 @@
 <p><strong>Response</strong></p>
 
 <p>If successful, returns a status code of 200 and a List of <code>BillingMeter</code> objects.</p>
+<h3 id='delete-billing-meter'>Delete Billing Meter</h3>
+<p>Deletes the latest version of the billing meter. </p>
+
+<p><strong>Note:</strong> Since this is an irreversible operation, the query parameter <code>force=true</code> must be specified to proceed with the deletion.</p>
+
+<p><strong>HTTP Request</strong></p>
+
+<p><code>DELETE /plugins/aviate-plugin/v1/catalog/{meterCode}/billingMeter</code></p>
+
+<blockquote>
+<p>Example Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> DELETE <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apiKey: alphaF'</span> <span class="se">\</span>
+<span class="nt">-H</span><span class="s1">'X-killbill-apisecret: alphaF'</span> <span class="se">\</span>
+<span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/code1/billingMeter?force=true'</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code></code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code></code></pre></div><div class="highlight"><pre class="highlight plaintext"><code></code></pre></div>
+<blockquote>
+<p>Example Response:</p>
+</blockquote>
+
+<p><strong>Query Parameters</strong></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>force</strong></td>
+<td>boolean</td>
+<td>true</td>
+<td>none</td>
+<td>Whether to force plan deletion</td>
+</tr>
+<tr>
+<td><strong>accountId</strong></td>
+<td>UUID</td>
+<td>false</td>
+<td>none</td>
+<td>Account Id for which to create the plan</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response</strong></p>
+
+<p>If successful, returns a status code of 200 and an empty body.</p>
 <h3 id='submit-usage-events'>Submit Usage Events</h3>
 <p>Submits usage events.</p>
 
