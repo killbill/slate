@@ -3707,7 +3707,7 @@
 <p>Example Request:</p>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/data'</span>
@@ -3897,7 +3897,7 @@
 <div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c"># Returns metric data for the queue.bus.incoming,queue.bus.processing, queue.bus.late for the duration 2024-12-19T00:00:00 to 2025-01-04T11:59:00 with HOURLY granularity </span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?from=2024-12-19T00:00:00&amp;to=2025-01-04T11:59:00&amp;metricName=queue.bus.incoming&amp;metricName=queue.bus.processing&amp;metricName=queue.bus.late&amp;granularity=HOUR'</span>
@@ -3905,7 +3905,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 <span class="c"># Returns the metric data for the logs.rates.error metric on the ip-172-31-6-87 node</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=logs.rates.error'</span>  
@@ -3913,7 +3913,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 <span class="c"># Returns metric data for the logs.rates.error metric for all the nodes:</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?metricName=logs.rates.error'</span>   
@@ -3921,7 +3921,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 <span class="c"># Returns metric data for the queue.bus.incoming metric for all the nodes (nodeName is ignored since queue.bus.incoming is a global metric):</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/metrics?nodeName=ip-172-31-6-87&amp;name=queue.bus.incoming'</span> 
@@ -4012,7 +4012,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/bus/failed?from=2025-01-01T00:00:00&amp;to=2025-02-01T00:00:00'</span>
@@ -4120,7 +4120,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> GET <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/notifications/failed?from=2025-01-01T00:00:00&amp;to=2025-02-01T00:00:00'</span>
@@ -4218,7 +4218,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
@@ -4247,7 +4247,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
@@ -4276,7 +4276,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
@@ -4305,7 +4305,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">-X</span> PUT <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-d</span> <span class="s1">'[1,2]'</span> <span class="se">\</span>
@@ -4343,14 +4343,14 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 </blockquote>
 <div class="highlight"><pre class="highlight shell tab-shell"><code><span class="c">## Example 1 - Returns data for the specified account in JSON format</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="s1">'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/diagnostic?accountId=af65531a-fc2e-43cd-8af1-6ec0709d9700'</span>
 
 <span class="c">## Example 2 - Creates a zip file. Includes account information, Kill Bill configuration data and tenant configuration data</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s2">"Accept: application/zip"</span> <span class="se">\</span>
@@ -4358,7 +4358,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 
 <span class="c">## Example 3 - Creates a zip file. Includes account information and the catalina.2024-11-27.log and localhost_access_log.2024-11-27.txt logs from the Tomcat directory.</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s2">"Accept: application/zip"</span>  <span class="se">\</span>
@@ -4366,7 +4366,7 @@ curl <span class="nt">-X</span> GET <span class="se">\</span>
 
 <span class="c">## Example 4- Creates a zip file. Includes account information and the killbill.out/kaui.out log files from the /var/lib/killbill/logs directory.</span>
 curl <span class="nt">-X</span> GET <span class="se">\</span>
-     <span class="nt">-H</span> <span class="s1">'Authorization: Bearer ${ID_TOKEN}'</span> <span class="se">\ </span>    
+     <span class="nt">-H</span> <span class="s2">"Authorization: Bearer </span><span class="k">${</span><span class="nv">ID_TOKEN</span><span class="k">}</span><span class="s2">"</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apiKey: bob'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s1">'X-killbill-apisecret: lazar'</span> <span class="se">\</span>
      <span class="nt">-H</span> <span class="s2">"Accept: application/zip"</span>  <span class="se">\</span>
