@@ -444,6 +444,209 @@ If successful, returns a status code of 200 and the requested metric data.
 <!-- ### Fix Parked Accounts - This method is not implemented in the code, so not documenting it
 --> 
 
+### Retrieve Health Configuration
+
+Return the effective runtime configuration currently in use by Kill Bill and its plugins. This endpoint shows the resolved value of each configuration property along with the source it was derived from, based on Kill Bill’s property resolution precedence rules.
+
+**HTTP Request**
+
+`GET /plugins/aviate-plugin/v1/health/config`
+
+> Example Request:
+
+```shell
+curl -X GET \
+     -H "Authorization: Bearer ${ID_TOKEN}" \
+     -H 'X-killbill-apiKey: bob' \
+     -H 'X-killbill-apisecret: lazar' \
+     'http://127.0.0.1:8080/plugins/aviate-plugin/v1/health/config'           
+```
+
+```java
+```
+
+```ruby
+```
+
+```python
+```
+
+````php
+````
+
+````javacript
+````
+
+> Example Response:
+
+```json
+{
+  "config": {
+    "EnvironmentVariables": {
+      "values": [
+        {
+          "key": "org.killbill.billing.osgi.dao.maxActive",
+          "value": "99"
+        },
+        {
+          "key": "org.killbill.dao.healthCheckConnectionTimeout",
+          "value": "11s"
+        }
+      ]
+    },
+    "ImmutableSystemProperties": {
+      "values": [
+        {
+          "key": "user.timezone",
+          "value": "GMT"
+        }
+      ]
+    },
+    "RuntimeConfiguration": {
+      "values": [
+        {
+          "key": "org.killbill.billing.plugin.kpm.nexusUrl",
+          "value": "https://repo1.maven.org"
+        },
+        {
+          "key": "org.killbill.payment.plugin.threads.nb",
+          "value": "10"
+        },
+        {
+          "key": "org.killbill.invoice.maxDailyNumberOfItemsSafetyBound",
+          "value": "5"
+        },
+        {
+          "key": "org.killbill.dao.user",
+          "value": "root"
+        },
+        {
+          "key": "org.killbill.billing.osgi.dao.url",
+          "value": "jdbc:mysql://127.0.0.1:3306/killbill?allowPublicKeyRetrieval=true"
+        },
+        {
+          "key": "org.killbill.billing.plugin.kpm.bundlesPath",
+          "value": "/var/lib/killbill/bundles"
+        },
+        {
+          "key": "org.killbill.billing.osgi.dao.password",
+          "value": "root"
+        },
+        {
+          "key": "org.killbill.dao.password",
+          "value": "root"
+        },
+        {
+          "key": "org.killbill.billing.plugin.kpm.adminPassword",
+          "value": "i-082bcac4af7c39660"
+        },
+        {
+          "key": "org.killbill.dao.url",
+          "value": "jdbc:mysql://127.0.0.1:3306/killbill?allowPublicKeyRetrieval=true"
+        },
+        {
+          "key": "org.killbill.server.lookupEnvironmentVariables",
+          "value": "true"
+        },
+        {
+          "key": "org.killbill.billing.plugin.kpm.kpmPath",
+          "value": "/opt/kpm-latest/kpm"
+        },
+        {
+          "key": "org.killbill.osgi.bundle.install.dir",
+          "value": "/var/lib/killbill/bundles"
+        },
+        {
+          "key": "org.killbill.payment.plugin.timeout",
+          "value": "30s"
+        },
+        {
+          "key": "org.killbill.notificationq.analytics.tableName",
+          "value": "analytics_notifications"
+        },
+        {
+          "key": "org.killbill.security.shiroNbHashIterations",
+          "value": "1"
+        },
+        {
+          "key": "org.killbill.security.shiroResourcePath",
+          "value": "/var/lib/killbill/config/shiro.ini"
+        },
+        {
+          "key": "org.killbill.billing.osgi.dao.user",
+          "value": "root"
+        },
+        {
+          "key": "org.killbill.notificationq.analytics.historyTableName",
+          "value": "analytics_notifications_history"
+        }
+      ]
+    },
+    "KillBillDefaults": {
+      "values": [
+        {
+          "key": "org.killbill.dao.maxConnectionAge",
+          "value": "0m"
+        },
+        {
+          "key": "org.killbill.dao.useServerPrepStmts",
+          "value": "true"
+        },
+        {
+          "key": "org.killbill.billing.server.notifications.retries",
+          "value": "[15m, 30m, 2h, 12h, 1d]"
+        },
+        {
+          "key": "org.killbill.billing.main.ro.dao.cachePrepStmts",
+          "value": "true"
+        },
+        {
+          "key": "org.killbill.persistent.bus.main.shutdownTimeout",
+          "value": "15s"
+        },
+        {
+          "key": "org.killbill.persistent.bus.main.historyTableName",
+          "value": "bus_events_history"
+        },
+        {
+          "key": "org.killbill.billing.main.ro.dao.transactionIsolationLevel",
+          "value": "TRANSACTION_READ_COMMITTED"
+        },
+        {
+          "key": "org.killbill.cache.config.redis.password",
+          "value": ""
+        },
+        {
+          "key": "org.killbill.persistent.bus.external.reapThreshold",
+          "value": "10m"
+        },
+        {
+          "key": "org.killbill.billing.main.ro.dao.logLevel",
+          "value": "DEBUG"
+        },
+        {
+          "key": "org.killbill.export.extra.tables.prefix",
+          "value": "[aviate_catalog]"
+        },
+        {
+          "key": "org.killbill.payment.failure.retry.max.attempts",
+          "value": "8"
+        },
+        {
+          "key": "org.killbill.invoice.usage.tz.mode",
+          "value": "FIXED"
+        },
+        {
+          "key": "org.killbill.security.okta.permissionsByGroup",
+          "value": "admin = *:*\nfinance = invoice:*, payment:*\nsupport = entitlement:*, invoice:item_adjust"
+        }
+      ]
+    }
+  }
+}
+````
+
+
 ### Get Failed Bus Events
 
 Returns a list of failed bus events. Basically returns the records from the `bus_events_history` table that have `processing_state` as `FAILED`. Returns records for the specified date range (`created_date >=from and created_date <=to`). 
