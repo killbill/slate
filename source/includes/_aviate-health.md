@@ -448,6 +448,8 @@ If successful, returns a status code of 200 and the requested metric data.
 
 Return the effective runtime configuration currently in use by Kill Bill and its plugins. This endpoint shows the resolved value of each configuration property along with the source it was derived from, based on Kill Bill’s property resolution precedence rules.
 
+For a detailed explanation of Kill Bill’s runtime property sources and resolution precedence, see the official [Runtime Properties](https://docs.killbill.io/latest/aviate-health#_runtime_properties) documentation.
+
 **HTTP Request**
 
 `GET /plugins/aviate-plugin/v1/health/config`
