@@ -5262,6 +5262,7 @@ curl <span class="nt">-v</span> <span class="se">\</span>
 
 <ul>
 <li>When a <code>DateTime</code> is specified corresponding to the <code>requestedDate</code> parameter, it may or may not include a timezone component. If a timezone is included (like <code>entitlementDate=2024-03-10T11:00:00-08:00</code>), the specified timezone (<code>PST</code> in this case) is used. If timezone is not included (like <code>entitlementDate=2024-03-07T11:15</code>), it defaults to UTC.</li>
+<li>Plan change is only possible within the same product category. So when changing plans, both the current plan and the target plan must belong to products in the same category.</li>
 </ul>
 
 <p><strong>Response</strong></p>
