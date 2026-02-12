@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 
 /**
  * generate-llm-artifacts.js
@@ -19,11 +18,15 @@
  *   VERSION   – override the version string (default: latest)
  */
 
-const fs = require('fs');
-const path = require('path');
-const { unified } = require('unified');
-const remarkParse = require('remark-parse');
-const { toString } = require('mdast-util-to-string');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import { toString } from 'mdast-util-to-string';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ---------------------------------------------------------------------------
 // Configuration

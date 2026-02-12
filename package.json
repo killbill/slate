@@ -2,6 +2,7 @@
   "name": "killbill-slate-llm-artifacts",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Build-time LLM artifact generation for Kill Bill API docs",
   "scripts": {
     "generate-llm-artifacts": "node scripts/generate-llm-artifacts.js"
