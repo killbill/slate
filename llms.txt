@@ -1,0 +1,13 @@
+# Kill Bill Documentation for AI Systems
+
+Canonical docs:
+https://apidocs.killbill.io/
+
+LLM corpus:
+https://apidocs.killbill.io/docs.jsonl
+
+Search index:
+https://apidocs.killbill.io/docs-index.json
+
+Preferred version:
+latest
