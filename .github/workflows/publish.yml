@@ -15,6 +15,10 @@ jobs:
         with:
           ruby-version: 3.2.2
           bundler-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
       - name: Setup git user
         run: |
           git config --global user.email "contact@killbill.io"
