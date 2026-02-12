@@ -13,6 +13,17 @@ jobs:
         with:
           ruby-version: 3.2.2
           bundler-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
       - name: Build Slate
         run: |
           ./deploy.sh -v --source-only
+      - name: Validate LLM artifacts
+        run: |
+          test -f build/docs.jsonl && echo '✓ docs.jsonl exists' || exit 1
+          test -f build/docs-index.json && echo '✓ docs-index.json exists' || exit 1
+          test -f build/llms.txt && echo '✓ llms.txt exists' || exit 1
+          node -e "require('fs').readFileSync('build/docs.jsonl','utf8').trim().split('\n').forEach((l,i)=>{JSON.parse(l)});console.log('✓ docs.jsonl is valid NDJSON')"
+          node -e "JSON.parse(require('fs').readFileSync('build/docs-index.json','utf8'));console.log('✓ docs-index.json is valid JSON');"

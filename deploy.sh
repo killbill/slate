@@ -26,6 +26,11 @@ run_build() {
   else
     bundle exec middleman build --clean
   fi
+
+  # Generate LLM artifacts (docs.jsonl, docs-index.json, llms.txt)
+  npm ci --ignore-scripts
+  node scripts/generate-llm-artifacts.js
+
   # Add script for Cloudflare
   cp -f cloudflare_deploy.sh build/
 }
