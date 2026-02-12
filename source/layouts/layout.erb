@@ -65,7 +65,7 @@ under the License.
         <a href="/"  aria-label="Kill Bill logo" class="header__logo"></a>
         <label class="header__theme-switch theme-switch"></label>
       </div>
-      
+
       <div class="header__sidebar-toggler">
         <svg class="hamburger" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="currentColor">
           <path fill-rule="evenodd" clip-rule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7C3.25 6.58579 3.58579 6.25 4 6.25L20 6.25C20.4142 6.25 20.75 6.58579 20.75 7Z" fill=""/>
@@ -102,8 +102,8 @@ under the License.
         <% end %>
       </div>
     </header>
-    <main class="page sidebar-show">
-      <div class="page__sidebar">
+    <main class="page sidebar-show api-page">
+      <div class="page__sidebar api-nav">
         <div class="page__sidebar-toggle">
           <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6.33316 10.6665L1.6665 5.99992L6.33316 1.33325" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -119,7 +119,7 @@ under the License.
                     <span class="dot" style="background-color: #7C3AE3;"></span>
                   <% end %>
                 </a>
-                
+
                 <% if menu_item[:children].length > 0 %>
                   <ul class="site-navigator__submenu">
                     <% menu_item[:children].each do |submenu_item| %>
@@ -156,7 +156,7 @@ under the License.
         </nav>
       </div>
 
-      <div class="page__content content">
+      <div class="page__content content api-main">
         <%= page_content %>
       </div>
     </main>
@@ -220,7 +220,7 @@ under the License.
         const activeLang = localStorage.getItem('activeProgramingLanguage');
         return activeLang || this.list[0];
       }
-      
+
       set activeLanguage(activeLang) {
         localStorage.setItem('activeProgramingLanguage', activeLang);
       }
@@ -234,10 +234,10 @@ under the License.
         $(`.lang-selector .lang-selector__link[data-language-name='${lang || this.activeLanguage}']`).addClass('active');
         this.showOnlyActiveLanguage();
       }
-      
+
       showOnlyActiveLanguage() {
         const activeLang = this.activeLanguage;
-        
+
         if (activeLang) {
           $('.code-snippet').each((index, element) => {
             const snippetHasActiveLang = $(element).find(`.${activeLang}`);
@@ -247,9 +247,9 @@ under the License.
             } else {
               $(element).show();
             }
-            
+
             $(element).has('.json, .textplain, .plaintext, .xml').show();
-            
+
             $(element).children('.highlight').each(function (index, ch) {
               $(ch).hide()
               $(ch).has(`.${activeLang}, .json, .textplain, .plaintext, .xml`).show()
@@ -263,7 +263,7 @@ under the License.
     $('.content h2, .content h3, .content h4').each(function(){
       const itemHref = '#' + $(this).attr('id');
       $(this).append(`<a href="${itemHref}" style="padding-left: 10px;"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a>`);
-      
+
       $(this).find('a').on('click', function(event) {
         const currentURLWithoutHash = window?.location?.href?.split('#')[0];
         const textToCopy = currentURLWithoutHash + itemHref;
@@ -303,7 +303,7 @@ under the License.
       $(this).wrapAll('<div class="table-wrapper" />')
     })
 
-    // Init active menu item if it has 
+    // Init active menu item if it has
     $('.site-navigator .site-navigator__menu-item[href*="#"]').addClass('active')
 
     // Init theme
@@ -311,7 +311,7 @@ under the License.
       $('body').addClass('dark')
     }
 
-    // Init programing language 
+    // Init programing language
     programingLanguages = new ProgramingLanguages($('body').data('languages'))
 
     // Add event listeners on '.copy-clipboard' selector
@@ -320,14 +320,14 @@ under the License.
 
       if (!$(this).find('.tooltip').length > 0) {
         $(this).prepend('<span class="tooltip">Copied</span>');
-        
+
         let that = this;
         setTimeout(function () {
           $(that).find('.tooltip').remove();
         }, 2000);
       }
     });
-    
+
     $('.theme-switch').on('click', function (e) {
       $('body').toggleClass('dark');
 
@@ -349,7 +349,7 @@ under the License.
         $(this).removeClass('active')
       }
     })
-    
+
     $('.site-navigator .site-navigator__submenu-item').on('click', function () {
       if($(this).parent('.site-navigator__submenu').siblings('.site-navigator__menu-item.active')) {
         $('.site-navigator .site-navigator__submenu-item').removeClass('active')
@@ -366,7 +366,7 @@ under the License.
 
     const navLinks = $('.site-navigator .site-navigator__menu-item.active + .site-navigator__submenu').find('.site-navigator__submenu-item')
     const HEIGHT_OF_PAGE_HEADER = 70;
-    
+
     function handleScroll() {
       navLinks.each(function(index) {
         const currentHref = $(this).attr('href')
