@@ -3833,7 +3833,7 @@
 <td>boolean</td>
 <td>true</td>
 <td>none</td>
-<td>Whether to force plan deletion</td>
+<td>Whether to force product deletion</td>
 </tr>
 <tr>
 <td><strong>deleteAllPlans</strong></td>
@@ -4553,7 +4553,7 @@ curl <span class="nt">-X</span> POST <span class="se">\</span>
 
 <p><strong>Note:</strong> Since this is an irreversible operation, the query parameter <code>force=true</code> must be specified to proceed with the deletion.</p>
 
-<p><strong>Note:</strong> Retiring a plan simply marks it as &quot;retired&quot; in the database and prevents creating new subscriptions corresponding to the plan. On the other hand, deleting a plan hard deletes it from the database and hence should be done with caution.</p>
+<p><strong>Note:</strong> Retiring a plan simply marks it as &quot;retired&quot; in the database and prevents creating new subscriptions corresponding to the plan. On the other hand, deleting a plan hard deletes it from the database and this will affect existing subscriptions. This operation should only typically be performed on plans created erroneously to which there are no subscriptions. </p>
 
 <p><strong>HTTP Request</strong></p>
 
