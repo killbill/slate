@@ -342,7 +342,7 @@ curl -X DELETE \
 
 | Name               | Type    | Required | Default | Description                                                 |
 |--------------------|---------|----------|---------|-------------------------------------------------------------
-| **force**          | boolean | true     | none    | Whether to force plan deletion                              |
+| **force**          | boolean | true     | none    | Whether to force product deletion                           |
 | **deleteAllPlans** | boolean | false    | false   | If true, deletes all the plans corresponding to the product |
 | **accountId**      | UUID    | false    | none    | Account Id for which to create the plan                     |
 
@@ -1070,7 +1070,7 @@ Deletes the latest version of the plan. If `allVersions=true` is specified, dele
 
 **Note:** Since this is an irreversible operation, the query parameter `force=true` must be specified to proceed with the deletion.
 
-**Note:** Retiring a plan simply marks it as "retired" in the database and prevents creating new subscriptions corresponding to the plan. On the other hand, deleting a plan hard deletes it from the database and hence should be done with caution.
+**Note:** Retiring a plan simply marks it as "retired" in the database and prevents creating new subscriptions corresponding to the plan. On the other hand, deleting a plan hard deletes it from the database and this will affect existing subscriptions. This operation should only typically be performed on plans created erroneously to which there are no subscriptions. 
 
 **HTTP Request**
 

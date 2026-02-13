@@ -264,7 +264,7 @@ Deletes the latest version of the billing meter.
 
 **HTTP Request**
 
-`DELETE /plugins/aviate-plugin/v1/catalog/{meterCode}/billingMeter`
+`DELETE /plugins/aviate-plugin/v1/metering/{meterCode}/billingMeter`
 
 > Example Request:
 
@@ -274,7 +274,7 @@ curl -X DELETE \
 -H"Authorization: Bearer ${ID_TOKEN}" \
 -H'X-killbill-apiKey: alphaF' \
 -H'X-killbill-apisecret: alphaF' \
-'http://127.0.0.1:8080/plugins/aviate-plugin/v1/catalog/code1/billingMeter?force=true'
+'http://127.0.0.1:8080/plugins/aviate-plugin/v1/metering/code1/billingMeter?force=true'
 ```
 
 ```java
