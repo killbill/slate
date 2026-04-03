@@ -111,12 +111,18 @@ under the License.
         </div>
         <nav class="site-navigator">
           <ul class="site-navigator__menu">
+            <% aviate_separator_added = false %>
             <% toc_data(current_page.data.menu_items, current_page.data.current_page, page_content).each do |menu_item| %>
+              <% is_aviate = menu_item[:title].downcase.match("aviate") %>
+              <% if is_aviate && !aviate_separator_added %>
+                <% aviate_separator_added = true %>
+                <li class="site-navigator__separator"></li>
+              <% end %>
               <li>
                 <a href="<%= menu_item[:href]%>" class="site-navigator__item site-navigator__menu-item" data-title="<%= menu_item[:title] %>">
                   <span><%= menu_item[:content] %></span>
-                  <% if menu_item[:title].downcase.match("aviate") %>
-                    <span class="dot" style="background-color: #7C3AE3;"></span>
+                  <% if is_aviate %>
+                    <span class="badge-premium">Premium</span>
                   <% end %>
                 </a>
                 
