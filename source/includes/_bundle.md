@@ -473,10 +473,10 @@ $bundleResult = $apiInstance->getBundleByKey($bundleKey);
 
 **Query Parameters**
 
-| Name | Type | Required | Default | Description |
-| ---- | -----| -------- | ------- | ----------- |
-| **externalKey** | String | yes | none | The subscription external key |
-| **includedDeleted** | boolean | no | false | If true, include deleted bundles |
+| Name | Type | Required | Default | Description                                                                       |
+| ---- | -----| -------- | ------- |-----------------------------------------------------------------------------------|
+| **externalKey** | String | yes | none | The bundle external key                                                           |
+| **includedDeleted** | boolean | no | false | If true, include deleted bundles (bundles that have cancelled subscriptions)      |
 | **audit** | string | no | "NONE" | Level of audit information to return: "NONE", "MINIMAL" (only inserts), or "FULL" |
 
 **Response**
@@ -931,7 +931,7 @@ curl -v \
     -H "X-Killbill-CreatedBy: demo" \
     -H "X-Killbill-Reason: demo" \
     -H "X-Killbill-Comment: demo" \
-    -d '{ "stateName": "STATE1", "service": "ServiceStateService", "isBlockChange": false, "isBlockEntitlement": false, "isBlockBilling": false, "effectiveDate": "2018-07-17T21:17:28.842Z", "type": "SUBSCRIPTION" }' \
+    -d '{ "stateName": "STATE1", "service": "ServiceStateService", "isBlockChange": false, "isBlockEntitlement": false, "isBlockBilling": false, "effectiveDate": "2018-07-17T21:17:28.842Z", "type": "SUBSCRIPTION_BUNDLE" }' \
     "http://127.0.0.1:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/block"
 ```
 ```java

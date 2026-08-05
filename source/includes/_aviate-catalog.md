@@ -1001,13 +1001,13 @@ A `PhaseData` List. As mentioned earlier, one must specify all the prices - whet
 | Name                                      | Type   | Required | Default          | Description                                                 |
 |-------------------------------------------|--------|----------|------------------|-------------------------------------------------------------
 | **effectiveDateForExistingSubscriptions** | String | false    | none             | Datetime when the price change is applicable for existing subscriptions |
-| **effectiveDate**                         | UUID   | false    | Current DateTime | Datetime when the plan change is effective                  |
+| **effDate**                         | UUID   | false    | Current DateTime | Datetime when the plan change is effective                  |
 | **accountId**                             | UUID   | false    | none             | Account Id to which the plan belongs                        |
 
 **Notes:**
 
-* If `effectiveDateForExistingSubscriptions` is specified, it is necessary to specify `effectiveDate`
-* If both `effectiveDateForExistingSubscriptions` and `effectiveDate` are specified, `effectiveDateForExistingSubscriptions` cannot be prior to `effectiveDate`
+* If `effectiveDateForExistingSubscriptions` is specified, it is necessary to specify `effDate`
+* If both `effectiveDateForExistingSubscriptions` and `effDate` are specified, `effectiveDateForExistingSubscriptions` cannot be prior to `effDate`
 
 
 **Response**
