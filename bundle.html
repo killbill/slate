@@ -3755,14 +3755,14 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
 <td>String</td>
 <td>yes</td>
 <td>none</td>
-<td>The subscription external key</td>
+<td>The bundle external key</td>
 </tr>
 <tr>
 <td><strong>includedDeleted</strong></td>
 <td>boolean</td>
 <td>no</td>
 <td>false</td>
-<td>If true, include deleted bundles</td>
+<td>If true, include deleted bundles (bundles that have cancelled subscriptions)</td>
 </tr>
 <tr>
 <td><strong>audit</strong></td>
@@ -4227,7 +4227,7 @@ any <code>ADD_ON</code> subscriptions in the same bundle are also cancelled auto
     <span class="nt">-H</span> <span class="s2">"X-Killbill-CreatedBy: demo"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-Reason: demo"</span> <span class="se">\</span>
     <span class="nt">-H</span> <span class="s2">"X-Killbill-Comment: demo"</span> <span class="se">\</span>
-    <span class="nt">-d</span> <span class="s1">'{ "stateName": "STATE1", "service": "ServiceStateService", "isBlockChange": false, "isBlockEntitlement": false, "isBlockBilling": false, "effectiveDate": "2018-07-17T21:17:28.842Z", "type": "SUBSCRIPTION" }'</span> <span class="se">\</span>
+    <span class="nt">-d</span> <span class="s1">'{ "stateName": "STATE1", "service": "ServiceStateService", "isBlockChange": false, "isBlockEntitlement": false, "isBlockBilling": false, "effectiveDate": "2018-07-17T21:17:28.842Z", "type": "SUBSCRIPTION_BUNDLE" }'</span> <span class="se">\</span>
     <span class="s2">"http://127.0.0.1:8080/1.0/kb/bundles/2cd2f4b5-a1c0-42a7-924f-64c7b791332d/block"</span>
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">org.killbill.billing.client.api.gen.BundleApi</span><span class="o">;</span>
 <span class="kd">protected</span> <span class="nc">BundleApi</span> <span class="n">bundleApi</span><span class="o">;</span>
