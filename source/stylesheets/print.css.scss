@@ -19,9 +19,9 @@ License for the specific language governing permissions and limitations
 under the License.
 */
 
-$print-color: #999;
-$print-color-light: #ccc;
-$print-font-size: 12px;
+// Print uses theme-invariant primitives so dark mode never leaks onto paper
+$print-color: var(--color-neutral-300);
+$print-color-light: var(--color-neutral-200);
 
 body {
   @extend %default-font;
@@ -37,13 +37,13 @@ body {
 }
 
 .content {
-  font-size: 12px;
+  font-size: var(--font-size-12);
 
   pre, code {
     @extend %code-font;
     @extend %break-words;
     border: 1px solid $print-color;
-    border-radius: 5px;
+    border-radius: var(--radius-md);
     font-size: 0.8em;
   }
 
@@ -74,7 +74,7 @@ body {
 
   a {
     text-decoration: none;
-    color: #000;
+    color: var(--color-neutral-900);
   }
 
   h1 {
@@ -83,7 +83,7 @@ body {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     margin-top: 1em;
-    margin-bottom: $h1-margin-bottom;
+    margin-bottom: 21px;
     border: 2px solid $print-color-light;
     border-width: 2px 0;
     text-align: center;
@@ -118,7 +118,7 @@ body {
   aside {
     padding: 1em;
     border: 1px solid $print-color-light;
-    border-radius: 5px;
+    border-radius: var(--radius-md);
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     line-height: 1.6;
@@ -127,7 +127,7 @@ body {
   aside:before {
     vertical-align: middle;
     padding-right: 0.5em;
-    font-size: 14px;
+    font-size: var(--font-size-14);
   }
 
   aside.notice:before {
