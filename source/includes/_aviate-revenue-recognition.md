@@ -1746,7 +1746,7 @@ If successful, returns a status code of 200 and a list of `AccountRevenueByPlan`
 
 ## Standalone Selling Price APIs
 
-Standalone selling prices (SSPs) are used to [allocate the transaction price of a contract](#contract-allocation) across its terms. The SSP of a term is the SSP of its plan, phase and currency that is effective on the allocation date: effective on or before that date, not expired before it, and with the latest effective date if several match.
+Standalone selling prices (SSPs) are used to [allocate the transaction price of a contract](#allocate-a-contract) across its terms. The SSP of a term is the SSP of its plan, phase and currency that is effective on the allocation date: effective on or before that date, not expired before it, and with the latest effective date if several match.
 
 ### Create a Standalone Selling Price
 
