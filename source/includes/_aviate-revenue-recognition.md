@@ -406,7 +406,7 @@ If successful, returns a status code of 200 and the `RevenueSchedule` of the lin
 |--------|--------|
 | 400 | The invoice of the line is not `COMMITTED`, or the line is not a revenue line (`RECURRING`, `USAGE`, `FIXED` or `EXTERNAL_CHARGE` with a positive amount) |
 | 404 | Invoice item not found |
-| 409 | An entry of the schedule would fall in a closed accounting period: nothing is saved |
+| 409 | An entry of the schedule would fall in a closed accounting period: no schedule or entry is saved |
 | 500 | The revenue allocation of the line's contract failed |
 
 ### Get the Entries of a Revenue Schedule
