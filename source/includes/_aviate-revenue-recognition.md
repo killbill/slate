@@ -1922,7 +1922,7 @@ If successful, returns a status code of 204 and an empty body. Returns 404 if th
 
 ### Allocate a Contract
 
-Allocates a transaction price across the terms of an Aviate contract (see [Contract Allocation](#contract-allocation)), and saves the allocation of each term, replacing any existing allocation of the term. The revenue schedules already created for the contract are not changed.
+Allocates a transaction price across the terms of an Aviate contract (see [Contract Allocation](#allocate-a-contract)), and saves the allocation of each term, replacing any existing allocation of the term. The revenue schedules already created for the contract are not changed.
 
 When allocating through this endpoint:
 
