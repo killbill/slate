@@ -26,26 +26,26 @@ The revenue of one invoice line, recognized over its service period.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `revenueScheduleId` | `string` | Unique identifier of the schedule (a number, as a string) |
-| `invoiceId` | `string` (UUID) | Invoice of the line |
-| `invoiceItemId` | `string` (UUID) | Invoice line (item) |
-| `accountId` | `string` (UUID) | Account of the invoice |
-| `subscriptionId` | `string` (UUID) | Subscription of the line; empty when the line has none |
-| `bundleId` | `string` (UUID) | Bundle of the line; empty when the line has none |
-| `planName` | `string` | Plan of the line; empty when the line has none |
-| `phaseName` | `string` | Phase of the line; empty when the line has none |
-| `invoiceItemType` | `string` | Type of the line: `RECURRING`, `USAGE`, `FIXED` or `EXTERNAL_CHARGE` |
-| `invoiceItemDescription` | `string` | Description of the line |
-| `totalAmount` | `string` | Amount to recognize: the line amount, or the amount allocated to its contract term |
-| `recognizedAmount` | `string` | Amount recognized so far |
-| `deferredAmount` | `string` | Amount not recognized yet (set to 0 when the schedule is adjusted) |
-| `currency` | `string` | Currency of the line |
-| `recognitionRule` | `string` | `REVENUE_RECOGNITION_RULE_STRAIGHT_LINE` or `REVENUE_RECOGNITION_RULE_IMMEDIATE` (`REVENUE_RECOGNITION_RULE_UNKNOWN` for an unknown stored value) |
-| `servicePeriodStartDate` | `string` (date) | Start of the service period |
-| `servicePeriodEndDate` | `string` (date) | End of the service period: the first day not served |
-| `invoiceDate` | `string` (date) | Date of the invoice |
-| `isClosed` | `boolean` | Whether the schedule is closed (fully recognized, or adjusted) |
-| `closedDate` | `string` (date-time) | When the schedule was closed; empty when it is open |
+| **revenueScheduleId** | string | Unique identifier of the schedule (a number, as a string) |
+| **invoiceId** | string (UUID) | Invoice of the line |
+| **invoiceItemId** | string (UUID) | Invoice line (item) |
+| **accountId** | string (UUID) | Account of the invoice |
+| **subscriptionId** | string (UUID) | Subscription of the line; empty when the line has none |
+| **bundleId** | string (UUID) | Bundle of the line; empty when the line has none |
+| **planName** | string | Plan of the line; empty when the line has none |
+| **phaseName** | string | Phase of the line; empty when the line has none |
+| **invoiceItemType** | string | Type of the line: `RECURRING`, `USAGE`, `FIXED` or `EXTERNAL_CHARGE` |
+| **invoiceItemDescription** | string | Description of the line |
+| **totalAmount** | string | Amount to recognize: the line amount, or the amount allocated to its contract term |
+| **recognizedAmount** | string | Amount recognized so far |
+| **deferredAmount** | string | Amount not recognized yet (set to 0 when the schedule is adjusted) |
+| **currency** | string | Currency of the line |
+| **recognitionRule** | string | `REVENUE_RECOGNITION_RULE_STRAIGHT_LINE` or `REVENUE_RECOGNITION_RULE_IMMEDIATE` (`REVENUE_RECOGNITION_RULE_UNKNOWN` for an unknown stored value) |
+| **servicePeriodStartDate** | string (date) | Start of the service period |
+| **servicePeriodEndDate** | string (date) | End of the service period: the first day not served |
+| **invoiceDate** | string (date) | Date of the invoice |
+| **isClosed** | boolean | Whether the schedule is closed (fully recognized, or adjusted) |
+| **closedDate** | string (date-time) | When the schedule was closed; empty when it is open |
 
 ---
 
@@ -55,16 +55,16 @@ One installment of a revenue schedule, or a reversal.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `revenueEntryId` | `string` | Unique identifier of the entry (a number, as a string) |
-| `revenueScheduleId` | `string` | Schedule of the entry |
-| `recognitionDate` | `string` (date) | Date of the entry |
-| `amount` | `string` | Amount of the entry; negative for a reversal |
-| `entryType` | `string` | `REVENUE_ENTRY_TYPE_RECOGNITION` (an installment) or `REVENUE_ENTRY_TYPE_REVERSAL` (from an adjustment or a credit) |
-| `description` | `string` | For example `Day 1 of 31`, `Month 1 of 2`, `Immediate recognition`, or the adjustment or credit it reverses |
-| `isRecognized` | `boolean` | Whether the entry is recognized |
-| `recognizedDate` | `string` (date) | Date of the run that recognized the entry; empty when not recognized |
-| `accountingPeriod` | `string` | Accounting period of the entry (`yyyy-MM`); empty for reversal entries, which belong to the period of the month of their date |
-| `isPeriodClosed` | `boolean` | Whether the entry is closed: by a period close, or by an adjustment of its schedule |
+| **revenueEntryId** | string | Unique identifier of the entry (a number, as a string) |
+| **revenueScheduleId** | string | Schedule of the entry |
+| **recognitionDate** | string (date) | Date of the entry |
+| **amount** | string | Amount of the entry; negative for a reversal |
+| **entryType** | string | `REVENUE_ENTRY_TYPE_RECOGNITION` (an installment) or `REVENUE_ENTRY_TYPE_REVERSAL` (from an adjustment or a credit) |
+| **description** | string | For example `Day 1 of 31`, `Month 1 of 2`, `Immediate recognition`, or the adjustment or credit it reverses |
+| **isRecognized** | boolean | Whether the entry is recognized |
+| **recognizedDate** | string (date) | Date of the run that recognized the entry; empty when not recognized |
+| **accountingPeriod** | string | Accounting period of the entry (`yyyy-MM`); empty for reversal entries, which belong to the period of the month of their date |
+| **isPeriodClosed** | boolean | Whether the entry is closed: by a period close, or by an adjustment of its schedule |
 
 ---
 
@@ -72,13 +72,13 @@ One installment of a revenue schedule, or a reversal.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `periodName` | `string` | Name of the period (`yyyy-MM`) |
-| `startDate` | `string` (date) | First day of the period |
-| `endDate` | `string` (date) | Last day of the period |
-| `closed` | `boolean` | Whether the period is closed |
-| `closedDate` | `string` (date-time) | When the period was closed; `null` when it is open |
-| `closedBy` | `string` | Who closed the period; `null` when it is open |
-| `tenantId` | `string` (UUID) | Tenant of the period |
+| **periodName** | string | Name of the period (`yyyy-MM`) |
+| **startDate** | string (date) | First day of the period |
+| **endDate** | string (date) | Last day of the period |
+| **closed** | boolean | Whether the period is closed |
+| **closedDate** | string (date-time) | When the period was closed; `null` when it is open |
+| **closedBy** | string | Who closed the period; `null` when it is open |
+| **tenantId** | string (UUID) | Tenant of the period |
 
 ---
 
@@ -86,11 +86,11 @@ One installment of a revenue schedule, or a reversal.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `accountingPeriod` | `string` | Name of the period |
-| `recognizedAmount` | `number` | Total of the recognized entries of the period |
-| `deferredAmount` | `number` | Total of the entries of the period not recognized yet |
-| `entryCount` | `integer` | Number of entries of the period |
-| `unrecognizedCount` | `integer` | Number of entries of the period not recognized yet: the entries that block a close without `force` |
+| **accountingPeriod** | string | Name of the period |
+| **recognizedAmount** | number | Total of the recognized entries of the period |
+| **deferredAmount** | number | Total of the entries of the period not recognized yet |
+| **entryCount** | integer | Number of entries of the period |
+| **unrecognizedCount** | integer | Number of entries of the period not recognized yet: the entries that block a close without `force` |
 
 The amounts and `entryCount` cover the entries saved with the period. `unrecognizedCount` also counts the reversal entries of a standalone credit dated in the period.
 
@@ -108,11 +108,11 @@ One row of the revenue waterfall.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `accountingPeriod` | `string` | Accounting period of the entries |
-| `currency` | `string` | Currency of the entries |
-| `recognizedAmount` | `number` | Total of the recognized entries |
-| `deferredAmount` | `number` | Total of the entries not recognized yet |
-| `entryCount` | `integer` | Number of entries |
+| **accountingPeriod** | string | Accounting period of the entries |
+| **currency** | string | Currency of the entries |
+| **recognizedAmount** | number | Total of the recognized entries |
+| **deferredAmount** | number | Total of the entries not recognized yet |
+| **entryCount** | integer | Number of entries |
 
 ---
 
@@ -120,9 +120,9 @@ One row of the revenue waterfall.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `currency` | `string` | Currency |
-| `totalDeferred` | `number` | Total deferred amount of the open schedules in this currency |
-| `scheduleCount` | `integer` | Number of open schedules in this currency |
+| **currency** | string | Currency |
+| **totalDeferred** | number | Total deferred amount of the open schedules in this currency |
+| **scheduleCount** | integer | Number of open schedules in this currency |
 
 ---
 
@@ -132,18 +132,18 @@ A standalone selling price (SSP).
 
 | Name | Type | Description |
 |------|------|-------------|
-| `id` | `string` (UUID) | Unique identifier of the SSP |
-| `planName` | `string` | Plan |
-| `phaseName` | `string` | Phase |
-| `currency` | `string` | Currency |
-| `sspAmount` | `number` | Standalone selling price |
-| `effectiveDate` | `string` (date) | First day the SSP applies |
-| `expirationDate` | `string` (date) | Last day the SSP applies; `null` when it does not expire |
-| `source` | `string` | Source of the SSP, `LIST_PRICE` by default. `RESIDUAL` selects the residual allocation method. |
-| `createdBy` | `string` | Who created the SSP |
-| `createdDate` | `string` (date-time) | When the SSP was created |
-| `accountId` | `string` (UUID) | Always `null` when created through the API |
-| `tenantId` | `string` (UUID) | Tenant of the SSP |
+| **id** | string (UUID) | Unique identifier of the SSP |
+| **planName** | string | Plan |
+| **phaseName** | string | Phase |
+| **currency** | string | Currency |
+| **sspAmount** | number | Standalone selling price |
+| **effectiveDate** | string (date) | First day the SSP applies |
+| **expirationDate** | string (date) | Last day the SSP applies; `null` when it does not expire |
+| **source** | string | Source of the SSP, `LIST_PRICE` by default. `RESIDUAL` selects the residual allocation method. |
+| **createdBy** | string | Who created the SSP |
+| **createdDate** | string (date-time) | When the SSP was created |
+| **accountId** | string (UUID) | Always `null` when created through the API |
+| **tenantId** | string (UUID) | Tenant of the SSP |
 
 ---
 
@@ -153,22 +153,22 @@ The revenue allocated to one term of a contract.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `id` | `string` (UUID) | Unique identifier of the allocation |
-| `contractId` | `string` (UUID) | Contract |
-| `contractTermId` | `string` (UUID) | Contract term |
-| `planName` | `string` | Plan of the term |
-| `phaseName` | `string` | Phase used to look up the SSP of the term (see [Allocate a Contract](#allocate-a-contract)) |
-| `listPrice` | `number` | List price of the term |
-| `sspAmount` | `number` | SSP of the term, or the fallback value when the term has no SSP |
-| `sspRatio` | `number` | Share of the term. Proportional allocation: its SSP divided by the total SSP of the terms. Residual allocation: its SSP (`RELATIVE_SSP` terms) or its allocated amount (`RESIDUAL` terms) divided by the transaction price. |
-| `allocatedAmount` | `number` | Revenue allocated to the term |
-| `transactionPrice` | `number` | Transaction price of the whole contract |
-| `currency` | `string` | Currency |
-| `allocationMethod` | `string` | `RELATIVE_SSP` or `RESIDUAL` |
-| `createdBy` | `string` | Who created the allocation |
-| `createdDate` | `string` (date-time) | When the allocation was created |
-| `accountId` | `string` (UUID) | Always `null` when created through the API |
-| `tenantId` | `string` (UUID) | Tenant of the allocation |
+| **id** | string (UUID) | Unique identifier of the allocation |
+| **contractId** | string (UUID) | Contract |
+| **contractTermId** | string (UUID) | Contract term |
+| **planName** | string | Plan of the term |
+| **phaseName** | string | Phase used to look up the SSP of the term (see [Allocate a Contract](#allocate-a-contract)) |
+| **listPrice** | number | List price of the term |
+| **sspAmount** | number | SSP of the term, or the fallback value when the term has no SSP |
+| **sspRatio** | number | Share of the term. Proportional allocation: its SSP divided by the total SSP of the terms. Residual allocation: its SSP (`RELATIVE_SSP` terms) or its allocated amount (`RESIDUAL` terms) divided by the transaction price. |
+| **allocatedAmount** | number | Revenue allocated to the term |
+| **transactionPrice** | number | Transaction price of the whole contract |
+| **currency** | string | Currency |
+| **allocationMethod** | string | `RELATIVE_SSP` or `RESIDUAL` |
+| **createdBy** | string | Who created the allocation |
+| **createdDate** | string (date-time) | When the allocation was created |
+| **accountId** | string (UUID) | Always `null` when created through the API |
+| **tenantId** | string (UUID) | Tenant of the allocation |
 
 ---
 
@@ -176,11 +176,11 @@ The revenue allocated to one term of a contract.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `contractId` | `string` (UUID) | Contract |
-| `allocationCount` | `integer` | Number of allocated terms |
-| `totalAllocated` | `number` | Total allocated amount |
-| `totalTransactionPrice` | `number` | Sum of the `transactionPrice` of the allocations of the contract. Each allocation holds the transaction price of the whole contract, so this is the transaction price multiplied by `allocationCount`. |
-| `currency` | `string` | Currency of the allocations (the first one alphabetically if they differ) |
+| **contractId** | string (UUID) | Contract |
+| **allocationCount** | integer | Number of allocated terms |
+| **totalAllocated** | number | Total allocated amount |
+| **totalTransactionPrice** | number | Sum of the `transactionPrice` of the allocations of the contract. Each allocation holds the transaction price of the whole contract, so this is the transaction price multiplied by `allocationCount`. |
+| **currency** | string | Currency of the allocations (the first one alphabetically if they differ) |
 
 ---
 
@@ -188,14 +188,14 @@ The revenue allocated to one term of a contract.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `planName` | `string` | Plan; empty for lines without a plan (for example external charges) |
-| `currency` | `string` | Currency |
-| `totalAmount` | `number` | Total amount |
-| `recognizedAmount` | `number` | Recognized amount |
-| `deferredAmount` | `number` | Deferred amount |
-| `scheduleCount` | `integer` | Number of schedules for this plan in this currency |
-| `accounts` | `integer` | Number of distinct accounts with such a schedule |
-| `subscriptions` | `integer` | Number of distinct subscriptions with such a schedule |
+| **planName** | string | Plan; empty for lines without a plan (for example external charges) |
+| **currency** | string | Currency |
+| **totalAmount** | number | Total amount |
+| **recognizedAmount** | number | Recognized amount |
+| **deferredAmount** | number | Deferred amount |
+| **scheduleCount** | integer | Number of schedules for this plan in this currency |
+| **accounts** | integer | Number of distinct accounts with such a schedule |
+| **subscriptions** | integer | Number of distinct subscriptions with such a schedule |
 
 ---
 
@@ -203,15 +203,15 @@ The revenue allocated to one term of a contract.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `recognitionRule` | `string` | Recognition rule of the schedules |
-| `currency` | `string` | Currency |
-| `totalAmount` | `number` | Total amount of the schedules |
-| `recognizedAmount` | `number` | Recognized amount of the schedules |
-| `deferredAmount` | `number` | Deferred amount of the schedules |
-| `recognitionRate` | `number` | `recognizedAmount` divided by `totalAmount`, 4 decimal places (`0` when the total is zero) |
-| `avgRecognitionPercent` | `number` | `recognitionRate` as a percentage, 2 decimal places |
-| `scheduleCount` | `integer` | Number of schedules |
-| `avgDaysSinceInvoice` | `integer` | Average number of days from the invoice date to the as-of date, over the schedules invoiced on or before the as-of date |
+| **recognitionRule** | string | Recognition rule of the schedules |
+| **currency** | string | Currency |
+| **totalAmount** | number | Total amount of the schedules |
+| **recognizedAmount** | number | Recognized amount of the schedules |
+| **deferredAmount** | number | Deferred amount of the schedules |
+| **recognitionRate** | number | `recognizedAmount` divided by `totalAmount`, 4 decimal places (`0` when the total is zero) |
+| **avgRecognitionPercent** | number | `recognitionRate` as a percentage, 2 decimal places |
+| **scheduleCount** | integer | Number of schedules |
+| **avgDaysSinceInvoice** | integer | Average number of days from the invoice date to the as-of date, over the schedules invoiced on or before the as-of date |
 
 ---
 
@@ -221,18 +221,18 @@ One row of the transaction ledger of an account: a revenue schedule or one of it
 
 | Name | Type | Description |
 |------|------|-------------|
-| `createDate` | `string` (date) | Invoice date of a schedule, or date of a reversal entry |
-| `startDate` | `string` (date) | Service period start of the schedule |
-| `endDate` | `string` (date) | Service period end of the schedule |
-| `credit` | `string` | Amount of a reversal entry (or of a negative schedule); `"0"` otherwise |
-| `debit` | `string` | Total amount of a schedule; `"0"` otherwise |
-| `balance` | `string` | Running total of the rows so far in this currency |
-| `currency` | `string` | Currency of the schedule |
-| `planName` | `string` | Plan of the schedule |
-| `invoiceItemType` | `string` | Line type of a schedule, or `REVERSAL` |
-| `invoiceItemDescription` | `string` | Description of the line, or of the reversal entry |
-| `subscriptionExternalKey` | `string` | External key of the subscription of the schedule; `null` when it has none |
-| `invoiceId` | `string` (UUID) | Invoice of the schedule |
+| **createDate** | string (date) | Invoice date of a schedule, or date of a reversal entry |
+| **startDate** | string (date) | Service period start of the schedule |
+| **endDate** | string (date) | Service period end of the schedule |
+| **credit** | string | Amount of a reversal entry (or of a negative schedule); `"0"` otherwise |
+| **debit** | string | Total amount of a schedule; `"0"` otherwise |
+| **balance** | string | Running total of the rows so far in this currency |
+| **currency** | string | Currency of the schedule |
+| **planName** | string | Plan of the schedule |
+| **invoiceItemType** | string | Line type of a schedule, or `REVERSAL` |
+| **invoiceItemDescription** | string | Description of the line, or of the reversal entry |
+| **subscriptionExternalKey** | string | External key of the subscription of the schedule; `null` when it has none |
+| **invoiceId** | string (UUID) | Invoice of the schedule |
 
 ---
 
@@ -242,20 +242,20 @@ One revenue schedule of an account, with the number of its entries.
 
 | Name | Type | Description |
 |------|------|-------------|
-| `planName` | `string` | Plan |
-| `phaseName` | `string` | Phase |
-| `totalAmount` | `string` | Total amount of the schedule |
-| `recognizedAmount` | `string` | Recognized amount |
-| `deferredAmount` | `string` | Deferred amount, as stored on the schedule |
-| `currency` | `string` | Currency |
-| `serviceStartDate` | `string` (date) | Service period start |
-| `serviceEndDate` | `string` (date) | Service period end |
-| `invoiceDate` | `string` (date) | Invoice date |
-| `recognitionRule` | `string` | Recognition rule |
-| `totalEntries` | `integer` | Number of entries of the schedule, reversal entries included |
-| `recognizedEntries` | `integer` | Number of recognized entries |
-| `pendingEntries` | `integer` | Number of entries neither recognized nor closed |
-| `scheduleId` | `string` | Identifier of the schedule |
+| **planName** | string | Plan |
+| **phaseName** | string | Phase |
+| **totalAmount** | string | Total amount of the schedule |
+| **recognizedAmount** | string | Recognized amount |
+| **deferredAmount** | string | Deferred amount, as stored on the schedule |
+| **currency** | string | Currency |
+| **serviceStartDate** | string (date) | Service period start |
+| **serviceEndDate** | string (date) | Service period end |
+| **invoiceDate** | string (date) | Invoice date |
+| **recognitionRule** | string | Recognition rule |
+| **totalEntries** | integer | Number of entries of the schedule, reversal entries included |
+| **recognizedEntries** | integer | Number of recognized entries |
+| **pendingEntries** | integer | Number of entries neither recognized nor closed |
+| **scheduleId** | string | Identifier of the schedule |
 
 The entry counts show the stored state: a later run may still recognize entries closed by an adjustment (those before the new service end), and entries of a closed period are not counted as pending.
 
