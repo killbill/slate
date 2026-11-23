@@ -349,7 +349,7 @@ curl -X DELETE \
 
 **Response**
 
-If successful, returns a status code of 200 and an empty body.
+If successful, returns a status code of 204 and an empty body.
 
 ## Plan APIs
 
@@ -375,6 +375,7 @@ curl -X POST \
       "name": "premium-annual",
       "prettyName": "Premium Annual",
       "recurringBillingMode": "IN_ADVANCE",
+      "effectiveDate": "2023-01-01T12:00",
       "pricelistName": "DEFAULT",
       "productName": "Premium",
       "phases": [
@@ -1001,7 +1002,7 @@ A `PhaseData` List. As mentioned earlier, one must specify all the prices - whet
 | Name                                      | Type   | Required | Default          | Description                                                 |
 |-------------------------------------------|--------|----------|------------------|-------------------------------------------------------------
 | **effectiveDateForExistingSubscriptions** | String | false    | none             | Datetime when the price change is applicable for existing subscriptions |
-| **effDate**                         | UUID   | false    | Current DateTime | Datetime when the plan change is effective                  |
+| **effDate**                         | String | false    | Current DateTime | Datetime when the plan change is effective                  |
 | **accountId**                             | UUID   | false    | none             | Account Id to which the plan belongs                        |
 
 **Notes:**
@@ -1012,7 +1013,7 @@ A `PhaseData` List. As mentioned earlier, one must specify all the prices - whet
 
 **Response**
 
-If successful, returns a status code of 201 and the modified `PlanData` object.
+If successful, returns a status code of 200 and the modified `PlanData` object.
 
 ### Retire Plan
 
@@ -1062,7 +1063,7 @@ curl -X DELETE \
 
 **Response**
 
-If successful, returns a status code of 200 and an empty body.
+If successful, returns a status code of 204 and an empty body.
 
 ### Delete Plan
 
@@ -1115,7 +1116,7 @@ curl -X DELETE \
 
 **Response**
 
-If successful, returns a status code of 200 and an empty body.
+If successful, returns a status code of 204 and an empty body.
 
 ## Catalog APIs
 

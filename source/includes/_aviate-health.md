@@ -341,7 +341,7 @@ None
 
 **Response**
 
-If successful, returns a `HealthData` object.
+If successful, returns a status code of 200 and a `HealthData` object.
 
 ### Retrieve Runtime Configuration
 
