@@ -187,7 +187,7 @@ None
 
 **Response**
 
-If successful, returns a `Wallet` object.
+If successful, returns a status code of 201 and a `Wallet` object. If the wallet is created but the payment of the initial paid credits fails, as in the example response above, returns a status code of 206 with the `Wallet` object and the payment error.
 
 ### Add credits to a Wallet
 
@@ -237,6 +237,8 @@ curl -X PUT \
 {"status":"WALLET_SUCCESS","errorMessage":""}
 ```
 
+Returns `200` OK if successful.
+
 ### Modify topOff Wallet configuration
 
 Modify or add a topOff configuration for a previously created wallet.
@@ -281,7 +283,11 @@ curl -X PUT \
 
 > Example Response:
 
-Returns `200` OK if successful.
+```
+HTTP/1.1 204 No Content
+```
+
+Returns `204` No Content if successful.
 
 ### Retrieve Wallets for user Account
 

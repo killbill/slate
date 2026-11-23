@@ -122,7 +122,7 @@ A `BillingMeter` list. At the minimum, one `BillingMeter` object need to be spec
 
 **Response**
 
-If successful, returns a status code of 200 and a `BillingMeter` list
+If successful, returns a status code of 201 and a `BillingMeter` list
 
 ### Retrieve Billing Meter
 
@@ -195,7 +195,7 @@ Returns all the billing meters corresponding to a tenant/account.
 
 **HTTP Request**
 
-`GET /plugins/aviate-plugin/v1/metering//billingMeters/all`
+`GET /plugins/aviate-plugin/v1/metering/billingMeters/all`
 
 > Example Request:
 
@@ -205,7 +205,7 @@ curl -X GET \
 -H"Authorization: Bearer ${ID_TOKEN}" \
 -H'X-killbill-apiKey: alphaF' \
 -H'X-killbill-apisecret: alphaF' \
-'http://127.0.0.1:8080/plugins/aviate-plugin/v1/metering//billingMeters/all'
+'http://127.0.0.1:8080/plugins/aviate-plugin/v1/metering/billingMeters/all'
 ```
 
 ```java
@@ -304,7 +304,7 @@ curl -X DELETE \
 
 **Response**
 
-If successful, returns a status code of 200 and an empty body.
+If successful, returns a status code of 204 and an empty body.
 
 
 

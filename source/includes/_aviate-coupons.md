@@ -179,6 +179,8 @@ curl -X GET \
 
 > Example Response:
 
+Returns `200` with a list of `Coupon` objects.
+
 ```json     
 [
   {
@@ -245,6 +247,8 @@ curl -X GET \
 
 > Example Response:
 
+Returns `200` with a `Coupon` object.
+
 ```json
 {
   "redemptionCode": "UPGRADE2025",
@@ -296,11 +300,8 @@ curl -X PUT \
 
 > Example Response:
 
-```json
-{
-  "status": "SUCCESS"
-}
+```
+HTTP/1.1 204 No Content
 ```
 
-
-Returns HTTP 200 on success
+Returns `204` with an empty body on success.
