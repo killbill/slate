@@ -34,6 +34,7 @@ menu_items:
   - aviate-wallet
   - aviate-coupons
   - aviate-revenue-recognition
+  - aviate-billing-accounts
 
 title: Kill Bill
 
